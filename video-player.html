@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padhle Champs - Video Player</title>
+    <link rel="stylesheet" href="video-player.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MathJax for LaTeX support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <button onclick="goBack()" class="nav-back">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back</span>
+        </button>
+        <div class="nav-title">
+            <h1 id="videoTitle">Loading Video...</h1>
+            <div class="nav-breadcrumb">
+                <span id="videoSubject">Subject</span>
+                <i class="fas fa-chevron-right"></i>
+                <span>Video Player</span>
+            </div>
+        </div>
+        <div class="nav-user">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <span id="userGreeting">Hi Student</span>
+            <div id="banIndicator" class="ban-status" style="display: none;">
+                <i class="fas fa-ban"></i>
+                <span id="banTimer">Restricted</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Video Player Section -->
+        <div class="player-section">
+            <div class="video-wrapper">
+                <!-- YouTube Player -->
+                <div id="youtubePlayer" class="video-player" style="display: none;">
+                    <div id="youtubeIframe"></div>
+                    <div class="player-overlay">
+                        <div class="seek-feedback" id="ytSeekFeedback">+10s</div>
+                        <div class="volume-feedback" id="ytVolumeFeedback">
+                            <div class="feedback-bar">
+                                <div class="feedback-fill" id="ytVolumeFill"></div>
+                            </div>
+                        </div>
+                        <div class="shortcut-hint" id="ytShortcutHint">Space - Play/Pause</div>
+                    </div>
+                    <div class="center-controls">
+                        <button id="ytRewindBtn" class="center-control-btn">
+                            <i class="fas fa-undo"></i>
+                            <span>10</span>
+                        </button>
+                        <button id="ytPlayBtn" class="center-control-btn play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button id="ytForwardBtn" class="center-control-btn">
+                            <i class="fas fa-redo"></i>
+                            <span>10</span>
+                        </button>
+                    </div>
+                    <div class="player-controls">
+                        <div class="progress-section">
+                            <div class="progress-track" id="ytProgressTrack">
+                                <div id="ytProgress" class="progress-fill"></div>
+                            </div>
+                            <span id="ytTimeDisplay">0:00 / 0:00</span>
+                        </div>
+                        <div class="controls-group">
+                            <button id="ytSpeedBtn" class="control-btn" data-speed="1x">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </button>
+                            <div class="dropdown" id="ytSpeedDropdown">
+                                <button class="dropdown-item" data-speed="0.25">0.25x</button>
+                                <button class="dropdown-item" data-speed="0.5">0.5x</button>
+                                <button class="dropdown-item" data-speed="0.75">0.75x</button>
+                                <button class="dropdown-item active" data-speed="1">1x</button>
+                                <button class="dropdown-item" data-speed="1.25">1.25x</button>
+                                <button class="dropdown-item" data-speed="1.5">1.5x</button>
+                                <button class="dropdown-item" data-speed="2">2x</button>
+                            </div>
+                            <button id="ytQualityBtn" class="control-btn" data-quality="720p">
+                                <i class="fas fa-hdd"></i>
+                            </button>
+                            <div class="dropdown" id="ytQualityDropdown">
+                                <button class="dropdown-item" data-quality="144">144p</button>
+                                <button class="dropdown-item" data-quality="240">240p</button>
+                                <button class="dropdown-item" data-quality="360">360p</button>
+                                <button class="dropdown-item" data-quality="480">480p</button>
+                                <button class="dropdown-item active" data-quality="720">720p</button>
+                                <button class="dropdown-item" data-quality="1080">1080p</button>
+                            </div>
+                            <button id="ytVolumeBtn" class="control-btn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button id="ytFullscreenBtn" class="control-btn">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MP4 Player -->
+                <div id="mp4Player" class="video-player" style="display: none;">
+                    <video id="customVideo" preload="metadata">
+                        <source id="videoSource" src="" type="video/mp4">
+                    </video>
+                    <div class="player-overlay">
+                        <div class="seek-feedback" id="seekFeedback">+10s</div>
+                        <div class="volume-feedback" id="volumeFeedback">
+                            <div class="feedback-bar">
+                                <div class="feedback-fill" id="volumeFill"></div>
+                            </div>
+                        </div>
+                        <div class="shortcut-hint" id="shortcutHint">Space - Play/Pause</div>
+                    </div>
+                    <div class="center-controls">
+                        <button id="rewindBtn" class="center-control-btn">
+                            <i class="fas fa-undo"></i>
+                            <span>10</span>
+                        </button>
+                        <button id="playBtn" class="center-control-btn play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button id="forwardBtn" class="center-control-btn">
+                            <i class="fas fa-redo"></i>
+                            <span>10</span>
+                        </button>
+                    </div>
+                    <div class="player-controls">
+                        <div class="progress-section">
+                            <div class="progress-track">
+                                <div id="progress" class="progress-fill"></div>
+                            </div>
+                            <span id="timeDisplay">0:00</span>
+                        </div>
+                        <div class="controls-group">
+                            <button id="speedBtn" class="control-btn" data-speed="1x">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </button>
+                            <div class="dropdown" id="speedDropdown">
+                                <button class="dropdown-item" data-speed="0.25">0.25x</button>
+                                <button class="dropdown-item" data-speed="0.5">0.5x</button>
+                                <button class="dropdown-item" data-speed="0.75">0.75x</button>
+                                <button class="dropdown-item active" data-speed="1">1x</button>
+                                <button class="dropdown-item" data-speed="1.25">1.25x</button>
+                                <button class="dropdown-item" data-speed="1.5">1.5x</button>
+                                <button class="dropdown-item" data-speed="2">2x</button>
+                            </div>
+                            <button id="volumeBtn" class="control-btn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button id="fullscreenBtn" class="control-btn">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Info -->
+            <div class="video-info">
+                <div class="video-stats">
+                    <span class="views"><i class="fas fa-eye"></i> <span id="videoViews">0</span> views</span>
+                    <span class="date"><i class="fas fa-calendar"></i> Today</span>
+                </div>
+                <div class="video-actions">
+                    <button id="likeBtn" class="action-btn">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span id="likeCount">0</span>
+                    </button>
+                    <button id="dislikeBtn" class="action-btn">
+                        <i class="fas fa-thumbs-down"></i>
+                        <span id="dislikeCount">0</span>
+                    </button>
+                    <button id="shareBtn" class="action-btn">
+                        <i class="fas fa-share"></i>
+                        Share
+                    </button>
+                    <button id="bookmarkBtn" class="action-btn">
+                        <i class="fas fa-bookmark"></i>
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Section -->
+        <div class="ai-chat-section">
+            <div class="ai-chat-header">
+                <h3><i class="fas fa-robot"></i> Eduvia AI</h3>
+                <span class="ai-status">Ready to help</span>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-welcome-message">
+                    <div class="ai-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message-content">
+                        <p>Hi! I'm <strong>Eduvia AI</strong>, your advanced learning companion! 🤖✨</p>
+                        
+                        <p>I can help you with:</p>
+                        <ul>
+                            <li><strong>Mathematics:</strong> From basic algebra to advanced calculus</li>
+                            <li><strong>Physics:</strong> Classical mechanics, thermodynamics, quantum physics</li>
+                            <li><strong>Problem Solving:</strong> Step-by-step solutions with detailed explanations</li>
+                            <li><strong>Concept Clarification:</strong> Breaking down complex topics</li>
+                        </ul>
+                        
+                        <p><strong>Mathematical Examples I can help with:</strong></p>
+                        <div class="math-examples">
+                            <p>• Quadratic Formula: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</p>
+                            <p>• Newton's Second Law: $F = ma$</p>
+                            <p>• Energy-Mass Relation: $E = mc^2$</p>
+                            <p>• Euler's Identity: $e^{i\pi} + 1 = 0$</p>
+                            <p>• Wave Equation: $\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}$</p>
+                        </div>
+                        
+                        <p>Ask me anything about this video or any mathematical/physics concept you're studying!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-chat-form">
+                <div class="ai-form-input">
+                    <button id="aiScreenshotButton" class="ai-screenshot-btn" title="Take Screenshot">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <textarea id="aiChatInput" placeholder="Ask me anything about this video or your studies..." rows="1"></textarea>
+                    <button id="aiMicButton" class="ai-mic-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button id="aiSendButton" class="ai-send-btn" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div id="screenshotPreview" class="screenshot-preview" style="display: none;">
+                    <img id="screenshotImage" src="" alt="Screenshot">
+                    <button id="removeScreenshot" class="remove-screenshot-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <div class="comments-header">
+                <h3><i class="fas fa-comments"></i> Comments</h3>
+                <span id="commentCount" class="comment-count">0 comments</span>
+            </div>
+            <div class="comment-form">
+                <div class="form-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-input">
+                    <input type="text" id="commentText" placeholder="Add a comment...">
+                    <button id="submitComment" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <div class="no-comments">
+                    <i class="fas fa-comment-dots"></i>
+                    <p>No comments yet. Be the first to share your thoughts!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restriction Overlay -->
+    <div id="restrictionOverlay" class="restriction-overlay" style="display: none;">
+        <div class="restriction-popup">
+            <div class="restriction-icon">
+                <i class="fas fa-ban"></i>
+            </div>
+            <div class="blocked-status">Account Restricted</div>
+            <h3>Access Temporarily Blocked</h3>
+            <p>Your account has been temporarily restricted. You can still contact support for assistance.</p>
+            <div class="restriction-actions">
+                <button onclick="window.location.href='contact-us.html'" class="contact-btn">
+                    <i class="fas fa-envelope"></i> Contact Support
+                </button>
+                <button onclick="goBack()" class="back-btn-popup">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Rules Modal -->
+    <div id="rulesModal" class="rules-modal">
+        <div class="rules-content">
+            <div class="rules-header">
+                <h2><i class="fas fa-shield-alt"></i> Video Guidelines</h2>
+                <button id="closeRules" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="rules-body">
+                <div class="rule-section">
+                    <h3><i class="fas fa-thumbs-up"></i> Interaction Rules</h3>
+                    <ul>
+                        <li>You can only like OR dislike once per video</li>
+                        <li>Choose wisely - no changing your vote!</li>
+                    </ul>
+                </div>
+                <div class="rule-section">
+                    <h3><i class="fas fa-comments"></i> Comment Guidelines</h3>
+                    <ul>
+                        <li>No inappropriate language or slang</li>
+                        <li>No promotional content or links</li>
+                        <li>Be respectful and constructive</li>
+                        <li>Violations result in 24-hour ban</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rules-footer">
+                <button id="acceptRules" class="accept-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="video-player.js"></script>
+</body>
+</html>

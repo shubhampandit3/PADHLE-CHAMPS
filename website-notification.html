@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Notifications - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .notification-form {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .notification-preview {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        Padhle Champs
+                    </h1>
+                </div>
+                <button onclick="window.location.href='home.html'" class="text-gray-600 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-home mr-2"></i>Back to Home
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Main Form -->
+        <div class="notification-form p-8 text-white mb-8">
+            <div class="text-center mb-8">
+                <i class="fas fa-bell text-5xl mb-4 opacity-80"></i>
+                <h2 class="text-3xl font-bold mb-2">Send Notification</h2>
+                <p class="opacity-80">Send important updates to all students</p>
+            </div>
+
+            <form id="notificationForm" class="space-y-6">
+                <!-- Title -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        <i class="fas fa-heading mr-2"></i>Notification Title
+                    </label>
+                    <input type="text" id="notificationTitle" class="form-input w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/70 outline-none" placeholder="Enter notification title..." required>
+                </div>
+
+                <!-- Message -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        <i class="fas fa-message mr-2"></i>Message
+                    </label>
+                    <textarea id="notificationMessage" rows="4" class="form-input w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/70 outline-none resize-none" placeholder="Enter your message..." required></textarea>
+                </div>
+
+                <!-- Priority -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Priority Level
+                    </label>
+                    <select id="notificationPriority" class="form-input w-full px-4 py-3 rounded-lg bg-white/20 text-white outline-none">
+                        <option value="normal" class="text-gray-800">Normal</option>
+                        <option value="important" class="text-gray-800">Important</option>
+                        <option value="urgent" class="text-gray-800">Urgent</option>
+                    </select>
+                </div>
+
+                <!-- Type -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        <i class="fas fa-tag mr-2"></i>Notification Type
+                    </label>
+                    <select id="notificationType" class="form-input w-full px-4 py-3 rounded-lg bg-white/20 text-white outline-none">
+                        <option value="general" class="text-gray-800">General Announcement</option>
+                        <option value="assignment" class="text-gray-800">Assignment</option>
+                        <option value="test" class="text-gray-800">Test/Exam</option>
+                        <option value="event" class="text-gray-800">Event</option>
+                        <option value="reminder" class="text-gray-800">Reminder</option>
+                    </select>
+                </div>
+
+                <!-- Preview -->
+                <div class="notification-preview rounded-lg p-4">
+                    <h4 class="font-semibold mb-2">Preview:</h4>
+                    <div id="notificationPreview" class="bg-white/10 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bell text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h5 id="previewTitle" class="font-semibold">Notification Title</h5>
+                                <p id="previewMessage" class="text-sm opacity-80 mt-1">Your message will appear here...</p>
+                                <div class="flex items-center mt-2 text-xs opacity-60">
+                                    <span id="previewType">General</span>
+                                    <span class="mx-2">•</span>
+                                    <span id="previewPriority">Normal Priority</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Send Button -->
+                <button type="submit" class="send-btn w-full py-4 rounded-lg font-semibold text-white flex items-center justify-center space-x-2">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Send Notification to All Students</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Recent Notifications -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-history mr-2 text-blue-600"></i>Recent Notifications
+            </h3>
+            <div id="recentNotifications" class="space-y-3">
+                <!-- Recent notifications will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-2xl text-green-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Notification Sent!</h3>
+            <p class="text-gray-600 mb-6">Your notification has been sent to all students successfully.</p>
+            <button onclick="closeSuccessModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Check if user is teacher
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = JSON.parse(userData);
+            if (user.role !== 'Teacher' && user.role !== 'teacher') {
+                alert('Access denied. Only teachers can send notifications.');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            loadRecentNotifications();
+            setupPreview();
+        });
+
+        // Setup live preview
+        function setupPreview() {
+            const titleInput = document.getElementById('notificationTitle');
+            const messageInput = document.getElementById('notificationMessage');
+            const prioritySelect = document.getElementById('notificationPriority');
+            const typeSelect = document.getElementById('notificationType');
+
+            const previewTitle = document.getElementById('previewTitle');
+            const previewMessage = document.getElementById('previewMessage');
+            const previewPriority = document.getElementById('previewPriority');
+            const previewType = document.getElementById('previewType');
+
+            function updatePreview() {
+                previewTitle.textContent = titleInput.value || 'Notification Title';
+                previewMessage.textContent = messageInput.value || 'Your message will appear here...';
+                previewPriority.textContent = prioritySelect.options[prioritySelect.selectedIndex].text + ' Priority';
+                previewType.textContent = typeSelect.options[typeSelect.selectedIndex].text;
+            }
+
+            titleInput.addEventListener('input', updatePreview);
+            messageInput.addEventListener('input', updatePreview);
+            prioritySelect.addEventListener('change', updatePreview);
+            typeSelect.addEventListener('change', updatePreview);
+        }
+
+        // Handle form submission
+        document.getElementById('notificationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('notificationTitle').value;
+            const message = document.getElementById('notificationMessage').value;
+            const priority = document.getElementById('notificationPriority').value;
+            const type = document.getElementById('notificationType').value;
+
+            if (!title || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            try {
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                
+                // Create notification object
+                const notification = {
+                    id: Date.now().toString(),
+                    title: title,
+                    message: message,
+                    priority: priority,
+                    type: type,
+                    timestamp: Date.now(),
+                    date: new Date().toISOString(),
+                    sender: userData.name,
+                    senderId: userData.userId,
+                    read: false
+                };
+
+                // Save to Firebase
+                await database.ref('notifications').push(notification);
+
+                // Show success modal
+                document.getElementById('successModal').classList.remove('hidden');
+                document.getElementById('successModal').classList.add('flex');
+
+                // Reset form
+                document.getElementById('notificationForm').reset();
+                setupPreview(); // Reset preview
+
+                // Reload recent notifications
+                loadRecentNotifications();
+
+            } catch (error) {
+                console.error('Error sending notification:', error);
+                alert('Failed to send notification. Please try again.');
+            }
+        });
+
+        // Load recent notifications
+        async function loadRecentNotifications() {
+            try {
+                const snapshot = await database.ref('notifications')
+                    .orderByChild('timestamp')
+                    .limitToLast(5)
+                    .once('value');
+
+                const notifications = [];
+                snapshot.forEach(childSnapshot => {
+                    notifications.unshift({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+
+                displayRecentNotifications(notifications);
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        // Display recent notifications
+        function displayRecentNotifications(notifications) {
+            const container = document.getElementById('recentNotifications');
+            
+            if (notifications.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No notifications sent yet.</p>';
+                return;
+            }
+
+            container.innerHTML = notifications.map(notification => {
+                const priorityColors = {
+                    normal: 'bg-blue-100 text-blue-800',
+                    important: 'bg-yellow-100 text-yellow-800',
+                    urgent: 'bg-red-100 text-red-800'
+                };
+
+                return `
+                    <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-gray-800">${notification.title}</h4>
+                                <p class="text-gray-600 text-sm mt-1">${notification.message}</p>
+                                <div class="flex items-center mt-2 space-x-2">
+                                    <span class="px-2 py-1 rounded-full text-xs ${priorityColors[notification.priority]}">${notification.priority}</span>
+                                    <span class="text-xs text-gray-500">${notification.type}</span>
+                                    <span class="text-xs text-gray-500">•</span>
+                                    <span class="text-xs text-gray-500">${new Date(notification.timestamp).toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-bell text-gray-400"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Close success modal
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>

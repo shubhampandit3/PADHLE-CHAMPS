@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigyan Batch 2025 - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hamburger Menu Animations */
+        .hamburger {
+            cursor: pointer;
+            width: 28px;
+            height: 24px;
+            position: relative;
+            display: none !important;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #9333ea, #4f46e5);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #9333ea, #4f46e5);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::before {
+            width: 80%;
+        }
+        
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: block !important;
+            }
+            
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            
+            .hamburger {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand -->
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Vigyan Batch 2025
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav flex items-center space-x-2">
+                    <a href="home.html" class="nav-link relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50 group">
+                        <span class="material-icons text-sm align-middle mr-1">home</span>
+                        <span class="relative z-10">Home</span>
+                    </a>
+                    <a href="subject-vigyan.html" class="nav-link relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50 group">
+                        <span class="material-icons text-sm align-middle mr-1">book</span>
+                        <span class="relative z-10">Subjects</span>
+                    </a>
+                    
+                    <!-- Notification Bell -->
+                    <div class="relative group">
+                        <a href="notification-vigyan.html" class="nav-link relative p-3 text-gray-700 rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50 flex items-center justify-center">
+                            <span class="material-icons transform transition-all duration-300 group-hover:scale-110">notifications</span>
+                            <span id="notification-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden animate-pulse shadow-lg">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-2 rounded-xl border border-purple-100 hover:border-purple-200 transition-all duration-300 hover:shadow-md group cursor-pointer">
+                        <span class="material-icons text-purple-600">account_circle</span>
+                        <span class="font-semibold text-gray-700 group-hover:text-purple-700 transition-colors duration-300" id="username">Hi Student</span>
+                        <span class="material-icons text-xs text-gray-500 transform transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="py-4 space-y-2">
+                    <a href="home.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">home</span>
+                        Home
+                    </a>
+                    <a href="subject-vigyan.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">book</span>
+                        Subjects
+                    </a>
+                    <a href="notification-vigyan.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">notifications</span>
+                        Notifications
+                        <span id="notification-count-mobile" class="ml-auto bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
+                    </a>
+                    <div class="flex items-center px-4 py-3 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-100">
+                        <span class="material-icons text-purple-600 mr-3">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username-mobile">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Hero Section -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                    <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                        Vigyan Batch 2025
+                    </span>
+                </h1>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+                    Advanced science and mathematics program for students pursuing excellence in STEM subjects
+                </p>
+            </div>
+
+            <!-- Batch Description -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">About This Batch</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Vigyan Batch 2025 focuses on advanced science and mathematics concepts. Perfect for students 
+                            preparing for competitive exams and those who want to excel in STEM fields.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="material-icons text-purple-600">science</span>
+                                </div>
+                                <span class="text-gray-700 text-sm sm:text-base">Advanced Physics concepts and problem solving</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="material-icons text-indigo-600">biotech</span>
+                                </div>
+                                <span class="text-gray-700 text-sm sm:text-base">Comprehensive Chemistry with practical applications</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-violet-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="material-icons text-violet-600">calculate</span>
+                                </div>
+                                <span class="text-gray-700 text-sm sm:text-base">Higher Mathematics and analytical thinking</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Batch Highlights</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center bg-white rounded-lg p-4 shadow-sm">
+                                <span class="material-icons text-3xl text-purple-600 mb-2">menu_book</span>
+                                <div class="text-2xl font-bold text-purple-600">9</div>
+                                <div class="text-sm text-gray-600">Core Subjects</div>
+                            </div>
+                            <div class="text-center bg-white rounded-lg p-4 shadow-sm">
+                                <span class="material-icons text-3xl text-indigo-600 mb-2">event</span>
+                                <div class="text-2xl font-bold text-indigo-600">2025</div>
+                                <div class="text-sm text-gray-600">Target Year</div>
+                            </div>
+                            <div class="text-center bg-white rounded-lg p-4 shadow-sm">
+                                <span class="material-icons text-3xl text-violet-600 mb-2">support_agent</span>
+                                <div class="text-2xl font-bold text-violet-600">24/7</div>
+                                <div class="text-sm text-gray-600">Support</div>
+                            </div>
+                            <div class="text-center bg-white rounded-lg p-4 shadow-sm">
+                                <span class="material-icons text-3xl text-fuchsia-600 mb-2">workspace_premium</span>
+                                <div class="text-2xl font-bold text-fuchsia-600">Pro</div>
+                                <div class="text-sm text-gray-600">Quality</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subjects Overview -->
+            <div class="mb-8" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Subjects We Cover</h2>
+                
+                <!-- Science Subjects -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="material-icons text-blue-600 mr-2">science</span>
+                        Science
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-blue-600 text-3xl">bolt</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Physics</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-cyan-600 text-3xl">biotech</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Chemistry</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-teal-600 text-3xl">eco</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Biology</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Science Subjects -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="material-icons text-green-600 mr-2">public</span>
+                        Social Science
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-amber-600 text-3xl">history_edu</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">History</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-rose-600 text-3xl">account_balance</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Civics</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-emerald-600 text-3xl">trending_up</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Economics</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-lime-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-lime-600 text-3xl">map</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Geography</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other Subjects -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <span class="material-icons text-purple-600 mr-2">school</span>
+                        Other Subjects
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-yellow-600 text-3xl">calculate</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Maths</h3>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center group cursor-pointer">
+                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-icons text-purple-600 text-3xl">computer</span>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 mb-2 text-lg">Information Technology</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="subject-vigyan.html" class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons mr-2">arrow_forward</span>
+                    Explore Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Load username from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('username-mobile').textContent = `Hi ${username}`;
+            
+            // Load notification count with Firebase
+            loadNotificationCount();
+        });
+        
+        function loadNotificationCount() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+            
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            database.ref('notifications/vigyan').on('value', (snapshot) => {
+                const count = snapshot.numChildren();
+                const countElement = document.getElementById('notification-count');
+                const countElementMobile = document.getElementById('notification-count-mobile');
+                
+                if (count > 0) {
+                    countElement.textContent = count;
+                    countElement.classList.remove('hidden');
+                    countElementMobile.textContent = count;
+                    countElementMobile.classList.remove('hidden');
+                } else {
+                    countElement.classList.add('hidden');
+                    countElementMobile.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
