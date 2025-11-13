@@ -8,8 +8,61 @@
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Load MathJax for beautiful LaTeX rendering -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            loader: {load: ['[tex]/mhchem']},
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                packages: { '[+]': ['ams', 'newcommand', 'configmacros', 'action', 'mhchem', 'physics', 'cancel', 'color', 'bbox', 'boldsymbol', 'braket'] },
+                macros: {
+                    // Basic Math Sets
+                    R: '{\\mathbb{R}}', N: '{\\mathbb{N}}', Z: '{\\mathbb{Z}}', Q: '{\\mathbb{Q}}', C: '{\\mathbb{C}}',
+                    // Calculus
+                    dd: ['{\\frac{d#1}{d#2}}', 2], pp: ['{\\frac{\\partial#1}{\\partial#2}}', 2],
+                    dv: ['{\\frac{d}{d#1}}', 1], pv: ['{\\frac{\\partial}{\\partial#1}}', 1],
+                    // Physics Vectors & Units
+                    vect: ['{\\vec{#1}}', 1], unit: ['{\\,\\text{#1}}', 1], SI: ['{\\,\\text{#1}}', 1],
+                    // Chemistry
+                    mol: '{\\,\\text{mol}}', M: '{\\,\\text{M}}', atm: '{\\,\\text{atm}}',
+                    // Geometry
+                    degree: '{^\\circ}', ang: ['{\\angle #1}', 1],
+                    // Statistics
+                    mean: ['{\\bar{#1}}', 1], prob: ['{P(#1)}', 1], var: ['{\\text{Var}(#1)}', 1],
+                    // Physics Constants
+                    hbar: '{\\hbar}', kB: '{k_B}', NA: '{N_A}',
+                    // Matrices
+                    mat: ['{\\begin{pmatrix}#1\\end{pmatrix}}', 1],
+                    det: ['{\\begin{vmatrix}#1\\end{vmatrix}}', 1]
+                }
+            },
+            chtml: {
+                scale: 1.15, minScale: 0.5, matchFontHeight: false,
+                displayAlign: 'center', displayIndent: '0',
+                fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
+                adaptiveCSS: true
+            },
+            svg: {
+                scale: 1.15, minScale: 0.5, matchFontHeight: false,
+                displayAlign: 'center', displayIndent: '0',
+                fontCache: 'local'
+            },
+            options: { renderActions: { addMenu: [0, '', ''] } },
+            startup: {
+                ready() {
+                    MathJax.startup.defaultReady();
+                    console.log('MathJax loaded with advanced support');
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/input/tex/extensions/mhchem.js"></script>
 
     <!-- Load Chart.js for graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -27,7 +80,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Math:wght@400;500&family=Latin+Modern+Math:wght@400&family=STIX+Two+Math:wght@400;500;600&display=swap');
 
         * {
             margin: 0;
@@ -73,9 +126,7 @@
             font-feature-settings: 'liga' 1, 'calt' 1;
         }
 
-        .math-display {
-            font-family: 'KaTeX_Main', 'Computer Modern', serif;
-        }
+
 
         .chat-container::-webkit-scrollbar,
         .sessions-container::-webkit-scrollbar {
@@ -167,42 +218,7 @@
             animation: pulse 2s infinite;
         }
 
-        .MathJax {
-            font-size: 1.15em !important;
-            font-family: 'KaTeX_Main', 'Computer Modern', serif !important;
-        }
 
-        .MathJax_Display {
-            margin: 1.2em 0 !important;
-            padding: 0.8em !important;
-            background: rgba(99, 102, 241, 0.05) !important;
-            border-radius: 12px !important;
-            border-left: 4px solid #6366f1 !important;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1) !important;
-        }
-
-        /* Enhanced math rendering for better readability */
-        .MathJax .mo {
-            color: #6366f1 !important;
-        }
-
-        .MathJax .mi {
-            font-style: italic !important;
-        }
-
-        .MathJax .mn {
-            color: #059669 !important;
-        }
-
-        mjx-container[jax="SVG"] {
-            direction: ltr;
-        }
-
-        mjx-container[jax="SVG"]>svg {
-            overflow: visible;
-            min-height: 1px;
-            min-width: 1px;
-        }
 
         /* Enhanced code block styling */
         pre[class*="language-"] {
@@ -230,55 +246,108 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Enhanced Math equation styling */
-        .katex {
-            font-size: 1.1em;
-            font-family: 'KaTeX_Main', 'Computer Modern', serif;
+
+
+
+
+        /* Mathematical Expression Styling */
+        .MathJax, .MathJax_Display, .MathJax_Preview {
+            font-family: 'STIX Two Math', 'Latin Modern Math', 'Fira Math', 'Times New Roman', serif !important;
+            font-size: 1.1em !important;
+            color: #1e293b !important;
         }
 
-        .katex-display {
-            margin: 1.5em 0;
-            text-align: center;
-            padding: 0.5em;
-            background: rgba(99, 102, 241, 0.05);
-            border-radius: 8px;
-            border-left: 4px solid #6366f1;
+        /* Inline Math */
+        .MathJax[style*="display: inline"] {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            padding: 2px 6px !important;
+            border-radius: 6px !important;
+            border: 1px solid #cbd5e1 !important;
+            margin: 0 2px !important;
         }
 
-        /* MathJax enhanced styling */
-        mjx-container {
-            margin: 0.5em 0;
+        /* Display Math */
+        .MathJax[style*="display: block"] {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+            padding: 12px 16px !important;
+            border-radius: 12px !important;
+            border: 2px solid #94a3b8 !important;
+            margin: 16px 0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
         }
 
-        mjx-container[display="true"] {
-            margin: 1em 0;
-            padding: 0.8em;
-            background: rgba(99, 102, 241, 0.05);
-            border-radius: 12px;
-            border-left: 4px solid #6366f1;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Physics and Chemistry equation highlighting */
+        /* Physics equations */
         .physics-equation {
-            background: rgba(34, 197, 94, 0.05);
-            border-left: 4px solid #22c55e;
-            padding: 0.8em;
-            border-radius: 8px;
-            margin: 1em 0;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(16, 185, 129, 0.05));
+            border-left: 4px solid #10b981;
+            padding: 1em 1.2em;
+            border-radius: 12px;
+            margin: 1.2em 0;
+            font-family: 'STIX Two Math', serif;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
         }
 
+        .physics-equation .MathJax {
+            color: #065f46 !important;
+            font-weight: 500 !important;
+        }
+
+        /* Chemistry equations */
         .chemistry-equation {
-            background: rgba(249, 115, 22, 0.05);
-            border-left: 4px solid #f97316;
-            padding: 0.8em;
-            border-radius: 8px;
-            margin: 1em 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(251, 146, 60, 0.05));
+            border-left: 4px solid #f59e0b;
+            padding: 1em 1.2em;
+            border-radius: 12px;
+            margin: 1.2em 0;
+            font-family: 'STIX Two Math', serif;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+        }
+
+        .chemistry-equation .MathJax {
+            color: #92400e !important;
+            font-weight: 500 !important;
         }
 
         /* Chemistry reaction styling */
         .chem {
-            font-family: 'Inter', sans-serif;
+            font-family: 'STIX Two Math', 'Latin Modern Math', serif;
+            font-weight: 500;
+            color: #dc2626;
+        }
+
+        /* Mathematics problem styling */
+        .math-problem {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.05));
+            border-left: 4px solid #6366f1;
+            padding: 1em 1.2em;
+            border-radius: 12px;
+            margin: 1.2em 0;
+            font-family: 'STIX Two Math', serif;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+        }
+
+        .math-problem .MathJax {
+            color: #3730a3 !important;
+            font-weight: 500 !important;
+        }
+
+        /* Numerical answer styling */
+        .numerical-answer {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(147, 51, 234, 0.05));
+            border: 2px solid #a855f7;
+            padding: 0.8em 1em;
+            border-radius: 10px;
+            margin: 1em 0;
+            text-align: center;
+            font-family: 'STIX Two Math', serif;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2);
+        }
+
+        .numerical-answer .MathJax {
+            color: #6b21a8 !important;
+            font-size: 1.2em !important;
+            font-weight: 600 !important;
         }
 
         .ai-table {
@@ -478,45 +547,10 @@
                 }
             }
         }
-
-        // Optimized MathJax configuration - prevents macro substitution errors
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true,
-                packages: { '[+]': ['base', 'ams', 'mhchem'] },
-                maxMacros: 10000,
-                maxBuffer: 10 * 1024,
-                macros: {
-                    'vec': ['\\mathbf{#1}', 1],
-                    'degree': '^\\circ'
-                }
-            },
-            loader: {
-                load: ['[tex]/mhchem']
-            },
-            options: {
-                ignoreHtmlClass: 'tex2jax_ignore',
-                processHtmlClass: 'tex2jax_process',
-                renderActions: {
-                    addMenu: [0, '', '']
-                }
-            },
-            startup: {
-                ready: () => {
-                    MathJax.startup.defaultReady();
-                    MathJax.startup.promise.then(() => {
-                        console.log('MathJax with mhchem loaded successfully');
-                    });
-                }
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
     </script>
+
+
+
 </head>
 
 <body class="flex flex-col h-screen">
@@ -837,8 +871,6 @@
                 const cleanText = text
                     .replace(/\*\*(.*?)\*\*/g, '$1')
                     .replace(/\*(.*?)\*/g, '$1')
-                    .replace(/\$\$[\s\S]*?\$\$/g, ' mathematical expression ')
-                    .replace(/\$([^$\n]+?)\$/g, ' math expression ')
                     .replace(/#+\s*/g, '')
                     .replace(/\n/g, ' ')
                     .replace(/\s+/g, ' ')
@@ -916,7 +948,7 @@
 
         // Update system instruction with user context
         function getPersonalizedSystemInstruction() {
-            const baseInstruction = "You are 'The Eduvia AI from Padhle Champs,' an AI doubt-solving assistant created by the Padhle Champs team. The CEO and founder of Padhle Champs is Shubham Pandit. Your persona is that of an incredibly supportive, friendly, encouraging elder sibling or mentor (like a 'Bhaiya' or 'Didi'). You specialize in solving academic doubts for school students (especially grades 9-12) in subjects like Science, Math, Social Studies, English, Computer Science/Programming, and Chemistry. Keep your tone light, relatable, and use conversational language. Never use overly formal or complex words. When solving a problem, break it down into easy, encouraging steps. **IMPORTANT: If someone asks about who created you or who is the CEO/founder, mention that you were created by Padhle Champs team and the CEO is Shubham Pandit. If Shubham Pandit himself is using the platform, address him respectfully as 'Shubham Sir' or 'Sir'.** **CRITICAL: You are multilingual. Respond in the language the user uses for their query (e.g., Hindi, Spanish, etc.) if possible.** **STRICT NO-CODE RULE FOR MATH/SCIENCE:** NEVER provide programming code for mathematical or scientific problems UNLESS the user explicitly asks for programming help using words like 'write a program', 'code this', 'python solution', 'HTML', 'C++', 'JavaScript', 'programming', 'algorithm', 'function', 'script', or similar coding-related terms. For regular math/science questions, solve them using mathematical methods, formulas, and step-by-step calculations only. Focus on teaching the mathematical/scientific concepts, not programming implementations. **MATH & PHYSICS RENDERING RULES:** ALWAYS use proper MathJax formatting. Use $...$ for inline math and $$...$$ for display math. NEVER use \\text{} for units or physical quantities in equations. Use proper symbols: $E$ for energy, $m$ for mass, $T$ for temperature, $P$ for power, $F$ for force, $v$ for velocity, $a$ for acceleration. For vectors use $\\vec{v}$, $\\vec{F}$. For derivatives use $\\frac{dx}{dt}$. Examples: $F = ma$, $E = mc^2$, $v = u + at$, $P = \\frac{W}{t}$, $V = IR$. For chemistry use $\\ce{}$: $\\ce{H2O}$, $\\ce{2H2 + O2 -> 2H2O}$. AVOID complex array environments or ASCII art for division - just show the calculation steps clearly with proper fractions. **FORMATTING:** Use simple, clean mathematical notation. For fractions: $\\frac{a}{b}$, Square roots: $\\sqrt{x}$, Powers: $x^n$. Keep it simple and readable. **CODING RULES (ONLY when explicitly requested):** When writing ANY code, you MUST ALWAYS wrap it in proper markdown code blocks with ```language. **TABLES & GRAPHS:** Use markdown table syntax with | separators. For graphs use [CHART:type]{data}[/CHART] format. **PROBLEM SOLVING:** For math: 1) Identify given and unknown, 2) Choose formulas, 3) Show steps clearly, 4) Verify answer. Keep explanations simple and encouraging.";
+            const baseInstruction = "You are 'The Eduvia AI from Padhle Champs,' an AI doubt-solving assistant created by the Padhle Champs team. The CEO and founder of Padhle Champs is Shubham Pandit. Your persona is that of an incredibly supportive, friendly, encouraging elder sibling or mentor (like a 'Bhaiya' or 'Didi'). You specialize in solving academic doubts for school students (especially grades 9-12) in subjects like Science, Math, Social Studies, English, Computer Science/Programming, and Chemistry. Keep your tone light, relatable, and use conversational language. Never use overly formal or complex words. When solving a problem, break it down into easy, encouraging steps. **IMPORTANT: If someone asks about who created you or who is the CEO/founder, mention that you were created by Padhle Champs team and the CEO is Shubham Pandit. If Shubham Pandit himself is using the platform, address him respectfully as 'Shubham Sir' or 'Sir'.** **CRITICAL: You are multilingual. Respond in the language the user uses for their query (e.g., Hindi, Spanish, etc.) if possible.** **CHEMICAL REACTIONS:** ALWAYS use proper chemical notation with MathJax/LaTeX. Use $\\ce{}$ for chemical formulas and reactions. Examples: $\\ce{H2 + Cl2 -> 2HCl}$, $\\ce{CaCO3 <=> CaO + CO2}$, $\\ce{2H2O2 ->[MnO2] 2H2O + O2}$. Never write 'reacts with' - use → or ⇌ arrows. For equilibrium use <=> or ⇌. For catalysts use ->[catalyst]. **STRICT NO-CODE RULE FOR MATH/SCIENCE:** NEVER provide programming code for mathematical or scientific problems UNLESS the user explicitly asks for programming help using words like 'write a program', 'code this', 'python solution', 'HTML', 'C++', 'JavaScript', 'programming', 'algorithm', 'function', 'script', or similar coding-related terms. For regular math/science questions, solve them using mathematical methods, formulas, and step-by-step calculations only. Focus on teaching the mathematical/scientific concepts, not programming implementations. **CODING RULES (ONLY when explicitly requested):** When writing ANY code, you MUST ALWAYS wrap it in proper markdown code blocks with ```language. **TABLES & GRAPHS:** Use markdown table syntax with | separators. For graphs use [CHART:type]{data}[/CHART] format. **PROBLEM SOLVING:** For math: 1) Identify given and unknown, 2) Choose formulas, 3) Show steps clearly, 4) Verify answer. Keep explanations simple and encouraging.";
 
             if (currentUser) {
                 const name = currentUser.name?.split(' ')[0] || 'Champ';
@@ -925,7 +957,7 @@
                 const class_ = currentUser.class;
 
                 let userContext = `\n\n**IMPORTANT USER CONTEXT:** You are talking to ${name}, who is a ${role}`;
-                
+
                 // Check if user is Shubham Pandit (CEO)
                 if (fullName.toLowerCase().includes('shubham') && fullName.toLowerCase().includes('pandit')) {
                     userContext += ` **CRITICAL: This is Shubham Pandit, the CEO and founder of Padhle Champs who created you. Address him respectfully as 'Shubham Sir' or 'Sir' throughout the conversation. Show extra respect and professionalism.**`;
@@ -1210,11 +1242,12 @@
             textarea.innerHTML = content;
             content = textarea.value;
 
-            // Clean and format content while preserving math expressions and code blocks
+            // Now do other lightweight formatting safely
             let formattedContent = content
                 .replace(/#+\s*/g, '')
                 .replace(/\*\*(.*?)\*\*/gs, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/gs, '<em>$1</em>');
+
 
             // Protect math expressions and code blocks from HTML processing
             const mathExpressions = [];
@@ -1263,24 +1296,9 @@
                 return placeholder;
             });
 
-            // Store display math ($$...$$)
-            formattedContent = formattedContent.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
-                const placeholder = `__MATH_DISPLAY_${mathIndex}__`;
-                mathExpressions[mathIndex] = `$$${math}$$`;
-                mathIndex++;
-                return placeholder;
-            });
 
-            // Store inline math ($...$)
-            formattedContent = formattedContent.replace(/\$([^$\n]+?)\$/g, (match, math) => {
-                const placeholder = `__MATH_INLINE_${mathIndex}__`;
-                mathExpressions[mathIndex] = `$${math}$`;
-                mathIndex++;
-                return placeholder;
-            });
 
             const container = document.createElement('div');
-            container.className = 'tex2jax_process';
 
             // Process tables
             formattedContent = processTablesAndGraphs(formattedContent, container);
@@ -1312,12 +1330,6 @@
                 }
             }
 
-            // Restore math expressions
-            for (let i = 0; i < mathExpressions.length; i++) {
-                htmlContent = htmlContent.replace(`__MATH_DISPLAY_${i}__`, mathExpressions[i]);
-                htmlContent = htmlContent.replace(`__MATH_INLINE_${i}__`, mathExpressions[i]);
-            }
-
             container.innerHTML = htmlContent;
 
             // Add responsive handling for wide content
@@ -1335,7 +1347,7 @@
                 }
             });
 
-            // Apply syntax highlighting
+            // Apply syntax highlighting and MathJax rendering
             if (window.Prism) {
                 setTimeout(() => {
                     Prism.highlightAllUnder(container);
@@ -1358,29 +1370,17 @@
                 }, 50);
             }
 
-            // Render math with proper error handling and retry mechanism
-            if (window.MathJax && MathJax.typesetPromise) {
+            // Render MathJax expressions
+            if (window.MathJax && window.MathJax.typesetPromise) {
                 setTimeout(() => {
-                    MathJax.typesetPromise([container]).then(() => {
-                        console.log('MathJax rendering completed successfully');
-                        // Adjust container if math equations are too wide
-                        const mathElements = container.querySelectorAll('.MathJax, mjx-container');
-                        mathElements.forEach(el => {
-                            if (el.scrollWidth > el.clientWidth) {
-                                el.style.fontSize = '0.95em';
-                                el.style.overflowX = 'auto';
-                                el.style.maxWidth = '100%';
-                            }
-                        });
-                    }).catch((err) => {
-                        console.error('MathJax rendering error:', err);
-                        // Retry once if there's an error
-                        setTimeout(() => {
-                            MathJax.typesetPromise([container]).catch(e => console.error('MathJax retry failed:', e));
-                        }, 500);
+                    MathJax.typesetPromise([container]).catch((err) => {
+                        console.warn('MathJax rendering error:', err);
                     });
-                }, 150);
+                }, 100);
             }
+
+
+
 
             return container;
         }
@@ -2048,13 +2048,13 @@
         window.onload = () => {
             sendButton.disabled = true;
             loadSessions();
-            
+
             // Auto-create new chat on first load (not on refresh)
             if (!sessionStorage.getItem('eduvia_visited')) {
                 sessionStorage.setItem('eduvia_visited', 'true');
                 startNewSession(true);
             }
-            
+
             renderSessionList();
 
             // Setup remove image button
