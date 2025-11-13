@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-xl shadow-lg border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Padhle Champs</span>
+                    </div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="home.html" class="nav-link flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                            <i class="fas fa-home text-sm"></i>
+                            <span>Home</span>
+                        </a>
+                        <a href="batch.html" class="nav-link flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                            <i class="fas fa-layer-group text-sm"></i>
+                            <span>Batches</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="live-indicator px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                            <span class="text-sm font-semibold text-emerald-700">AI Active</span>
+                        </div>
+                    </div>
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-slate-200">
+                    <a href="home.html" class="flex items-center space-x-3 px-3 py-3 rounded-lg text-slate-700 hover:bg-blue-50 transition-colors">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="batch.html" class="flex items-center space-x-3 px-3 py-3 rounded-lg text-slate-700 hover:bg-blue-50 transition-colors">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Batches</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Dashboard Header -->
+            <div class="text-center mb-8">
+                <div class="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-white/50 shadow-lg inline-block">
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">Student Dashboard</h1>
+                            <p class="text-slate-600 font-medium" id="welcomeText">Welcome back, Student!</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 text-slate-500 text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="lastActivity">Last activity: Just now</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="stat-card">
+                    <div class="stat-icon bg-gradient-to-br from-blue-500 to-blue-600">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="sessionTime">0m</div>
+                        <div class="stat-label">Session Time</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-gradient-to-br from-emerald-500 to-green-600">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="streakCount">0</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-gradient-to-br from-amber-500 to-orange-600">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalXP">0</div>
+                        <div class="stat-label">Total XP</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-gradient-to-br from-purple-500 to-indigo-600">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="activityScore">0%</div>
+                        <div class="stat-label">Activity Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Bot Section -->
+            <div class="bot-section mb-8">
+                <div class="bot-header">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">AI Learning Assistant</h2>
+                            <p class="text-slate-600">Monitoring your progress</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-emerald-50 px-3 py-2 rounded-lg border border-emerald-200">
+                        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                        <span class="text-emerald-700 font-semibold text-sm">Online</span>
+                    </div>
+                </div>
+                
+                <div class="bot-tabs">
+                    <button class="bot-tab active" onclick="switchBotTab('monitoring')" id="monitoringTab">
+                        <i class="fas fa-eye"></i>
+                        <span>Monitoring</span>
+                    </button>
+                    <button class="bot-tab" onclick="switchBotTab('performance')" id="performanceTab">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Performance</span>
+                    </button>
+                    <button class="bot-tab" onclick="switchBotTab('testAnalysis')" id="testAnalysisTab">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Tests</span>
+                    </button>
+                    <button class="bot-tab" onclick="switchBotTab('dppAnalysis')" id="dppAnalysisTab">
+                        <i class="fas fa-tasks"></i>
+                        <span>DPP</span>
+                    </button>
+                </div>
+                
+                <div class="bot-content">
+                    <!-- Monitoring Tab -->
+                    <div class="bot-tab-content active" id="monitoringContent">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="monitoring-card">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i class="fas fa-clock text-blue-500"></i>
+                                    <h3 class="font-semibold">Session Tracking</h3>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Current Session:</span>
+                                        <span class="font-semibold" id="currentSession">0 minutes</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Pages Visited:</span>
+                                        <span class="font-semibold" id="pagesVisited">Dashboard</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="monitoring-card">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i class="fas fa-brain text-purple-500"></i>
+                                    <h3 class="font-semibold">Learning Patterns</h3>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-600 min-w-0 flex-1">Focus Level:</span>
+                                        <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="h-full bg-purple-500" style="width: 75%"></div>
+                                        </div>
+                                        <span class="font-semibold">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Tab -->
+                    <div class="bot-tab-content" id="performanceContent">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                            <div class="text-center">
+                                <div class="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex flex-col items-center justify-center text-white shadow-lg">
+                                    <div class="text-2xl font-bold" id="overallScore">85</div>
+                                    <div class="text-sm opacity-90">Overall Score</div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4">
+                                    <span class="w-20 text-sm font-medium">Consistency</span>
+                                    <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-blue-500 to-purple-600" style="width: 90%"></div>
+                                    </div>
+                                    <span class="text-sm font-semibold">90%</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="w-20 text-sm font-medium">Engagement</span>
+                                    <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-blue-500 to-purple-600" style="width: 80%"></div>
+                                    </div>
+                                    <span class="text-sm font-semibold">80%</span>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="w-20 text-sm font-medium">Progress</span>
+                                    <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-blue-500 to-purple-600" style="width: 75%"></div>
+                                    </div>
+                                    <span class="text-sm font-semibold">75%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Test Analysis Tab -->
+                    <div class="bot-tab-content" id="testAnalysisContent">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-blue-50 p-6 rounded-xl text-center">
+                                <div class="text-3xl font-bold text-blue-600" id="testsAttempted">0</div>
+                                <div class="text-gray-600">Tests Attempted</div>
+                            </div>
+                            <div class="bg-green-50 p-6 rounded-xl text-center">
+                                <div class="text-3xl font-bold text-green-600" id="avgTestScore">0%</div>
+                                <div class="text-gray-600">Average Score</div>
+                            </div>
+                        </div>
+                        <div id="recentTestResults" class="text-center text-gray-500 py-8">
+                            <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                            <p>No test attempts yet</p>
+                        </div>
+                    </div>
+                    
+                    <!-- DPP Analysis Tab -->
+                    <div class="bot-tab-content" id="dppAnalysisContent">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-green-50 p-6 rounded-xl text-center">
+                                <div class="text-3xl font-bold text-green-600" id="dppsAttempted">0</div>
+                                <div class="text-gray-600">DPPs Attempted</div>
+                            </div>
+                            <div class="bg-purple-50 p-6 rounded-xl text-center">
+                                <div class="text-3xl font-bold text-purple-600" id="totalDppXP">0</div>
+                                <div class="text-gray-600">Total DPP XP</div>
+                            </div>
+                        </div>
+                        <div id="recentDppResults" class="text-center text-gray-500 py-8">
+                            <i class="fas fa-tasks text-4xl mb-4"></i>
+                            <p>No DPP attempts yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Progress -->
+            <div class="progress-section mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-green-600 bg-clip-text text-transparent">Learning Progress</h2>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg" id="progressSummary">0% Complete</div>
+                </div>
+                <div id="progressCards">
+                    <div class="progress-card">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold text-slate-800">No Enrolled Batches</h3>
+                            <span class="text-2xl font-bold text-green-600">0%</span>
+                        </div>
+                        <div class="w-full h-3 bg-gray-200 rounded-full mb-3">
+                            <div class="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p class="text-slate-600">Enroll in a batch to start tracking progress</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Access Section -->
+            <div class="quick-access-section mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-rocket text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-purple-600 bg-clip-text text-transparent">Quick Access</h2>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <a href="test-analysis.html" class="quick-access-card">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg mb-4">
+                            <i class="fas fa-chart-bar text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-2">Test Analysis</h3>
+                        <p class="text-slate-600 text-sm">View your test performance</p>
+                    </a>
+                    <a href="test-detailed-analysis.html" class="quick-access-card">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg mb-4">
+                            <i class="fas fa-search text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-2">Detailed Analysis</h3>
+                        <p class="text-slate-600 text-sm">Deep dive into performance</p>
+                    </a>
+                    <a href="test-results.html" class="quick-access-card">
+                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center text-white shadow-lg mb-4">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-2">Latest Results</h3>
+                        <p class="text-slate-600 text-sm">Check recent test results</p>
+                    </a>
+                    <a href="dpp-analysis.html" class="quick-access-card">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white shadow-lg mb-4">
+                            <i class="fas fa-tasks text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mb-2">DPP Analysis</h3>
+                        <p class="text-slate-600 text-sm">View DPP performance</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI Recommendations Section -->
+            <div class="quick-access-section mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-lightbulb text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-amber-600 bg-clip-text text-transparent">AI Recommendations</h2>
+                    </div>
+                    <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg text-sm">Personalized for you</div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="aiRecommendations">
+                    <div class="recommendation-card">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800 mb-2">Optimize Study Schedule</h3>
+                                <p class="text-slate-600 text-sm mb-4">Based on your activity patterns, I recommend studying between 2-4 PM for maximum retention and focus.</p>
+                                <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all duration-300" onclick="applyRecommendation('schedule')">Apply Suggestion</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                                <i class="fas fa-target text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800 mb-2">Focus on Weak Areas</h3>
+                                <p class="text-slate-600 text-sm mb-4">Your test analysis shows room for improvement in Mathematics. Spend 30 minutes daily on practice problems.</p>
+                                <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all duration-300" onclick="applyRecommendation('focus')">Start Practice</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800 mb-2">Increase Test Frequency</h3>
+                                <p class="text-slate-600 text-sm mb-4">Taking tests more frequently can improve your performance by 25%. Try taking 2-3 tests per week.</p>
+                                <button class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all duration-300" onclick="applyRecommendation('tests')">View Tests</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800 mb-2">Join Study Groups</h3>
+                                <p class="text-slate-600 text-sm mb-4">Collaborative learning can boost understanding by 40%. Join active study groups in your enrolled batches.</p>
+                                <button class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all duration-300" onclick="applyRecommendation('groups')">Find Groups</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="dashboard.js"></script> 
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
+    <!-- Mobile Menu Script -->
+    <script src="mobile-menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPP Analysis - Padhle Champs</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        }
+        
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg { 
+            background: var(--primary-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            pointer-events: none;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-shadow { 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-shadow:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .fade-in { 
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+            opacity: 0; 
+            transform: translateY(30px);
+        }
+        
+        @keyframes fadeInUp { 
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            } 
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .performance-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .icon-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-8px,0); }
+            70% { transform: translate3d(0,-4px,0); }
+            90% { transform: translate3d(0,-2px,0); }
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <!-- Enhanced Responsive Header -->
+    <nav class="gradient-bg shadow-2xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Section -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm5-18v4h3V3h-3z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="text-2xl font-display font-bold text-white tracking-tight">DPP Analysis</h1>
+                        <p class="text-sm text-white text-opacity-80 font-medium">Performance Dashboard</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="home.html" class="nav-link text-white hover:text-blue-200 transition-all duration-300 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-10">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        <span class="font-medium">Home</span>
+                    </a>
+                    
+                    <div class="glass-card px-6 py-3 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-white text-sm" id="username">Student</p>
+                                <p class="text-xs text-white text-opacity-70">Learner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-blue-200 transition-colors p-2 rounded-lg hover:bg-white hover:bg-opacity-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden fixed top-20 right-0 w-80 h-screen bg-white shadow-2xl z-40">
+            <div class="p-6 space-y-6">
+                <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900" id="mobileUsername">Student</p>
+                        <p class="text-sm text-gray-600">Active Learner</p>
+                    </div>
+                </div>
+                
+                <nav class="space-y-3">
+                    <a href="home.html" class="flex items-center space-x-3 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium text-gray-900">Home Dashboard</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Enhanced Overview Stats -->
+        <div class="glass-card rounded-3xl card-shadow p-8 mb-10 fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-4xl font-display font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Performance Overview</h1>
+                    <p class="text-gray-600 font-medium">Your comprehensive DPP analytics dashboard</p>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center icon-bounce">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm5-18v4h3V3h-3z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info Banner -->
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-6 mb-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                <div class="relative flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-emerald-900 mb-1">Unlimited Learning Opportunities</h3>
+                        <p class="text-emerald-800 font-medium">DPPs have unlimited time and can be reattempted anytime for additional XP. Keep practicing to improve!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced Stats Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mobile-stats">
+                <!-- Total DPPs -->
+                <div class="stat-card rounded-2xl p-6 text-center group">
+                    <div class="relative mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">📚</span>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-emerald-600 mb-1" id="totalDPPs">0</div>
+                    <div class="text-sm font-medium text-gray-600">Total DPPs</div>
+                    <div class="mt-2 text-xs text-emerald-600 font-medium">Available</div>
+                </div>
+                
+                <!-- Attempted DPPs -->
+                <div class="stat-card rounded-2xl p-6 text-center group">
+                    <div class="relative mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">✓</span>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-blue-600 mb-1" id="attemptedDPPs">0</div>
+                    <div class="text-sm font-medium text-gray-600">Attempted</div>
+                    <div class="mt-2 text-xs text-blue-600 font-medium">Completed</div>
+                </div>
+                
+                <!-- Total XP -->
+                <div class="stat-card rounded-2xl p-6 text-center group">
+                    <div class="relative mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">⭐</span>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-purple-600 mb-1" id="totalXP">0</div>
+                    <div class="text-sm font-medium text-gray-600">Total XP</div>
+                    <div class="mt-2 text-xs text-purple-600 font-medium">Experience</div>
+                </div>
+                
+                <!-- Average Score -->
+                <div class="stat-card rounded-2xl p-6 text-center group">
+                    <div class="relative mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">%</span>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-amber-600 mb-1" id="avgPercentage">0%</div>
+                    <div class="text-sm font-medium text-gray-600">Avg Score</div>
+                    <div class="mt-2 text-xs text-amber-600 font-medium">Performance</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Reattempt Summary -->
+        <div class="glass-card rounded-3xl card-shadow p-8 mb-10 fade-in" style="animation-delay: 0.1s">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-display font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-2">Reattempt Analytics</h2>
+                    <p class="text-gray-600 font-medium">Track your improvement journey</p>
+                </div>
+                <div class="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="reattemptSummary" class="grid gap-6">
+                <!-- Reattempt data will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Enhanced DPP Cards -->
+        <div class="glass-card rounded-3xl card-shadow p-8 fade-in" style="animation-delay: 0.2s">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-display font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent mb-2">Performance History</h2>
+                    <p class="text-gray-600 font-medium">Detailed analysis of your DPP attempts</p>
+                </div>
+                <div class="w-16 h-16 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-2xl flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="dppCards" class="grid gap-8">
+                <!-- Enhanced Loading state -->
+                <div class="text-center py-16" id="loadingState">
+                    <div class="relative">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                            <svg class="w-10 h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-blue-200 rounded-full animate-ping opacity-20"></div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Loading Your Performance Data</h3>
+                    <p class="text-gray-500 font-medium">Analyzing your DPP history and progress...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let userData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+                document.getElementById('mobileUsername').textContent = userData.name.split(' ')[0];
+                loadDPPAnalysis();
+                updateUserXPFromResults();
+                initializeMobileMenu();
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+        });
+        
+        // Mobile Menu Functionality
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                mobileOverlay.classList.toggle('hidden');
+                document.body.classList.toggle('overflow-hidden');
+            });
+            
+            mobileOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileOverlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            });
+            
+            // Close menu on window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    mobileMenu.classList.remove('active');
+                    mobileOverlay.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }
+            });
+        }
+
+        async function updateUserXPFromResults() {
+            try {
+                if (!userData) return;
+
+                const statsRef = database.ref(`userStats/${userData.userId}`);
+                const snapshot = await statsRef.once('value');
+                const stats = snapshot.val() || { xp: 0 };
+                
+                // Get all DPP results for this user
+                const resultsSnapshot = await database.ref('dppResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                let totalDppXP = 0;
+                
+                resultsSnapshot.forEach(childSnapshot => {
+                    const result = childSnapshot.val();
+                    totalDppXP += result.earnedXP || 0;
+                });
+                
+                // Update XP if needed
+                if (totalDppXP > 0 && stats.xp < totalDppXP) {
+                    await statsRef.update({ xp: Math.max(stats.xp, totalDppXP) });
+                }
+                
+            } catch (error) {
+                console.error('Error updating XP from results:', error);
+            }
+        }
+
+        function loadDPPAnalysis() {
+            // Load all DPPs and user's results
+            Promise.all([
+                database.ref('dpps').once('value'),
+                database.ref('dppResults').orderByChild('studentId').equalTo(userData.userId).once('value')
+            ]).then(([dppsSnapshot, resultsSnapshot]) => {
+                const allDPPs = [];
+                const userResults = [];
+
+                // Get all DPPs
+                dppsSnapshot.forEach(childSnapshot => {
+                    const dpp = childSnapshot.val();
+                    dpp.id = childSnapshot.key;
+                    allDPPs.push(dpp);
+                });
+
+                // Get user's results
+                resultsSnapshot.forEach(childSnapshot => {
+                    userResults.push(childSnapshot.val());
+                });
+
+                displayAnalysis(allDPPs, userResults);
+            }).catch(error => {
+                console.error('Error loading data:', error);
+                showError();
+            });
+        }
+
+        function displayAnalysis(allDPPs, userResults) {
+            // Group results by dppId and get only first attempts for main stats
+            const dppAttempts = {};
+            userResults.forEach(result => {
+                if (!dppAttempts[result.dppId]) {
+                    dppAttempts[result.dppId] = [];
+                }
+                dppAttempts[result.dppId].push(result);
+            });
+            
+            // Get only first attempts for main statistics
+            const firstAttempts = Object.values(dppAttempts).map(attempts => {
+                return attempts.sort((a, b) => a.submittedAt - b.submittedAt)[0];
+            });
+            
+            // Update overview stats (only first attempts)
+            const totalDPPs = allDPPs.length;
+            const attemptedDPPs = firstAttempts.length;
+            const totalXP = userResults.reduce((sum, result) => sum + (result.earnedXP || 0), 0); // All attempts for XP
+            const avgPercentage = firstAttempts.length > 0 ? 
+                Math.round(firstAttempts.reduce((sum, result) => sum + ((result.totalMarks / result.maxMarks) * 100), 0) / firstAttempts.length) : 0;
+
+            document.getElementById('totalDPPs').textContent = totalDPPs;
+            document.getElementById('attemptedDPPs').textContent = attemptedDPPs;
+            document.getElementById('totalXP').textContent = totalXP;
+            document.getElementById('avgPercentage').textContent = avgPercentage + '%';
+
+            // Display reattempt summary (all attempts)
+            displayReattemptSummary(userResults);
+            
+            // Display DPP cards (only first attempts)
+            displayDPPCards(allDPPs, firstAttempts);
+        }
+
+        function displayReattemptSummary(userResults) {
+            const container = document.getElementById('reattemptSummary');
+            
+            // Group results by dppId to count attempts
+            const dppAttempts = {};
+            userResults.forEach(result => {
+                if (!dppAttempts[result.dppId]) {
+                    dppAttempts[result.dppId] = {
+                        dppTitle: result.dppTitle,
+                        attempts: []
+                    };
+                }
+                dppAttempts[result.dppId].attempts.push(result);
+            });
+            
+            // Filter DPPs with multiple attempts
+            const reattemptedDPPs = Object.entries(dppAttempts).filter(([dppId, data]) => data.attempts.length > 1);
+            
+            if (reattemptedDPPs.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-24 h-24 bg-gradient-to-r from-orange-100 to-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No Reattempts Yet</h3>
+                        <p class="text-gray-500 font-medium">All DPPs attempted only once. Great consistency!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const summaryHTML = reattemptedDPPs.map(([dppId, data], index) => {
+                const attemptCount = data.attempts.length;
+                const bestScore = Math.max(...data.attempts.map(a => Math.round((a.totalMarks / a.maxMarks) * 100)));
+                const latestScore = Math.round((data.attempts[data.attempts.length - 1].totalMarks / data.attempts[data.attempts.length - 1].maxMarks) * 100);
+                const totalXP = data.attempts.reduce((sum, attempt) => sum + attempt.earnedXP, 0);
+                const improvement = latestScore - Math.round((data.attempts[0].totalMarks / data.attempts[0].maxMarks) * 100);
+                
+                return `
+                    <div class="glass-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2" style="animation-delay: ${index * 0.1}s">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-900 mb-2">${data.dppTitle}</h3>
+                                <div class="flex items-center space-x-2">
+                                    <span class="performance-badge px-3 py-1 rounded-full text-sm font-medium">
+                                        ${attemptCount} Attempts
+                                    </span>
+                                    ${improvement > 0 ? `
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                            +${improvement}%
+                                        </span>
+                                    ` : improvement < 0 ? `
+                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                            ${improvement}%
+                                        </span>
+                                    ` : `
+                                        <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                                            No Change
+                                        </span>
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="text-2xl font-bold text-green-600 mb-1">${bestScore}%</div>
+                                <div class="text-sm text-gray-600 font-medium">Best Score</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="text-2xl font-bold text-blue-600 mb-1">${latestScore}%</div>
+                                <div class="text-sm text-gray-600 font-medium">Latest Score</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-2xl font-bold text-purple-600 mb-1">${totalXP}</div>
+                                <div class="text-sm text-gray-600 font-medium">Total XP</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = summaryHTML;
+        }
+
+        function displayDPPCards(allDPPs, userResults) {
+            const container = document.getElementById('dppCards');
+            const loadingState = document.getElementById('loadingState');
+            
+            if (userResults.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <div class="w-32 h-32 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <svg class="w-16 h-16 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-700 mb-4">Ready to Start Your Journey?</h3>
+                        <p class="text-gray-500 mb-8 max-w-md mx-auto font-medium">No DPPs attempted yet. Begin your learning adventure and track your amazing progress!</p>
+                        <a href="home.html" class="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                            </svg>
+                            <span class="font-semibold">Go to Dashboard</span>
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort results by submission date (newest first)
+            userResults.sort((a, b) => b.submittedAt - a.submittedAt);
+
+            const cardsHTML = userResults.map((result, index) => {
+                const percentage = Math.round((result.totalMarks / result.maxMarks) * 100);
+                const submissionDate = new Date(result.submittedAt).toLocaleDateString();
+                
+                let performanceClass, performanceIcon, performanceText;
+                if (percentage >= 80) {
+                    performanceClass = 'text-green-600 bg-green-100';
+                    performanceIcon = 'fa-trophy';
+                    performanceText = 'Excellent';
+                } else if (percentage >= 60) {
+                    performanceClass = 'text-blue-600 bg-blue-100';
+                    performanceIcon = 'fa-thumbs-up';
+                    performanceText = 'Good';
+                } else if (percentage >= 40) {
+                    performanceClass = 'text-yellow-600 bg-yellow-100';
+                    performanceIcon = 'fa-chart-line';
+                    performanceText = 'Average';
+                } else {
+                    performanceClass = 'text-red-600 bg-red-100';
+                    performanceIcon = 'fa-chart-line-down';
+                    performanceText = 'Needs Work';
+                }
+
+                return `
+                    <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group" style="animation-delay: ${index * 0.1}s">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex-1">
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors">${result.dppTitle}</h3>
+                                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
+                                    <span class="flex items-center space-x-1 sm:space-x-2 bg-gray-50 px-2 sm:px-3 py-1 rounded-lg">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span class="font-medium">${submissionDate}</span>
+                                    </span>
+                                    <span class="flex items-center space-x-1 sm:space-x-2 bg-green-50 px-2 sm:px-3 py-1 rounded-lg">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span class="font-medium">${result.subject}</span>
+                                    </span>
+                                    <span class="flex items-center space-x-1 sm:space-x-2 bg-purple-50 px-2 sm:px-3 py-1 rounded-lg">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                                        </svg>
+                                        <span class="font-medium">${result.chapter}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="${performanceClass} px-3 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl flex items-center space-x-1 sm:space-x-2 shadow-sm">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                                <span class="font-semibold text-sm sm:text-base">${performanceText}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                            <div class="text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-gray-400 to-gray-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-lg sm:text-2xl font-bold text-gray-900 mb-1">${result.totalMarks}</div>
+                                <div class="text-xs sm:text-sm text-gray-600 font-medium">Marks</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-lg sm:text-2xl font-bold text-green-600 mb-1">${percentage}%</div>
+                                <div class="text-xs sm:text-sm text-gray-600 font-medium">Score</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="text-lg sm:text-2xl font-bold text-blue-600 mb-1">${result.correctAnswers}</div>
+                                <div class="text-xs sm:text-sm text-gray-600 font-medium">Correct</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-lg sm:text-2xl font-bold text-purple-600 mb-1">${result.earnedXP || 0}</div>
+                                <div class="text-xs sm:text-sm text-gray-600 font-medium">XP</div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm">
+                                <span class="flex items-center space-x-1 sm:space-x-2 bg-green-50 text-green-700 px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-medium">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>${result.correctAnswers} Correct</span>
+                                </span>
+                                <span class="flex items-center space-x-1 sm:space-x-2 bg-red-50 text-red-700 px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-medium">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>${result.wrongAnswers} Wrong</span>
+                                </span>
+                                <span class="flex items-center space-x-1 sm:space-x-2 bg-yellow-50 text-yellow-700 px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-medium">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>${result.unattempted} Skipped</span>
+                                </span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="viewDetailedAnalysis('${result.dppId}')" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium text-sm">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                    </svg>
+                                    <span>Details</span>
+                                </button>
+                                <button onclick="reattemptDPP('${result.dppId}')" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium text-sm">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span>Reattempt</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = cardsHTML;
+            loadingState.style.display = 'none';
+        }
+
+        function viewDetailedAnalysis(dppId) {
+            // Store DPP ID and redirect to detailed analysis
+            localStorage.setItem('selectedDppId', dppId);
+            window.location.href = 'dpp-detailed-analysis.html';
+        }
+
+        function reattemptDPP(dppId) {
+            const confirmReattempt = confirm('Are you sure you want to reattempt this DPP? You will earn +1 XP per correct answer on reattempts.');
+            if (confirmReattempt) {
+                localStorage.setItem('selectedDppId', dppId);
+                window.location.href = 'attempt-dpp-students.html';
+            }
+        }
+
+        function showError() {
+            const container = document.getElementById('dppCards');
+            container.innerHTML = `
+                <div class="text-center py-16">
+                    <div class="w-24 h-24 bg-gradient-to-r from-red-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                        <svg class="w-12 h-12 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-red-600 mb-4">Oops! Something went wrong</h3>
+                    <p class="text-red-500 mb-8 max-w-md mx-auto font-medium">Unable to load your DPP analysis. Please check your connection and try again.</p>
+                    <button onclick="loadDPPAnalysis()" class="inline-flex items-center space-x-3 bg-gradient-to-r from-red-500 to-pink-600 text-white px-8 py-4 rounded-2xl hover:from-red-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-semibold">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Try Again</span>
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

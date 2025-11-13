@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Leaderboard? - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .level-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-h-screen text-white">
+    <!-- Header -->
+    <nav class="bg-black bg-opacity-30 backdrop-blur-lg p-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <button onclick="goBack()" class="text-white hover:text-purple-300 transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>Back
+            </button>
+            <h1 class="text-2xl font-bold">What is Leaderboard?</h1>
+            <div></div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Main Description -->
+        <div class="text-center mb-12">
+            <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 mb-8">
+                <i class="fas fa-trophy text-6xl text-yellow-400 mb-6"></i>
+                <h2 class="text-3xl font-bold mb-4">What is Leaderboard?</h2>
+                <p class="text-xl mb-4">The Leaderboard compares your activities and gives you a rank based on XP earned during the week.</p>
+                <p class="text-lg text-gray-300">You can see your XP and compare it with your mates.</p>
+            </div>
+        </div>
+
+        <!-- Leaderboard Image -->
+        <div class="text-center mb-12">
+            <img src="leaderboard.png" alt="Leaderboard" class="mx-auto rounded-2xl shadow-2xl max-w-full h-auto">
+        </div>
+
+        <!-- Levels Section -->
+        <div class="mb-12">
+            <h3 class="text-2xl font-bold text-center mb-8">There are 10 levels in the leaderboard which are as follows:</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 1.png" alt="Level 1" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 1</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 2.png" alt="Level 2" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 2</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 3.png" alt="Level 3" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 3</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 4.png" alt="Level 4" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 4</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 5.png" alt="Level 5" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 5</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 6.png" alt="Level 6" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 6</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 7.png" alt="Level 7" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 7</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 8.png" alt="Level 8" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 8</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 9.png" alt="Level 9" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 9</p>
+                </div>
+                <div class="level-card rounded-2xl p-4 text-center">
+                    <img src="Level 10.png" alt="Level 10" class="w-16 h-16 mx-auto mb-2">
+                    <p class="font-semibold">Level 10</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Starting Level -->
+        <div class="bg-orange-500 bg-opacity-20 backdrop-blur-lg rounded-3xl p-8 text-center">
+            <i class="fas fa-star text-4xl text-orange-400 mb-4"></i>
+            <h3 class="text-2xl font-bold mb-4">Starting Point</h3>
+            <p class="text-lg">Every student starts at the base level which is <span class="font-bold text-orange-400">Honhar Level</span> and has to get promoted to climb up the ladder.</p>
+        </div>
+
+        <!-- Action Button -->
+        <div class="text-center mt-12">
+            <button onclick="openLeaderboard()" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all transform hover:scale-105">
+                <i class="fas fa-trophy mr-2"></i>View Leaderboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        
+        function openLeaderboard() {
+            window.location.href = 'xp-ladder.html';
+        }
+    </script>
+</body>
+</html>

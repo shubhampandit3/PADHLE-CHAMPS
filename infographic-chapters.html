@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic of Chapters - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .infographic-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .infographic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .chapter-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="window.history.back()" class="mr-4 text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-arrow-left text-xl"></i>
+                    </button>
+                    <h1 class="text-2xl font-bold text-gray-800">Infographic of Chapters</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Visual Learning Made Easy</h2>
+            <p class="text-gray-600">Explore chapter concepts through interactive infographics</p>
+        </div>
+
+        <!-- Modern Filter Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <!-- Step 1: Subject Selection -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Step 1: Select Subject</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="selectSubject('all')" class="subject-btn active px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-blue-500 text-white hover:bg-blue-600">
+                        <i class="fas fa-th-large mr-2"></i>All Subjects
+                    </button>
+                    <button onclick="selectSubject('Mathematics')" class="subject-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-blue-100">
+                        <i class="fas fa-calculator mr-2"></i>Mathematics
+                    </button>
+                    <button onclick="selectSubject('Science')" class="subject-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-green-100">
+                        <i class="fas fa-microscope mr-2"></i>Science
+                    </button>
+                    <button onclick="selectSubject('English')" class="subject-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-purple-100">
+                        <i class="fas fa-book mr-2"></i>English
+                    </button>
+                    <button onclick="selectSubject('History')" class="subject-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-orange-100">
+                        <i class="fas fa-landmark mr-2"></i>History
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Class Selection -->
+            <div class="mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Step 2: Select Class</h3>
+                <div id="class-buttons" class="flex gap-2">
+                    <button onclick="selectClass('all')" class="class-btn active px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-indigo-500 text-white hover:bg-indigo-600">
+                        All Classes
+                    </button>
+                    <button onclick="selectClass('5')" class="class-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-indigo-100">
+                        Class 5
+                    </button>
+                    <button onclick="selectClass('10')" class="class-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-indigo-100">
+                        Class 10
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filter Results Info -->
+            <div id="filter-info" class="text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg">
+                Showing: <span id="current-filter">All Subjects, All Classes</span>
+            </div>
+        </div>
+
+        <!-- Infographic Cards Grid -->
+        <div id="cards-container" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Percentage Chapter -->
+            <div class="infographic-card" data-subject="Mathematics" data-class="5" onclick="window.location.href='percentage-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-percentage text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Percentage</h3>
+                <p class="text-sm opacity-90 mb-4">Visual guide to percentage calculations and concepts</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">Mathematics</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 5</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Science - Circulatory System -->
+            <div class="infographic-card" data-subject="Science" data-class="5" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" onclick="window.location.href='circulatory_system-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-heartbeat text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Circulatory System</h3>
+                <p class="text-sm opacity-90 mb-4">Heart and blood circulation infographics</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">Science</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 5</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- English - Leisure Poem -->
+            <div class="infographic-card" data-subject="English" data-class="5" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);" onclick="window.location.href='leisure-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-feather-alt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Leisure</h3>
+                <p class="text-sm opacity-90 mb-4">Poem analysis by W. H. Davies</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">English</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 5</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- English - My Shadow Poem -->
+            <div class="infographic-card" data-subject="English" data-class="5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="window.location.href='my_shadow-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-user-friends text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">My Shadow</h3>
+                <p class="text-sm opacity-90 mb-4">Poem by Robert Louis Stevenson</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">English</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 5</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- History - Evolution of Human Beings -->
+            <div class="infographic-card" data-subject="History" data-class="5" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);" onclick="window.location.href='evolution_of_human_beings-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-users text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Evolution of Human Beings</h3>
+                <p class="text-sm opacity-90 mb-4">Stone Age and human development</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">History</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 5</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- English - A Letter to God -->
+            <div class="infographic-card" data-subject="English" data-class="10" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" onclick="window.location.href='letter_to_god-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-envelope text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">A Letter to God</h3>
+                <p class="text-sm opacity-90 mb-4">Story by G.L. Fuentes - Faith and irony</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">English</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 10</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Mathematics - Real Numbers -->
+            <div class="infographic-card" data-subject="Mathematics" data-class="10" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="window.location.href='real_numbers-infographic.html'">
+                <div class="chapter-icon">
+                    <i class="fas fa-square-root-alt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Real Numbers</h3>
+                <p class="text-sm opacity-90 mb-4">Euclid's Division, FTA, and Decimal Expansions</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">Mathematics</span>
+                        <span class="text-xs bg-white/30 px-2 py-1 rounded">Class 10</span>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Section -->
+        <div class="mt-12 text-center">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">More Infographics Coming Soon!</h3>
+            <p class="text-gray-600 mb-6">We're working on adding more visual learning materials for all subjects</p>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md opacity-60">
+                    <i class="fas fa-atom text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-sm text-gray-500">Physics</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md opacity-60">
+                    <i class="fas fa-flask text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-sm text-gray-500">Chemistry</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md opacity-60">
+                    <i class="fas fa-globe text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-sm text-gray-500">Geography</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md opacity-60">
+                    <i class="fas fa-code text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-sm text-gray-500">Programming</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedSubject = 'all';
+        let selectedClass = 'all';
+        
+        function selectSubject(subject) {
+            selectedSubject = subject;
+            
+            // Update subject button states
+            const subjectButtons = document.querySelectorAll('.subject-btn');
+            subjectButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-500', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-blue-500', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'text-gray-700');
+            
+            // Update available class options based on selected subject
+            updateClassOptions();
+            
+            // Apply combined filter
+            applyFilter();
+        }
+        
+        function selectClass(classNum) {
+            selectedClass = classNum;
+            
+            // Update class button states
+            const classButtons = document.querySelectorAll('.class-btn');
+            classButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-indigo-500', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-indigo-500', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'text-gray-700');
+            
+            // Apply combined filter
+            applyFilter();
+        }
+        
+        function updateClassOptions() {
+            const cards = document.querySelectorAll('.infographic-card');
+            const availableClasses = new Set();
+            
+            // Find available classes for selected subject
+            cards.forEach(card => {
+                if (selectedSubject === 'all' || card.dataset.subject === selectedSubject) {
+                    availableClasses.add(card.dataset.class);
+                }
+            });
+            
+            // Update class buttons visibility
+            const classButtons = document.querySelectorAll('.class-btn');
+            classButtons.forEach(btn => {
+                const btnClass = btn.textContent.includes('5') ? '5' : 
+                                btn.textContent.includes('10') ? '10' : 'all';
+                
+                if (btnClass === 'all' || availableClasses.has(btnClass)) {
+                    btn.style.display = 'inline-block';
+                    btn.disabled = false;
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        }
+        
+        function applyFilter() {
+            const cards = document.querySelectorAll('.infographic-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const matchesSubject = selectedSubject === 'all' || card.dataset.subject === selectedSubject;
+                const matchesClass = selectedClass === 'all' || card.dataset.class === selectedClass;
+                
+                if (matchesSubject && matchesClass) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease-in';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update filter info
+            const subjectText = selectedSubject === 'all' ? 'All Subjects' : selectedSubject;
+            const classText = selectedClass === 'all' ? 'All Classes' : `Class ${selectedClass}`;
+            document.getElementById('current-filter').textContent = `${subjectText}, ${classText} (${visibleCount} items)`;
+        }
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
+</html>

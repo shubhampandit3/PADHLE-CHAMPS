@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPP Detailed Analysis - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .correct-answer { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-color: #16a34a; }
+        .wrong-answer { background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-color: #dc2626; }
+        .unattempted-answer { background: linear-gradient(135deg, #fefce8 0%, #fef08a 100%); border-color: #ca8a04; }
+        .material-icons-round { font-size: inherit; vertical-align: middle; }
+        .question-card { transition: all 0.3s ease; }
+        .question-card:hover { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50 min-h-screen">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-xl sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm float-animation">
+                        <span class="material-icons-round text-white text-2xl sm:text-3xl">science</span>
+                    </div>
+                    <span class="text-base sm:text-xl font-bold text-white hidden sm:inline">DPP Detailed Analysis</span>
+                    <span class="text-base font-bold text-white sm:hidden">Analysis</span>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <a href="dpp-results.html" class="nav-link hidden sm:flex items-center space-x-2 px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-xl transition-all">
+                        <span class="material-icons-round text-xl">arrow_back</span>
+                        <span class="font-medium">Back</span>
+                    </a>
+                    <a href="dpp-results.html" class="nav-link sm:hidden flex items-center justify-center w-10 h-10 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-xl transition-all">
+                        <span class="material-icons-round text-xl">arrow_back</span>
+                    </a>
+                    <div class="bg-white bg-opacity-20 px-3 sm:px-4 py-2 rounded-xl backdrop-blur-sm">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-icons-round text-white text-lg sm:text-xl">person</span>
+                            <span class="font-semibold text-white text-sm sm:text-base" id="username">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Analysis Header -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-6 sm:mb-8" data-aos="fade-up">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                <div class="flex items-center space-x-3">
+                    <span class="material-icons-round text-3xl sm:text-4xl text-green-600">assessment</span>
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-900" id="dppTitle">DPP Analysis</h1>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                    <span class="bg-gradient-to-r from-green-100 to-green-200 text-green-800 px-3 py-2 rounded-xl font-medium shadow-sm" id="subjectChapter">Subject - Chapter</span>
+                    <span class="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-3 py-2 rounded-xl font-medium shadow-sm" id="attemptType">First Attempt</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-all">
+                    <span class="material-icons-round text-green-600 text-2xl sm:text-3xl mb-2">check_circle</span>
+                    <div class="text-xl sm:text-2xl font-bold text-green-600" id="correctCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Correct</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 hover:shadow-lg transition-all">
+                    <span class="material-icons-round text-red-600 text-2xl sm:text-3xl mb-2">cancel</span>
+                    <div class="text-xl sm:text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Wrong</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-yellow-50 to-yellow-100 hover:shadow-lg transition-all">
+                    <span class="material-icons-round text-yellow-600 text-2xl sm:text-3xl mb-2">remove_circle</span>
+                    <div class="text-xl sm:text-2xl font-bold text-yellow-600" id="unattemptedCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Unattempted</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all">
+                    <span class="material-icons-round text-purple-600 text-2xl sm:text-3xl mb-2">emoji_events</span>
+                    <div class="text-xl sm:text-2xl font-bold text-purple-600" id="totalScore">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Total Score</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-indigo-50 to-indigo-100 hover:shadow-lg transition-all col-span-2 sm:col-span-1">
+                    <span class="material-icons-round text-indigo-600 text-2xl sm:text-3xl mb-2">percent</span>
+                    <div class="text-xl sm:text-2xl font-bold text-indigo-600" id="percentage">0%</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Percentage</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question-wise Analysis -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="material-icons-round text-3xl text-green-600">quiz</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Question-wise Analysis</h2>
+            </div>
+            <div id="questionsAnalysis" class="space-y-4 sm:space-y-6">
+                <!-- Questions will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid sm:grid-cols-2 gap-4 mt-6 sm:mt-8" data-aos="fade-up" data-aos-delay="200">
+            <button onclick="reattemptDPP()" class="bg-gradient-to-r from-orange-600 to-orange-700 text-white py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all font-semibold flex items-center justify-center space-x-2">
+                <span class="material-icons-round">refresh</span>
+                <span>Reattempt DPP</span>
+            </button>
+            <button onclick="goHome()" class="bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all font-semibold flex items-center justify-center space-x-2">
+                <span class="material-icons-round">home</span>
+                <span>Back to Home</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        let resultData = null;
+        let questionsData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+                loadAnalysisData();
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+        });
+
+        function loadAnalysisData() {
+            resultData = JSON.parse(localStorage.getItem('selectedDppResult'));
+            questionsData = JSON.parse(localStorage.getItem('selectedDppQuestions'));
+
+            if (!resultData || !questionsData) {
+                alert('No analysis data found');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            displayAnalysis();
+        }
+
+        function displayAnalysis() {
+            // Header information
+            document.getElementById('dppTitle').textContent = resultData.dppTitle;
+            document.getElementById('subjectChapter').textContent = `${resultData.subject} - ${resultData.chapter}`;
+            document.getElementById('attemptType').textContent = resultData.isFirstAttempt ? 'First Attempt' : 'Reattempt';
+
+            // Statistics
+            document.getElementById('correctCount').textContent = resultData.correctAnswers;
+            document.getElementById('wrongCount').textContent = resultData.wrongAnswers;
+            document.getElementById('unattemptedCount').textContent = resultData.unattempted;
+            document.getElementById('totalScore').textContent = `${resultData.totalMarks}/${resultData.maxMarks}`;
+            
+            const percentage = Math.round((resultData.totalMarks / resultData.maxMarks) * 100);
+            document.getElementById('percentage').textContent = percentage + '%';
+
+            // Question-wise analysis
+            displayQuestionAnalysis();
+        }
+
+        function displayQuestionAnalysis() {
+            const container = document.getElementById('questionsAnalysis');
+            container.innerHTML = '';
+
+            questionsData.forEach((question, index) => {
+                const userAnswer = resultData.answers ? resultData.answers[index] : null;
+                const isCorrect = userAnswer === question.correctAnswer;
+                const isUnattempted = userAnswer === null;
+
+                let statusClass, statusIcon, statusText, statusColor;
+                
+                if (isUnattempted) {
+                    statusClass = 'unattempted-answer';
+                    statusIcon = 'remove_circle';
+                    statusText = 'Unattempted';
+                    statusColor = 'text-yellow-600';
+                } else if (isCorrect) {
+                    statusClass = 'correct-answer';
+                    statusIcon = 'check_circle';
+                    statusText = 'Correct';
+                    statusColor = 'text-green-600';
+                } else {
+                    statusClass = 'wrong-answer';
+                    statusIcon = 'cancel';
+                    statusText = 'Wrong';
+                    statusColor = 'text-red-600';
+                }
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = `question-card border-2 rounded-2xl p-4 sm:p-6 ${statusClass} shadow-md`;
+                questionDiv.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                                <span class="font-bold text-gray-700">${index + 1}</span>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-semibold text-gray-900">Question ${index + 1}</h3>
+                        </div>
+                        <div class="flex items-center space-x-2 px-3 py-2 bg-white rounded-xl shadow-sm ${statusColor}">
+                            <span class="material-icons-round text-lg">${statusIcon === 'check_circle' ? 'check' : statusIcon === 'cancel' ? 'close' : 'remove'}</span>
+                            <span class="font-semibold text-sm">${statusText}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 p-4 bg-white rounded-xl shadow-sm">
+                        <p class="text-sm sm:text-base text-gray-800 leading-relaxed">${question.question}</p>
+                    </div>
+                    
+                    <div class="grid sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
+                        ${['A', 'B', 'C', 'D'].map(option => {
+                            let optionClass = 'border-2 border-gray-300 bg-white';
+                            let optionIcon = '';
+                            
+                            if (option === question.correctAnswer) {
+                                optionClass = 'border-green-500 bg-gradient-to-r from-green-50 to-green-100';
+                                optionIcon = '<span class="material-icons-round text-green-600 text-lg">check</span>';
+                            }
+                            
+                            if (userAnswer === option && option !== question.correctAnswer) {
+                                optionClass = 'border-red-500 bg-gradient-to-r from-red-50 to-red-100';
+                                optionIcon = '<span class="material-icons-round text-red-600 text-lg">cancel</span>';
+                            }
+                            
+                            return `
+                                <div class="p-3 sm:p-4 rounded-xl ${optionClass} shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <div class="flex items-center gap-3">
+                                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border-2 border-gray-400 flex items-center justify-center text-xs sm:text-sm font-bold shadow-sm">
+                                                ${option}
+                                            </span>
+                                            <span class="text-xs sm:text-sm text-gray-800">${question.options[option]}</span>
+                                        </div>
+                                        ${optionIcon}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs sm:text-sm bg-white p-3 sm:p-4 rounded-xl shadow-sm">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-icons-round text-gray-500 text-sm">person</span>
+                                <span class="text-gray-600">Your Answer: 
+                                    <span class="font-semibold ${userAnswer ? (isCorrect ? 'text-green-600' : 'text-red-600') : 'text-yellow-600'}">
+                                        ${userAnswer || 'Not Attempted'}
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="material-icons-round text-green-500 text-sm">check</span>
+                                <span class="text-gray-600">Correct: 
+                                    <span class="font-semibold text-green-600">${question.correctAnswer}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2 px-3 py-1 rounded-lg ${isUnattempted ? 'bg-yellow-100' : (isCorrect ? 'bg-green-100' : 'bg-red-100')}">
+                            <span class="material-icons-round ${statusColor} text-sm">grade</span>
+                            <span class="text-gray-700 font-semibold">
+                                ${isUnattempted ? '0' : (isCorrect ? '+4' : '-1')} marks
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function reattemptDPP() {
+            const confirmReattempt = confirm('Are you sure you want to reattempt this DPP? You will earn +1 XP per correct answer on reattempts.');
+            if (confirmReattempt) {
+                localStorage.setItem('selectedDppId', resultData.dppId);
+                window.location.href = 'attempt-dpp-students.html';
+            }
+        }
+
+        async function goHome() {
+            await updateUserXP();
+            window.location.href = 'home.html';
+        }
+
+        async function updateUserXP() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                if (!userData || !resultData) return;
+
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                    authDomain: "quiz-app-10f81.firebaseapp.com",
+                    databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                    projectId: "quiz-app-10f81",
+                    storageBucket: "quiz-app-10f81.firebasestorage.app",
+                    messagingSenderId: "351578019731",
+                    appId: "1:351578019731:web:2055fe24498ca17908fa66"
+                };
+
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const database = firebase.database();
+
+                const statsRef = database.ref(`userStats/${userData.userId}`);
+                const snapshot = await statsRef.once('value');
+                const stats = snapshot.val() || { xp: 0 };
+                
+                const newXP = (stats.xp || 0) + (resultData.earnedXP || 0);
+                await statsRef.update({ xp: newXP });
+                
+                console.log(`Updated XP: +${resultData.earnedXP} = ${newXP} total`);
+            } catch (error) {
+                console.error('Error updating XP:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution of Human Beings Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Lighter background */
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05); /* Stronger shadow */
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .timeline-item {
+            border-left: 4px solid #10b981; /* Tailwind Emerald */
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 4px solid #f3f4f6; /* Matches body background */
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover::before {
+            background: #059669; /* Darker Emerald on hover */
+        }
+        .section-header-container {
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid #8b5cf6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-header {
+            font-size: 1.75rem; /* text-3xl */
+            font-weight: 700;
+            color: #1f2937;
+            margin-left: 0.5rem;
+        }
+        .category-block {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .category-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .image-placeholder {
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 0.75rem;
+            background-color: #6366f1; /* Indigo */
+        }
+        .qa-question {
+            font-weight: 700;
+            color: #4f46e5;
+            padding-left: 1rem;
+            border-left: 3px solid #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+        .qa-answer {
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #c4b5fd;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Changed max-w-4xl to max-w-6xl for wider layout -->
+    <div class="max-w-6xl mx-auto">
+        <!-- Main Header -->
+        <header class="text-center mb-10 p-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-3xl shadow-2xl">
+            <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tight">EVOLUTION OF HUMAN BEINGS</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">SANGHARSH BATCH 2025-26 | Detailed Infographic</p>
+        </header>
+
+        <!-- SECTION 1: Introduction & Sources (Part 1) -->
+        <div class="card bg-white border-t-8 border-indigo-500">
+            <div class="section-header-container">
+                <!-- SVG Icon for Foundations/Origins (Earth/Globe) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-indigo-600"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20"></path><path d="M2 12h20"></path></svg>
+                <h2 class="section-header">1. Foundations of Evolution</h2>
+            </div>
+            <!-- Layout changed to 3 columns on desktop to fit image placeholder -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                
+                <div>
+                    <h3 class="text-xl font-bold text-indigo-700 mb-3 border-b border-indigo-200 pb-1">Key Definitions</h3>
+                    <ul class="space-y-3 text-gray-700 text-base">
+                        <li>Early Humans: Lived in Prehistoric Times (no reading/writing). Communication was via sign language or special drums.</li>
+                        <li>Evolution: Development from simple early forms to more advanced ones over millennia.</li>
+                        <li>Modern Theory: Humans and modern apes share a same ape-like ancestor (separated ~5 million years ago).</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold text-indigo-700 mb-3 border-b border-indigo-200 pb-1">Sources of Information (No Written Records)</h3>
+                    <ul class="space-y-3 text-gray-700 text-base">
+                        <li>Anthropologists: Study bones and skeletons of early humans and animals.</li>
+                        <li>Palaeontologists: Study Fossils (traces of plants/animals preserved in Earth's crust).</li>
+                        <li>Artifacts: Evidence like Tools, Weapons, Shelters, and Cave Paintings.</li>
+                    </ul>
+                </div>
+
+                <!-- Image Placeholder for Foundations -->
+                <div class="flex justify-center md:justify-start">
+                    <img src="https://www.evolutionisamyth.com/wp-content/uploads/2019/09/fossil-collage-810x456.jpg" alt="Placeholder image for Fossil Records" class="w-full max-w-xs md:max-w-none h-auto object-cover rounded-xl shadow-lg transition duration-300 hover:shadow-2xl hover:scale-105">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: The Human Lineage (Part 1) -->
+        <div class="card bg-white border-t-8 border-indigo-500">
+            <div class="section-header-container">
+                <!-- SVG Icon for Lineage (Users/Group) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-indigo-600"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <h2 class="section-header">2. Three Categories of Early Humans</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                
+                <div class="category-block p-4 bg-green-50 rounded-xl border-4 border-green-300 shadow-md">
+                    <p class="text-4xl mb-2">🛠️</p>
+                    <p class="text-xl font-extrabold text-green-700">Homo habilis</p>
+                    <p class="text-sm text-gray-600 mt-1">The Tool Maker — First to make tools of stone.</p>
+                </div>
+                
+                <div class="category-block p-4 bg-yellow-50 rounded-xl border-4 border-yellow-300 shadow-md">
+                    <p class="text-4xl mb-2">🚶</p>
+                    <p class="text-xl font-extrabold text-yellow-700">Homo erectus</p>
+                    <p class="text-sm text-gray-600 mt-1">The Upright Walker — First to stand upright and use fire.</p>
+                </div>
+                
+                <div class="category-block p-4 bg-red-50 rounded-xl border-4 border-red-300 shadow-md">
+                    <p class="text-4xl mb-2">🧠</p>
+                    <p class="text-xl font-extrabold text-red-700">Homo sapiens</p>
+                    <p class="text-sm text-gray-600 mt-1">The Thinking People — Modern humans.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SECTION 3: The Stone Ages (Part 1, 2, & 3) -->
+        <div class="card bg-white border-t-8 border-indigo-500">
+            <div class="section-header-container">
+                <!-- SVG Icon for Timeline (Clock) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-indigo-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <h2 class="section-header">3. The Stone Age Timeline</h2>
+            </div>
+            
+            <!-- Stone Age Divisions (Part 1) -->
+            <div class="mb-8">
+                <p class="text-lg font-bold text-gray-800 mb-3">Historical Divisions:</p>
+                <div class="flex flex-wrap justify-center md:justify-around text-center text-base font-semibold space-x-2">
+                    <span class="p-3 bg-purple-100 text-purple-700 rounded-full m-1 border border-purple-300 shadow-sm transition duration-300 hover:bg-purple-200">Palaeolithic (Old Stone Age)</span>
+                    <span class="p-3 bg-purple-100 text-purple-700 rounded-full m-1 border border-purple-300 shadow-sm transition duration-300 hover:bg-purple-200">Mesolithic (Middle Stone Age)</span>
+                    <span class="p-3 bg-purple-100 text-purple-700 rounded-full m-1 border border-purple-300 shadow-sm transition duration-300 hover:bg-purple-200">Neolithic (New Stone Age)</span>
+                    <span class="p-3 bg-purple-100 text-purple-700 rounded-full m-1 border border-purple-300 shadow-sm transition duration-300 hover:bg-purple-200">Chalcolithic (Stone-Copper Age)</span>
+                </div>
+            </div>
+
+            <!-- Palaeolithic Age (Part 2) -->
+            <div class="timeline-item">
+                <h3 class="text-2xl font-extrabold text-indigo-800 mb-1">Palaeolithic Age (Old Stone Age)</h3>
+                <h4 class="text-lg font-semibold text-gray-700 italic">Lifestyle: Hunter-Gatherers & Nomads</h4>
+                <div class="flex flex-col md:flex-row gap-6 mt-3">
+                    <!-- Text Content (3/4 width) -->
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 md:w-3/4">
+                        <li>Nomadic Life: Moved based on seasons and following animal migration routes (Hunter-Gatherers).
+                            <p class="text-sm font-medium text-red-600 mt-1 pl-4">Challenges: 1) Many animals ran faster. 2) Dangerous close contact led to injury/death.</p>
+                        </li>
+                        <li>Tools: Made by chipping stone. Discovered Flint stone (easily shaped). Tools included knives, spears, axes, and harpoons. During excavations, many of these stone tools still retain their sharpness.</li>
+                        <li>Shelters: Lived in caves, under rock overhangs, on trees, or out in the open (reinforced with animal skins/leaves).</li>
+                        <li>Art: Made vivid Cave Paintings on walls (for recreation or religious significance).</li>
+                        <li class="font-bold text-lg text-emerald-600">Landmark Discovery: The ability to start a fire on their own (discovered by chance/accident).</li>
+                        <li>Fire Uses: Cooked food, warmth, light in dark caves, and scaring away wild animals.</li>
+                    </ul>
+                    <!-- Image Placeholder (1/4 width) -->
+                    <div class="md:w-1/4 flex-shrink-0">
+                        <img src="https://evolutionoftheprogress.com/wp-content/uploads/2023/04/Invention-of-Fire.jpeg" alt="Placeholder image for Fire Discovery" class="w-full h-auto object-cover rounded-lg shadow-md transition duration-300 hover:shadow-xl hover:scale-105">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mesolithic Age (Part 3) -->
+            <div class="timeline-item">
+                <h3 class="text-2xl font-extrabold text-indigo-800 mb-1">Mesolithic Age (Middle Stone Age)</h3>
+                <h4 class="text-lg font-semibold text-gray-700 italic">Key Advancements: Domestication & Agriculture</h4>
+                <div class="flex flex-col md:flex-row gap-6 mt-3">
+                    <!-- Image Placeholder (1/4 width, switched order) -->
+                    <div class="md:w-1/4 flex-shrink-0 order-2 md:order-1">
+                        <img src=https://ancienthistoryguide.com/wp-content/uploads/2024/12/The-Domestication-of-Animals-Exploring-Early-Partnerships-Between-Humans-and-Wildlife-1024x585.jpg" alt="Placeholder image for Animal Domestication" class="w-full h-auto object-cover rounded-lg shadow-md transition duration-300 hover:shadow-xl hover:scale-105">
+                    </div>
+                    <!-- Text Content (3/4 width, switched order) -->
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 md:w-3/4 order-1 md:order-2">
+                        <li>Lifestyle Shift: Continued hunting/gathering, but began to domesticate animals.</li>
+                        <li>First Domesticated Animal: The Wolf.</li>
+                        <li>Economy: Saw the beginning of agriculture (e.g., cultivation of bamboo and sugarcane).</li>
+                        <li>Tools: Began to make finer and smaller tools (microliths) like improved arrowheads, spearheads, canoes, and bows for hunting.</li>
+                        <li>Art: Enjoyed painting (depicting birds, animals, and humans) and created small sculptures from stone, clay, and bone.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 4: Key Q&A for Quick Revision -->
+        <div class="card bg-white border-t-8 border-purple-500">
+            <div class="section-header-container border-b-purple-500">
+                <!-- SVG Icon for Q&A (Checkmark in box) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-purple-600"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 13l2 2 4-4"></path></svg>
+                <h2 class="section-header text-purple-700">4. Quick Revision Q&A</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="p-3 bg-purple-50 rounded-lg">
+                    <p class="qa-question">Q1: What is the main source of information about early humans?</p>
+                    <p class="qa-answer">A: Since there are no written records, information comes from Anthropologists (bones/skeletons), Palaeontologists (fossils), and Artifacts (tools, weapons, paintings).</p>
+                </div>
+
+                <div class="p-3 bg-purple-50 rounded-lg">
+                    <p class="qa-question">Q2: What is the key difference between Homo Erectus and Homo Sapiens?</p>
+                    <p class="qa-answer">A: Homo Erectus were the Upright Walkers and first to use fire, while Homo Sapiens are the "Thinking People" (modern humans).</p>
+                </div>
+                
+                <div class="p-3 bg-purple-50 rounded-lg">
+                    <p class="qa-question">Q3: Which Stone Age period marked the beginning of agriculture and animal domestication?</p>
+                    <p class="qa-answer">A: The Mesolithic Age (Middle Stone Age).</p>
+                </div>
+                
+                <div class="p-3 bg-purple-50 rounded-lg">
+                    <p class="qa-question">Q4: What was the main challenge faced by the Palaeolithic hunter-gatherers?</p>
+                    <p class="qa-answer">A: Animals often ran faster than them, making hunting difficult, and close contact led to danger, injury, or death.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="text-center mt-10 p-4 text-sm text-gray-500 bg-gray-100 rounded-xl">
+            <p>This infographic is based on the contents of the PADHLE-CHAMPS video series.</p>
+        </footer>
+    </div>
+</body>
+</html>

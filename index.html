@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Padhle Champs - Educational Platform</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="logo-placeholder flex items-center group">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-500 rounded-full blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
+                        <img src="PC LOGO.png" alt="Padhle Champs Logo" class="h-12 w-12 mr-3 relative z-10">
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-green-500 bg-clip-text text-transparent">Padhle Champs</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center justify-between flex-1 ml-8">
+                    <!-- Left Navigation -->
+                    <div class="flex items-center space-x-8">
+                        <a href="home.html" class="nav-link group">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-home text-sm group-hover:scale-110 transition-transform"></i>
+                                Home
+                            </span>
+                        </a>
+                        <a href="aboutus.html" class="nav-link group">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-info-circle text-sm group-hover:scale-110 transition-transform"></i>
+                                About Us
+                            </span>
+                        </a>
+                    </div>
+                    
+                    <!-- Right Navigation -->
+                    <div class="flex items-center space-x-8">
+                        <a href="batch.html" class="nav-link group">
+                            <span class="flex items-center gap-2">
+                                <i class="fas fa-layer-group text-sm group-hover:scale-110 transition-transform"></i>
+                                Batches
+                            </span>
+                        </a>
+                        <div id="authSection">
+                            <button class="signup-btn group" id="signupBtn">
+                                <i class="fas fa-user-plus mr-2 group-hover:rotate-12 transition-transform"></i>Signup
+                            </button>
+                            <div class="hidden items-center space-x-3 cursor-pointer" id="userProfile" onclick="goToProfile()">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white text-sm" id="userIcon"></i>
+                                </div>
+                                <span class="text-gray-700 font-semibold" id="userGreeting">Hi User</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button class="md:hidden mobile-menu-btn flex items-center justify-center">
+                    <span class="material-icons">menu</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-4 pt-2 pb-3 space-y-1 bg-white border-t">
+                <a href="home.html" class="mobile-nav-link">Home</a>
+                <a href="aboutus.html" class="mobile-nav-link">About Us</a>
+                <a href="batch.html" class="mobile-nav-link">Batches</a>
+                <div id="mobileAuthSection">
+                    <button class="signup-btn w-full mt-3" id="mobileSignupBtn">
+                        <i class="fas fa-user-plus mr-2"></i>Signup
+                    </button>
+                    <div class="hidden w-full mt-3 p-3 bg-gray-100 rounded-lg" id="mobileUserProfile" onclick="goToProfile()">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-sm" id="mobileUserIcon"></i>
+                            </div>
+                            <span class="text-gray-700 font-semibold" id="mobileUserGreeting">Hi User</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section pt-20 pb-16 relative overflow-hidden">
+        <!-- SVG Background Decorations -->
+        <div class="absolute top-10 left-10 opacity-20">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" stroke="white" stroke-width="2" stroke-dasharray="5 5" class="animate-spin-slow"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-20 right-20 opacity-20">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M60 10 L110 110 L10 110 Z" stroke="white" stroke-width="2" fill="none" class="animate-pulse"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center" data-aos="fade-up">
+                <div class="relative inline-block mb-8">
+                    <div class="absolute inset-0 bg-white rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                    <img src="PC LOGO.png" alt="Padhle Champs Logo" class="w-32 h-32 mx-auto rounded-full shadow-2xl relative z-10 hover:scale-110 transition-transform duration-500">
+                </div>
+                <h1 class="hero-title">
+                    Welcome to <span class="text-gradient">Padhle Champs</span>
+                </h1>
+                <p class="hero-subtitle">
+                    <i class="fas fa-sparkles mr-2"></i>
+                    Empowering students with quality education and innovative learning experiences
+                    <i class="fas fa-sparkles ml-2"></i>
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="cta-primary group">
+                        <i class="fas fa-rocket mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        Get Started
+                    </button>
+                    <button class="cta-secondary group">
+                        <i class="fas fa-play mr-2 group-hover:scale-125 transition-transform"></i>
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="section-title"><i class="fas fa-star text-yellow-500 mr-3"></i>Why Choose Padhle Champs?<i class="fas fa-star text-yellow-500 ml-3"></i></h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon bg-gradient-to-br from-blue-100 to-blue-200">
+                        <i class="fas fa-graduation-cap text-blue-600 group-hover:rotate-12 transition-transform duration-300"></i>
+                    </div>
+                    <h3 class="feature-title">Expert Teachers</h3>
+                    <p class="feature-desc">Learn from industry experts and experienced educators</p>
+                </div>
+                <div class="feature-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon bg-gradient-to-br from-green-100 to-green-200">
+                        <i class="fas fa-clock text-green-600 group-hover:rotate-12 transition-transform duration-300"></i>
+                    </div>
+                    <h3 class="feature-title">Flexible Schedule</h3>
+                    <p class="feature-desc">Study at your own pace with flexible timing options</p>
+                </div>
+                <div class="feature-card group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon bg-gradient-to-br from-amber-100 to-amber-200">
+                        <i class="fas fa-trophy text-amber-600 group-hover:rotate-12 transition-transform duration-300"></i>
+                    </div>
+                    <h3 class="feature-title">Proven Results</h3>
+                    <p class="feature-desc">Join thousands of successful students who achieved their goals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="section-title text-left"><i class="fas fa-users text-blue-600 mr-3"></i>About Padhle Champs</h2>
+                    <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                        We are dedicated to providing high-quality education that empowers students to achieve their academic goals. Our platform combines modern technology with proven teaching methodologies.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center group hover:translate-x-2 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 group-hover:bg-green-500 transition-colors">
+                                <i class="fas fa-check text-green-600 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="font-medium">Interactive Learning Experience</span>
+                        </div>
+                        <div class="flex items-center group hover:translate-x-2 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 group-hover:bg-green-500 transition-colors">
+                                <i class="fas fa-check text-green-600 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="font-medium">24/7 Student Support</span>
+                        </div>
+                        <div class="flex items-center group hover:translate-x-2 transition-transform duration-300">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 group-hover:bg-green-500 transition-colors">
+                                <i class="fas fa-check text-green-600 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="font-medium">Regular Progress Tracking</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image" data-aos="fade-left">
+                    <div class="bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-2xl h-64 flex items-center justify-center relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                        <i class="fas fa-book-open text-white text-6xl group-hover:scale-110 transition-transform duration-500"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batches Section -->
+    <section id="batches" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="section-title"><i class="fas fa-layer-group text-purple-600 mr-3"></i>Our Batches<i class="fas fa-layer-group text-purple-600 ml-3"></i></h2>
+                <p class="text-gray-600 text-lg mt-4"><i class="fas fa-arrow-down mr-2 animate-bounce"></i>Choose the perfect batch that fits your goals and class</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="batch-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="batch-logo relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                        <img src="SANGHARSH.png" alt="Sangharsh Batch" class="w-18 h-16 mx-auto mb-3 rounded-3xl relative z-10">
+                    </div>
+                    <div class="batch-header">
+                        <h3 class="batch-title flex items-center justify-center gap-2">
+                            <i class="fas fa-fire text-orange-500"></i>
+                            SANGHARSH BATCH 2025
+                        </h3>
+                        <p class="batch-class"><i class="fas fa-graduation-cap mr-2"></i>Class 5</p>
+                    </div>
+                    <div class="batch-mentor">
+                        <p class="mentor-name"><i class="fas fa-chalkboard-teacher mr-2"></i>Mentor: Aarav Pandit</p>
+                    </div>
+                </div>
+                <div class="batch-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="batch-logo relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-teal-500 rounded-3xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                        <img src="MANZIL.png" alt="Manzil Batch" class="w-18 h-16 mx-auto mb-3 rounded-3xl relative z-10">
+                    </div>
+                    <div class="batch-header">
+                        <h3 class="batch-title flex items-center justify-center gap-2">
+                            <i class="fas fa-mountain text-green-600"></i>
+                            MANZIL BATCH 2025
+                        </h3>
+                        <p class="batch-class"><i class="fas fa-graduation-cap mr-2"></i>Class 5</p>
+                    </div>
+                    <div class="batch-mentor">
+                        <p class="mentor-name"><i class="fas fa-chalkboard-teacher mr-2"></i>Mentor: Aarav Pandit</p>
+                    </div>
+                </div>
+                <div class="batch-card group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="batch-logo relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                        <img src="VIGYAN.png" alt="Vigyan Batch" class="w-18 h-16 mx-auto mb-3 rounded-3xl relative z-10">
+                    </div>
+                    <div class="batch-header">
+                        <h3 class="batch-title flex items-center justify-center gap-2">
+                            <i class="fas fa-flask text-purple-600"></i>
+                            VIGYAN BATCH 2025
+                        </h3>
+                        <p class="batch-class"><i class="fas fa-graduation-cap mr-2"></i>Class 10</p>
+                    </div>
+                    <div class="batch-mentor">
+                        <p class="mentor-name"><i class="fas fa-chalkboard-teacher mr-2"></i>Mentor: Shubham Pandit</p>
+                    </div>
+                </div>
+                <div class="batch-card group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="batch-logo relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                        <img src="CODECRACK.png" alt="CodeCrack Batch" class="w-18 h-16 mx-auto mb-3 rounded-3xl relative z-10">
+                    </div>
+                    <div class="batch-header">
+                        <h3 class="batch-title flex items-center justify-center gap-2">
+                            <i class="fas fa-code text-cyan-600"></i>
+                            CODECRACK BATCH
+                        </h3>
+                        <p class="batch-class"><i class="fas fa-graduation-cap mr-2"></i>Class 7-12</p>
+                    </div>
+                    <div class="batch-mentor">
+                        <p class="mentor-name"><i class="fas fa-chalkboard-teacher mr-2"></i>Mentor: Shubham Pandit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 relative overflow-hidden">
+        <div class="absolute top-0 right-0 opacity-10">
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="80" stroke="white" stroke-width="3" stroke-dasharray="10 10"/>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-white mb-4">
+                <i class="fas fa-rocket mr-3"></i>
+                Ready to Start Your Journey?
+                <i class="fas fa-rocket ml-3"></i>
+            </h2>
+            <p class="text-blue-100 mb-8 text-lg"><i class="fas fa-users mr-2"></i>Join thousands of students who are already learning with us</p>
+            <button class="bg-white text-blue-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all hover:scale-105 hover:shadow-2xl group">
+                <i class="fas fa-arrow-right mr-2 group-hover:translate-x-2 transition-transform"></i>Join Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <i class="fas fa-graduation-cap text-3xl text-blue-400 mb-3 inline-block"></i>
+            </div>
+            <p class="text-gray-300 mb-2"><i class="fas fa-copyright mr-2"></i>2024 Padhle Champs. All rights reserved.</p>
+            <p class="text-gray-500 text-sm"><i class="fas fa-heart text-red-500 mr-2"></i>Made with passion for education</p>
+        </div>
+    </footer>
+
+    <!-- Demo Video Modal -->
+    <div id="demoModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto my-8">
+            <div class="flex justify-between items-center p-4 border-b sticky top-0 bg-white z-10">
+                <h3 class="text-xl font-bold">Demo Video</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="relative">
+                <div id="videoContainer" class="aspect-video">
+                    <iframe id="demoVideo" width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="p-4 border-t bg-gray-50">
+                    <div class="flex items-center justify-center space-x-6">
+                        <button class="reaction-btn" data-reaction="love">
+                            <i class="fas fa-heart text-red-500 text-2xl"></i>
+                            <span class="reaction-count">0</span>
+                        </button>
+                        <button class="reaction-btn" data-reaction="fire">
+                            <i class="fas fa-fire text-orange-500 text-2xl"></i>
+                            <span class="reaction-count">0</span>
+                        </button>
+                        <button class="reaction-btn" data-reaction="smile">
+                            <i class="fas fa-smile text-yellow-500 text-2xl"></i>
+                            <span class="reaction-count">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

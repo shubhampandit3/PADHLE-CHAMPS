@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="home.css">
+    
+    <!-- MathJax for LaTeX support -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <!-- Restriction Popup Styles -->
+    <style>
+        .restriction-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .restriction-overlay * {
+            pointer-events: auto !important;
+            z-index: 10000;
+        }
+        .restriction-popup {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: restrictionSlide 0.3s ease;
+        }
+        @keyframes restrictionSlide {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .restriction-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+        .blocked-status {
+            background: linear-gradient(135deg, #FEE2E2, #FECACA);
+            color: #991B1B;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid #FCA5A5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left side: Brand -->
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Padhle Champs
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Right side: XP and Streak -->
+                <div class="flex items-center space-x-3">
+                    <div class="xp-container cursor-pointer hover:scale-105 transition-all duration-300" onclick="openXPLeaderboard()" title="View XP Leaderboard">
+                        <div class="xp-icon-wrapper">
+                            <i class="fas fa-star"></i>
+                            <div class="xp-sparkle"></div>
+                        </div>
+                        <div class="xp-info">
+                            <span class="xp-label">XP</span>
+                            <span class="xp-value" id="userXP">0</span>
+                        </div>
+                    </div>
+                    <div class="streak-container">
+                        <div class="streak-icon-wrapper">
+                            <i class="fas fa-fire-flame-curved"></i>
+                            <div class="streak-flame"></div>
+                        </div>
+                        <div class="streak-info">
+                            <span class="streak-label">Streak</span>
+                            <span class="streak-value" id="userStreak">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner Carousel -->
+    <div class="hero-carousel-container">
+        <div class="hero-carousel">
+            <div class="hero-slide active">
+                <img src="welcome_padhle.png" alt="Banner 1" class="hero-image">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <h2 class="hero-title">Welcome to Padhle Champs</h2>
+                        <p class="hero-subtitle">Your journey to excellence starts here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <img src="ai.png" alt="Banner 2" class="hero-image">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <h2 class="hero-title">Learn with AI Assistance</h2>
+                        <p class="hero-subtitle">Get personalized learning experience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <img src="track_pro.png" alt="Banner 3" class="hero-image">
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <h2 class="hero-title">Track Your Progress</h2>
+                        <p class="hero-subtitle">Monitor your learning achievements</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-dots">
+            <span class="hero-dot active" data-slide="0"></span>
+            <span class="hero-dot" data-slide="1"></span>
+            <span class="hero-dot" data-slide="2"></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Welcome Section -->
+            <div class="welcome-section mb-12 relative" data-aos="fade-up">
+                <div class="floating-elements">
+                    <div class="floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="floating-icon" style="bottom: 30%; left: 20%; animation-delay: 2s;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="floating-icon" style="bottom: 20%; right: 10%; animation-delay: 1.5s;">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="floating-icon" style="top: 50%; left: 5%; animation-delay: 0.5s;">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="floating-icon" style="top: 60%; right: 8%; animation-delay: 2.5s;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <div class="welcome-badge" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-sparkles"></i>
+                    <span>Welcome Back</span>
+                </div>
+                <h1 class="welcome-title animated-gradient" id="welcomeMessage" data-aos="fade-up" data-aos-delay="300">Hi Student!</h1>
+                <p class="welcome-quote" id="dailyQuote" data-aos="fade-up" data-aos-delay="400">Ready to learn something new today?</p>
+                <div class="welcome-stats" data-aos="fade-up" data-aos-delay="500">
+                    <div class="stat-item">
+                        <i class="material-icons-round">local_fire_department</i>
+                        <span class="stat-number" id="statsStreak">0</span>
+                        <span class="stat-label">Day Streak</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="material-icons-round">emoji_events</i>
+                        <span class="stat-number" id="statsXP">0</span>
+                        <span class="stat-label">Total XP</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="material-icons-round">school</i>
+                        <span class="stat-number" id="statsBatches">0</span>
+                        <span class="stat-label">Batches</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="quick-access-section mb-8" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="section-title">Quick Access</h2>
+                <div class="quick-access-grid">
+                    <div class="quick-access-card student-only" onclick="window.location.href='my-enrolled-batches.html'">
+                        <div class="card-icon-modern blue-gradient">
+                            <i class="material-icons-round">school</i>
+                            <div class="icon-glow"></div>
+                            <div class="icon-pulse"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">My Batches</h3>
+                            <p class="card-desc">View your enrolled courses</p>
+                            <span class="batch-count blue-badge" id="batchCount">1 Batch</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card student-only" onclick="window.location.href='dashboard.html'">
+                        <div class="card-icon-modern green-gradient">
+                            <i class="material-icons-round">dashboard</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Dashboard</h3>
+                            <p class="card-desc">View progress & updates</p>
+                            <span class="batch-count orange-badge">New Updates</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='teacher-dashboard.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Teacher Dashboard</h3>
+                            <p class="card-desc">Monitor student progress</p>
+                            <span class="batch-count">Analytics</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='create-test.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Create Test</h3>
+                            <p class="card-desc">Design new tests & quizzes</p>
+                            <span class="batch-count">New Test</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='create-dpp.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Create DPP</h3>
+                            <p class="card-desc">Design daily practice problems</p>
+                            <span class="batch-count">New DPP</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='test-teacher-analysis.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Test Analysis</h3>
+                            <p class="card-desc">Analyze student test performance</p>
+                            <span class="batch-count">Analytics</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='dpp-analysis-teacher.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">DPP Analysis</h3>
+                            <p class="card-desc">Monitor DPP performance</p>
+                            <span class="batch-count">DPP Stats</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='website-notification.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Send Notifications</h3>
+                            <p class="card-desc">Send important updates to all students</p>
+                            <span class="batch-count">Notify All</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='create-notification-batch.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Batch Notifications</h3>
+                            <p class="card-desc">Send notifications to specific batches</p>
+                            <span class="batch-count">Batch Notify</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='all-batches-teacher.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">All Batches</h3>
+                            <p class="card-desc">View and manage all batches</p>
+                            <span class="batch-count">Manage</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='note-interactive-mode.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Smart Notes</h3>
+                            <p class="card-desc">Create lesson plans & to-do lists</p>
+                            <span class="batch-count">AI Tools</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='infographic-chapters.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Infographic of Chapters</h3>
+                            <p class="card-desc">Visual learning with infographics</p>
+                            <span class="batch-count">Visual Learning</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='feedback-form.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Feedback Management</h3>
+                            <p class="card-desc">Manage feedback forms and view responses</p>
+                            <span class="batch-count">Feedback</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='block-students.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-user-slash"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Block Students</h3>
+                            <p class="card-desc">Manage student access and restrictions</p>
+                            <span class="batch-count">Manage Access</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='teacher-contact-us.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Student Messages</h3>
+                            <p class="card-desc">View and reply to student contact messages</p>
+                            <span class="batch-count">Messages</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+
+                    
+
+                    <div class="quick-access-card student-only" onclick="window.location.href='test-analysis.html'">
+                        <div class="card-icon-modern indigo-gradient">
+                            <i class="material-icons-round">analytics</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Test Analysis</h3>
+                            <p class="card-desc">View your test performance</p>
+                            <span class="batch-count indigo-badge">Analytics</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card student-only" onclick="window.location.href='dpp-analysis.html'">
+                        <div class="card-icon-modern green-gradient">
+                            <i class="material-icons-round">assignment</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">DPP Analysis</h3>
+                            <p class="card-desc">View your DPP performance</p>
+                            <span class="batch-count green-badge">DPP Stats</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card student-only" onclick="askDoubts()">
+                        <div class="card-icon-modern red-gradient">
+                            <i class="material-icons-round">help</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Ask Doubts</h3>
+                            <p class="card-desc">Get help with your queries</p>
+                            <span class="batch-count red-badge">Get Help</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='teacher-doubts.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Manage Doubts</h3>
+                            <p class="card-desc">View and respond to student queries</p>
+                            <span class="batch-count">Answer Doubts</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card" onclick="window.location.href='eduvia.html'">
+                        <div class="card-icon-modern purple-gradient">
+                            <i class="material-icons-round">smart_toy</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Eduvia AI</h3>
+                            <p class="card-desc">Your AI learning assistant</p>
+                            <span class="batch-count purple-badge">Chat Now</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card" onclick="window.location.href='test-leaderboard.html'">
+                        <div class="card-icon-modern yellow-gradient">
+                            <i class="material-icons-round">emoji_events</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Test Leaderboard</h3>
+                            <p class="card-desc">View test rankings & your position</p>
+                            <span class="batch-count yellow-badge">Rankings</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card student-only" onclick="window.location.href='progress-dashboard.html'">
+                        <div class="card-icon-modern green-gradient">
+                            <i class="material-icons-round">trending_up</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Progress Dashboard</h3>
+                            <p class="card-desc">Track your learning progress</p>
+                            <span class="batch-count green-badge">View Progress</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card" onclick="window.location.href='community.html'">
+                        <div class="card-icon-modern purple-gradient">
+                            <i class="material-icons-round">groups</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Community</h3>
+                            <p class="card-desc">Connect with students</p>
+                            <span class="batch-count purple-badge">Join Discussion</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    <div class="quick-access-card student-only" onclick="window.location.href='creative-corner.html'">
+                        <div class="card-icon-modern pink-gradient">
+                            <i class="material-icons-round">palette</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Creative Corner</h3>
+                            <p class="card-desc">Share poems, art & projects</p>
+                            <span class="batch-count pink-badge">Share Creation</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card student-only" onclick="window.location.href='note-interactive-mode.html'">
+                        <div class="card-icon-modern purple-gradient">
+                            <i class="material-icons-round">note_alt</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Interactive Notes</h3>
+                            <p class="card-desc">Create & organize smart notes with AI</p>
+                            <span class="batch-count purple-badge">AI Powered</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card student-only" onclick="window.location.href='infographic-chapters.html'">
+                        <div class="card-icon-modern orange-gradient">
+                            <i class="material-icons-round">bar_chart</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Infographic of Chapters</h3>
+                            <p class="card-desc">Visual learning with infographics</p>
+                            <span class="batch-count orange-badge">Visual Learning</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card" onclick="window.location.href='profile.html'">
+                        <div class="card-icon-modern blue-gradient">
+                            <i class="material-icons-round">account_circle</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Profile</h3>
+                            <p class="card-desc">View & edit your profile</p>
+                            <span class="batch-count blue-badge">My Profile</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card student-only" onclick="window.location.href='student-complain-center.html'">
+                        <div class="card-icon-modern red-gradient">
+                            <i class="material-icons-round">report_problem</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Report Issues</h3>
+                            <p class="card-desc">Submit complaints about technical issues</p>
+                            <span class="batch-count red-badge">Report Problem</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card teacher-only" onclick="window.location.href='teacher-complain-center.html'" style="display: none;">
+                        <div class="card-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Manage Complaints</h3>
+                            <p class="card-desc">View and resolve student complaints</p>
+                            <span class="batch-count">Complaint Center</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <div class="quick-access-card student-only" onclick="window.location.href='student-complaint-status.html'">
+                        <div class="card-icon-modern green-gradient">
+                            <i class="material-icons-round">fact_check</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Complaint Status</h3>
+                            <p class="card-desc">Track your submitted complaints</p>
+                            <span class="batch-count green-badge">Check Status</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card" onclick="window.location.href='privacy-policy.html'">
+                        <div class="card-icon-modern indigo-gradient">
+                            <i class="material-icons-round">shield</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Privacy Policy</h3>
+                            <p class="card-desc">Learn how we protect your data</p>
+                            <span class="batch-count indigo-badge">Data Protection</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-access-card" onclick="window.location.href='brainstream.html'">
+                        <div class="card-icon-modern cyan-gradient">
+                            <i class="material-icons-round">stream</i>
+                            <div class="icon-glow"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Brainstream</h3>
+                            <p class="card-desc">Interactive video learning platform</p>
+                            <span class="batch-count cyan-badge">Watch & Learn</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="material-icons-round">arrow_forward_ios</i>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+
+            <!-- All Batches Section (Teacher Only) -->
+            <div style="display: none;">
+                <h2>All Batches</h2>
+                <div>
+                    <!-- Sangharsh Batch -->
+                    <div onclick="manageBatch('sangharsh')">
+                        <div>
+                            <img src="SANGHARSH.png" alt="Sangharsh Batch">
+                            <div>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Sangharsh 2025</h3>
+                            <p>Class 5 Comprehensive</p>
+                            <div>
+                                <div>
+                                    <i class="fas fa-users"></i>
+                                    <span id="sangharshStudents">0</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-book"></i>
+                                    <span>5 Subjects</span>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); manageBatch('sangharsh')">
+                                <i class="fas fa-cog"></i> Manage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Manzil Batch -->
+                    <div onclick="manageBatch('manzil')">
+                        <div>
+                            <img src="MANZIL.png" alt="Manzil Batch">
+                            <div>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Manzil 2025</h3>
+                            <p>Advanced Class 5</p>
+                            <div>
+                                <div>
+                                    <i class="fas fa-users"></i>
+                                    <span id="manzilStudents">0</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-book"></i>
+                                    <span>5 Subjects</span>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); manageBatch('manzil')">
+                                <i class="fas fa-cog"></i> Manage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Vigyan Batch -->
+                    <div onclick="manageBatch('vigyan')">
+                        <div>
+                            <img src="VIGYAN.png" alt="Vigyan Batch">
+                            <div>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Vigyan 2025</h3>
+                            <p>Class 10 Science</p>
+                            <div>
+                                <div>
+                                    <i class="fas fa-users"></i>
+                                    <span id="vigyanStudents">0</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-flask"></i>
+                                    <span>3 Subjects</span>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); manageBatch('vigyan')">
+                                <i class="fas fa-cog"></i> Manage
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CodeCrack Batch -->
+                    <div onclick="manageBatch('codecrack')">
+                        <div>
+                            <img src="CODECRACK.png" alt="CodeCrack Batch">
+                            <div>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>CodeCrack 2025</h3>
+                            <p>Programming Focus</p>
+                            <div>
+                                <div>
+                                    <i class="fas fa-users"></i>
+                                    <span id="codecrackStudents">0</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-code"></i>
+                                    <span>Coding</span>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); manageBatch('codecrack')">
+                                <i class="fas fa-cog"></i> Manage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+    <!-- Bot Chat -->
+    <div id="botChat" class="bot-chat hidden">
+        <div class="bot-header">
+            <div class="bot-avatar">
+                <i class="fas fa-robot text-white"></i>
+            </div>
+            <div class="bot-info">
+                <h4 class="bot-name">Learning Bot</h4>
+                <span class="bot-status">Online</span>
+            </div>
+            <button onclick="closeBotChat()" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="bot-messages" id="botMessages">
+            <div class="bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hello! I'm your learning assistant. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="bot-input">
+            <input type="text" placeholder="Type your message..." id="botInput">
+            <button onclick="sendBotMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div id="dashboardModal" class="dashboard-modal hidden">
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Student Dashboard</h2>
+                <button onclick="closeDashboard()" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="dashboard-body">
+                <!-- Bot Remarks Section -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <i class="fas fa-robot text-blue-600 mr-2"></i>
+                        <h3>Bot Remarks & Motivation</h3>
+                    </div>
+                    <div id="botRemarks" class="remarks-container">
+                        <div class="remark-card">
+                            <div class="remark-icon">
+                                <i class="fas fa-star text-amber-500"></i>
+                            </div>
+                            <div class="remark-content">
+                                <p class="remark-text">Great progress this week! You've been consistent with your studies.</p>
+                                <span class="remark-time">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Updates Section -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <i class="fas fa-bell text-green-600 mr-2"></i>
+                        <h3>Latest Updates</h3>
+                    </div>
+                    <div id="websiteUpdates" class="updates-container">
+                        <div class="update-card">
+                            <div class="update-badge">NEW</div>
+                            <div class="update-content">
+                                <h4 class="update-title">New Practice Tests Added</h4>
+                                <p class="update-desc">We've added 50+ new practice questions for all batches</p>
+                                <span class="update-time">1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="update-card">
+                            <div class="update-badge" style="background: #10B981;">UPDATE</div>
+                            <div class="update-content">
+                                <h4 class="update-title">Bot Assistant Improved</h4>
+                                <p class="update-desc">Enhanced AI responses and better learning guidance</p>
+                                <span class="update-time">3 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="dashboard-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-line text-purple-600 mr-2"></i>
+                        <h3>Your Progress</h3>
+                    </div>
+                    <div class="progress-overview">
+                        <div class="progress-stat">
+                            <div class="stat-value" id="totalXP">0</div>
+                            <div class="stat-label">Total XP</div>
+                        </div>
+                        <div class="progress-stat">
+                            <div class="stat-value" id="currentStreak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="progress-stat">
+                            <div class="stat-value" id="completedTasks">0</div>
+                            <div class="stat-label">Tasks Done</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="home.js"></script>
+    
+
+</body>
+</html>

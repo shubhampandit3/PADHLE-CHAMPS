@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); background-attachment: fixed; }
+        .profile-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 2px solid rgba(255, 255, 255, 0.3); }
+        .modern-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modern-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 20px 50px rgba(102, 126, 234, 0.5); }
+        .input-field { transition: all 0.3s ease; border: 2px solid #e5e7eb; }
+        .input-field:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); outline: none; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <nav class="bg-white/95 backdrop-blur-lg shadow-2xl sticky top-0 z-50 border-b-2 border-purple-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center space-x-2 sm:space-x-3 group cursor-pointer">
+                    <svg class="w-8 h-8 sm:w-10 sm:h-10 float-animation" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="25" cy="25" r="23" fill="url(#grad1)" stroke="url(#grad2)" stroke-width="2"/>
+                        <path d="M25 10 L25 25 L35 25" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="25" cy="25" r="3" fill="white"/>
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#764ba2;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#667eea;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">Padhle Champs</h1>
+                </div>
+                <button onclick="goBack()" class="flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-lg text-gray-700 hover:text-purple-600 font-semibold transition-all hover:bg-purple-50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Back</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-6 sm:py-8 lg:py-12 px-4">
+        <div class="max-w-3xl mx-auto">
+            <div class="profile-card rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8" data-aos="fade-up">
+                <div class="text-center mb-6 sm:mb-8">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i id="profileIcon" class="fas fa-user text-3xl sm:text-4xl text-white"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Edit Profile</h2>
+                    <p class="text-sm sm:text-base text-gray-600">Update your information</p>
+                </div>
+
+                <form id="editProfileForm" class="space-y-4 sm:space-y-6">
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" class="input-field w-full px-4 py-3 rounded-xl" placeholder="Enter your name" required>
+                    </div>
+
+                    <!-- Role (Read-only) -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+                        <input type="text" id="role" class="input-field w-full px-4 py-3 rounded-xl bg-gray-100" readonly>
+                    </div>
+
+                    <!-- Student Fields -->
+                    <div id="studentFields" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Class</label>
+                            <select id="class" class="input-field w-full px-4 py-3 rounded-xl">
+                                <option value="5">Class 5</option>
+                                <option value="6">Class 6</option>
+                                <option value="7">Class 7</option>
+                                <option value="8">Class 8</option>
+                                <option value="9">Class 9</option>
+                                <option value="10">Class 10</option>
+                                <option value="11">Class 11</option>
+                                <option value="12">Class 12</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">School Name</label>
+                            <input type="text" id="schoolName" class="input-field w-full px-4 py-3 rounded-xl" placeholder="Enter school name">
+                        </div>
+                    </div>
+
+                    <!-- Teacher Fields -->
+                    <div id="teacherFields" class="hidden">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Age</label>
+                        <input type="number" id="age" class="input-field w-full px-4 py-3 rounded-xl" placeholder="Enter your age" min="18" max="100">
+                    </div>
+
+                    <!-- Success Message -->
+                    <div id="successMessage" class="hidden bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-xl flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Profile updated successfully!</span>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="hidden bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 rounded-xl flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <span id="errorText">An error occurred</span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button type="submit" class="modern-btn text-white px-6 py-3 rounded-xl font-bold text-base shadow-2xl flex items-center justify-center space-x-2 flex-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Save Changes</span>
+                        </button>
+                        <button type="button" onclick="goBack()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-bold text-base shadow-lg transition-all flex items-center justify-center space-x-2 flex-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                            <span>Cancel</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+
+        function loadUserData() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = JSON.parse(userData);
+            document.getElementById('name').value = currentUser.name || '';
+            document.getElementById('role').value = currentUser.role || '';
+
+            const profileIcon = document.getElementById('profileIcon');
+            if (currentUser.role === 'Student') {
+                profileIcon.className = 'fas fa-user-graduate text-3xl sm:text-4xl text-white';
+                document.getElementById('studentFields').classList.remove('hidden');
+                document.getElementById('class').value = currentUser.class || '5';
+                document.getElementById('schoolName').value = currentUser.schoolName || '';
+            } else {
+                profileIcon.className = 'fas fa-chalkboard-teacher text-3xl sm:text-4xl text-white';
+                document.getElementById('teacherFields').classList.remove('hidden');
+                document.getElementById('age').value = currentUser.age || '';
+            }
+        }
+
+        document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                showError('Name is required');
+                return;
+            }
+
+            currentUser.name = name;
+
+            if (currentUser.role === 'Student') {
+                currentUser.class = document.getElementById('class').value;
+                currentUser.schoolName = document.getElementById('schoolName').value.trim();
+            } else {
+                const age = document.getElementById('age').value;
+                if (age && (age < 18 || age > 100)) {
+                    showError('Age must be between 18 and 100');
+                    return;
+                }
+                currentUser.age = age;
+            }
+
+            localStorage.setItem('padhleChamps_user', JSON.stringify(currentUser));
+            showSuccess();
+            
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 1500);
+        });
+
+        function showSuccess() {
+            document.getElementById('successMessage').classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorMessage').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+
+        function goBack() {
+            window.location.href = 'profile.html';
+        }
+    </script>
+</body>
+</html>

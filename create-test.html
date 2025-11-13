@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+        .gradient-text { background: linear-gradient(135deg, #06b6d4, #0891b2, #0e7490); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05); }
+        .glass-effect { backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .fade-in { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; opacity: 0; }
+        .slide-up { animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.12); }
+        .icon-bounce { animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); } 40%, 43% { transform: translate3d(0, -8px, 0); } 70% { transform: translate3d(0, -4px, 0); } 90% { transform: translate3d(0, -2px, 0); } }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hover-lift:hover { transform: none; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); }
+            .mobile-hidden { display: none !important; }
+            .mobile-text-sm { font-size: 0.875rem; }
+            .mobile-p-4 { padding: 1rem; }
+            .mobile-gap-4 { gap: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-text-xs { font-size: 0.75rem; }
+            .mobile-p-3 { padding: 0.75rem; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 mr-3 sm:mr-4 icon-bounce">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white">
+                            <path d="M3 3V21L12 17L21 21V3H3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor" fill-opacity="0.2"/>
+                            <path d="M9 9L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M9 13L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl sm:text-2xl font-bold text-white font-poppins tracking-tight">Test Creator Hub</span>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-6">
+                    <a href="home.html" class="glass-effect px-3 sm:px-4 py-2 rounded-xl text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="hidden sm:inline font-medium">Home</span>
+                    </a>
+                    <div class="glass-effect px-3 sm:px-4 py-2 rounded-xl flex items-center">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="font-semibold text-white text-sm sm:text-base" id="username">Teacher</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Test Details Form -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 fade-in hover-lift">
+            <div class="flex items-center mb-6 sm:mb-8">
+                <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 16H12V12H11M12 8H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">Test Configuration</h2>
+            </div>
+
+            <form id="testDetailsForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 7V4C4 3.46957 4.21071 2.96086 4.58579 2.58579C4.96086 2.21071 5.46957 2 6 2H18C18.5304 2 19.0391 2.21071 19.4142 2.58579C19.7893 2.96086 20 3.46957 20 4V7M4 7C4 6.46957 4.21071 5.96086 4.58579 5.58579C4.96086 5.21071 5.46957 5 6 5H18C18.5304 5 19.0391 5.21071 19.4142 5.58579C19.7893 5.96086 20 6.46957 20 7M4 7V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Test Title
+                    </label>
+                    <input type="text" id="testTitle" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="✨ Enter an engaging test title..." required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C23 18.1645 22.7155 17.3541 22.2094 16.6977C21.7033 16.0414 20.9999 15.5766 20.2 15.3746" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8003 3.33204 17.5037 3.79668 18.0098 4.45302C18.5159 5.10936 18.8004 5.91973 18.8004 6.755C18.8004 7.59027 18.5159 8.40064 18.0098 9.05698C17.5037 9.71332 16.8003 10.178 16 10.38" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Target Batch
+                    </label>
+                    <select id="testBatch" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                        <option value="">🎯 Select Target Batch</option>
+                        <option value="sangharsh">🔥 Sangharsh Batch 2025</option>
+                        <option value="manzil">🎯 Manzil Batch 2025</option>
+                        <option value="vigyan">🧪 Vigyan Batch 2025</option>
+                        <option value="codecrack">💻 CodeCrack Batch 2025</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Duration (minutes)
+                    </label>
+                    <input type="number" id="testDuration" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="⏱️ 60" min="1" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Start Date
+                    </label>
+                    <input type="date" id="startDate" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-100 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Start Time
+                    </label>
+                    <input type="time" id="startTime" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-100 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        End Date
+                    </label>
+                    <input type="date" id="endDate" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-red-100 focus:border-red-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        End Time
+                    </label>
+                    <input type="time" id="endTime" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-red-100 focus:border-red-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                </div>
+            </form>
+        </div>
+
+        <!-- Question Adding Section -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 slide-up hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8">
+                <div class="flex items-center mb-4 sm:mb-0">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">Question Builder</h2>
+                </div>
+                <div class="bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-800 px-4 sm:px-6 py-2 sm:py-3 rounded-2xl font-bold text-sm sm:text-base shadow-sm">
+                    <svg class="w-4 h-4 inline mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Total: <span id="questionCount">0</span> Questions
+                </div>
+            </div>
+
+            <!-- Question Form -->
+            <div class="border-2 border-dashed border-cyan-200 rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 bg-gradient-to-br from-cyan-50/30 to-blue-50/30 hover:border-cyan-300 transition-all duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 6.253V10C12 10.2652 12.1054 10.5196 12.2929 10.7071C12.4804 10.8946 12.7348 11 13 11H16.747M18 13V20C18 20.5304 17.7893 21.0391 17.4142 21.4142C17.0391 21.7893 16.5304 22 16 22H8C7.46957 22 6.96086 21.7893 6.58579 21.4142C6.21071 21.0391 6 20.5304 6 20V4C6 3.46957 6.21071 2.96086 6.58579 2.58579C6.96086 2.21071 7.46957 2 8 2H12.747C13.0122 2 13.2666 2.10536 13.4541 2.29289L17.7071 6.54594C17.8946 6.73347 18 6.98783 18 7.253V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Subject
+                        </label>
+                        <select id="questionSubject" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" onchange="updateChapters()">
+                            <option value="">📚 Choose Subject</option>
+                            <option value="mathematics">🔢 Mathematics</option>
+                            <option value="science">🔬 Science</option>
+                            <option value="english">📖 English</option>
+                            <option value="social_science">🌍 Social Science</option>
+                            <option value="computer">💻 Computer</option>
+                            <option value="physics">⚛️ Physics</option>
+                            <option value="chemistry">🧪 Chemistry</option>
+                            <option value="biology">🧬 Biology</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Chapter
+                        </label>
+                        <select id="questionChapter" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" onchange="updateTopics()">
+                            <option value="">📑 Select Chapter</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Topic
+                        </label>
+                        <select id="questionTopic" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white">
+                            <option value="">🎯 Select Topic</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-purple-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Question Type
+                    </label>
+                    <select id="questionType" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" onchange="toggleQuestionType()">
+                        <option value="single">🔘 Single Choice (MCQ)</option>
+                        <option value="multiple">🔢 Multiple Choice (Select Multiple)</option>
+                        <option value="type">✍️ Type Answer (Number/Word)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-cyan-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.228 9C8.549 8.33167 9.025 7.76811 9.644 7.40913C10.263 7.05016 10.997 6.91894 11.712 7.03871C12.427 7.15849 13.075 7.52152 13.543 8.06353C14.011 8.60553 14.269 9.29152 14.268 10C14.268 12 11.268 13 11.268 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.268 17H11.278" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Question Statement
+                    </label>
+                    <textarea id="questionText" rows="4" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-cyan-100 focus:border-cyan-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white resize-none" placeholder="❓ Write your question here... Be clear and concise!"></textarea>
+                </div>
+
+                <!-- MCQ Options -->
+                <div id="mcqOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">A</div>
+                            Option A
+                        </label>
+                        <input type="text" id="optionA" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🅰️ Enter option A...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">B</div>
+                            Option B
+                        </label>
+                        <input type="text" id="optionB" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-red-100 focus:border-red-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🅱️ Enter option B...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">C</div>
+                            Option C
+                        </label>
+                        <input type="text" id="optionC" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🄭 Enter option C...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">D</div>
+                            Option D
+                        </label>
+                        <input type="text" id="optionD" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🄳 Enter option D...">
+                    </div>
+                </div>
+
+                <!-- Type Answer -->
+                <div id="typeAnswer" class="mb-6" style="display: none;">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H16C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18V13M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Correct Answer
+                    </label>
+                    <input type="text" id="typeCorrectAnswer" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-100 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="✍️ Enter correct answer (number or word)">
+                    <p class="text-xs sm:text-sm text-green-600 mt-2 font-medium flex items-center">
+                        <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 16H12V12H11M12 8H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        For numbers: exact value | For words: case-insensitive matching
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                    <!-- Single Choice Answer -->
+                    <div id="singleAnswer">
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Correct Answer
+                        </label>
+                        <select id="correctAnswer" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-100 focus:border-green-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white">
+                            <option value="">✅ Select Correct Answer</option>
+                            <option value="A">🅰️ Option A</option>
+                            <option value="B">🅱️ Option B</option>
+                            <option value="C">🄭 Option C</option>
+                            <option value="D">🄳 Option D</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Multiple Choice Answer -->
+                    <div id="multipleAnswer" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Correct Answers (Select Multiple)</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="checkbox" id="correctA" class="mr-2"> Option A</label>
+                            <label class="flex items-center"><input type="checkbox" id="correctB" class="mr-2"> Option B</label>
+                            <label class="flex items-center"><input type="checkbox" id="correctC" class="mr-2"> Option C</label>
+                            <label class="flex items-center"><input type="checkbox" id="correctD" class="mr-2"> Option D</label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-amber-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Marks
+                        </label>
+                        <input type="number" id="questionMarks" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-amber-100 focus:border-amber-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="⭐ 4" min="1" value="4">
+                    </div>
+                </div>
+
+                <button type="button" onclick="addQuestion()" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-4 px-8 rounded-2xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2"/>
+                        <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Add Question to Test
+                </button>
+            </div>
+        </div>
+
+        <!-- Questions List -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 slide-up hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center mb-6 sm:mb-8">
+                <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold gradient-text font-poppins">Question Bank</h3>
+            </div>
+            <div id="questionsList" class="space-y-4 sm:space-y-6">
+                <div class="text-center py-12 text-gray-500">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <p class="text-lg font-medium mb-2">No questions added yet</p>
+                    <p class="text-sm text-gray-400">Start building your test by adding questions above ⬆️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Test Buttons -->
+        <div class="text-center space-y-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                <button onclick="saveDraft()" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-8 rounded-2xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 2.58579C3.96086 2.21071 4.46957 2 5 2H16L21 7V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="7,3 7,8 15,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Save as Draft
+                </button>
+                <button onclick="showSubjectChapterModal()" class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-4 px-8 rounded-2xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.5 16.5C4.5 17.8807 5.61929 19 7 19H17C18.3807 19 19.5 17.8807 19.5 16.5V10.9142C19.5 10.649 19.3946 10.3946 19.2071 10.2071L13.7929 4.79289C13.6054 4.60536 13.351 4.5 13.0858 4.5H7C5.61929 4.5 4.5 5.61929 4.5 7V16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Create Test
+                </button>
+            </div>
+            <button onclick="showDraftsModal()" class="text-cyan-600 hover:text-cyan-800 font-semibold text-lg transition-colors duration-300 flex items-center justify-center mx-auto">
+                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7M3 7C3 6.46957 3.21071 5.96086 3.58579 5.58579C3.96086 5.21071 4.46957 5 5 5H19C19.5304 5 20.0391 5.21071 20.4142 5.58579C20.7893 5.96086 21 6.46957 21 7M3 7V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 12H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Load Saved Draft
+            </button>
+        </div>
+    </div>
+
+    <!-- Drafts Modal -->
+    <div id="draftsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex items-center justify-between mb-6 sm:mb-8">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 7C3 6.46957 3.21071 5.96086 3.58579 5.58579C3.96086 5.21071 4.46957 5 5 5H19C19.5304 5 20.0391 5.21071 20.4142 5.58579C20.7893 5.96086 21 6.46957 21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 7V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">Load Test Draft</h2>
+                </div>
+                <button onclick="closeDraftsModal()" class="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-xl">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="draftsList" class="space-y-4">
+                <!-- Drafts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Subject & Chapter Selection Modal -->
+    <div id="subjectChapterModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex items-center justify-between mb-6 sm:mb-8">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12S4 4 12 4S23 12 23 12S20 20 12 20S1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold gradient-text font-poppins">Test Visibility</h2>
+                </div>
+                <button onclick="closeSubjectChapterModal()" class="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-xl">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 mb-6">
+                <p class="text-blue-800 font-medium text-sm sm:text-base flex items-center">
+                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 16H12V12H11M12 8H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Choose where students can find this test
+                </p>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Subject Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Select Subjects:</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="mathematics" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-calculator text-blue-500 mr-2"></i>
+                            <span>Mathematics</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="science" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-flask text-green-500 mr-2"></i>
+                            <span>Science</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="english" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-book-open text-red-500 mr-2"></i>
+                            <span>English</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="social_science" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-globe text-yellow-500 mr-2"></i>
+                            <span>Social Science</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="computer" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-laptop-code text-purple-500 mr-2"></i>
+                            <span>Computer</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="physics" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-atom text-indigo-500 mr-2"></i>
+                            <span>Physics</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="chemistry" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-vial text-orange-500 mr-2"></i>
+                            <span>Chemistry</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                            <input type="checkbox" value="biology" class="subject-checkbox mr-3" onchange="updateChapterOptions()">
+                            <i class="fas fa-dna text-teal-500 mr-2"></i>
+                            <span>Biology</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Chapter Selection -->
+                <div id="chapterSelectionContainer" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Select Chapters:</label>
+                    <div id="chapterOptions" class="space-y-3 max-h-60 overflow-y-auto">
+                        <!-- Chapter options will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 mt-8">
+                <button onclick="closeSubjectChapterModal()" class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold">
+                    Cancel
+                </button>
+                <button onclick="createTestWithSelection()" class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-2xl hover:from-cyan-700 hover:to-blue-700 transition-all duration-300 font-semibold flex items-center justify-center">
+                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.5 16.5C4.5 17.8807 5.61929 19 7 19H17C18.3807 19 19.5 17.8807 19.5 16.5V10.9142C19.5 10.649 19.3946 10.3946 19.2071 10.2071L13.7929 4.79289C13.6054 4.60536 13.351 4.5 13.0858 4.5H7C5.61929 4.5 4.5 5.61929 4.5 7V16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Create Test
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let questions = [];
+        let questionCounter = 0;
+        let selectedSubjectsChapters = {};
+        let currentDraftId = null;
+        let autoSaveInterval;
+
+        // Subject-Chapter mapping for test visibility
+        const batchChapters = {
+            'sangharsh': {
+                'english': ['warmth-candle', 'my-shadow', 'leisure'],
+                'science': ['circulatory-system', 'skeletal-system'],
+                'social_science': ['evolution-humans'],
+                'computer': ['simple-circuits']
+            },
+            'manzil': {
+                'mathematics': ['foundation-math'],
+                'science': ['foundation-science'],
+                'english': ['foundation-english']
+            },
+            'vigyan': {
+                'physics': ['mechanics', 'thermodynamics'],
+                'chemistry': ['atomic-structure', 'chemical-bonding'],
+                'biology': ['cell-biology', 'genetics']
+            },
+            'codecrack': {
+                'computer': ['html-basics', 'css-styling', 'javascript-fundamentals'],
+                'mathematics': ['algorithms', 'data-structures']
+            }
+        };
+
+        // Subject-Chapter-Topic mapping for question creation
+        const subjectData = {
+            mathematics: {
+                chapters: {
+                    'algebra': ['Linear Equations', 'Quadratic Equations', 'Polynomials'],
+                    'geometry': ['Triangles', 'Circles', 'Coordinate Geometry'],
+                    'trigonometry': ['Basic Ratios', 'Identities', 'Heights and Distances']
+                }
+            },
+            science: {
+                chapters: {
+                    'the circulatory system': ['The Human Circulatory System', 'Heart', 'Blood', 'Blood Vessels', 'Process Of Blood Circulation', 'Heartbeat And Pulse', 'For A Healthy Heart', 'Yoga For A Healthy Heart'],
+                    'the skeletal system': ['The Skeletal System', 'The Skull', 'The Backbone', 'The Ribcage', 'The Limbs', 'Funtions Of A Skeleton', 'Joints', 'Hinge Joints', 'Pivot Joint', 'Gliding Joint', 'Ball-And-Socket Joint', 'Muscles', 'Types Of Muscles', 'How Muscles Work?', 'Care Of Bones And Muscles', 'Importance Of COrrect Posture And Exercise'],
+                }
+            },
+            social_science: {
+                chapters: {
+                    'the evolution of human beings': [],
+                }
+            },
+            english: {
+                chapters: {
+                    'the warmth of a candle': ['Prose'],
+                    'my shadow': ['Poetry'],
+                    'leisure': ['Poetry'],
+                }
+            }
+        };
+
+        // Load user data and start auto-save
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    document.getElementById('username').textContent = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            
+            // Start auto-save every 30 seconds
+            startAutoSave();
+        });
+        
+        function startAutoSave() {
+            autoSaveInterval = setInterval(() => {
+                if (hasUnsavedChanges()) {
+                    autoSaveDraft();
+                }
+            }, 30000); // Auto-save every 30 seconds
+        }
+        
+        function hasUnsavedChanges() {
+            const title = document.getElementById('testTitle').value;
+            return title.trim() !== '' || questions.length > 0;
+        }
+        
+        async function autoSaveDraft() {
+            if (!hasUnsavedChanges()) return;
+            
+            try {
+                const draftData = getDraftData();
+                draftData.title = draftData.title || 'Auto-saved Draft';
+                draftData.isAutoSave = true;
+                
+                if (currentDraftId) {
+                    await database.ref(`drafts/${currentDraftId}`).update(draftData);
+                } else {
+                    const draftRef = database.ref('drafts').push();
+                    currentDraftId = draftRef.key;
+                    await draftRef.set(draftData);
+                }
+            } catch (error) {
+                console.error('Auto-save failed:', error);
+            }
+        }
+        
+        function getDraftData() {
+            return {
+                title: document.getElementById('testTitle').value,
+                batch: document.getElementById('testBatch').value,
+                duration: document.getElementById('testDuration').value,
+                startDate: document.getElementById('startDate').value,
+                startTime: document.getElementById('startTime').value,
+                endDate: document.getElementById('endDate').value,
+                endTime: document.getElementById('endTime').value,
+                questions: questions,
+                createdBy: JSON.parse(localStorage.getItem('padhleChamps_user'))?.name || 'Teacher',
+                lastModified: Date.now()
+            };
+        }
+        
+        async function saveDraft() {
+            if (!hasUnsavedChanges()) {
+                alert('No changes to save');
+                return;
+            }
+            
+            const title = document.getElementById('testTitle').value;
+            if (!title.trim()) {
+                alert('Please enter a test title before saving draft');
+                return;
+            }
+            
+            try {
+                const draftData = getDraftData();
+                draftData.isAutoSave = false;
+                
+                if (currentDraftId) {
+                    await database.ref(`drafts/${currentDraftId}`).update(draftData);
+                } else {
+                    const draftRef = database.ref('drafts').push();
+                    currentDraftId = draftRef.key;
+                    await draftRef.set(draftData);
+                }
+                
+                alert('Draft saved successfully!');
+            } catch (error) {
+                console.error('Error saving draft:', error);
+                alert('Error saving draft. Please try again.');
+            }
+        }
+        
+        async function showDraftsModal() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const teacherName = userData?.name || 'Teacher';
+                
+                const draftsSnapshot = await database.ref('drafts')
+                    .orderByChild('createdBy')
+                    .equalTo(teacherName)
+                    .once('value');
+                
+                const drafts = [];
+                draftsSnapshot.forEach(childSnapshot => {
+                    const draft = childSnapshot.val();
+                    draft.id = childSnapshot.key;
+                    drafts.push(draft);
+                });
+                
+                displayDrafts(drafts);
+                document.getElementById('draftsModal').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading drafts:', error);
+                alert('Error loading drafts');
+            }
+        }
+        
+        function displayDrafts(drafts) {
+            const container = document.getElementById('draftsList');
+            
+            if (drafts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-folder-open text-4xl mb-4"></i>
+                        <p>No drafts found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort drafts by last modified (newest first)
+            drafts.sort((a, b) => b.lastModified - a.lastModified);
+            
+            container.innerHTML = drafts.map(draft => {
+                const lastModified = new Date(draft.lastModified).toLocaleString();
+                const questionCount = draft.questions?.length || 0;
+                const autoSaveLabel = draft.isAutoSave ? ' (Auto-saved)' : '';
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-900">${draft.title || 'Untitled Draft'}${autoSaveLabel}</h3>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    <span class="mr-4">Batch: ${draft.batch || 'Not selected'}</span>
+                                    <span class="mr-4">Questions: ${questionCount}</span>
+                                    <span>Modified: ${lastModified}</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="loadDraft('${draft.id}')" class="bg-cyan-600 text-white px-4 py-2 rounded hover:bg-cyan-700 text-sm">
+                                    <i class="fas fa-upload mr-1"></i>Load
+                                </button>
+                                <button onclick="deleteDraft('${draft.id}')" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 text-sm">
+                                    <i class="fas fa-trash mr-1"></i>Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        async function loadDraft(draftId) {
+            try {
+                const draftSnapshot = await database.ref(`drafts/${draftId}`).once('value');
+                const draft = draftSnapshot.val();
+                
+                if (!draft) {
+                    alert('Draft not found');
+                    return;
+                }
+                
+                // Load form data
+                document.getElementById('testTitle').value = draft.title || '';
+                document.getElementById('testBatch').value = draft.batch || '';
+                document.getElementById('testDuration').value = draft.duration || '';
+                document.getElementById('startDate').value = draft.startDate || '';
+                document.getElementById('startTime').value = draft.startTime || '';
+                document.getElementById('endDate').value = draft.endDate || '';
+                document.getElementById('endTime').value = draft.endTime || '';
+                
+                // Load questions
+                questions = draft.questions || [];
+                questionCounter = Math.max(...questions.map(q => q.id), 0);
+                updateQuestionsList();
+                
+                currentDraftId = draftId;
+                closeDraftsModal();
+                alert('Draft loaded successfully!');
+            } catch (error) {
+                console.error('Error loading draft:', error);
+                alert('Error loading draft');
+            }
+        }
+        
+        async function deleteDraft(draftId) {
+            if (!confirm('Are you sure you want to delete this draft?')) {
+                return;
+            }
+            
+            try {
+                await database.ref(`drafts/${draftId}`).remove();
+                showDraftsModal(); // Refresh the list
+            } catch (error) {
+                console.error('Error deleting draft:', error);
+                alert('Error deleting draft');
+            }
+        }
+        
+        function closeDraftsModal() {
+            document.getElementById('draftsModal').classList.add('hidden');
+        }
+
+        function updateChapters() {
+            const subject = document.getElementById('questionSubject').value;
+            const chapterSelect = document.getElementById('questionChapter');
+            const topicSelect = document.getElementById('questionTopic');
+            
+            chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+            topicSelect.innerHTML = '<option value="">Select Topic</option>';
+            
+            if (subject && subjectData[subject]) {
+                Object.keys(subjectData[subject].chapters).forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter;
+                    option.textContent = chapter.charAt(0).toUpperCase() + chapter.slice(1);
+                    chapterSelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateTopics() {
+            const subject = document.getElementById('questionSubject').value;
+            const chapter = document.getElementById('questionChapter').value;
+            const topicSelect = document.getElementById('questionTopic');
+            
+            topicSelect.innerHTML = '<option value="">Select Topic</option>';
+            
+            if (subject && chapter && subjectData[subject]?.chapters[chapter]) {
+                subjectData[subject].chapters[chapter].forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic;
+                    option.textContent = topic;
+                    topicSelect.appendChild(option);
+                });
+            }
+        }
+
+        function toggleQuestionType() {
+            const questionType = document.getElementById('questionType').value;
+            const mcqOptions = document.getElementById('mcqOptions');
+            const typeAnswer = document.getElementById('typeAnswer');
+            const singleAnswer = document.getElementById('singleAnswer');
+            const multipleAnswer = document.getElementById('multipleAnswer');
+            
+            if (questionType === 'type') {
+                mcqOptions.style.display = 'none';
+                typeAnswer.style.display = 'block';
+                singleAnswer.style.display = 'none';
+                multipleAnswer.style.display = 'none';
+            } else {
+                mcqOptions.style.display = 'grid';
+                typeAnswer.style.display = 'none';
+                
+                if (questionType === 'multiple') {
+                    singleAnswer.style.display = 'none';
+                    multipleAnswer.style.display = 'block';
+                } else {
+                    singleAnswer.style.display = 'block';
+                    multipleAnswer.style.display = 'none';
+                }
+            }
+        }
+
+        function addQuestion() {
+            const subject = document.getElementById('questionSubject').value;
+            const chapter = document.getElementById('questionChapter').value;
+            const topic = document.getElementById('questionTopic').value;
+            const questionText = document.getElementById('questionText').value;
+            const questionType = document.getElementById('questionType').value;
+            const marks = document.getElementById('questionMarks').value;
+
+            if (!subject || !chapter || !topic || !questionText || !marks) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            let question = {
+                id: ++questionCounter,
+                subject,
+                chapter,
+                topic,
+                question: questionText,
+                type: questionType,
+                marks: parseInt(marks)
+            };
+
+            if (questionType === 'type') {
+                const typeCorrectAnswer = document.getElementById('typeCorrectAnswer').value;
+                if (!typeCorrectAnswer) {
+                    alert('Please enter the correct answer');
+                    return;
+                }
+                question.correctAnswer = typeCorrectAnswer.trim();
+            } else {
+                const optionA = document.getElementById('optionA').value;
+                const optionB = document.getElementById('optionB').value;
+                const optionC = document.getElementById('optionC').value;
+                const optionD = document.getElementById('optionD').value;
+                
+                if (!optionA || !optionB || !optionC || !optionD) {
+                    alert('Please fill all options');
+                    return;
+                }
+                
+                question.options = { A: optionA, B: optionB, C: optionC, D: optionD };
+                
+                if (questionType === 'multiple') {
+                    const correctAnswers = [];
+                    if (document.getElementById('correctA').checked) correctAnswers.push('A');
+                    if (document.getElementById('correctB').checked) correctAnswers.push('B');
+                    if (document.getElementById('correctC').checked) correctAnswers.push('C');
+                    if (document.getElementById('correctD').checked) correctAnswers.push('D');
+                    
+                    if (correctAnswers.length === 0) {
+                        alert('Please select at least one correct answer');
+                        return;
+                    }
+                    question.correctAnswer = correctAnswers;
+                } else {
+                    const correctAnswer = document.getElementById('correctAnswer').value;
+                    if (!correctAnswer) {
+                        alert('Please select the correct answer');
+                        return;
+                    }
+                    question.correctAnswer = correctAnswer;
+                }
+            }
+
+            questions.push(question);
+            updateQuestionsList();
+            clearQuestionForm();
+        }
+
+        function updateQuestionsList() {
+            const container = document.getElementById('questionsList');
+            document.getElementById('questionCount').textContent = questions.length;
+
+            if (questions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                        <p>No questions added yet. Add your first question above.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questions.map(q => {
+                let optionsHtml = '';
+                let correctAnswerHtml = '';
+                
+                if (q.type === 'type') {
+                    optionsHtml = '<div class="text-sm text-gray-600 italic">Type Answer Question</div>';
+                    correctAnswerHtml = `<div class="mt-2 text-sm text-green-600">Correct Answer: ${q.correctAnswer}</div>`;
+                } else {
+                    optionsHtml = `
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="text-gray-600">A) ${q.options.A}</div>
+                            <div class="text-gray-600">B) ${q.options.B}</div>
+                            <div class="text-gray-600">C) ${q.options.C}</div>
+                            <div class="text-gray-600">D) ${q.options.D}</div>
+                        </div>
+                    `;
+                    
+                    if (q.type === 'multiple') {
+                        correctAnswerHtml = `<div class="mt-2 text-sm text-green-600">Correct Answers: ${Array.isArray(q.correctAnswer) ? q.correctAnswer.join(', ') : q.correctAnswer}</div>`;
+                    } else {
+                        correctAnswerHtml = `<div class="mt-2 text-sm text-green-600">Correct Answer: ${q.correctAnswer}</div>`;
+                    }
+                }
+                
+                const typeLabel = q.type === 'single' ? 'Single Choice' : q.type === 'multiple' ? 'Multiple Choice' : 'Type Answer';
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-500 mb-1">${q.subject} > ${q.chapter} > ${q.topic}</div>
+                                <div class="font-medium text-gray-900">${q.question}</div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">${typeLabel}</span>
+                                <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-sm">${q.marks} marks</span>
+                                <button onclick="removeQuestion(${q.id})" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        ${optionsHtml}
+                        ${correctAnswerHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeQuestion(id) {
+            questions = questions.filter(q => q.id !== id);
+            updateQuestionsList();
+        }
+
+        function clearQuestionForm() {
+            document.getElementById('questionSubject').value = '';
+            document.getElementById('questionChapter').innerHTML = '<option value="">Select Chapter</option>';
+            document.getElementById('questionTopic').innerHTML = '<option value="">Select Topic</option>';
+            document.getElementById('questionText').value = '';
+            document.getElementById('questionType').value = 'single';
+            document.getElementById('optionA').value = '';
+            document.getElementById('optionB').value = '';
+            document.getElementById('optionC').value = '';
+            document.getElementById('optionD').value = '';
+            document.getElementById('correctAnswer').value = '';
+            document.getElementById('typeCorrectAnswer').value = '';
+            document.getElementById('correctA').checked = false;
+            document.getElementById('correctB').checked = false;
+            document.getElementById('correctC').checked = false;
+            document.getElementById('correctD').checked = false;
+            document.getElementById('questionMarks').value = '4';
+            toggleQuestionType();
+        }
+
+        function showSubjectChapterModal() {
+            const testTitle = document.getElementById('testTitle').value;
+            const testBatch = document.getElementById('testBatch').value;
+            const testDuration = document.getElementById('testDuration').value;
+            const startDate = document.getElementById('startDate').value;
+            const startTime = document.getElementById('startTime').value;
+            const endDate = document.getElementById('endDate').value;
+            const endTime = document.getElementById('endTime').value;
+
+            if (!testTitle || !testBatch || !testDuration || !startDate || !startTime || !endDate || !endTime) {
+                alert('Please fill all test details first');
+                return;
+            }
+
+            if (questions.length === 0) {
+                alert('Please add at least one question');
+                return;
+            }
+
+            document.getElementById('subjectChapterModal').classList.remove('hidden');
+        }
+
+        function closeSubjectChapterModal() {
+            document.getElementById('subjectChapterModal').classList.add('hidden');
+            // Reset selections
+            document.querySelectorAll('.subject-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.chapter-checkbox').forEach(cb => cb.checked = false);
+            document.getElementById('chapterSelectionContainer').classList.add('hidden');
+            selectedSubjectsChapters = {};
+        }
+
+        function updateChapterOptions() {
+            const selectedSubjects = Array.from(document.querySelectorAll('.subject-checkbox:checked')).map(cb => cb.value);
+            const testBatch = document.getElementById('testBatch').value;
+            const chapterContainer = document.getElementById('chapterSelectionContainer');
+            const chapterOptions = document.getElementById('chapterOptions');
+            
+            if (selectedSubjects.length === 0) {
+                chapterContainer.classList.add('hidden');
+                return;
+            }
+            
+            chapterContainer.classList.remove('hidden');
+            
+            let chaptersHtml = '';
+            selectedSubjects.forEach(subject => {
+                if (batchChapters[testBatch] && batchChapters[testBatch][subject]) {
+                    chaptersHtml += `<div class="mb-4">
+                        <h4 class="font-medium text-gray-800 mb-2 capitalize">${subject.replace('_', ' ')}</h4>
+                        <div class="grid grid-cols-1 gap-2 ml-4">`;
+                    
+                    batchChapters[testBatch][subject].forEach(chapter => {
+                        const chapterTitle = chapter.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        chaptersHtml += `
+                            <label class="flex items-center p-2 border border-gray-200 rounded hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" value="${subject}:${chapter}" class="chapter-checkbox mr-2">
+                                <span class="text-sm">${chapterTitle}</span>
+                            </label>`;
+                    });
+                    
+                    chaptersHtml += '</div></div>';
+                }
+            });
+            
+            chapterOptions.innerHTML = chaptersHtml || '<p class="text-gray-500 text-sm">No chapters available for selected subjects in this batch.</p>';
+        }
+
+        async function createTestWithSelection() {
+            const selectedChapters = Array.from(document.querySelectorAll('.chapter-checkbox:checked')).map(cb => cb.value);
+            
+            if (selectedChapters.length === 0) {
+                alert('Please select at least one chapter where this test should appear');
+                return;
+            }
+            
+            // Organize selected chapters by subject
+            selectedChapters.forEach(selection => {
+                const [subject, chapter] = selection.split(':');
+                if (!selectedSubjectsChapters[subject]) {
+                    selectedSubjectsChapters[subject] = [];
+                }
+                selectedSubjectsChapters[subject].push(chapter);
+            });
+            
+            await createTest();
+        }
+
+        async function createTest() {
+            const testTitle = document.getElementById('testTitle').value;
+            const testBatch = document.getElementById('testBatch').value;
+            const testDuration = document.getElementById('testDuration').value;
+            const startDate = document.getElementById('startDate').value;
+            const startTime = document.getElementById('startTime').value;
+            const endDate = document.getElementById('endDate').value;
+            const endTime = document.getElementById('endTime').value;
+
+            const testData = {
+                title: testTitle,
+                batch: testBatch,
+                duration: parseInt(testDuration),
+                startDateTime: `${startDate}T${startTime}`,
+                endDateTime: `${endDate}T${endTime}`,
+                questions: questions,
+                totalMarks: questions.reduce((sum, q) => sum + q.marks, 0),
+                createdAt: Date.now(),
+                createdBy: JSON.parse(localStorage.getItem('padhleChamps_user'))?.name || 'Teacher',
+                status: 'active',
+                visibleIn: selectedSubjectsChapters // Add visibility information
+            };
+
+            try {
+                const testRef = database.ref('tests').push();
+                await testRef.set(testData);
+                
+                // Delete the draft if it exists
+                if (currentDraftId) {
+                    await database.ref(`drafts/${currentDraftId}`).remove();
+                }
+                
+                // Clear auto-save interval
+                if (autoSaveInterval) {
+                    clearInterval(autoSaveInterval);
+                }
+                
+                alert('Test created successfully and will appear in selected chapters!');
+                closeSubjectChapterModal();
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Error creating test:', error);
+                alert('Error creating test. Please try again.');
+            }
+        }
+    </script>
+    
+    <style>
+        .subject-checkbox:checked + .mr-3 + i {
+            color: #0891b2;
+        }
+        
+        .chapter-checkbox:checked {
+            accent-color: #0891b2;
+        }
+        
+        #subjectChapterModal {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduvia AI Live Mode</title>
+    <!-- 1. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 3. Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        body {
+            background: #e0e5ec;
+        }
+        .material-icons-outlined {
+            font-size: inherit;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e5ec;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+        .neuro-card {
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+            border-radius: 20px;
+        }
+        .neuro-inset {
+            background: #e0e5ec;
+            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+            border-radius: 20px;
+        }
+        .neuro-btn {
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+            transition: all 0.3s;
+        }
+        .neuro-btn:hover {
+            box-shadow: 4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff;
+        }
+        .neuro-btn:active {
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+        }
+        .listening-pulse {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7), 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff; }
+            70% { box-shadow: 0 0 0 30px rgba(239, 68, 68, 0), 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff; }
+        }
+        .blinking-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            from, to { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: #e0e5ec;
+            box-shadow: -8px 0 16px #a3b1c6;
+            transition: right 0.3s;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            right: 0;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+        .overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+    </style>
+    <script>
+        // Set up Tailwind configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="text-gray-800 font-inter flex flex-col h-screen overflow-hidden">
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold gradient-text">Settings</h2>
+            <button onclick="toggleSidebar()" class="neuro-btn p-2 rounded-full">
+                <span class="material-icons-outlined">close</span>
+            </button>
+        </div>
+        
+        <div class="space-y-6">
+            <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center mb-2">
+                    <span class="material-icons-outlined text-lg mr-2">language</span>
+                    Language
+                </label>
+                <select id="langSelect" class="neuro-inset w-full text-gray-800 border-0 rounded-xl text-sm p-3 focus:outline-none">
+                    <option value="en-US">English (US)</option>
+                    <option value="en-GB">English (UK)</option>
+                    <option value="en-IN">English (India)</option>
+                    <option value="hi-IN" selected>हिन्दी (Hindi)</option>
+                    <option value="es-ES">Español (Spain)</option>
+                    <option value="es-MX">Español (Mexico)</option>
+                    <option value="fr-FR">Français (France)</option>
+                    <option value="de-DE">Deutsch (Germany)</option>
+                    <option value="it-IT">Italiano (Italy)</option>
+                    <option value="ja-JP">日本語 (Japanese)</option>
+                    <option value="ko-KR">한국어 (Korean)</option>
+                    <option value="pt-BR">Português (Brazil)</option>
+                    <option value="ru-RU">Русский (Russian)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="text-sm font-medium text-gray-700 flex items-center mb-2">
+                    <span class="material-icons-outlined text-lg mr-2">record_voice_over</span>
+                    AI Voice
+                </label>
+                <select id="voiceSelect" class="neuro-inset w-full text-gray-800 border-0 rounded-xl text-sm p-3 focus:outline-none">
+                    <option value="">Loading voices...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="neuro-card p-4 w-full">
+        <div class="flex justify-between items-center max-w-6xl mx-auto">
+            <h1 class="text-xl md:text-2xl font-bold flex items-center space-x-2">
+                <span class="material-icons-outlined text-2xl md:text-3xl gradient-text">psychology</span>
+                <span class="gradient-text">Eduvia AI</span>
+            </h1>
+            <div class="relative group">
+                <button onclick="toggleSidebar()" class="neuro-btn p-3 rounded-xl">
+                    <span class="material-icons-outlined">menu</span>
+                </button>
+                <div class="absolute right-0 top-full mt-2 neuro-card p-3 rounded-xl text-xs text-gray-700 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Change Language & Voice
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chat Log -->
+    <div id="chatLog" class="flex-grow overflow-y-auto p-4 md:p-6 space-y-4 flex flex-col">
+        <!-- Messages will be appended here by JavaScript -->
+        <!-- The initial message is now added via JS -->
+    </div>
+
+    <!-- Status & Control Footer -->
+    <footer class="p-4 w-full flex flex-col items-center justify-center">
+        <!-- Status Text -->
+        <div id="statusText" class="text-gray-400 text-sm mb-4 h-6 transition-all">
+            Click the mic to start.
+        </div>
+        
+        <!-- Microphone Button -->
+        <button id="micButton" class="neuro-btn text-white w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out transform focus:outline-none hover:scale-110" style="background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;">
+            <span id="micIcon" class="material-icons-outlined" style="font-size: 40px;">mic</span>
+        </button>
+    </footer>
+
+    <script>
+        // === TTS Audio Helper Functions ===
+        
+        /**
+         * Helper to decode Base64 to ArrayBuffer
+         */
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        /**
+         * Helper to write a string to a DataView
+         */
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        /**
+         * Helper to convert raw PCM16 data to a WAV Blob
+         */
+        function pcmToWav(pcmData, sampleRate) {
+            const numChannels = 1;
+            const bitsPerSample = 16;
+            const dataSize = pcmData.length * 2; // 16 bits = 2 bytes per sample
+            const blockAlign = (numChannels * bitsPerSample) >> 3;
+            const byteRate = sampleRate * blockAlign;
+
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            // RIFF header
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+
+            // fmt chunk
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true); // chunk size
+            view.setUint16(20, 1, true);  // audio format (1 = PCM)
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, bitsPerSample, true);
+
+            // data chunk
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            // Write PCM data
+            let offset = 44;
+            for (let i = 0; i < pcmData.length; i++, offset += 2) {
+                view.setInt16(offset, pcmData[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        // === DOM Elements ===
+        const micButton = document.getElementById('micButton');
+        const micIcon = document.getElementById('micIcon');
+        const chatLog = document.getElementById('chatLog');
+        const statusText = document.getElementById('statusText');
+        const langSelect = document.getElementById('langSelect');
+        const voiceSelect = document.getElementById('voiceSelect');
+
+        // === State Variables ===
+        let apiKey = 'AIzaSyA6KLaumDVrGILSCRnbKNJoboSpHyPPKSI'; // <-- API Key is now permanent
+        let isListening = false;
+        let isLiveMode = true; // Set to true for auto-re-listening
+        let chatHistory = [];
+        const GEMINI_MODEL = 'gemini-2.5-flash-preview-09-2025';
+        let aiTypeInterval; // For the AI's typing
+        let userTypeInterval; // For the user's typing
+        const audioPlayer = new Audio(); // Player for TTS audio
+        let currentUser = null; // User data
+
+        // === Speech Recognition Setup ===
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false; 
+            recognition.interimResults = false;
+        }
+        
+        // === NEW: Speech Synthesis Setup (Gemini TTS) ===
+        function populateVoiceList() {
+            voiceSelect.innerHTML = ''; // Clear existing options
+            
+            // Gemini TTS voices
+            const ttsVoices = [
+                { name: "Achird", label: "Friendly", type: "gemini" },
+                { name: "Puck", label: "Upbeat", type: "gemini" },
+                { name: "Kore", label: "Firm", type: "gemini" },
+                { name: "Sulafat", label: "Warm", type: "gemini" },
+                { name: "Rasalgethi", label: "Informative", type: "gemini" },
+                { name: "Leda", label: "Youthful", type: "gemini" },
+                { name: "Zephyr", label: "Bright", type: "gemini" },
+            ];
+
+            ttsVoices.forEach(voice => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.label})`;
+                option.value = voice.name;
+                option.dataset.type = voice.type;
+                voiceSelect.appendChild(option);
+            });
+
+            // Add browser Hindi voices
+            const browserVoices = speechSynthesis.getVoices();
+            const hindiVoices = browserVoices.filter(v => v.lang.startsWith('hi') || v.lang.startsWith('en-IN'));
+            
+            if (hindiVoices.length > 0) {
+                const separator = document.createElement('option');
+                separator.textContent = '--- Browser Voices ---';
+                separator.disabled = true;
+                voiceSelect.appendChild(separator);
+                
+                hindiVoices.forEach(voice => {
+                    const option = document.createElement('option');
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    option.value = voice.name;
+                    option.dataset.type = 'browser';
+                    voiceSelect.appendChild(option);
+                });
+            }
+
+            voiceSelect.value = "Achird";
+        }
+        
+        // Reload voices when they change
+        if ('speechSynthesis' in window) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+        
+        // Setup audio player event handlers
+        audioPlayer.onended = () => {
+            // Re-trigger listening
+            if (isLiveMode && !isListening) {
+                updateStatus("Auto-listening... Speak now.");
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.error("Error auto-restarting recognition:", e);
+                    updateStatus("Click mic to continue.");
+                }
+            } else if (!isLiveMode) {
+                updateStatus("Click mic to reply.");
+            }
+        };
+        audioPlayer.onerror = () => {
+            console.error("Error playing audio.");
+            updateStatus("Error playing audio. Click mic to reply.");
+        };
+
+
+        // === User Loading ===
+        function loadUser() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                return getPersonalizedWelcome();
+            }
+            return "Hello! I'm Eduvia AI. Press the microphone to start our conversation.";
+        }
+
+        function getPersonalizedWelcome() {
+            const name = currentUser?.name || 'Champ';
+            const firstName = name.split(' ')[0];
+            const role = currentUser?.role || 'Student';
+            const class_ = currentUser?.class;
+
+            if (role === 'Teacher') {
+                return `Hello ${firstName} Sir/Ma'am! I'm Eduvia AI from Padhle Champs. Ready to help you with any academic questions.`;
+            } else {
+                let classMsg = class_ ? ` Class ${class_} ke ` : ' ';
+                return `Hey ${firstName}!${classMsg}I'm Eduvia AI from Padhle Champs. Press the mic and ask me anything!`;
+            }
+        }
+
+        // === Initialization ===
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!SpeechRecognition) {
+                addMessageToLog('ai', "Error: Your browser doesn't support the Web Speech API. Please try Chrome or Edge.");
+                updateStatus("Speech Recognition not supported.");
+                if (micButton) micButton.disabled = true;
+            } else {
+                const welcomeMsg = loadUser();
+                addMessageToLog('ai', welcomeMsg);
+            }
+            
+            // Load the new static voice list
+            populateVoiceList();
+            
+            // Show tooltip message
+            setTimeout(showTooltipMessage, 1000);
+        });
+
+        // === Sidebar Toggle ===
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        // === Tooltip Message ===
+        function showTooltipMessage() {
+            const tooltip = document.querySelector('.group > div');
+            if (!tooltip) return;
+            
+            const viewCount = parseInt(sessionStorage.getItem('tooltipViews') || '0');
+            
+            if (viewCount < 2) {
+                tooltip.style.opacity = '1';
+                tooltip.style.pointerEvents = 'auto';
+                
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.pointerEvents = 'none';
+                }, 3000);
+                
+                sessionStorage.setItem('tooltipViews', (viewCount + 1).toString());
+            }
+        }
+
+        // === Event Listeners ===
+        micButton.addEventListener('click', toggleListenMode);
+        
+        if (recognition) {
+            // --- Recognition Events ---
+            recognition.onstart = () => {
+                isListening = true;
+                updateStatus("Listening...");
+                micButton.classList.add('listening-pulse');
+                micButton.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                micIcon.textContent = 'graphic_eq';
+            };
+
+            recognition.onresult = (event) => {
+                let transcript = event.results[event.results.length - 1][0].transcript.trim();
+                if (transcript) {
+                    // Stop any previous *AI* typing
+                    if (aiTypeInterval) clearInterval(aiTypeInterval); 
+
+                    // Convert to Hinglish if Hindi selected
+                    const displayText = langSelect.value === 'hi-IN' ? transcript : transcript;
+                    
+                    // Typewrite the user's prompt
+                    const { messageElement, cursorSpan } = addMessageToLog('user', ''); 
+                    userTypeInterval = typewrite(messageElement, cursorSpan, displayText, () => {}, userTypeInterval); 
+                    
+                    updateStatus("Processing your request...");
+                    
+                    // Call AI immediately
+                    getAiResponse(transcript);
+                }
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                if (statusText.textContent === "Listening...") {
+                     updateStatus("Click mic to restart.");
+                }
+                stopListeningVisuals();
+            };
+
+            recognition.onerror = (event) => {
+                console.error("SpeechRecognition error:", event.error);
+                if (event.error === 'no-speech' || event.error === 'audio-capture') {
+                   updateStatus("Didn't catch that. Click mic to try again.");
+                } else if (event.error === 'not-allowed') {
+                    updateStatus("Please allow microphone access.");
+                } else {
+                    updateStatus(`Error: ${event.error}`);
+                }
+                stopListeningVisuals();
+            };
+        }
+
+        // === Core Functions ===
+
+        function toggleListenMode() {
+            if (!apiKey) {
+                updateStatus("API key is missing. Please check the code.");
+                return;
+            }
+
+            // Stop speech and typewriting if user clicks mic
+            if (!audioPlayer.paused) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }
+            if (aiTypeInterval) {
+                clearInterval(aiTypeInterval);
+                aiTypeInterval = null; 
+            }
+             if (userTypeInterval) {
+                clearInterval(userTypeInterval);
+                userTypeInterval = null; 
+            }
+
+            if (isListening) {
+                recognition.stop();
+                isLiveMode = false; // User manually stopped, so disable auto-listen
+                updateStatus("Mic off. Click to start.");
+            } else {
+                try {
+                    // Set the language for recognition *before* starting
+                    recognition.lang = langSelect.value;
+                    recognition.start();
+                    isLiveMode = true; // User manually started, re-enable auto-listen
+                } catch (e) {
+                    console.error("Error starting recognition:", e);
+                    updateStatus("Error starting mic. Please wait.");
+                }
+            }
+        }
+        
+        function stopListeningVisuals() {
+            micButton.classList.remove('listening-pulse');
+            micButton.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+            micIcon.textContent = 'mic';
+        }
+
+        /**
+         * Adds a message bubble to the chat log
+         * @param {'user' | 'ai'} sender - Who sent the message
+         * @param {string} message - The message content (can be empty for AI/User)
+         * @returns {object} { messageElement, cursorSpan }
+         */
+        function addMessageToLog(sender, message) {
+            const container = document.createElement('div');
+            container.classList.add('flex', 'items-start', 'space-x-2.5', 'max-w-[85%]', 'w-fit');
+
+            const icon = document.createElement('span');
+            icon.classList.add('material-icons-outlined', 'text-2xl', 'mt-1.5', 'flex-shrink-0');
+            
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('p-3', 'rounded-xl', 'shadow-md', 'break-words');
+            
+            let cursorSpan = null; // For the typing cursor
+
+            if (sender === 'user') {
+                container.classList.add('self-end', 'flex-row-reverse', 'space-x-reverse');
+                icon.textContent = 'account_circle';
+                icon.classList.add('text-blue-300');
+                messageElement.classList.add('text-white', 'rounded-br-none');
+                messageElement.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                messageElement.style.boxShadow = '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff';
+            } else {
+                container.classList.add('self-start');
+                icon.textContent = 'smart_toy';
+                icon.classList.add('text-green-300');
+                messageElement.classList.add('neuro-card', 'text-gray-800', 'rounded-bl-none');
+            }
+            
+            if (message) {
+                messageElement.textContent = message; // For initial AI message
+            } else {
+                // Create a cursor for typing effect
+                cursorSpan = document.createElement('span');
+                cursorSpan.className = 'blinking-cursor';
+                messageElement.appendChild(cursorSpan);
+            }
+            
+            container.appendChild(icon);
+            container.appendChild(messageElement);
+            chatLog.appendChild(container);
+            
+            // Scroll to the bottom
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            // Return the element and its cursor
+            return { messageElement, cursorSpan };
+        }
+
+        /**
+         * Typewriting effect function
+         * @param {HTMLElement} element - The message bubble to type into
+         * @param {HTMLElement | null} cursor - The blinking cursor element (can be null)
+         * @param {string} text - The full text to type
+         * @param {function} onComplete - Callback function to run when typing is done
+         * @param {number | null} intervalToClear - The ID of a previous interval to stop
+         * @returns {number} The ID of the new interval
+         */
+        function typewrite(element, cursor, text, onComplete, intervalToClear) {
+            let index = 0;
+            element.textContent = ''; // Clear the element
+            
+            if (intervalToClear) {
+                clearInterval(intervalToClear);
+            }
+
+            if (cursor) {
+                element.appendChild(cursor);
+            }
+
+            const newInterval = setInterval(() => {
+                if (index < text.length) {
+                    // Add text *before* the cursor
+                    const textNode = document.createTextNode(text[index]);
+                    element.insertBefore(textNode, cursor);
+                    index++;
+                    chatLog.scrollTop = chatLog.scrollHeight; // Keep scrolling
+                } else {
+                    clearInterval(newInterval); // Clear *this* interval
+                    if (cursor) cursor.remove(); // Remove cursor when done
+                    if (onComplete) onComplete(); // Call the callback
+                }
+            }, 30); // 30ms per character
+            
+            return newInterval; // Return the new interval ID
+        }
+
+        /**
+         * Updates the status text
+         * @param {string} text - The new status
+         */
+        function updateStatus(text) {
+            if (statusText) {
+                statusText.textContent = text;
+            }
+        }
+
+        /**
+         * Speaks the given text using the Gemini TTS API
+         * @param {string} text - The text to speak
+         * @param {HTMLElement} messageElement - The bubble to type into
+         * @param {HTMLElement} cursorSpan - The cursor for typing
+         */
+        async function speakText(text, messageElement, cursorSpan) {
+            const selectedOption = voiceSelect.options[voiceSelect.selectedIndex];
+            const voiceType = selectedOption?.dataset.type || 'gemini';
+            
+            if (voiceType === 'browser') {
+                useBrowserTTS(text, messageElement, cursorSpan);
+                return;
+            }
+            
+            if (!apiKey) {
+                console.error("Missing API key for TTS");
+                return;
+            }
+            
+            // Stop any currently playing audio
+            if (!audioPlayer.paused) {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+            }
+
+            updateStatus("Eduvia AI is speaking...");
+            stopListeningVisuals();
+
+            const selectedVoice = voiceSelect.value || "Achird";
+            const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            // Add a natural language prompt for style
+            const ttsPrompt = `Say in a friendly and conversational tone: ${text}`;
+            
+            const payload = {
+                contents: [{
+                    parts: [{ text: ttsPrompt }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: selectedVoice }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            try {
+                const response = await fetch(ttsUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ message: response.statusText }));
+                    throw new Error(`TTS API Error ${response.status}: ${errorData.error?.message || response.statusText}`);
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (!audioData || !mimeType) {
+                    throw new Error("Invalid TTS response structure or missing audio data.");
+                }
+
+                if (mimeType.startsWith("audio/")) {
+                    const rateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
+
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.play();
+                    
+                    aiTypeInterval = typewrite(messageElement, cursorSpan, text, () => {}, aiTypeInterval);
+
+                } else {
+                    throw new Error("Invalid TTS response structure or missing audio data.");
+                }
+
+            } catch (error) {
+                console.error("SpeechSynthesis error:", error);
+                updateStatus("Error speaking. Click mic to reply.");
+                
+                if (messageElement && cursorSpan) {
+                    aiTypeInterval = typewrite(messageElement, cursorSpan, text, () => {}, aiTypeInterval);
+                }
+                audioPlayer.onended(null);
+            }
+        }
+
+        function useBrowserTTS(text, messageElement, cursorSpan) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.1;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                const voices = speechSynthesis.getVoices();
+                const selectedOption = voiceSelect.options[voiceSelect.selectedIndex];
+                const selectedVoiceName = voiceSelect.value;
+                
+                if (selectedOption?.dataset.type === 'browser') {
+                    const voice = voices.find(v => v.name === selectedVoiceName);
+                    if (voice) utterance.voice = voice;
+                } else {
+                    const hindiVoice = voices.find(v => v.lang.startsWith('hi'));
+                    if (hindiVoice) utterance.voice = hindiVoice;
+                }
+                
+                utterance.onend = () => {
+                    if (isLiveMode && !isListening) {
+                        updateStatus("Auto-listening... Speak now.");
+                        try { recognition.start(); } 
+                        catch (e) { updateStatus("Click mic to continue."); }
+                    } else {
+                        updateStatus("Click mic to reply.");
+                    }
+                };
+                
+                speechSynthesis.speak(utterance);
+                aiTypeInterval = typewrite(messageElement, cursorSpan, text, () => {}, aiTypeInterval);
+            }
+        }
+        
+        // === Gemini API Call ===
+
+        /**
+         * Sends the user's prompt to the Gemini API
+         * @param {string} userText - The user's transcribed text
+         */
+        async function getAiResponse(userText) {
+            if (!apiKey) {
+                addMessageToLog('ai', "I can't respond without an API key. Please check the code.");
+                return;
+            }
+
+            chatHistory.push({
+                role: 'user',
+                parts: [{ text: userText }]
+            });
+            
+            if (chatHistory.length > 10) {
+                chatHistory = chatHistory.slice(-10);
+            }
+
+            const now = new Date();
+            const currentDate = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const currentTime = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+            const currentLangName = langSelect.options[langSelect.selectedIndex].text;
+
+            let systemPrompt = `You are Eduvia AI from Padhle Champs, a helpful and expert conversational AI created by the Padhle Champs team. The CEO and founder of Padhle Champs is Shubham Pandit.
+The current date is ${currentDate} and the time is ${currentTime}.
+You are in 'live mode', so keep responses conversational, suitable for being spoken aloud.
+The user is speaking ${currentLangName}. Please respond in a natural 'Hinglish' (a mix of Hindi and English) if the user is speaking Hindi, or in ${currentLangName} if they are speaking another language.
+You are an expert in many subjects. You can solve math problems (show your steps), write about physics concepts, and provide chemistry reactions.
+Do not use markdown in your responses (like *, #, or \`\`\`).
+Keep your spoken responses concise, but be ready to provide detail.
+Example Hinglish response: "Haan, of course! The answer is 42. Koi aur sawaal?"`;
+
+            if (currentUser) {
+                const name = currentUser.name?.split(' ')[0] || 'Champ';
+                const fullName = currentUser.name || 'Champ';
+                const role = currentUser.role || 'Student';
+                const class_ = currentUser.class;
+
+                let userContext = `\n\nIMPORTANT USER CONTEXT: You are talking to ${name}, who is a ${role}`;
+                
+                if (fullName.toLowerCase().includes('shubham') && fullName.toLowerCase().includes('pandit')) {
+                    userContext += `. This is Shubham Pandit Sir, the CEO and founder of Padhle Champs. Address him respectfully as 'Shubham Sir' or 'Sir'.`;
+                } else if (role === 'Teacher') {
+                    userContext += `. Address them respectfully as '${name} Sir' or '${name} Ma'am'.`;
+                } else if (class_) {
+                    userContext += ` in Class ${class_}. Keep explanations suitable for their level.`;
+                }
+                
+                systemPrompt += userContext;
+            }
+            
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: chatHistory,
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const aiText = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (aiText) {
+                    chatHistory.push({
+                        role: 'model',
+                        parts: [{ text: aiText }]
+                    });
+                    
+                    const cleanText = aiText.replace(/[*#`_~]/g, '');
+                    const { messageElement, cursorSpan } = addMessageToLog('ai', '');
+                    
+                    speakText(cleanText, messageElement, cursorSpan); 
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                const errorMessage = `Sorry, I had trouble processing that. Error: ${error.message}`;
+                
+                const { messageElement, cursorSpan } = addMessageToLog('ai', '');
+                
+                // --- FIX: Pass elements to speakText for error ---
+                speakText(errorMessage, messageElement, cursorSpan); // Speak error
+                
+                updateStatus("Error. Click mic to try again.");
+            }
+        }
+        
+        /**
+         * Fetches data from the Gemini API with exponential backoff.
+         */
+        async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        await new Promise(res => setTimeout(res, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    const errorData = await response.json().catch(() => ({ message: response.statusText }));
+                    throw new Error(`API Error ${response.status}: ${errorData.error?.message || response.statusText}`);
+                }
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!text) {
+                     if (result.promptFeedback?.blockReason) {
+                        throw new Error(`Request was blocked: ${result.promptFeedback.blockReason}`);
+                     }
+                    throw new Error("Invalid response structure from API.");
+                }
+                return text;
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+                throw error;
+            }
+        }
+
+    </script>
+</body>
+</html>

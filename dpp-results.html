@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPP Results - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .celebration { animation: celebration 2s ease-in-out; }
+        @keyframes celebration {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .score-circle {
+            background: conic-gradient(#10b981 0deg, #10b981 var(--percentage), #e5e7eb var(--percentage), #e5e7eb 360deg);
+        }
+        .material-icons-round { font-size: inherit; vertical-align: middle; }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { transform: translateY(-2px); }
+        @media (max-width: 640px) {
+            .mobile-menu { display: none; }
+            .mobile-menu.active { display: flex; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-green-50 min-h-screen">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-xl sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                        <span class="material-icons-round text-white text-2xl sm:text-3xl">analytics</span>
+                    </div>
+                    <span class="text-lg sm:text-xl font-bold text-white">DPP Results</span>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <a href="home.html" class="nav-link hidden sm:flex items-center space-x-2 px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-xl transition-all">
+                        <span class="material-icons-round text-xl">home</span>
+                        <span class="font-medium">Home</span>
+                    </a>
+                    <a href="home.html" class="nav-link sm:hidden flex items-center justify-center w-10 h-10 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-xl transition-all">
+                        <span class="material-icons-round text-xl">home</span>
+                    </a>
+                    <div class="bg-white bg-opacity-20 px-3 sm:px-4 py-2 rounded-xl backdrop-blur-sm">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-icons-round text-white text-lg sm:text-xl">person</span>
+                            <span class="font-semibold text-white text-sm sm:text-base" id="username">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Results Overview -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-6 sm:mb-8 celebration" data-aos="fade-up">
+            <div class="text-center mb-6 sm:mb-8">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 relative">
+                    <div class="score-circle w-full h-full rounded-full flex items-center justify-center shadow-lg" id="scoreCircle">
+                        <div class="bg-white w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center shadow-inner">
+                            <span class="text-xl sm:text-2xl font-bold text-gray-900" id="percentageScore">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2" id="dppTitle">DPP Completed!</h1>
+                <p class="text-sm sm:text-base text-gray-600" id="completionMessage">Great job on completing the DPP!</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div class="text-center p-3 sm:p-4 rounded-2xl hover:bg-green-50 transition-all">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-md">
+                        <span class="material-icons-round text-green-600 text-2xl sm:text-3xl">check_circle</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold text-green-600" id="correctCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Correct</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl hover:bg-red-50 transition-all">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-md">
+                        <span class="material-icons-round text-red-600 text-2xl sm:text-3xl">cancel</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Wrong</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl hover:bg-yellow-50 transition-all">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-md">
+                        <span class="material-icons-round text-yellow-600 text-2xl sm:text-3xl">remove_circle</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold text-yellow-600" id="unattemptedCount">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Unattempted</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl hover:bg-purple-50 transition-all">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-md">
+                        <span class="material-icons-round text-purple-600 text-2xl sm:text-3xl">stars</span>
+                    </div>
+                    <div class="text-xl sm:text-2xl font-bold text-purple-600" id="xpEarned">0</div>
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">XP Earned</div>
+                </div>
+            </div>
+
+            <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-gray-50 to-green-50 rounded-2xl border-2 border-green-100">
+                <div class="flex items-center justify-between text-base sm:text-lg">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-icons-round text-gray-700">emoji_events</span>
+                        <span class="font-semibold text-gray-700">Total Score:</span>
+                    </div>
+                    <span class="font-bold text-xl sm:text-2xl text-green-600" id="totalScore">0 / 0</span>
+                </div>
+                <div class="mt-2 flex items-center space-x-2 text-xs sm:text-sm text-gray-600">
+                    <span class="material-icons-round text-sm">info</span>
+                    <span id="attemptType">First Attempt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Analysis -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-6 sm:mb-8" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="material-icons-round text-3xl text-green-600">insights</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Performance Analysis</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
+                        <span class="material-icons-round text-xl">calculate</span>
+                        <span>Scoring Breakdown</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border-l-4 border-green-500 shadow-sm">
+                            <span class="text-xs sm:text-sm text-green-800 font-medium">Correct Answers (+4 each)</span>
+                            <span class="font-bold text-green-600 text-base sm:text-lg" id="correctMarks">+0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-red-50 to-red-100 rounded-xl border-l-4 border-red-500 shadow-sm">
+                            <span class="text-xs sm:text-sm text-red-800 font-medium">Wrong Answers (-1 each)</span>
+                            <span class="font-bold text-red-600 text-base sm:text-lg" id="wrongMarks">-0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl border-l-4 border-yellow-500 shadow-sm">
+                            <span class="text-xs sm:text-sm text-yellow-800 font-medium">Unattempted (0 each)</span>
+                            <span class="font-bold text-yellow-600 text-base sm:text-lg">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
+                        <span class="material-icons-round text-xl">military_tech</span>
+                        <span>XP System</span>
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="p-3 sm:p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl border-l-4 border-purple-500 shadow-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs sm:text-sm text-purple-800 font-medium" id="xpSystemText">First Attempt: +3 XP per correct</span>
+                                <span class="font-bold text-purple-600 text-base sm:text-lg" id="xpBreakdown">0 XP</span>
+                            </div>
+                            <div class="text-xs sm:text-sm text-purple-600" id="xpNote">Great job! Keep practicing for more XP.</div>
+                        </div>
+                        <div class="p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="material-icons-round text-blue-600 text-sm">refresh</span>
+                                <div class="text-xs sm:text-sm text-blue-800 font-medium">Reattempt Benefits</div>
+                            </div>
+                            <div class="text-xs text-blue-600 mt-1">You can reattempt this DPP anytime for +1 XP per correct answer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6" data-aos="fade-up" data-aos-delay="200">
+            <button onclick="viewDetailedAnalysis()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all font-semibold text-center flex items-center justify-center space-x-2">
+                <span class="material-icons-round">bar_chart</span>
+                <span>Detailed Analysis</span>
+            </button>
+            <button onclick="reattemptDPP()" class="bg-gradient-to-r from-orange-600 to-orange-700 text-white py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all font-semibold text-center flex items-center justify-center space-x-2">
+                <span class="material-icons-round">refresh</span>
+                <span>Reattempt DPP</span>
+            </button>
+            <button onclick="goHome()" class="bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all font-semibold text-center flex items-center justify-center space-x-2 sm:col-span-2 md:col-span-1">
+                <span class="material-icons-round">home</span>
+                <span>Back to Home</span>
+            </button>
+        </div>
+
+        <!-- Motivational Message -->
+        <div class="bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 rounded-3xl p-6 sm:p-8 text-white text-center mt-6 sm:mt-8 shadow-2xl" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                <span class="material-icons-round text-4xl sm:text-5xl text-white">emoji_events</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold mb-2" id="motivationalTitle">Excellent Work!</h3>
+            <p class="text-sm sm:text-base text-green-100" id="motivationalMessage">Keep practicing to improve your skills and earn more XP!</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let resultData = null;
+        let questionsData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+                loadResults();
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+        });
+
+        function loadResults() {
+            resultData = JSON.parse(localStorage.getItem('dppResult'));
+            questionsData = JSON.parse(localStorage.getItem('dppQuestions'));
+
+            if (!resultData) {
+                alert('No results found');
+                window.location.href = 'home.html';
+                return;
+            }
+
+            displayResults();
+        }
+
+        function displayResults() {
+            // Basic info
+            document.getElementById('dppTitle').textContent = resultData.dppTitle;
+            document.getElementById('username').textContent = resultData.studentName.split(' ')[0];
+
+            // Stats
+            document.getElementById('correctCount').textContent = resultData.correctAnswers;
+            document.getElementById('wrongCount').textContent = resultData.wrongAnswers;
+            document.getElementById('unattemptedCount').textContent = resultData.unattempted;
+            document.getElementById('xpEarned').textContent = resultData.earnedXP;
+
+            // Score calculation
+            const percentage = Math.round((resultData.totalMarks / resultData.maxMarks) * 100);
+            document.getElementById('percentageScore').textContent = percentage + '%';
+            document.getElementById('totalScore').textContent = `${resultData.totalMarks} / ${resultData.maxMarks}`;
+
+            // Update score circle
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.setProperty('--percentage', (percentage * 3.6) + 'deg');
+
+            // Attempt type
+            document.getElementById('attemptType').textContent = resultData.isFirstAttempt ? 'First Attempt' : 'Reattempt';
+
+            // Scoring breakdown
+            document.getElementById('correctMarks').textContent = `+${resultData.correctAnswers * 4}`;
+            document.getElementById('wrongMarks').textContent = `-${resultData.wrongAnswers * 1}`;
+
+            // XP breakdown
+            const xpPerCorrect = resultData.isFirstAttempt ? 3 : 1;
+            document.getElementById('xpSystemText').textContent = resultData.isFirstAttempt ? 
+                'First Attempt: +3 XP per correct' : 'Reattempt: +1 XP per correct';
+            document.getElementById('xpBreakdown').textContent = `${resultData.earnedXP} XP`;
+
+            // Motivational messages
+            setMotivationalMessage(percentage);
+            setCompletionMessage(percentage);
+        }
+
+        function setMotivationalMessage(percentage) {
+            let title, message;
+            
+            if (percentage >= 90) {
+                title = "Outstanding Performance! 🏆";
+                message = "You're mastering this topic! Keep up the excellent work!";
+            } else if (percentage >= 75) {
+                title = "Great Job! 🌟";
+                message = "You're doing really well! A little more practice and you'll be perfect!";
+            } else if (percentage >= 60) {
+                title = "Good Effort! 👍";
+                message = "You're on the right track! Keep practicing to improve further!";
+            } else if (percentage >= 40) {
+                title = "Keep Going! 💪";
+                message = "Don't give up! Every attempt makes you stronger. Try again!";
+            } else {
+                title = "Practice Makes Perfect! 📚";
+                message = "This is just the beginning! Review the concepts and try again!";
+            }
+
+            document.getElementById('motivationalTitle').textContent = title;
+            document.getElementById('motivationalMessage').textContent = message;
+        }
+
+        function setCompletionMessage(percentage) {
+            let message;
+            
+            if (percentage >= 80) {
+                message = "Excellent work! You've shown great understanding of the concepts.";
+            } else if (percentage >= 60) {
+                message = "Good job! You're making solid progress in your learning.";
+            } else {
+                message = "Keep practicing! Every attempt helps you learn and grow.";
+            }
+
+            document.getElementById('completionMessage').textContent = message;
+        }
+
+        function viewDetailedAnalysis() {
+            // Store data for detailed analysis page
+            localStorage.setItem('selectedDppResult', JSON.stringify(resultData));
+            localStorage.setItem('selectedDppQuestions', JSON.stringify(questionsData));
+            window.location.href = 'dpp-detailed-analysis.html';
+        }
+
+        function reattemptDPP() {
+            const confirmReattempt = confirm('Are you sure you want to reattempt this DPP? You will earn +1 XP per correct answer on reattempts.');
+            if (confirmReattempt) {
+                // Store DPP ID for reattempt
+                localStorage.setItem('selectedDppId', resultData.dppId);
+                window.location.href = 'attempt-dpp-students.html';
+            }
+        }
+
+        async function goHome() {
+            // Update XP in Firebase before going home
+            await updateUserXP();
+            
+            // Clear stored data
+            localStorage.removeItem('dppResult');
+            localStorage.removeItem('dppQuestions');
+            window.location.href = 'home.html';
+        }
+
+        async function updateUserXP() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                if (!userData || !resultData) return;
+
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                    authDomain: "quiz-app-10f81.firebaseapp.com",
+                    databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                    projectId: "quiz-app-10f81",
+                    storageBucket: "quiz-app-10f81.firebasestorage.app",
+                    messagingSenderId: "351578019731",
+                    appId: "1:351578019731:web:2055fe24498ca17908fa66"
+                };
+
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const database = firebase.database();
+
+                const statsRef = database.ref(`userStats/${userData.userId}`);
+                const snapshot = await statsRef.once('value');
+                const stats = snapshot.val() || { xp: 0 };
+                
+                const newXP = (stats.xp || 0) + (resultData.earnedXP || 0);
+                await statsRef.update({ xp: newXP });
+                
+                console.log(`Updated XP: +${resultData.earnedXP} = ${newXP} total`);
+            } catch (error) {
+                console.error('Error updating XP:', error);
+            }
+        }
+    </script>
+</body>
+</html>

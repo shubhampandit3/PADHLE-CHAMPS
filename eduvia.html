@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduvia AI from Padhle Champs</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load MathJax for beautiful LaTeX rendering -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+
+    <!-- Load Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            letter-spacing: -0.01em;
+            transition: all 0.3s ease;
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, monospace;
+            font-feature-settings: 'liga' 1, 'calt' 1;
+        }
+
+        code,
+        pre {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+            font-feature-settings: 'liga' 1, 'calt' 1;
+        }
+
+        .math-display {
+            font-family: 'KaTeX_Main', 'Computer Modern', serif;
+        }
+
+        .chat-container::-webkit-scrollbar,
+        .sessions-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb,
+        .sessions-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            border-radius: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track,
+        .sessions-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #session-list-wrapper {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        @media (max-width: 640px) {
+            #session-list-wrapper.hidden-on-mobile {
+                transform: translateX(-100%);
+                position: absolute;
+                z-index: 30;
+            }
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .message-bubble {
+            backdrop-filter: blur(16px);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: slideIn 0.4s ease-out;
+            word-wrap: break-word;
+            overflow-x: auto;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        @media (max-width: 640px) {
+            .message-bubble {
+                overflow-x: auto;
+            }
+        }
+
+        .message-bubble:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .message-bubble * {
+            word-wrap: normal;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .animate-pulse-custom {
+            animation: pulse 2s infinite;
+        }
+
+        .MathJax {
+            font-size: 1.15em !important;
+            font-family: 'KaTeX_Main', 'Computer Modern', serif !important;
+        }
+
+        .MathJax_Display {
+            margin: 1.2em 0 !important;
+            padding: 0.8em !important;
+            background: rgba(99, 102, 241, 0.05) !important;
+            border-radius: 12px !important;
+            border-left: 4px solid #6366f1 !important;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1) !important;
+        }
+
+        /* Enhanced math rendering for better readability */
+        .MathJax .mo {
+            color: #6366f1 !important;
+        }
+
+        .MathJax .mi {
+            font-style: italic !important;
+        }
+
+        .MathJax .mn {
+            color: #059669 !important;
+        }
+
+        mjx-container[jax="SVG"] {
+            direction: ltr;
+        }
+
+        mjx-container[jax="SVG"]>svg {
+            overflow: visible;
+            min-height: 1px;
+            min-width: 1px;
+        }
+
+        /* Enhanced code block styling */
+        pre[class*="language-"] {
+            margin: 1em 0;
+            padding: 1.5em;
+            border-radius: 12px;
+            font-size: 0.9em;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        code[class*="language-"] {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-feature-settings: 'liga' 1, 'calt' 1;
+        }
+
+        /* Inline code styling */
+        :not(pre)>code {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Enhanced Math equation styling */
+        .katex {
+            font-size: 1.1em;
+            font-family: 'KaTeX_Main', 'Computer Modern', serif;
+        }
+
+        .katex-display {
+            margin: 1.5em 0;
+            text-align: center;
+            padding: 0.5em;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #6366f1;
+        }
+
+        /* MathJax enhanced styling */
+        mjx-container {
+            margin: 0.5em 0;
+        }
+
+        mjx-container[display="true"] {
+            margin: 1em 0;
+            padding: 0.8em;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #6366f1;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Physics and Chemistry equation highlighting */
+        .physics-equation {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid #22c55e;
+            padding: 0.8em;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+
+        .chemistry-equation {
+            background: rgba(249, 115, 22, 0.05);
+            border-left: 4px solid #f97316;
+            padding: 0.8em;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+
+        /* Chemistry reaction styling */
+        .chem {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ai-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 3px solid #6366f1;
+        }
+
+        .ai-table th {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            border: 2px solid #4338ca;
+        }
+
+        .ai-table td {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .ai-table tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .ai-table tr:hover td {
+            background: #f1f5f9;
+        }
+
+        .chart-container {
+            position: relative;
+            margin: 20px 0;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            text-align: center;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+
+        .session-item-delete-confirm {
+            background: rgba(254, 242, 242, 0.95);
+            border: 1px solid #fca5a5;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
+        }
+
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .icon-bounce {
+            transition: transform 0.2s ease;
+        }
+
+        .icon-bounce:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        .modal-backdrop {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eduvia-primary': '#6366f1',
+                        'eduvia-secondary': '#8b5cf6',
+                        'eduvia-light': '#f0f4ff',
+                        'eduvia-dark': '#4338ca',
+                        'light-bg': '#fafbff',
+                        'light-surface': '#ffffff',
+                        'light-border': '#e2e8f0',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        'display': ['Poppins', 'Inter', 'sans-serif'],
+                        'heading': ['Space Grotesk', 'Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                    },
+                }
+            }
+        }
+
+        // Optimized MathJax configuration - prevents macro substitution errors
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                packages: { '[+]': ['base', 'ams', 'mhchem'] },
+                maxMacros: 10000,
+                maxBuffer: 10 * 1024,
+                macros: {
+                    'vec': ['\\mathbf{#1}', 1],
+                    'degree': '^\\circ'
+                }
+            },
+            loader: {
+                load: ['[tex]/mhchem']
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process',
+                renderActions: {
+                    addMenu: [0, '', '']
+                }
+            },
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                    MathJax.startup.promise.then(() => {
+                        console.log('MathJax with mhchem loaded successfully');
+                    });
+                }
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+</head>
+
+<body class="flex flex-col h-screen">
+
+    <!-- Header -->
+    <header
+        class="bg-light-surface/95 backdrop-blur-xl border-b border-light-border text-gray-800 p-4 lg:p-6 shadow-sm flex items-center justify-between flex-shrink-0 sticky top-0 z-10 rounded-b-3xl">
+        <div class="flex items-center">
+            <!-- Menu button for mobile -->
+            <button id="menu-toggle"
+                class="sm:hidden p-3 mr-3 rounded-2xl hover:bg-gray-100 transition-all duration-300 icon-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+            </button>
+            <!-- Custom AI Logo -->
+            <div class="mr-3 icon-bounce">
+                <img src="ai-icon-edu.png" alt="Eduvia AI" width="40" height="40" class="rounded-xl">
+            </div>
+            <h1
+                class="text-xl sm:text-2xl lg:text-3xl font-display font-bold tracking-tight bg-gradient-to-r from-eduvia-primary via-purple-500 to-eduvia-secondary bg-clip-text text-transparent animate-float">
+                Eduvia AI</h1>
+        </div>
+
+
+
+        <button id="new-chat-button-header"
+            class="hidden sm:inline-flex items-center bg-gradient-to-r from-eduvia-primary to-eduvia-secondary hover:from-eduvia-dark hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-2xl shadow-lg hover:shadow-2xl btn-hover text-sm transition-all duration-300 hover:scale-105">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <path d="M12 5v14M5 12h14" />
+            </svg>
+            New Chat
+        </button>
+    </header>
+
+    <!-- Main Content Area: Flex container for Sidebar and Chat -->
+    <div class="flex flex-grow overflow-hidden relative">
+
+        <!-- Sidebar: Session List -->
+        <div id="session-list-wrapper"
+            class="w-full sm:w-80 bg-light-surface/95 backdrop-blur-xl border-r border-light-border flex-shrink-0 p-4 lg:p-6 flex flex-col hidden-on-mobile sm:static sm:block h-full overflow-y-auto sessions-container rounded-r-3xl">
+            <div class="sm:hidden flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 tracking-tight">Conversations</h2>
+                <button id="close-menu-toggle"
+                    class="p-3 rounded-2xl text-gray-600 hover:bg-gray-100 transition-all duration-300 icon-bounce">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <button id="new-chat-button-sidebar"
+                class="w-full sm:hidden flex items-center justify-center bg-gradient-to-r from-eduvia-primary to-eduvia-secondary hover:from-eduvia-dark hover:to-purple-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:shadow-2xl btn-hover mb-6 transition-all duration-300 hover:scale-105">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="mr-2">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                Start New Chat
+            </button>
+
+            <ul id="session-list" class="space-y-3 flex-grow">
+                <!-- Session items will be dynamically added here -->
+            </ul>
+
+            <!-- Settings and Help Section -->
+            <div class="mt-6 pt-4 border-t border-light-border space-y-2">
+                <button
+                    class="w-full flex items-center p-3 text-gray-600 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 rounded-xl transition-all duration-300 hover:scale-105 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mr-3 group-hover:rotate-90 transition-transform duration-300">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-3.5L19 4m-7 7-2.5 2.5M7.5 4.5L5 7m7 7 2.5 2.5" />
+                    </svg>
+                    <span class="font-medium">Settings</span>
+                </button>
+                <button
+                    class="w-full flex items-center p-3 text-gray-600 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 rounded-xl transition-all duration-300 hover:scale-105 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mr-3 group-hover:scale-110 transition-transform duration-300">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <path d="M12 17h.01" />
+                    </svg>
+                    <span class="font-medium">Help</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Main Area -->
+        <div class="flex-grow flex flex-col max-w-full sm:max-w-[calc(100%-20rem)] mx-auto w-full bg-light-bg">
+            <!-- Messages Display -->
+            <div id="chat-messages"
+                class="flex-grow p-4 lg:p-6 overflow-y-auto space-y-6 max-w-4xl mx-auto w-full chat-container">
+                <!-- Image Preview Box -->
+                <div id="image-preview-box"
+                    class="hidden bg-white rounded-xl shadow-lg border border-gray-200 p-4 mb-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-medium text-gray-700">📷 Uploaded Image</h3>
+                        <button id="remove-image" class="text-red-500 hover:text-red-700 text-sm font-medium">✕
+                            Remove</button>
+                    </div>
+                    <div id="image-preview-content" class="flex justify-center">
+                        <!-- Image will be shown here -->
+                    </div>
+                </div>
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Input Form -->
+            <div class="p-6 bg-transparent flex-shrink-0">
+                <div class="max-w-4xl mx-auto">
+                    <form id="chat-form" class="relative">
+                        <div
+                            class="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 focus-within:shadow-xl focus-within:border-eduvia-primary/30">
+                            <div class="flex items-end px-6 py-4">
+                                <!-- Plus Icon Button -->
+                                <div class="relative mr-3">
+                                    <button type="button" id="plus-menu-button"
+                                        class="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+                                        aria-label="More Options">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="text-gray-600 group-hover:rotate-90 transition-transform duration-300">
+                                            <path d="M12 5v14M5 12h14" />
+                                        </svg>
+                                    </button>
+                                    <!-- Dropdown Menu -->
+                                    <div id="plus-menu"
+                                        class="hidden absolute bottom-full left-0 mb-2 bg-white rounded-xl shadow-xl border border-gray-200 py-2 min-w-[180px] z-50">
+                                        <a href="eduvia-live_mode.html"
+                                            class="w-full flex items-center justify-between px-4 py-2.5 text-gray-700 hover:bg-gray-100 transition-all duration-200">
+                                            <div class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="mr-2.5">
+                                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                                </svg>
+                                                <span class="text-sm">Live Mode</span>
+                                            </div>
+                                        </a>
+                                        <button type="button" id="screenshot-option"
+                                            class="w-full flex items-center justify-between px-4 py-2.5 text-gray-700 hover:bg-gray-100 transition-all duration-200">
+                                            <div class="flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="mr-2.5">
+                                                    <path
+                                                        d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                                                    <circle cx="12" cy="13" r="3" />
+                                                </svg>
+                                                <span class="text-sm">Take Screenshot</span>
+                                            </div>
+                                            <span
+                                                class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-2">Soon</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Textarea Input -->
+                                <textarea id="user-input" placeholder="Ask Eduvia"
+                                    class="flex-1 bg-transparent border-0 outline-none text-gray-800 placeholder-gray-400 text-base font-normal resize-none min-h-[24px] max-h-32 leading-6 flex items-center"
+                                    rows="1" autocomplete="off" required
+                                    style="padding-top: 8px; padding-bottom: 8px;"></textarea>
+
+                                <!-- Right Side Icons -->
+                                <div class="flex items-center space-x-2 ml-4 pb-1">
+                                    <button type="button" id="image-button"
+                                        class="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+                                        aria-label="Upload Image">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="text-gray-400 hover:text-eduvia-primary transition-all duration-300 hover:scale-110">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21 15 16 10 5 21" />
+                                        </svg>
+                                    </button>
+
+                                    <button type="button" id="mic-button"
+                                        class="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
+                                        aria-label="Voice Input">
+                                        <svg id="mic-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="text-gray-400 hover:text-eduvia-primary transition-all duration-300 hover:scale-110">
+                                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                            <path d="M12 19v4" />
+                                            <path d="M8 23h8" />
+                                        </svg>
+                                    </button>
+
+                                    <button type="submit" id="send-button"
+                                        class="p-2 bg-gradient-to-r from-eduvia-primary to-purple-600 hover:from-eduvia-dark hover:to-purple-700 text-white rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-110 group"
+                                        aria-label="Send Message">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="transition-transform duration-300 group-hover:translate-x-1">
+                                            <path
+                                                d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.843 7.627a.498.498 0 0 0 .683.627l18-8.5a.5.5 0 0 0 0-.904l-18-8.5z" />
+                                            <path d="M6 12h16" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden File Input -->
+                        <input type="file" id="image-input" accept="image/*" class="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Screenshot Modal -->
+    <div id="screenshot-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onclick="document.getElementById('screenshot-modal').classList.add('hidden')"></div>
+        <div class="modal-content relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-8">
+            <div class="flex flex-col items-center text-center">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                        <circle cx="12" cy="13" r="3" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Screenshot Feature</h3>
+                <p class="text-gray-600 mb-6">This amazing feature is coming soon! 🚀<br>Stay tuned for updates.</p>
+                <button onclick="document.getElementById('screenshot-modal').classList.add('hidden')"
+                    class="w-full bg-gradient-to-r from-eduvia-primary to-eduvia-secondary hover:from-eduvia-dark hover:to-purple-600 text-white font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    Got it!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // API Configuration
+        const API_KEY = 'AIzaSyAd6fdG2FuRZNFCyup_EHhnllgiiqkTfFQ';
+        const TEXT_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+        const IMAGE_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generateContent?key=${API_KEY}`;
+
+        // User State
+        let currentUser = null;
+
+        // DOM Elements
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const sendButton = document.getElementById('send-button');
+        const sessionListUl = document.getElementById('session-list');
+        const sessionListWrapper = document.getElementById('session-list-wrapper');
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenuToggle = document.getElementById('close-menu-toggle');
+        const newChatButtonHeader = document.getElementById('new-chat-button-header');
+        const newChatButtonSidebar = document.getElementById('new-chat-button-sidebar');
+        const micButton = document.getElementById('mic-button');
+        const micIcon = document.getElementById('mic-icon');
+        const imageButton = document.getElementById('image-button');
+        const imageInput = document.getElementById('image-input');
+        const plusMenuButton = document.getElementById('plus-menu-button');
+        const plusMenu = document.getElementById('plus-menu');
+        const screenshotOption = document.getElementById('screenshot-option');
+
+        // Image handling state
+        let currentImage = null;
+
+        // Voice Recognition Setup
+        let recognition = null;
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+        }
+
+        // Text-to-Speech Setup
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+
+                const cleanText = text
+                    .replace(/\*\*(.*?)\*\*/g, '$1')
+                    .replace(/\*(.*?)\*/g, '$1')
+                    .replace(/\$\$[\s\S]*?\$\$/g, ' mathematical expression ')
+                    .replace(/\$([^$\n]+?)\$/g, ' math expression ')
+                    .replace(/#+\s*/g, '')
+                    .replace(/\n/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.rate = 1.3;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+
+                const voices = speechSynthesis.getVoices();
+                const preferredVoice = voices.find(voice =>
+                    voice.name.includes('Google') ||
+                    voice.name.includes('Microsoft') ||
+                    voice.lang.startsWith('en')
+                );
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // State
+        let allSessions = {};
+        let currentSessionId = null;
+
+        // Load user and create personalized welcome message
+        function loadUser() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                return getPersonalizedWelcome();
+            }
+            return "Hello! How can I help you today?";
+        }
+
+        function getPersonalizedWelcome() {
+            const name = currentUser?.name || 'Champ';
+            const firstName = name.split(' ')[0];
+            const role = currentUser?.role || 'Student';
+            const class_ = currentUser?.class;
+
+            if (role === 'Teacher') {
+                return `Hello ${firstName} Sir/Ma'am! 👋 Welcome to **Eduvia AI from Padhle Champs**. I'm here to help you with any academic questions or to assist you in explaining concepts to your students. Whether it's Maths, Science, SST, or any other subject, I can provide detailed explanations and teaching strategies. How can I assist you today? 📚✨`;
+            } else {
+                let classMsg = class_ ? ` I see you're in Class ${class_} - ` : ' ';
+                return `Hey ${firstName}! 👋 Ready to tackle some doubts? I'm your **Eduvia AI from Padhle Champs** Bhaiya/Didi.${classMsg}Just shoot me your question on Maths, Science, SST, or anything else. Let's make learning super easy! 💪`;
+            }
+        }
+
+        const welcomeMessage = loadUser();
+
+        // Plus Menu Toggle
+        plusMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            plusMenu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!plusMenu.contains(e.target) && !plusMenuButton.contains(e.target)) {
+                plusMenu.classList.add('hidden');
+            }
+        });
+
+        // Screenshot option handler
+        screenshotOption.addEventListener('click', () => {
+            document.getElementById('screenshot-modal').classList.remove('hidden');
+            plusMenu.classList.add('hidden');
+        });
+
+
+
+        // Update system instruction with user context
+        function getPersonalizedSystemInstruction() {
+            const baseInstruction = "You are 'The Eduvia AI from Padhle Champs,' an AI doubt-solving assistant created by the Padhle Champs team. The CEO and founder of Padhle Champs is Shubham Pandit. Your persona is that of an incredibly supportive, friendly, encouraging elder sibling or mentor (like a 'Bhaiya' or 'Didi'). You specialize in solving academic doubts for school students (especially grades 9-12) in subjects like Science, Math, Social Studies, English, Computer Science/Programming, and Chemistry. Keep your tone light, relatable, and use conversational language. Never use overly formal or complex words. When solving a problem, break it down into easy, encouraging steps. **IMPORTANT: If someone asks about who created you or who is the CEO/founder, mention that you were created by Padhle Champs team and the CEO is Shubham Pandit. If Shubham Pandit himself is using the platform, address him respectfully as 'Shubham Sir' or 'Sir'.** **CRITICAL: You are multilingual. Respond in the language the user uses for their query (e.g., Hindi, Spanish, etc.) if possible.** **STRICT NO-CODE RULE FOR MATH/SCIENCE:** NEVER provide programming code for mathematical or scientific problems UNLESS the user explicitly asks for programming help using words like 'write a program', 'code this', 'python solution', 'HTML', 'C++', 'JavaScript', 'programming', 'algorithm', 'function', 'script', or similar coding-related terms. For regular math/science questions, solve them using mathematical methods, formulas, and step-by-step calculations only. Focus on teaching the mathematical/scientific concepts, not programming implementations. **MATH & PHYSICS RENDERING RULES:** ALWAYS use proper MathJax formatting. Use $...$ for inline math and $$...$$ for display math. NEVER use \\text{} for units or physical quantities in equations. Use proper symbols: $E$ for energy, $m$ for mass, $T$ for temperature, $P$ for power, $F$ for force, $v$ for velocity, $a$ for acceleration. For vectors use $\\vec{v}$, $\\vec{F}$. For derivatives use $\\frac{dx}{dt}$. Examples: $F = ma$, $E = mc^2$, $v = u + at$, $P = \\frac{W}{t}$, $V = IR$. For chemistry use $\\ce{}$: $\\ce{H2O}$, $\\ce{2H2 + O2 -> 2H2O}$. AVOID complex array environments or ASCII art for division - just show the calculation steps clearly with proper fractions. **FORMATTING:** Use simple, clean mathematical notation. For fractions: $\\frac{a}{b}$, Square roots: $\\sqrt{x}$, Powers: $x^n$. Keep it simple and readable. **CODING RULES (ONLY when explicitly requested):** When writing ANY code, you MUST ALWAYS wrap it in proper markdown code blocks with ```language. **TABLES & GRAPHS:** Use markdown table syntax with | separators. For graphs use [CHART:type]{data}[/CHART] format. **PROBLEM SOLVING:** For math: 1) Identify given and unknown, 2) Choose formulas, 3) Show steps clearly, 4) Verify answer. Keep explanations simple and encouraging.";
+
+            if (currentUser) {
+                const name = currentUser.name?.split(' ')[0] || 'Champ';
+                const fullName = currentUser.name || 'Champ';
+                const role = currentUser.role || 'Student';
+                const class_ = currentUser.class;
+
+                let userContext = `\n\n**IMPORTANT USER CONTEXT:** You are talking to ${name}, who is a ${role}`;
+                
+                // Check if user is Shubham Pandit (CEO)
+                if (fullName.toLowerCase().includes('shubham') && fullName.toLowerCase().includes('pandit')) {
+                    userContext += ` **CRITICAL: This is Shubham Pandit, the CEO and founder of Padhle Champs who created you. Address him respectfully as 'Shubham Sir' or 'Sir' throughout the conversation. Show extra respect and professionalism.**`;
+                }
+
+                if (role === 'Student' && class_) {
+                    userContext += ` in Class ${class_}`;
+                }
+
+                if (role === 'Teacher') {
+                    userContext += `. As a teacher, they may ask more advanced questions or seek explanations to help their students. Adjust your responses accordingly - you can be more detailed and include teaching tips when appropriate.`;
+                } else {
+                    userContext += `. Provide student-friendly explanations and encouragement.`;
+                }
+
+                return baseInstruction + userContext;
+            }
+
+            return baseInstruction;
+        }
+
+        // Initial history for a new chat
+        const initialHistory = [{ role: 'model', text: welcomeMessage }];
+
+        // --- LocalStorage Management ---
+
+        function loadSessions() {
+            try {
+                const storedSessions = localStorage.getItem('eduvia_chat_sessions');
+                if (storedSessions) {
+                    allSessions = JSON.parse(storedSessions);
+                } else {
+                    allSessions = {};
+                }
+            } catch (error) {
+                console.error("Error loading sessions from localStorage:", error);
+                allSessions = {};
+            }
+        }
+
+        function saveSessions() {
+            try {
+                localStorage.setItem('eduvia_chat_sessions', JSON.stringify(allSessions));
+            } catch (error) {
+                console.error("Error saving sessions to localStorage:", error);
+            }
+        }
+
+        function saveCurrentChat() {
+            if (currentSessionId && allSessions[currentSessionId]) {
+                const chatHistory = allSessions[currentSessionId].history;
+                // Only save the current session if it has more than just the welcome message
+                if (chatHistory.length > 1) {
+                    saveSessions();
+                }
+            }
+        }
+
+        // --- Creative Session Naming Logic ---
+
+        function generateSessionName(query) {
+            const lowerQuery = query.toLowerCase();
+            const themes = {
+                'math': ['equation', 'solve', 'theorem', 'algebra', 'geometry', 'calculus', 'trigonometry', 'derivative', 'integral', 'quadratic', 'value of x', 'find the root', 'formula'],
+                'science': ['science', 'physics', 'chem', 'bio', 'newton', 'force', 'atom', 'cell', 'reaction', 'light', 'dna', 'element', 'organism', 'circuit'],
+                'history': ['history', 'war', 'mughal', 'india', 'world war', 'revolution', 'date', 'era', 'ruler', 'empire'],
+                'english': ['essay', 'poem', 'grammar', 'novel', 'story', 'literature', 'write', 'meaning', 'summary', 'poet', 'tense'],
+                'sst': ['social', 'sst', 'geo', 'economy', 'political', 'citizen', 'constitution', 'map', 'continent', 'resource']
+            };
+
+            let category = 'Doubt Crush';
+            let title = query.substring(0, 20).trim();
+            if (query.length > 20) title += '...';
+
+            for (const key in themes) {
+                if (themes[key].some(keyword => lowerQuery.includes(keyword))) {
+                    category = key;
+                    break;
+                }
+            }
+
+            switch (category) {
+                case 'math':
+                    return `Maths Mission: ${title}`;
+                case 'science':
+                    return `Science Quest: ${title}`;
+                case 'history':
+                    return `Time Traveler: ${title}`;
+                case 'english':
+                    return `Lit Lab: ${title}`;
+                case 'sst':
+                    return `SST Scout: ${title}`;
+                default:
+                    return `Doubt Crush: ${title}`;
+            }
+        }
+
+        // --- Deletion Logic ---
+
+        function deleteSession(id) {
+            if (!allSessions[id]) return;
+
+            // Remove from session store
+            delete allSessions[id];
+
+            // If the deleted session was the current one, switch context
+            if (id === currentSessionId) {
+                const sessionIds = Object.keys(allSessions).sort().reverse();
+                if (sessionIds.length > 0) {
+                    currentSessionId = sessionIds[0]; // Switch to the newest remaining session
+                } else {
+                    // If no sessions are left, start a new one
+                    startNewSession(true);
+                    return; // startNewSession handles rendering and saving
+                }
+            }
+
+            saveSessions();
+            renderSessionList();
+        }
+
+        // --- UI & State Management ---
+
+        function startNewSession(switchToNew = true) {
+            saveCurrentChat();
+
+            const newId = crypto.randomUUID();
+            allSessions[newId] = {
+                name: "New Chat",
+                history: [...initialHistory],
+                isDeleting: false
+            };
+
+            if (switchToNew) {
+                currentSessionId = newId;
+                renderSessionList();
+                renderChat(allSessions[currentSessionId].history);
+                if (window.innerWidth <= 640) {
+                    toggleSessionList(false);
+                }
+            }
+            saveSessions();
+        }
+
+        function switchSession(id) {
+            if (id === currentSessionId || !allSessions[id]) return;
+
+            // If the session we're leaving was in deletion state, reset it
+            if (currentSessionId && allSessions[currentSessionId]?.isDeleting) {
+                allSessions[currentSessionId].isDeleting = false;
+            }
+
+            // Save the current one first
+            saveCurrentChat();
+
+            currentSessionId = id;
+            renderSessionList();
+            renderChat(allSessions[currentSessionId].history);
+
+            if (window.innerWidth <= 640) {
+                toggleSessionList(false);
+            }
+        }
+
+        function renameSession(id, query) {
+            if (allSessions[id].name === "New Chat") {
+                const newName = generateSessionName(query);
+                allSessions[id].name = newName;
+                renderSessionList();
+                saveSessions();
+            }
+        }
+
+        function renderSessionList() {
+            sessionListUl.innerHTML = '';
+            const sessionIds = Object.keys(allSessions).sort().reverse();
+
+            if (sessionIds.length === 0) {
+                startNewSession(false);
+                renderSessionList();
+                return;
+            }
+
+            if (!currentSessionId || !allSessions[currentSessionId]) {
+                currentSessionId = sessionIds[0];
+            }
+
+            sessionIds.forEach(id => {
+                const session = allSessions[id];
+                const listItem = document.createElement('li');
+                const isCurrent = id === currentSessionId;
+                const isDeleting = session.isDeleting;
+
+                // BASE STYLING
+                let baseClasses = 'p-3 rounded-xl cursor-pointer transition duration-150 flex items-center justify-between group ';
+
+                if (isCurrent) {
+                    baseClasses += 'bg-eduvia-primary text-white shadow-lg font-semibold';
+                } else {
+                    baseClasses += 'text-gray-700 hover:bg-gray-100';
+                }
+
+                if (isDeleting) {
+                    // Confirmation state styling
+                    baseClasses += ' session-item-delete-confirm';
+                    if (isCurrent) baseClasses += ' current';
+                }
+
+                listItem.className = baseClasses;
+                listItem.onclick = () => switchSession(id);
+
+                if (!isDeleting) {
+                    // NORMAL DISPLAY STATE
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'flex items-center w-full min-w-0';
+                    contentWrapper.innerHTML = `<span class="truncate pr-2">${session.name}</span>`;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = `p-1 ml-2 rounded-lg transition duration-200 flex-shrink-0 
+                                            ${isCurrent ? 'text-white/80 hover:bg-indigo-700' : 'text-gray-400 opacity-0 group-hover:opacity-100 hover:bg-red-100 hover:text-red-500'}`;
+                    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`;
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        allSessions[id].isDeleting = true;
+                        renderSessionList(); // Re-render to show confirmation state
+                    };
+
+                    listItem.appendChild(contentWrapper);
+                    listItem.appendChild(deleteBtn);
+
+                } else {
+                    // CONFIRMATION DISPLAY STATE
+                    listItem.onclick = (e) => e.stopPropagation(); // Block chat switch when confirming
+
+                    const confirmWrapper = document.createElement('div');
+                    confirmWrapper.className = 'flex items-center space-x-2 w-full text-red-600';
+                    confirmWrapper.innerHTML = `<span class="font-bold">🗑️ Delete?</span>`;
+
+                    const confirmBtn = document.createElement('button');
+                    confirmBtn.className = 'bg-red-500 text-white p-1 px-3 rounded-lg hover:bg-red-600 transition duration-150 text-sm font-medium flex-shrink-0';
+                    confirmBtn.textContent = 'Yes';
+                    confirmBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        deleteSession(id);
+                    };
+
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.className = 'bg-gray-200 text-gray-700 p-1 px-3 rounded-lg hover:bg-gray-300 transition duration-150 text-sm font-medium flex-shrink-0';
+                    cancelBtn.textContent = 'No';
+                    cancelBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        allSessions[id].isDeleting = false;
+                        renderSessionList(); // Re-render to go back to normal state
+                    };
+
+                    listItem.appendChild(confirmWrapper);
+                    listItem.appendChild(confirmBtn);
+                    listItem.appendChild(cancelBtn);
+                }
+
+                sessionListUl.appendChild(listItem);
+            });
+
+            renderChat(allSessions[currentSessionId].history);
+        }
+
+        function decodeHtmlEntities(text) {
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = text;
+            return textarea.value;
+        }
+
+        function renderChat(history) {
+            chatMessages.innerHTML = '';
+            history.forEach(msg => renderMessage(msg.role, decodeHtmlEntities(msg.text)));
+            scrollToBottom();
+        }
+
+        function renderContent(content) {
+            // Decode HTML entities first
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = content;
+            content = textarea.value;
+
+            // Clean and format content while preserving math expressions and code blocks
+            let formattedContent = content
+                .replace(/#+\s*/g, '')
+                .replace(/\*\*(.*?)\*\*/gs, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/gs, '<em>$1</em>');
+
+            // Protect math expressions and code blocks from HTML processing
+            const mathExpressions = [];
+            const codeBlocks = [];
+            let mathIndex = 0;
+            let codeIndex = 0;
+
+            // Store code blocks first (```language...```)
+            formattedContent = formattedContent.replace(/```(\w+)?([\s\S]*?)```/g, (match, language, code) => {
+                const placeholder = `__CODE_BLOCK_${codeIndex}__`;
+                // Map common language aliases
+                const langMap = {
+                    'py': 'python', 'js': 'javascript', 'ts': 'typescript',
+                    'cpp': 'cpp', 'c++': 'cpp', 'csharp': 'csharp', 'cs': 'csharp',
+                    'html': 'markup', 'xml': 'markup', 'jsx': 'jsx', 'tsx': 'tsx'
+                };
+                const mappedLang = langMap[language?.toLowerCase()] || language || 'text';
+                // Clean HTML entities from code and remove leading newline
+                const cleanCode = code.replace(/^\n/, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+                codeBlocks[codeIndex] = { language: mappedLang, code: cleanCode.trim() };
+                codeIndex++;
+                return placeholder;
+            });
+
+            // Also handle code without proper blocks (emergency fix)
+            formattedContent = formattedContent.replace(/(^|\n)(import \w+|def \w+|class \w+|function \w+|var \w+|let \w+|const \w+)([\s\S]*?)(?=\n\n|$)/g, (match, prefix, codeStart, rest) => {
+                // If this looks like code but isn't in a block, wrap it
+                if (!match.includes('```')) {
+                    const language = codeStart.startsWith('import') || codeStart.startsWith('def') || codeStart.startsWith('class') ? 'python' :
+                        codeStart.startsWith('function') || codeStart.startsWith('var') || codeStart.startsWith('let') || codeStart.startsWith('const') ? 'javascript' : 'text';
+                    const placeholder = `__CODE_BLOCK_${codeIndex}__`;
+                    const cleanCode = (codeStart + rest).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+                    codeBlocks[codeIndex] = { language: language, code: cleanCode.trim() };
+                    codeIndex++;
+                    return prefix + placeholder;
+                }
+                return match;
+            });
+
+            // Store inline code (`code`) - escape HTML entities
+            formattedContent = formattedContent.replace(/`([^`]+)`/g, (match, code) => {
+                const placeholder = `__INLINE_CODE_${codeIndex}__`;
+                const cleanCode = code.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+                codeBlocks[codeIndex] = { language: 'text', code: cleanCode, inline: true };
+                codeIndex++;
+                return placeholder;
+            });
+
+            // Store display math ($$...$$)
+            formattedContent = formattedContent.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+                const placeholder = `__MATH_DISPLAY_${mathIndex}__`;
+                mathExpressions[mathIndex] = `$$${math}$$`;
+                mathIndex++;
+                return placeholder;
+            });
+
+            // Store inline math ($...$)
+            formattedContent = formattedContent.replace(/\$([^$\n]+?)\$/g, (match, math) => {
+                const placeholder = `__MATH_INLINE_${mathIndex}__`;
+                mathExpressions[mathIndex] = `$${math}$`;
+                mathIndex++;
+                return placeholder;
+            });
+
+            const container = document.createElement('div');
+            container.className = 'tex2jax_process';
+
+            // Process tables
+            formattedContent = processTablesAndGraphs(formattedContent, container);
+
+            // Convert newlines to breaks
+            let htmlContent = formattedContent.replace(/\n/g, '<br/>');
+
+            // Restore code blocks with syntax highlighting
+            for (let i = 0; i < codeBlocks.length; i++) {
+                const block = codeBlocks[i];
+                // Clean up any remaining explanatory text mixed in code
+                let cleanedCode = block.code;
+                // Remove lines that look like explanations (not proper comments)
+                cleanedCode = cleanedCode.split('\n').filter(line => {
+                    const trimmed = line.trim();
+                    // Keep empty lines, proper comments, and code lines
+                    if (!trimmed) return true;
+                    if (trimmed.startsWith('#') || trimmed.startsWith('//') || trimmed.startsWith('/*') || trimmed.startsWith('<!--')) return true;
+                    // Remove lines that are clearly explanations (start with capital letter, no code syntax)
+                    if (/^[A-Z][a-z].*[.!?]$/.test(trimmed) && !trimmed.includes('=') && !trimmed.includes('(') && !trimmed.includes('{')) return false;
+                    return true;
+                }).join('\n');
+
+                if (block.inline) {
+                    htmlContent = htmlContent.replace(`__INLINE_CODE_${i}__`, `<code class="language-${block.language}">${cleanedCode}</code>`);
+                } else {
+                    htmlContent = htmlContent.replace(`__CODE_BLOCK_${i}__`,
+                        `<pre class="language-${block.language}"><code class="language-${block.language}">${cleanedCode}</code></pre>`);
+                }
+            }
+
+            // Restore math expressions
+            for (let i = 0; i < mathExpressions.length; i++) {
+                htmlContent = htmlContent.replace(`__MATH_DISPLAY_${i}__`, mathExpressions[i]);
+                htmlContent = htmlContent.replace(`__MATH_INLINE_${i}__`, mathExpressions[i]);
+            }
+
+            container.innerHTML = htmlContent;
+
+            // Add responsive handling for wide content
+            container.style.wordWrap = 'break-word';
+            container.style.overflowWrap = 'break-word';
+            container.style.maxWidth = '100%';
+            container.style.overflow = 'hidden';
+
+            // Handle long words and URLs
+            const textNodes = container.querySelectorAll('*');
+            textNodes.forEach(node => {
+                if (node.textContent && node.textContent.length > 50) {
+                    node.style.wordBreak = 'break-word';
+                    node.style.overflowWrap = 'break-word';
+                }
+            });
+
+            // Apply syntax highlighting
+            if (window.Prism) {
+                setTimeout(() => {
+                    Prism.highlightAllUnder(container);
+                    // Add copy buttons to code blocks
+                    const codeBlocks = container.querySelectorAll('pre[class*="language-"]');
+                    codeBlocks.forEach(block => {
+                        if (!block.querySelector('.copy-button')) {
+                            const copyBtn = document.createElement('button');
+                            copyBtn.className = 'copy-button absolute top-2 right-2 p-2 bg-gray-700 text-white rounded opacity-0 hover:opacity-100 transition-opacity';
+                            copyBtn.innerHTML = '📋';
+                            copyBtn.onclick = () => {
+                                navigator.clipboard.writeText(block.textContent);
+                                copyBtn.innerHTML = '✅';
+                                setTimeout(() => copyBtn.innerHTML = '📋', 2000);
+                            };
+                            block.style.position = 'relative';
+                            block.appendChild(copyBtn);
+                        }
+                    });
+                }, 50);
+            }
+
+            // Render math with proper error handling and retry mechanism
+            if (window.MathJax && MathJax.typesetPromise) {
+                setTimeout(() => {
+                    MathJax.typesetPromise([container]).then(() => {
+                        console.log('MathJax rendering completed successfully');
+                        // Adjust container if math equations are too wide
+                        const mathElements = container.querySelectorAll('.MathJax, mjx-container');
+                        mathElements.forEach(el => {
+                            if (el.scrollWidth > el.clientWidth) {
+                                el.style.fontSize = '0.95em';
+                                el.style.overflowX = 'auto';
+                                el.style.maxWidth = '100%';
+                            }
+                        });
+                    }).catch((err) => {
+                        console.error('MathJax rendering error:', err);
+                        // Retry once if there's an error
+                        setTimeout(() => {
+                            MathJax.typesetPromise([container]).catch(e => console.error('MathJax retry failed:', e));
+                        }, 500);
+                    });
+                }, 150);
+            }
+
+            return container;
+        }
+
+        function processTablesAndGraphs(content, container) {
+            // Process markdown-style tables with responsive wrapper
+            content = content.replace(/\|(.+)\|\n\|[-\s|:]+\|\n((\|.+\|\n?)+)/g, (match, header, body) => {
+                const tableId = 'table_' + Math.random().toString(36).substr(2, 9);
+                const headerCells = header.split('|').map(cell => cell.trim()).filter(cell => cell);
+                const bodyRows = body.trim().split('\n').map(row =>
+                    row.split('|').map(cell => cell.trim()).filter(cell => cell)
+                );
+
+                let tableHtml = `<div style="overflow-x: auto; margin: 16px 0; border-radius: 16px;"><table class="ai-table"><thead><tr>`;
+                headerCells.forEach(cell => {
+                    tableHtml += `<th>${cell}</th>`;
+                });
+                tableHtml += `</tr></thead><tbody>`;
+
+                bodyRows.forEach(row => {
+                    if (row.length > 0) {
+                        tableHtml += `<tr>`;
+                        row.forEach(cell => {
+                            tableHtml += `<td>${cell}</td>`;
+                        });
+                        tableHtml += `</tr>`;
+                    }
+                });
+
+                tableHtml += `</tbody></table></div>`;
+                return tableHtml;
+            });
+
+            // Process chart data patterns
+            content = content.replace(/\[CHART:(\w+)\]([\s\S]*?)\[\/CHART\]/g, (match, type, data) => {
+                const chartId = 'chart_' + Math.random().toString(36).substr(2, 9);
+                setTimeout(() => createChart(chartId, type, data), 200);
+                return `<div class="chart-container"><canvas id="${chartId}" width="400" height="200"></canvas></div>`;
+            });
+
+            return content;
+        }
+
+        function createChart(chartId, type, dataStr) {
+            const canvas = document.getElementById(chartId);
+            if (!canvas) return;
+
+            try {
+                const data = JSON.parse(dataStr.trim());
+                const ctx = canvas.getContext('2d');
+
+                // Smart color assignment based on common entities
+                function getSmartColor(label) {
+                    const labelLower = label.toLowerCase();
+                    const colorMap = {
+                        'india': '#FF9933', 'indian': '#FF9933', 'भारत': '#FF9933',
+                        'usa': '#0052CC', 'america': '#0052CC', 'us': '#0052CC', 'united states': '#0052CC',
+                        'china': '#DE2910', 'chinese': '#DE2910',
+                        'japan': '#BC002D', 'japanese': '#BC002D',
+                        'uk': '#012169', 'britain': '#012169', 'england': '#012169',
+                        'germany': '#000000', 'german': '#000000',
+                        'france': '#0055A4', 'french': '#0055A4',
+                        'russia': '#D52B1E', 'russian': '#D52B1E',
+                        'brazil': '#009739', 'brazilian': '#009739',
+                        'canada': '#FF0000', 'canadian': '#FF0000',
+                        'australia': '#00843D', 'australian': '#00843D',
+                        'male': '#36A2EB', 'men': '#36A2EB', 'boys': '#36A2EB',
+                        'female': '#FF6384', 'women': '#FF6384', 'girls': '#FF6384',
+                        'apple': '#A2AAAD', 'iphone': '#A2AAAD',
+                        'google': '#4285F4', 'android': '#3DDC84',
+                        'microsoft': '#00BCF2', 'windows': '#00BCF2',
+                        'facebook': '#1877F2', 'meta': '#1877F2',
+                        'twitter': '#1DA1F2', 'x': '#000000',
+                        'youtube': '#FF0000', 'instagram': '#E4405F'
+                    };
+
+                    for (const [key, color] of Object.entries(colorMap)) {
+                        if (labelLower.includes(key)) return color;
+                    }
+                    return null;
+                }
+
+                // Vibrant fallback color palette
+                const colorPalette = [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                    '#FF9F40', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',
+                    '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE'
+                ];
+
+                // Force colors on all datasets
+                if (data.datasets && data.datasets.length > 0) {
+                    data.datasets.forEach((dataset, datasetIndex) => {
+                        if (type === 'pie' || type === 'doughnut') {
+                            // For pie/doughnut charts, assign colors based on labels
+                            const colors = [];
+                            if (data.labels) {
+                                data.labels.forEach((label, index) => {
+                                    const smartColor = getSmartColor(label);
+                                    colors.push(smartColor || colorPalette[index % colorPalette.length]);
+                                });
+                            } else {
+                                colors.push(...colorPalette.slice(0, dataset.data.length));
+                            }
+                            dataset.backgroundColor = colors;
+                            dataset.borderColor = '#ffffff';
+                            dataset.borderWidth = 3;
+                        } else {
+                            // For bar/line charts, assign different colors to each bar/point
+                            const colors = [];
+                            const borderColors = [];
+
+                            if (data.labels) {
+                                // Use different color for each data point based on labels
+                                data.labels.forEach((label, index) => {
+                                    const smartColor = getSmartColor(label);
+                                    const finalColor = smartColor || colorPalette[index % colorPalette.length];
+                                    colors.push(finalColor + '80'); // Add transparency
+                                    borderColors.push(finalColor);
+                                });
+                            } else {
+                                // Fallback to palette colors
+                                dataset.data.forEach((_, index) => {
+                                    const color = colorPalette[index % colorPalette.length];
+                                    colors.push(color + '80');
+                                    borderColors.push(color);
+                                });
+                            }
+
+                            dataset.backgroundColor = colors;
+                            dataset.borderColor = borderColors;
+                            dataset.borderWidth = 3;
+                            dataset.pointBackgroundColor = borderColors;
+                            dataset.pointBorderColor = '#ffffff';
+                            dataset.pointBorderWidth = 2;
+                        }
+                    });
+                } else {
+                    // If no datasets, create a default one with smart colors
+                    const colors = [];
+                    const borderColors = [];
+
+                    if (data.labels) {
+                        data.labels.forEach((label, index) => {
+                            const smartColor = getSmartColor(label);
+                            const finalColor = smartColor || colorPalette[index % colorPalette.length];
+                            colors.push(finalColor + (type === 'pie' || type === 'doughnut' ? '' : '80'));
+                            borderColors.push(finalColor);
+                        });
+                    } else {
+                        const dataLength = data.data ? data.data.length : 3;
+                        for (let i = 0; i < dataLength; i++) {
+                            const color = colorPalette[i % colorPalette.length];
+                            colors.push(color + (type === 'pie' || type === 'doughnut' ? '' : '80'));
+                            borderColors.push(color);
+                        }
+                    }
+
+                    data.datasets = [{
+                        data: data.data || [10, 20, 30],
+                        backgroundColor: colors,
+                        borderColor: type === 'pie' || type === 'doughnut' ? '#ffffff' : borderColors,
+                        borderWidth: 3
+                    }];
+                }
+
+                new Chart(ctx, {
+                    type: type.toLowerCase(),
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 20,
+                                    font: {
+                                        size: 12,
+                                        weight: '500'
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: data.title || 'Chart',
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                color: '#374151'
+                            }
+                        },
+                        scales: type !== 'pie' && type !== 'doughnut' ? {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#e2e8f0',
+                                    lineWidth: 1
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: '#e2e8f0',
+                                    lineWidth: 1
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        } : {},
+                        elements: {
+                            point: {
+                                radius: 6,
+                                hoverRadius: 8
+                            },
+                            line: {
+                                tension: 0.4
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Chart creation error:', error);
+                canvas.parentElement.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Chart rendering error: ' + error.message + '</p>';
+            }
+        }
+
+        /**
+         * Creates and appends a message bubble with modern, custom icons.
+         */
+        function renderMessage(role, content) {
+            const isUser = role === 'user';
+            const messageWrapper = document.createElement('div');
+            const text = typeof content === 'string' ? content : content.text || '';
+            const isWelcome = role === 'model' && (text.includes('Welcome to') || text.includes('Ready to tackle'));
+
+            messageWrapper.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'} mb-4`;
+
+            // Icon Setup
+            const iconContainer = document.createElement('div');
+            iconContainer.className = 'flex-shrink-0 mt-1';
+            const iconBubble = document.createElement('div');
+            iconBubble.className = `p-1 rounded-full shadow-md w-12 h-12 flex items-center justify-center
+                                    ${isUser ? 'bg-indigo-400 ml-3' : 'mr-3'}`;
+
+            if (isUser) {
+                const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                iconSvg.setAttribute('width', 20);
+                iconSvg.setAttribute('height', 20);
+                iconSvg.setAttribute('viewBox', '0 0 24 24');
+                iconSvg.setAttribute('fill', 'none');
+                iconSvg.setAttribute('stroke', 'white');
+                iconSvg.setAttribute('stroke-width', '2');
+                iconSvg.setAttribute('stroke-linecap', 'round');
+                iconSvg.setAttribute('stroke-linejoin', 'round');
+                iconSvg.innerHTML = '<circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/><path d="M12 13v8"/>';
+                iconBubble.appendChild(iconSvg);
+            } else {
+                iconBubble.innerHTML = '<img src="ai-icon-edu.png" alt="AI" width="40" height="40" class="rounded-full object-cover">';
+            }
+            iconContainer.appendChild(iconBubble);
+
+            // Text Bubble Setup
+            const hasImage = typeof content === 'object' && content.image;
+            const hasWideContent = text.includes('|') || text.includes('$$') || text.includes('[CHART:') || hasImage;
+            const widthClass = hasWideContent ? 'max-w-[98%] sm:max-w-[90%] lg:max-w-[85%]' : 'max-w-[95%] sm:max-w-[75%] lg:max-w-[60%]';
+
+            const textBubble = document.createElement('div');
+
+            if (isWelcome) {
+                textBubble.className = `message-bubble ${widthClass} p-6 rounded-2xl shadow-xl text-gray-800 relative group overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-2 border-purple-200 rounded-tl-none`;
+            } else {
+                textBubble.className = `message-bubble ${widthClass} p-4 rounded-xl shadow-lg text-gray-800 relative group overflow-hidden
+                                        ${isUser ? 'bg-eduvia-light rounded-br-none' : 'bg-white rounded-tl-none'}`;
+            }
+
+            // Handle user message with image
+            if (hasImage) {
+                const img = document.createElement('img');
+                img.src = `data:${content.image.mimeType};base64,${content.image.data}`;
+                img.className = 'max-w-full h-auto rounded-lg shadow-md mb-3';
+                img.alt = 'Uploaded image';
+                textBubble.appendChild(img);
+            }
+
+            // Add text content
+            if (text && text !== '[Image uploaded]') {
+                textBubble.appendChild(renderContent(text));
+            }
+
+            // Add speaker button for AI text responses
+            if (!isUser && text) {
+                const speakerBtn = document.createElement('button');
+                speakerBtn.className = 'absolute top-2 right-2 p-1.5 rounded-lg hover:bg-gray-100 transition-all duration-200 opacity-0 group-hover:opacity-100';
+                speakerBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+                speakerBtn.onclick = () => speakText(text);
+                textBubble.appendChild(speakerBtn);
+            }
+
+            if (isUser) {
+                messageWrapper.appendChild(textBubble);
+                messageWrapper.appendChild(iconContainer);
+            } else {
+                messageWrapper.appendChild(iconContainer);
+                messageWrapper.appendChild(textBubble);
+            }
+
+            chatMessages.appendChild(messageWrapper);
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function updateLoading(isLoading, modelText = '') {
+            const existingLoader = document.getElementById('loading-indicator');
+            userInput.disabled = isLoading;
+            sendButton.disabled = isLoading || !userInput.value.trim();
+
+            if (isLoading) {
+                if (!existingLoader) {
+                    const loaderWrapper = document.createElement('div');
+                    loaderWrapper.id = 'loading-indicator';
+                    loaderWrapper.className = 'flex justify-start mb-4';
+
+                    // Use the custom AI icon for the loader
+                    loaderWrapper.innerHTML = `
+                        <div class="flex-shrink-0 mr-3 mt-1">
+                            <div class="p-1 rounded-full w-12 h-12 flex items-center justify-center">
+                                <img src="ai-icon-edu.png" alt="AI" width="40" height="40" class="rounded-full object-cover animate-pulse">
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl rounded-tl-none shadow-lg max-w-[75%]">
+                            <div class="flex items-center text-gray-500">
+                                Eduvia AI is thinking...
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.appendChild(loaderWrapper);
+                    scrollToBottom();
+                }
+            } else {
+                if (existingLoader) {
+                    if (modelText) {
+                        renderMessage('model', modelText);
+                        saveCurrentChat();
+                    }
+                    existingLoader.remove();
+                }
+            }
+        }
+
+        // --- Core API Logic ---
+
+        function detectImageRequest(prompt) {
+            const imageKeywords = ['generate image', 'create image', 'draw', 'picture of', 'image of', 'make a picture', 'create a drawing', 'generate a photo', 'show me', 'visualize'];
+            return imageKeywords.some(keyword => prompt.toLowerCase().includes(keyword));
+        }
+
+        async function generateImageWithRetry(prompt, maxRetries = 3, delay = 1000) {
+            // Fallback to text response with image description for now
+            const imagePrompt = `I understand you want an image, but I can currently only provide text responses. Let me describe what that image would look like instead:\n\n${prompt}\n\nFor actual image generation, you might want to try:\n- DALL-E 2/3 by OpenAI\n- Midjourney\n- Stable Diffusion\n- Adobe Firefly\n\nWould you like me to provide a detailed description of what this image should contain instead?`;
+
+            return imagePrompt;
+        }
+
+        async function generateContentWithRetry(prompt, history = [], imageData = null, maxRetries = 3, delay = 1000) {
+            const contents = [...history.map(msg => ({
+                role: msg.role === 'model' ? 'model' : 'user',
+                parts: [{ text: msg.text }]
+            }))];
+
+            // Add current message with optional image
+            const userParts = [];
+            if (imageData) {
+                userParts.push({
+                    inlineData: {
+                        mimeType: imageData.mimeType,
+                        data: imageData.data
+                    }
+                });
+            }
+            if (prompt) {
+                userParts.push({ text: prompt });
+            }
+
+            contents.push({
+                role: 'user',
+                parts: userParts
+            });
+
+            const payload = {
+                contents,
+                systemInstruction: {
+                    parts: [{ text: getPersonalizedSystemInstruction() }]
+                }
+            };
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    console.log('Sending payload:', JSON.stringify(payload, null, 2));
+                    const response = await fetch(TEXT_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API Error Response:', errorText);
+                        throw new Error(`API Error: ${response.status} - ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate a response.";
+
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+        }
+
+        function convertImageToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve({
+                        data: base64,
+                        mimeType: file.type
+                    });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+
+        // --- Main Event Handler ---
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = userInput.value.trim();
+            if (!userMessage && !currentImage) return;
+
+            const messageText = userMessage || "[Image uploaded]";
+            renameSession(currentSessionId, messageText);
+
+            // Render user message with image if present
+            if (currentImage) {
+                renderMessage('user', { text: messageText, image: currentImage });
+                allSessions[currentSessionId].history.push({
+                    role: 'user',
+                    text: messageText,
+                    image: currentImage
+                });
+            } else {
+                renderMessage('user', messageText);
+                allSessions[currentSessionId].history.push({ role: 'user', text: messageText });
+            }
+
+            updateLoading(true);
+            userInput.value = '';
+            hideImagePreview();
+            resetImageButton();
+
+            const currentHistory = allSessions[currentSessionId].history.slice(1);
+            let modelResponse = "Oops! I ran into a bit of a snag while thinking. Can you try asking that again, champ? 😅";
+
+            try {
+                if (detectImageRequest(messageText) && !currentImage) {
+                    modelResponse = await generateImageWithRetry(messageText);
+                } else {
+                    modelResponse = await generateContentWithRetry(messageText, currentHistory, currentImage);
+                }
+            } catch (error) {
+                console.error("Error sending message to Gemini API:", error);
+                if (error.message.includes('403') || error.message.includes('API key not valid')) {
+                    modelResponse = "🔑 **Invalid API Key!** Please update the API_KEY in the code with a valid Gemini API key from https://makersuite.google.com/app/apikey";
+                } else if (error.message.includes('429')) {
+                    modelResponse = "⏰ **Rate limit reached.** I'm thinking too fast! Please wait a moment and try again.";
+                } else if (error.message.includes('Image API Error')) {
+                    modelResponse = "🎨 **Image generation failed.** I couldn't create that image right now. Try describing it differently or ask for text help instead!";
+                } else {
+                    modelResponse = "Uff! Network error, my bad! Seems like my brain went offline. Check your connection and let's try again. 😥";
+                }
+            } finally {
+                allSessions[currentSessionId].history.push({
+                    role: 'model',
+                    text: typeof modelResponse === 'string' ? modelResponse : '[Generated Image]'
+                });
+                updateLoading(false, modelResponse);
+                currentImage = null;
+            }
+        });
+
+        // --- UI/UX Event Listeners ---
+
+        function toggleSessionList(open) {
+            if (open === true) {
+                sessionListWrapper.classList.remove('hidden-on-mobile');
+            } else if (open === false) {
+                sessionListWrapper.classList.add('hidden-on-mobile');
+            } else {
+                sessionListWrapper.classList.toggle('hidden-on-mobile');
+            }
+        }
+
+
+
+        // Voice Recognition Event Listeners
+        if (recognition) {
+            micButton.addEventListener('click', () => {
+                if (isListening) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+            recognition.onstart = () => {
+                isListening = true;
+                micButton.classList.add('bg-red-100');
+                micIcon.classList.add('text-red-500', 'animate-pulse');
+                userInput.placeholder = 'Listening... Speak now!';
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                userInput.value = transcript;
+                sendButton.disabled = false;
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                micButton.classList.remove('bg-red-100');
+                micIcon.classList.remove('text-red-500', 'animate-pulse');
+                userInput.placeholder = 'Ask your doubt here or click mic to speak...';
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                isListening = false;
+                micButton.classList.remove('bg-red-100');
+                micIcon.classList.remove('text-red-500', 'animate-pulse');
+                userInput.placeholder = 'Voice recognition failed. Try typing instead.';
+            };
+        } else {
+            micButton.style.display = 'none';
+        }
+
+        // Image upload functionality
+        imageButton.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Check file size (max 20MB)
+                if (file.size > 20 * 1024 * 1024) {
+                    alert('Image too large. Please use an image smaller than 20MB.');
+                    return;
+                }
+
+                // Check file type
+                const supportedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+                if (!supportedTypes.includes(file.type)) {
+                    alert('Unsupported image format. Please use JPG, PNG, WEBP, HEIC, or HEIF.');
+                    return;
+                }
+
+                try {
+                    currentImage = await convertImageToBase64(file);
+                    currentImage.fileName = file.name;
+                    console.log('Image processed:', { mimeType: currentImage.mimeType, dataLength: currentImage.data.length });
+                    showImagePreview(currentImage);
+                    userInput.placeholder = `Ask me about the uploaded image!`;
+                    userInput.focus();
+                    imageButton.style.background = '#e0f2fe';
+                    imageButton.style.color = '#0277bd';
+                } catch (error) {
+                    console.error('Error processing image:', error);
+                    alert('Error processing image. Please try again.');
+                }
+            }
+        });
+
+        menuToggle.addEventListener('click', () => toggleSessionList(true));
+        closeMenuToggle.addEventListener('click', () => toggleSessionList(false));
+        newChatButtonHeader.addEventListener('click', () => startNewSession(true));
+        newChatButtonSidebar.addEventListener('click', () => startNewSession(true));
+
+        // Auto-resize textarea
+        userInput.addEventListener('input', () => {
+            sendButton.disabled = !userInput.value.trim();
+
+            // Auto-resize textarea
+            userInput.style.height = 'auto';
+            userInput.style.height = Math.min(userInput.scrollHeight, 128) + 'px';
+        });
+
+        userInput.addEventListener('focus', () => {
+            if (!currentImage) {
+                userInput.placeholder = 'Ask Eduvia';
+            }
+        });
+
+        // Handle Enter key for submission (Shift+Enter for new line)
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+
+
+
+
+        // Image preview functions
+        function showImagePreview(imageData) {
+            const previewBox = document.getElementById('image-preview-box');
+            const previewContent = document.getElementById('image-preview-content');
+
+            if (previewBox && previewContent) {
+                previewContent.innerHTML = `<img src="data:${imageData.mimeType};base64,${imageData.data}" alt="Preview" class="max-w-xs max-h-32 rounded-lg shadow-md object-cover">`;
+                previewBox.classList.remove('hidden');
+            }
+        }
+
+        function hideImagePreview() {
+            const previewBox = document.getElementById('image-preview-box');
+            if (previewBox) {
+                previewBox.classList.add('hidden');
+            }
+        }
+
+        function resetImageButton() {
+            if (imageButton) {
+                imageButton.style.background = '';
+                imageButton.style.color = '';
+            }
+            if (userInput) {
+                userInput.placeholder = 'Ask Eduvia';
+            }
+        }
+
+
+
+        // --- Initialization ---
+
+        window.onload = () => {
+            sendButton.disabled = true;
+            loadSessions();
+            
+            // Auto-create new chat on first load (not on refresh)
+            if (!sessionStorage.getItem('eduvia_visited')) {
+                sessionStorage.setItem('eduvia_visited', 'true');
+                startNewSession(true);
+            }
+            
+            renderSessionList();
+
+            // Setup remove image button
+            const removeImageBtn = document.getElementById('remove-image');
+            if (removeImageBtn) {
+                removeImageBtn.addEventListener('click', () => {
+                    currentImage = null;
+                    hideImagePreview();
+                    resetImageButton();
+                });
+            }
+
+            if (window.innerWidth <= 640) {
+                sessionListWrapper.classList.add('hidden-on-mobile');
+            }
+        };
+
+    </script>
+</body>
+
+</html>

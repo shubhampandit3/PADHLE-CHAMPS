@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-effect { backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.8); }
+        .faq-item { transition: all 0.3s ease; }
+        .faq-item:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
+    <!-- Header -->
+    <nav class="glass-effect sticky top-0 z-50 border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">Padhle Champs</span>
+                </div>
+                <button onclick="window.history.back()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl mb-6 shadow-lg">
+                <i class="fas fa-question-circle text-white text-3xl"></i>
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black gradient-text mb-4 tracking-tight">Help Center</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Find answers to common questions and get the help you need to succeed</p>
+        </div>
+
+        <!-- Quick Help Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
+            <div class="glass-effect rounded-2xl p-6 text-center hover:shadow-lg transition-all">
+                <i class="fas fa-rocket text-4xl text-blue-500 mb-4"></i>
+                <h3 class="font-bold text-gray-800 mb-2">Getting Started</h3>
+                <p class="text-sm text-gray-600">New to Padhle Champs? Start here!</p>
+            </div>
+            <div class="glass-effect rounded-2xl p-6 text-center hover:shadow-lg transition-all">
+                <i class="fas fa-layer-group text-4xl text-green-500 mb-4"></i>
+                <h3 class="font-bold text-gray-800 mb-2">Batches Guide</h3>
+                <p class="text-sm text-gray-600">Learn about our four specialized batches</p>
+            </div>
+            <div class="glass-effect rounded-2xl p-6 text-center hover:shadow-lg transition-all">
+                <i class="fas fa-fire text-4xl text-purple-500 mb-4"></i>
+                <h3 class="font-bold text-gray-800 mb-2">XP & Streaks</h3>
+                <p class="text-sm text-gray-600">Understand our gamified learning system</p>
+            </div>
+            <div class="glass-effect rounded-2xl p-6 text-center hover:shadow-lg transition-all">
+                <i class="fas fa-headset text-4xl text-orange-500 mb-4"></i>
+                <h3 class="font-bold text-gray-800 mb-2">Contact Support</h3>
+                <p class="text-sm text-gray-600">Get personalized help from our team</p>
+            </div>
+        </div>
+
+        <!-- FAQ Sections -->
+        <div class="space-y-12">
+            <!-- Getting Started -->
+            <section>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-play-circle text-blue-500 mr-3"></i>
+                    Getting Started
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-user-plus text-blue-500 mr-2"></i>
+                            How do I create an account?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Click "Sign Up" on the homepage, enter your details, and verify your email. Parents need to approve accounts for students under 13.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-layer-group text-blue-500 mr-2"></i>
+                            Which batch should I choose?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            <strong>Sangharsh/Manzil:</strong> Class 5 comprehensive learning<br>
+                            <strong>Vigyan:</strong> Class 10 science focus<br>
+                            <strong>CodeCrack:</strong> Programming for Classes 7-12
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-key text-blue-500 mr-2"></i>
+                            I forgot my password. What should I do?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Click "Forgot Password" on the login page, enter your email, and follow the reset instructions sent to your inbox.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-mobile-alt text-blue-500 mr-2"></i>
+                            Can I use Padhle Champs on my phone?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Yes! Our platform works on all devices - phones, tablets, and computers. Just use your web browser for the best experience.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Features -->
+            <section>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-graduation-cap text-green-500 mr-3"></i>
+                    Learning Features
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-fire text-green-500 mr-2"></i>
+                            How do XP points and streaks work?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Earn XP by completing lessons, tests, and DPPs. Maintain daily learning to build your streak. Check the leaderboard to see your ranking!
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-tasks text-green-500 mr-2"></i>
+                            What are DPPs and how do I solve them?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            DPPs (Daily Practice Problems) are daily questions to test your understanding. Find them in your dashboard and submit answers before the deadline.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-robot text-green-500 mr-2"></i>
+                            How do I use Eduvia AI assistant?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Click on "Eduvia AI" from your dashboard. Ask questions about any subject, get study tips, or request explanations of difficult concepts.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-video text-green-500 mr-2"></i>
+                            How do I watch video lessons?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Go to your batch page, select a subject, then choose a chapter. Click on any video to start watching. You can pause, rewind, and take notes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tests & Analytics -->
+            <section>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-chart-line text-purple-500 mr-3"></i>
+                    Tests & Analytics
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-clock text-purple-500 mr-2"></i>
+                            How do timed tests work?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Tests have a fixed time limit. Once you start, the timer begins. Answer all questions and submit before time runs out. Auto-submit happens at the end.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-chart-bar text-purple-500 mr-2"></i>
+                            How do I view my test analysis?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Go to "Test Analysis" from your dashboard to see detailed performance reports, subject-wise scores, and improvement suggestions.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-trophy text-purple-500 mr-2"></i>
+                            What is the test leaderboard?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            The leaderboard shows top performers in tests and overall XP. It updates in real-time and helps you track your progress against peers.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-download text-purple-500 mr-2"></i>
+                            Can I download my progress reports?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Yes! Visit your Progress Dashboard to download detailed reports of your performance, which you can share with parents or teachers.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Community Features -->
+            <section>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-users text-orange-500 mr-3"></i>
+                    Community & Support
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-question-circle text-orange-500 mr-2"></i>
+                            How do I ask doubts to teachers?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Click "Ask Doubts" from your dashboard, select the subject, type your question, and submit. Teachers will respond within 24 hours.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-palette text-orange-500 mr-2"></i>
+                            What is the Creative Corner?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Share your creative work like poems, art, projects, and stories with the community. Get feedback and appreciate others' creativity.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-note-sticky text-orange-500 mr-2"></i>
+                            How do Interactive Notes work?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Create smart notes with AI assistance, organize them by subjects, and use them for quick revision. Notes sync across all your devices.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-exclamation-triangle text-orange-500 mr-2"></i>
+                            How do I report technical issues?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Use "Report Issues" from your dashboard to submit technical problems. Include details about what happened and we'll fix it quickly.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Parents Section -->
+            <section>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <i class="fas fa-family text-indigo-500 mr-3"></i>
+                    For Parents & Guardians
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-eye text-indigo-500 mr-2"></i>
+                            How can I monitor my child's progress?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Create a parent account linked to your child's profile. You'll receive weekly progress reports and can view their dashboard anytime.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-shield-alt text-indigo-500 mr-2"></i>
+                            Is the platform safe for my child?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Absolutely! We follow strict safety protocols, have no advertisements, moderate all content, and comply with child privacy laws.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-bell text-indigo-500 mr-2"></i>
+                            What notifications will I receive?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Get updates about your child's test scores, XP milestones, streak achievements, and any important announcements from teachers.
+                        </p>
+                    </div>
+                    <div class="faq-item glass-effect rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i class="fas fa-phone text-indigo-500 mr-2"></i>
+                            How do I contact my child's teacher?
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Use the "Contact Teacher" feature in your parent dashboard, or email directly through the platform's messaging system.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Support Section -->
+        <div class="mt-16 glass-effect rounded-3xl p-12 text-center">
+            <div class="mb-8">
+                <i class="fas fa-headset text-6xl text-blue-500 mb-4"></i>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Still Need Help?</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Our friendly support team is here to help you succeed. Don't hesitate to reach out!
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
+                <div class="bg-white/60 rounded-2xl p-6">
+                    <i class="fas fa-comments text-4xl text-green-500 mb-4"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">Live Chat</h3>
+                    <p class="text-gray-600 text-sm mb-4">Get instant help during school hours</p>
+                    <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                        Start Chat
+                    </button>
+                </div>
+                <div class="bg-white/60 rounded-2xl p-6">
+                    <i class="fas fa-envelope text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">Email Support</h3>
+                    <p class="text-gray-600 text-sm mb-4">Detailed help and responses within 24 hours</p>
+                    <a href="mailto:padhle.champs156@gmail.com" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors inline-block">
+                        Send Email
+                    </a>
+                </div>
+                <div class="bg-white/60 rounded-2xl p-6">
+                    <i class="fas fa-robot text-4xl text-purple-500 mb-4"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">Eduvia AI</h3>
+                    <p class="text-gray-600 text-sm mb-4">Get instant answers to common questions</p>
+                    <a href="eduvia.html" class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors inline-block">
+                        Chat with AI
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100">
+                <h4 class="font-semibold text-gray-800 mb-4">Support Hours</h4>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <div class="font-medium text-gray-800">Live Chat</div>
+                        <div class="text-gray-600">Mon-Fri: 9 AM - 6 PM</div>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Email Support</div>
+                        <div class="text-gray-600">24/7 (Response within 24hrs)</div>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Eduvia AI</div>
+                        <div class="text-gray-600">Available 24/7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-white"></i>
+                </div>
+                <span class="text-xl font-bold">Padhle Champs</span>
+            </div>
+            <p class="text-gray-300 mb-6">We're here to support your learning journey every step of the way</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="home.html" class="text-gray-300 hover:text-white transition-colors">
+                    <i class="fas fa-home mr-1"></i>Home
+                </a>
+                <a href="privacy-policy.html" class="text-gray-300 hover:text-white transition-colors">
+                    <i class="fas fa-shield-alt mr-1"></i>Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-gray-300 hover:text-white transition-colors">
+                    <i class="fas fa-file-alt mr-1"></i>Terms of Service
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2025 Padhle Champs. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Live Chat Integration -->
+    <script src="chat-widget.js"></script>
+
+</body>
+</html>
