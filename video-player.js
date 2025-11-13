@@ -414,9 +414,7 @@ class VideoPlayer {
             }
         });
         
-        // Rules modal events
-        this.elements.closeRules?.addEventListener('click', () => this.hideRulesModal());
-        this.elements.acceptRules?.addEventListener('click', () => this.hideRulesModal());
+
         
 
 
@@ -1196,16 +1194,23 @@ class VideoPlayer {
     }
     
     showRulesModal() {
+        const hasSeenRules = localStorage.getItem('videoPlayerRulesAccepted');
+        if (hasSeenRules) return;
+        
         setTimeout(() => {
             if (this.elements.rulesModal) {
                 this.elements.rulesModal.classList.add('show');
             }
-        }, 3000);
+        }, 2000);
+        
+        this.elements.closeRules?.addEventListener('click', () => this.hideRulesModal());
+        this.elements.acceptRules?.addEventListener('click', () => this.hideRulesModal());
     }
     
     hideRulesModal() {
         if (this.elements.rulesModal) {
             this.elements.rulesModal.classList.remove('show');
+            localStorage.setItem('videoPlayerRulesAccepted', 'true');
         }
     }
     
@@ -1473,12 +1478,13 @@ Format:
             this.addAIMessage(response, 'ai');
         } catch (error) {
             console.error('Video analysis failed:', error);
+            // Don't show error to user for auto-analysis
         }
     }
     
     // AI Chat Functionality
     initializeAI() {
-        this.aiApiKey = 'AIzaSyDez5ARuZXyhUssEskk44EY-i-boEXx9r4';
+        this.aiApiKey = 'AIzaSyDSjLlnZ-2rMlT6rfGdW5aRDnOsra3XHIg';
         this.aiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.aiApiKey}`;
         this.isAIListening = false;
         this.aiRecognition = null;
@@ -1603,7 +1609,7 @@ Format:
         }
     }
 
-    async callGeminiAPI(message, screenshot = null) {
+    async callGeminiAPI(message, screenshot = null, retries = 2) {
         const videoTitle = this.elements.videoTitle?.textContent || 'Current Video';
         const videoSubject = this.elements.videoSubject?.textContent || 'General';
         const currentTime = this.getCurrentVideoTime();
@@ -1658,20 +1664,35 @@ Provide educational explanations with proper HTML formatting and LaTeX math.`;
             }
         };
 
-        const response = await fetch(this.aiApiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+        try {
+            const response = await fetch(this.aiApiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
 
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+            if (response.status === 429) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    return this.callGeminiAPI(message, screenshot, retries - 1);
+                }
+                throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+            }
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t process that. Please try again!';
+        } catch (error) {
+            if (error.message.includes('Rate limit')) {
+                throw error;
+            }
+            throw new Error('Failed to connect to AI. Please check your internet connection.');
         }
-
-        const data = await response.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t process that. Please try again!';
     }
 
     addAIMessage(message, sender, screenshot = null) {
