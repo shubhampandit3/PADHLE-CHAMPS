@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Numbers Comprehensive Study Guide</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font import and basic styling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Light background */
+            color: #1f2937; /* Dark text */
+            min-height: 100vh;
+        }
+        /* Style for LaTeX/Math content for better visibility */
+        .math-content {
+            font-family: 'Inter', monospace;
+            font-weight: 600;
+            color: #1e40af; /* Dark blue */
+            background-color: #f3f4f6;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 2px 0;
+            user-select: text;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+        }
+        /* Custom scrollbar for aesthetics */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f9fafb;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="text-center mb-6 p-4 border-b border-gray-300 sticky top-0 bg-white z-10 shadow-sm">
+        <h1 class="text-4xl font-extrabold text-green-600">Real Numbers: Comprehensive Study Hub</h1>
+        <p class="text-xl text-gray-600 mt-2">Theory, Examples, and Practice Questions</p>
+    </header>
+
+    <!-- Main Content Grid: Notes (2/3) and Questions (1/3) -->
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Column 1: Comprehensive Study Guide (Wider) -->
+        <section class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg custom-scrollbar overflow-y-auto max-h-[85vh] border border-gray-200">
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 border-b border-gray-300 pb-3">Study Guide: Real Numbers (Class 10)</h2>
+
+            <!-- Section 1: Euclid's Division Lemma (EDL) -->
+            <div class="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-red-600 mb-3">1. Euclid's Division Lemma (EDL)</h3>
+                <p class="text-gray-700 mb-2">Given positive integers <span class="math-content">a</span> and <span class="math-content">b</span>, there exist unique integers <span class="math-content">q</span> (quotient) and <span class="math-content">r</span> (remainder) such that:</p>
+                <div class="math-content text-lg w-full">a = bq + r, where 0 ≤ r < b</div>
+                <p class="text-gray-600 mt-3"><strong>Application:</strong> <strong>Euclid's Division Algorithm</strong> is used to find the <strong>HCF</strong> (Highest Common Factor) of two positive integers.</p>
+                <p class="text-sm text-gray-500 mt-2">Example: Find HCF of 42 and 455. <span class="math-content">455 = 42 × 10 + 35</span>. Then <span class="math-content">42 = 35 × 1 + 7</span>. Then <span class="math-content">35 = 7 × 5 + 0</span>. HCF is 7.</p>
+            </div>
+
+            <!-- Section 2: Fundamental Theorem of Arithmetic (FTA) -->
+            <div class="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-red-600 mb-3">2. Fundamental Theorem of Arithmetic (FTA)</h3>
+                <p class="text-gray-700 mb-2">Every composite number can be expressed (factorised) as a product of primes, and this factorisation is <strong>unique</strong>, apart from the order in which the prime factors occur.</p>
+                <div class="math-content text-lg w-full">Composite Number = p₁ × p₂ × p₃ × ...</div>
+                <p class="text-gray-600 mt-3 font-medium">Key Relation for HCF and LCM:</p>
+                <div class="math-content text-lg w-full">HCF(a, b) × LCM(a, b) = a × b</div>
+                <p class="text-gray-600 mt-3 font-medium">Application (Ending with <span class="math-content">0</span>): A number <span class="math-content">x</span> ends with the digit <span class="math-content">0</span> only if its prime factorization contains both <span class="math-content">2</span> and <span class="math-content">5</span>.</p>
+            </div>
+
+            <!-- Section 3: Proving Irrationality -->
+            <div class="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-red-600 mb-3">3. Revisiting Irrational Numbers</h3>
+                <p class="text-gray-700 mb-2">The method used is <strong>Proof by Contradiction</strong>.</p>
+                <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                    <li><strong>Type 1: Proving √p is Irrational (where p is prime)</strong>:
+                        <p class="text-sm mt-1">Assume <span class="math-content">√p = a/b</span> (coprime). Show that <span class="math-content">p</span> divides both <span class="math-content">a</span> and <span class="math-content">b</span>, which contradicts the coprime assumption.</p>
+                    </li>
+                    <li><strong>Type 2: Proving a+b√p is Irrational</strong>:
+                        <p class="text-sm mt-1">Assume <span class="math-content">a+b√p</span> is rational. Isolate <span class="math-content">√p</span>. Since <span class="math-content">a</span>, <span class="math-content">b</span>, and the assumed number are rational, <span class="math-content">√p</span> would be rational, which is a known contradiction.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section 4: Decimal Expansions -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h3 class="text-xl font-semibold text-red-600 mb-3">4. Decimal Expansions (Rational Numbers)</h3>
+                <p class="text-gray-700 mb-2">A rational number <span class="math-content">p/q</span> (where HCF<span class="math-content">(p, q) = 1</span>) has a decimal expansion that:</p>
+                <ul class="list-disc list-inside ml-4 space-y-2 text-gray-700">
+                    <li><strong>Terminates</strong> if the prime factorization of the denominator <span class="math-content">q</span> is of the form:
+                        <div class="math-content text-lg w-full">q = 2ⁿ × 5ᵐ, where n, m ≥ 0 are integers</div>
+                    </li>
+                    <li><strong>Is Non-terminating Repeating</strong> (Recurring) if the prime factorization of the denominator <span class="math-content">q</span> is <strong>NOT</strong> of the form <span class="math-content">2ⁿ × 5ᵐ</span> (i.e., it has a prime factor other than 2 or 5).</li>
+                </ul>
+                <p class="text-sm text-gray-500 mt-3">Example: <span class="math-content">13/3125</span> terminates because <span class="math-content">3125 = 5⁵</span>. <span class="math-content">17/8</span> terminates because <span class="math-content">8 = 2³</span>. <span class="math-content">64/455</span> is non-terminating repeating because <span class="math-content">455 = 5 × 7 × 13</span>.</p>
+            </div>
+        </section>
+
+        <!-- Column 2: Interactive Practice Questions (Narrower) -->
+        <section class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-bold text-green-600 mb-6 border-b border-gray-300 pb-3">Practice NCERT Questions</h2>
+
+            <div id="questions-container" class="space-y-6">
+                <!-- Questions will be injected here by JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                topic: "Fundamental Theorem of Arithmetic (HCF/LCM)",
+                question: "Find the <strong>HCF</strong> and <strong>LCM</strong> of the integers 26 and 91 by the prime factorization method.",
+                solution: {
+                    primeFactorization: `26 = 2 × 13, 91 = 7 × 13`,
+                    hcf: "HCF(26, 91) = 13",
+                    lcm: "LCM(26, 91) = 2 × 7 × 13 = 182"
+                }
+            },
+            {
+                id: 2,
+                topic: "Irrationality Proof (√p)",
+                question: "Prove that √5 is irrational. (Standard proof by contradiction.)",
+                solution: {
+                    steps: [
+                        "Assume √5 = a/b (coprime). Squaring gives a² = 5b².",
+                        "This implies 5 divides a², so 5 divides a. Let a = 5c.",
+                        "Substituting: (5c)² = 5b² ⟹ 25c² = 5b² ⟹ b² = 5c².",
+                        "This implies 5 divides b², so 5 divides b.",
+                        "Since 5 divides both a and b, they are not coprime, which is a contradiction. Hence, √5 is irrational."
+                    ]
+                }
+            },
+            {
+                id: 3,
+                topic: "Irrationality Proof (a+b√p)",
+                question: "Prove that 3+2√5 is irrational, given that √5 is irrational.",
+                solution: {
+                    steps: [
+                        "Assume 3+2√5 = a/b (rational).",
+                        "Isolate √5: √5 = (a - 3b)/(2b).",
+                        "Since a, b, and 3 are integers, (a - 3b)/(2b) is rational.",
+                        "This implies √5 is rational, which contradicts the given fact. Therefore, 3+2√5 is irrational."
+                    ]
+                }
+            },
+            {
+                id: 4,
+                topic: "Decimal Expansions",
+                question: "Without actual division, determine if 13/3125 has a terminating or non-terminating decimal expansion.",
+                solution: {
+                    reasoning: [
+                        "Denominator q = 3125. Prime factorisation of q is 5⁵.",
+                        "Since the denominator is of the form 2ⁿ × 5ᵐ (where n=0 and m=5), the rational number 13/3125 has a <strong>terminating</strong> decimal expansion."
+                    ]
+                }
+            },
+            {
+                id: 5,
+                topic: "HCF/LCM and Relation",
+                question: "Given that HCF(306, 657) = 9, find the LCM(306, 657).",
+                solution: {
+                    calculation: [
+                        "Use the relation: LCM(a, b) × HCF(a, b) = a × b.",
+                        "LCM(306, 657) = (306 × 657)/9",
+                        "LCM(306, 657) = 34 × 657 = 22338"
+                    ]
+                }
+            },
+            {
+                id: 6,
+                topic: "Euclid's Division Lemma (Show Form)",
+                question: "Show that any positive odd integer is of the form 4q+1 or 4q+3 for some integer q.",
+                solution: {
+                    steps: [
+                        "Let a be a positive integer and b=4. Then a = 4q + r, where r = 0, 1, 2, 3.",
+                        "If r=0, a=4q (Even).",
+                        "If r=1, a=4q+1 (Odd).",
+                        "If r=2, a=4q+2 = 2(2q+1) (Even).",
+                        "If r=3, a=4q+3 (Odd).",
+                        "Conclusion: Any positive odd integer is of the form 4q+1 or 4q+3."
+                    ]
+                }
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        const renderQuestion = (q) => {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-50 p-4 rounded-xl shadow-lg border border-gray-200 transition-all duration-300 flex flex-col';
+            
+            card.innerHTML = `
+                <span class="text-xs font-medium text-purple-600 mb-2">${q.topic}</span>
+                <p class="text-base mb-3 text-gray-800 flex-grow">${q.question}</p>
+                <div class="mt-2">
+                    <button id="toggle-btn-${q.id}" class="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-2 px-3 rounded-lg transition-colors shadow-md">
+                        Show Solution
+                    </button>
+                    <div id="solution-${q.id}" class="solution mt-3 p-3 border border-green-600 bg-green-50 rounded-lg hidden">
+                        <h4 class="text-sm font-semibold text-green-600 mb-2">Solution:</h4>
+                        ${renderSolution(q.solution)}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+            
+            // Add click listener to the button
+            document.getElementById(`toggle-btn-${q.id}`).addEventListener('click', () => {
+                const solutionDiv = document.getElementById(`solution-${q.id}`);
+                const button = document.getElementById(`toggle-btn-${q.id}`);
+                
+                if (solutionDiv.classList.contains('hidden')) {
+                    solutionDiv.classList.remove('hidden');
+                    button.textContent = 'Hide Solution';
+                    button.classList.replace('bg-green-600', 'bg-red-600');
+                    button.classList.replace('hover:bg-green-700', 'hover:bg-red-700');
+                } else {
+                    solutionDiv.classList.add('hidden');
+                    button.textContent = 'Show Solution';
+                    button.classList.replace('bg-red-600', 'bg-green-600');
+                    button.classList.replace('hover:bg-red-700', 'hover:bg-green-700');
+                }
+            });
+        };
+
+        const renderSolution = (solution) => {
+            let html = '';
+            
+            // Function to strip $$ or $ from LaTeX for clean display in the math-content block
+            const formatMathContent = (text) => text.replace(/(\$\$[^$]*\$\$)/g, (match) => match.substring(2, match.length - 2).trim()).replace(/(\$[^$]*\$)/g, (match) => match.substring(1, match.length - 1).trim());
+
+            // Render calculation/factorization steps using math-content block
+            if (solution.primeFactorization || solution.hcf || solution.lcm || solution.calculation) {
+                const parts = [solution.primeFactorization, solution.hcf, solution.lcm, solution.calculation].filter(Boolean).join('');
+                if (parts.length > 0) {
+                     html += `<div class="math-content w-full mb-2">${formatMathContent(parts)}</div>`;
+                }
+            }
+
+            // Render list steps or reasoning
+            if (solution.steps || solution.reasoning) {
+                const items = solution.steps || solution.reasoning;
+                html += `<ol class="list-decimal list-inside space-y-2 mt-2 text-gray-700">`;
+                items.forEach(item => {
+                    // Replace LaTeX delimiters for display in the list item
+                    const formattedItem = item.replace(/(\$[^$]*\$)/g, (match) => `<span class="math-content inline-block py-0 px-1 text-xs">${formatMathContent(match)}</span>`);
+                    html += `<li class="text-xs leading-relaxed">${formattedItem}</li>`;
+                });
+                html += `</ol>`;
+            }
+
+            return html;
+        };
+
+        // Render all questions when the window loads
+        window.onload = () => questions.forEach(renderQuestion);
+    </script>
+
+</body>
+</html>

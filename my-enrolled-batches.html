@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Enrolled Batches - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="my-enrolled-batches.css">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left side: Brand -->
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Padhle Champs
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Right side: Back Button -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='home.html'" class="back-btn">
+                        <i class="material-icons-round">arrow_back</i>
+                        <span>Back to Home</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header Section -->
+            <div class="header-section mb-12" data-aos="fade-up">
+                <div class="text-center relative">
+                    <!-- Background SVG -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                        <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M200 50L350 150L200 250L50 150L200 50Z" stroke="currentColor" stroke-width="2" fill="url(#gradient1)"/>
+                            <defs>
+                                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3B82F6"/>
+                                    <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    
+                    <div class="header-icon mb-6">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="url(#headerGradient)"/>
+                            <path d="M25 35L35 45L55 25" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 50H60M25 55H55M30 60H50" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3B82F6"/>
+                                    <stop offset="50%" style="stop-color:#8B5CF6"/>
+                                    <stop offset="100%" style="stop-color:#EC4899"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    
+                    <h1 class="header-title">My Enrolled Batches</h1>
+                    <p class="header-subtitle">Continue your learning journey with your enrolled courses</p>
+                    
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <i class="material-icons-round">school</i>
+                            <span class="stat-number" id="totalBatches">0</span>
+                            <span class="stat-label">Total Batches</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <i class="material-icons-round">trending_up</i>
+                            <span class="stat-number" id="activeProgress">0%</span>
+                            <span class="stat-label">Avg Progress</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <i class="material-icons-round">schedule</i>
+                            <span class="stat-number" id="studyTime">0h</span>
+                            <span class="stat-label">Study Time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Batches Grid -->
+            <div class="batches-section" data-aos="fade-up" data-aos-delay="200">
+                <div id="batchesContainer" class="batches-grid">
+                    <!-- Batches will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state hidden">
+                    <div class="empty-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="60" cy="60" r="50" fill="url(#emptyGradient)" opacity="0.1"/>
+                            <path d="M40 50L50 60L80 30" stroke="url(#emptyGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M30 70H90M35 80H85M40 90H80" stroke="url(#emptyGradient)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="emptyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#6B7280"/>
+                                    <stop offset="100%" style="stop-color:#9CA3AF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="empty-title">No Batches Enrolled Yet</h3>
+                    <p class="empty-description">Start your learning journey by enrolling in a batch that matches your goals</p>
+                    <button onclick="window.location.href='batch.html'" class="browse-btn">
+                        <i class="material-icons-round">explore</i>
+                        <span>Browse Available Batches</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="my-enrolled-batches.js"></script>
+</body>
+</html>

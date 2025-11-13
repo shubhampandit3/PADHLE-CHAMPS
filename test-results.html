@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .result-animation { animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-trophy text-2xl text-white mr-3"></i>
+                    <span class="text-xl font-bold text-white">Test Results</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="home.html" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fas fa-home mr-2"></i>Dashboard
+                    </a>
+                    <div class="bg-white bg-opacity-20 px-3 py-2 rounded-lg">
+                        <span class="font-semibold text-white" id="username">Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Results Header -->
+        <div class="bg-white rounded-2xl card-shadow p-8 mb-8 result-animation">
+            <div class="text-center">
+                <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2" id="testTitle">Test Completed!</h1>
+                <p class="text-gray-600" id="submissionTime">Submitted on: Loading...</p>
+            </div>
+        </div>
+
+        <!-- Score Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+            <div class="bg-white rounded-xl card-shadow p-6 text-center result-animation" style="animation-delay: 0.1s">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-check text-green-600 text-xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-green-600" id="correctCount">0</div>
+                <div class="text-sm text-gray-600">Correct</div>
+            </div>
+            
+            <div class="bg-white rounded-xl card-shadow p-6 text-center result-animation" style="animation-delay: 0.2s">
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-times text-red-600 text-xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                <div class="text-sm text-gray-600">Wrong</div>
+            </div>
+            
+            <div class="bg-white rounded-xl card-shadow p-6 text-center result-animation" style="animation-delay: 0.3s">
+                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-minus text-yellow-600 text-xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-yellow-600" id="unattemptedCount">0</div>
+                <div class="text-sm text-gray-600">Unattempted</div>
+            </div>
+            
+            <div class="bg-white rounded-xl card-shadow p-6 text-center result-animation" style="animation-delay: 0.4s">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-star text-purple-600 text-xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-purple-600" id="xpEarned">0</div>
+                <div class="text-sm text-gray-600">XP Earned</div>
+            </div>
+            
+            <div class="bg-white rounded-xl card-shadow p-6 text-center result-animation" style="animation-delay: 0.5s">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-clock text-orange-600 text-xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-orange-600" id="timeTaken">0m</div>
+                <div class="text-sm text-gray-600">Time Taken</div>
+            </div>
+        </div>
+
+        <!-- Score Card -->
+        <div class="bg-white rounded-2xl card-shadow p-8 mb-8 result-animation" style="animation-delay: 0.5s">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Score</h2>
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                        <path class="text-gray-200" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        <path class="text-purple-600" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" id="scoreCircle"></path>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-gray-900" id="scorePercentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-lg text-gray-600">
+                    <span id="totalMarks">0</span> / <span id="maxMarks">0</span> marks
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Comparison -->
+        <div class="bg-white rounded-2xl card-shadow p-8 mb-8 result-animation" style="animation-delay: 0.6s">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Performance Comparison</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Metric</th>
+                            <th class="text-center py-3 px-4 font-semibold text-green-600">Topper</th>
+                            <th class="text-center py-3 px-4 font-semibold text-blue-600">Average</th>
+                            <th class="text-center py-3 px-4 font-semibold text-purple-600">Your Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-4 font-medium text-gray-800">Marks</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-green-600" id="topperMarks">-</div>
+                                <div class="text-sm text-gray-500" id="topperMarksPercent">-%</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-blue-600" id="averageMarks">-</div>
+                                <div class="text-sm text-gray-500" id="averageMarksPercent">-%</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-purple-600" id="yourMarks">-</div>
+                                <div class="text-sm text-gray-500" id="yourMarksPercent">-%</div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-4 font-medium text-gray-800">Question Types</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-sm text-gray-600" id="questionTypes">Mixed Types</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-sm text-gray-600">-</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-sm text-gray-600" id="yourQuestionTypes">-</div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-4 font-medium text-gray-800">Time Taken</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-green-600" id="topperTime">-</div>
+                                <div class="text-sm text-gray-500">Fastest</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-blue-600" id="averageTime">-</div>
+                                <div class="text-sm text-gray-500">Average Time</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-purple-600" id="yourTime">-</div>
+                                <div class="text-sm text-gray-500">Your Time</div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-4 font-medium text-gray-800">Rank</td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-green-600">#1</div>
+                                <div class="text-sm text-gray-500">Top Performer</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-blue-600" id="averageRank">-</div>
+                                <div class="text-sm text-gray-500">Average Rank</div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <div class="text-lg font-bold text-purple-600" id="yourRank">-</div>
+                                <div class="text-sm text-gray-500" id="rankStatus">Your Position</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-2">Performance Status</div>
+                    <div class="text-lg font-bold" id="performanceStatus">Calculating...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center result-animation" style="animation-delay: 0.7s">
+            <a href="home.html" class="bg-gray-600 text-white px-8 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold text-center">
+                <i class="fas fa-home mr-2"></i>Back to Dashboard
+            </a>
+            <button onclick="viewDetailedResults()" class="gradient-bg text-white px-8 py-3 rounded-lg hover:opacity-90 transition-all font-semibold">
+                <i class="fas fa-chart-bar mr-2"></i>View Detailed Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+            }
+
+            const results = JSON.parse(localStorage.getItem('testResults'));
+            if (results) {
+                displayResults(results);
+                loadComparisonData(results);
+            } else {
+                alert('No test results found');
+                window.location.href = 'home.html';
+            }
+        });
+
+        function displayResults(results) {
+            document.getElementById('testTitle').textContent = results.testTitle;
+            document.getElementById('submissionTime').textContent = 
+                `Submitted on: ${new Date(results.submittedAt).toLocaleString()}`;
+            
+            document.getElementById('correctCount').textContent = results.correctAnswers;
+            document.getElementById('wrongCount').textContent = results.wrongAnswers;
+            document.getElementById('unattemptedCount').textContent = results.unattempted;
+            // Calculate XP properly for all attempts
+            const xpEarned = results.attemptNumber === 1 ? (results.earnedXP || 0) : results.correctAnswers;
+            document.getElementById('xpEarned').textContent = xpEarned;
+            
+            // Display time taken
+            const timeTaken = results.timeTaken || 0;
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            document.getElementById('timeTaken').textContent = `${minutes}m ${seconds}s`;
+            
+            document.getElementById('totalMarks').textContent = results.totalMarks;
+            document.getElementById('maxMarks').textContent = results.maxMarks;
+            
+            const percentage = Math.max(0, Math.round((results.totalMarks / results.maxMarks) * 100));
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            
+            // Show question type info
+            if (results.questionTypes) {
+                const types = results.questionTypes;
+                const typeText = `${types.single || 0} Single, ${types.multiple || 0} Multiple, ${types.type || 0} Type`;
+                document.getElementById('yourQuestionTypes').textContent = typeText;
+            }
+            
+            // Animate score circle
+            setTimeout(() => {
+                const circle = document.getElementById('scoreCircle');
+                const circumference = 2 * Math.PI * 15.9155;
+                const offset = circumference - (percentage / 100) * circumference;
+                circle.style.strokeDasharray = `${circumference}, ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+                circle.style.transition = 'stroke-dashoffset 2s ease-in-out';
+            }, 1000);
+        }
+
+        function loadComparisonData(results) {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+
+            // Fetch all results for this test
+            database.ref('testResults').orderByChild('testId').equalTo(results.testId).once('value')
+                .then(snapshot => {
+                    const allResults = [];
+                    snapshot.forEach(childSnapshot => {
+                        allResults.push(childSnapshot.val());
+                    });
+                    
+                    if (allResults.length > 0) {
+                        calculateComparison(results, allResults);
+                    } else {
+                        showDefaultComparison(results);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading comparison data:', error);
+                    showDefaultComparison(results);
+                });
+        }
+
+        function calculateComparison(userResults, allResults) {
+            // Sort by marks (descending), then by time taken (ascending) for equal marks
+            allResults.sort((a, b) => {
+                if (b.totalMarks !== a.totalMarks) {
+                    return b.totalMarks - a.totalMarks;
+                }
+                // If marks are equal, sort by time taken (less time = better rank)
+                const timeA = a.timeTaken || 0;
+                const timeB = b.timeTaken || 0;
+                return timeA - timeB;
+            });
+            
+            const topperMarks = allResults[0].totalMarks;
+            const topperPercent = Math.round((topperMarks / userResults.maxMarks) * 100);
+            const topperTime = allResults[0].timeTaken || 0;
+            
+            // Calculate averages
+            const totalMarks = allResults.reduce((sum, result) => sum + result.totalMarks, 0);
+            const averageMarks = Math.round(totalMarks / allResults.length);
+            const averagePercent = Math.round((averageMarks / userResults.maxMarks) * 100);
+            
+            const totalTime = allResults.reduce((sum, result) => sum + (result.timeTaken || 0), 0);
+            const averageTime = Math.round(totalTime / allResults.length);
+            
+            // Find user rank
+            const userRank = allResults.findIndex(result => result.studentId === userResults.studentId) + 1;
+            const averageRank = Math.ceil(allResults.length / 2);
+            
+            // Format time display
+            const formatTime = (seconds) => {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}m ${secs}s`;
+            };
+            
+            // Update UI
+            document.getElementById('topperMarks').textContent = topperMarks;
+            document.getElementById('topperMarksPercent').textContent = `${topperPercent}%`;
+            document.getElementById('averageMarks').textContent = averageMarks;
+            document.getElementById('averageMarksPercent').textContent = `${averagePercent}%`;
+            document.getElementById('yourMarks').textContent = userResults.totalMarks;
+            document.getElementById('yourMarksPercent').textContent = `${Math.round((userResults.totalMarks / userResults.maxMarks) * 100)}%`;
+            
+            document.getElementById('topperTime').textContent = formatTime(topperTime);
+            document.getElementById('averageTime').textContent = formatTime(averageTime);
+            document.getElementById('yourTime').textContent = formatTime(userResults.timeTaken || 0);
+            
+            document.getElementById('averageRank').textContent = `#${averageRank}`;
+            document.getElementById('yourRank').textContent = `#${userRank}`;
+            
+            // Performance status
+            let status, statusClass;
+            const userPercent = (userResults.totalMarks / userResults.maxMarks) * 100;
+            
+            if (userPercent >= 80) {
+                status = '🏆 Excellent Performance!';
+                statusClass = 'text-green-600';
+            } else if (userPercent >= 60) {
+                status = '👍 Good Performance!';
+                statusClass = 'text-blue-600';
+            } else if (userPercent >= 40) {
+                status = '📈 Average Performance';
+                statusClass = 'text-yellow-600';
+            } else {
+                status = '💪 Keep Practicing!';
+                statusClass = 'text-red-600';
+            }
+            
+            const statusElement = document.getElementById('performanceStatus');
+            statusElement.textContent = status;
+            statusElement.className = `text-lg font-bold ${statusClass}`;
+            
+            document.getElementById('rankStatus').textContent = 
+                userRank <= 3 ? 'Top Performer!' : 
+                userRank <= averageRank ? 'Above Average' : 'Below Average';
+        }
+
+        function showDefaultComparison(results) {
+            // Show user's data only when no other results available
+            document.getElementById('topperMarks').textContent = results.totalMarks;
+            document.getElementById('topperMarksPercent').textContent = `${Math.round((results.totalMarks / results.maxMarks) * 100)}%`;
+            document.getElementById('averageMarks').textContent = results.totalMarks;
+            document.getElementById('averageMarksPercent').textContent = `${Math.round((results.totalMarks / results.maxMarks) * 100)}%`;
+            document.getElementById('yourMarks').textContent = results.totalMarks;
+            document.getElementById('yourMarksPercent').textContent = `${Math.round((results.totalMarks / results.maxMarks) * 100)}%`;
+            document.getElementById('averageRank').textContent = '#1';
+            document.getElementById('yourRank').textContent = '#1';
+            document.getElementById('performanceStatus').textContent = '🎯 First Attempt!';
+            document.getElementById('performanceStatus').className = 'text-lg font-bold text-purple-600';
+            document.getElementById('rankStatus').textContent = 'First to Take!';
+        }
+
+        function viewDetailedResults() {
+            window.location.href = 'test-detailed-analysis.html';
+        }
+    </script>
+</body>
+</html>

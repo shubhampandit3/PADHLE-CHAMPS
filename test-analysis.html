@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Analysis - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .glass-effect { backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.1); }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+        .slide-up { animation: slideUp 0.6s ease-out forwards; opacity: 0; transform: translateY(30px); }
+        .bounce-in { animation: bounceIn 0.8s ease-out forwards; opacity: 0; transform: scale(0.8); }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3); }
+        .stat-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .stat-card:hover { transform: scale(1.05); }
+        .progress-bar { transition: width 1.5s ease-in-out; }
+        .icon-bounce { animation: iconBounce 0.6s ease-out; }
+        
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); } 50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); } }
+        @keyframes iconBounce { 0%, 20%, 60%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 80% { transform: translateY(-5px); } }
+        
+        .chart-container { position: relative; overflow: hidden; }
+        .chart-container::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+        
+        .floating-icon { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20"></div>
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center group">
+                    <div class="relative">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white mr-2 sm:mr-4 floating-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                        </svg>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <div>
+                        <span class="text-lg sm:text-2xl font-bold text-white tracking-tight">Test Analysis</span>
+                        <div class="text-xs sm:text-sm text-purple-200 font-medium hidden sm:block">Performance Dashboard</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-6">
+                    <a href="home.html" class="glass-effect text-white hover:bg-white/20 px-2 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-105 group">
+                        <i class="fas fa-home mr-1 sm:mr-2 group-hover:animate-pulse"></i><span class="hidden sm:inline">Home</span>
+                    </a>
+                    <div class="glass-effect px-2 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border border-white/20">
+                        <div class="flex items-center space-x-1 sm:space-x-2">
+                            <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs sm:text-sm"></i>
+                            </div>
+                            <span class="font-semibold text-white text-sm sm:text-base" id="username">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <!-- Overview Stats -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-3xl font-bold text-gray-900 tracking-tight">Performance Overview</h1>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Your comprehensive test analytics</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl sm:rounded-2xl p-3 sm:p-4 mb-6 sm:mb-8 relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 rounded-xl sm:rounded-2xl"></div>
+                    <div class="flex items-start sm:items-center relative z-10">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                            <i class="fas fa-info-circle text-white text-sm sm:text-base"></i>
+                        </div>
+                        <div>
+                            <span class="text-blue-900 font-semibold block text-sm sm:text-base">First Attempt Analytics</span>
+                            <span class="text-xs sm:text-sm text-blue-700">Statistics below are based on first attempts only. Reattempts are tracked separately.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="stat-card text-center p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl border border-blue-200 hover:border-blue-300">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white icon-bounce" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-blue-600 mb-1" id="totalTests">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-blue-700">Total Tests</div>
+                    </div>
+                    
+                    <div class="stat-card text-center p-4 sm:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl sm:rounded-2xl border border-green-200 hover:border-green-300">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white icon-bounce" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-green-600 mb-1" id="attemptedTests">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-green-700">First Attempts</div>
+                    </div>
+                    
+                    <div class="stat-card text-center p-4 sm:p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl sm:rounded-2xl border border-purple-200 hover:border-purple-300">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white icon-bounce" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-purple-600 mb-1" id="totalXP">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-purple-700">Total XP</div>
+                    </div>
+                    
+                    <div class="stat-card text-center p-4 sm:p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl sm:rounded-2xl border border-yellow-200 hover:border-yellow-300">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+                            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white icon-bounce" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/>
+                            </svg>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-yellow-600 mb-1" id="avgPercentage">0%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-yellow-700">Avg Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reattempt Summary -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.1s">
+            <div class="absolute top-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-orange-100 to-red-100 rounded-full -translate-y-8 -translate-x-8 sm:-translate-y-12 sm:-translate-x-12 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Reattempt Summary</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Track your improvement journey</p>
+                    </div>
+                </div>
+                <div id="reattemptSummary" class="grid gap-4 sm:gap-6">
+                    <!-- Reattempt data will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Cards -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.2s">
+            <div class="absolute bottom-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-tl from-green-100 to-blue-100 rounded-full translate-y-10 translate-x-10 sm:translate-y-16 sm:translate-x-16 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-6 sm:mb-8">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Test History</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Your complete performance timeline</p>
+                    </div>
+                </div>
+                <div id="testCards" class="grid gap-4 sm:gap-6">
+                    <!-- Loading state -->
+                    <div class="text-center py-12 sm:py-16" id="loadingState">
+                        <div class="relative">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4 sm:mb-6"></div>
+                            <div class="absolute inset-0 w-12 h-12 sm:w-16 sm:h-16 border-4 border-transparent border-r-blue-600 rounded-full animate-spin mx-auto" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+                        </div>
+                        <div class="space-y-1 sm:space-y-2">
+                            <p class="text-lg sm:text-xl font-semibold text-gray-700">Loading your test history...</p>
+                            <p class="text-sm sm:text-base text-gray-500">Analyzing your performance data</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let userData = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+                loadTestAnalysis();
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+        });
+
+        function loadTestAnalysis() {
+            // Load all tests and user's results
+            Promise.all([
+                database.ref('tests').once('value'),
+                database.ref('testResults').orderByChild('studentId').equalTo(userData.userId).once('value')
+            ]).then(([testsSnapshot, resultsSnapshot]) => {
+                const allTests = [];
+                const userResults = [];
+
+                // Get all tests
+                testsSnapshot.forEach(childSnapshot => {
+                    const test = childSnapshot.val();
+                    test.id = childSnapshot.key;
+                    allTests.push(test);
+                });
+
+                // Get user's results
+                resultsSnapshot.forEach(childSnapshot => {
+                    userResults.push(childSnapshot.val());
+                });
+
+                displayAnalysis(allTests, userResults);
+            }).catch(error => {
+                console.error('Error loading data:', error);
+                showError();
+            });
+        }
+
+        function displayAnalysis(allTests, userResults) {
+            // Group results by testId and get only first attempts
+            const testAttempts = {};
+            userResults.forEach(result => {
+                if (!testAttempts[result.testId]) {
+                    testAttempts[result.testId] = [];
+                }
+                testAttempts[result.testId].push(result);
+            });
+            
+            // Get only first attempts for stats and history
+            const firstAttempts = Object.values(testAttempts).map(attempts => {
+                return attempts.sort((a, b) => a.submittedAt - b.submittedAt)[0];
+            });
+            
+            // Update overview stats (only first attempts)
+            const totalTests = allTests.length;
+            const attemptedTests = firstAttempts.length;
+            const totalXP = firstAttempts.reduce((sum, result) => sum + (result.earnedXP || 0), 0);
+            const avgPercentage = firstAttempts.length > 0 ? 
+                Math.round(firstAttempts.reduce((sum, result) => sum + ((result.totalMarks / result.maxMarks) * 100), 0) / firstAttempts.length) : 0;
+
+            document.getElementById('totalTests').textContent = totalTests;
+            document.getElementById('attemptedTests').textContent = attemptedTests + ' (First Attempts Only)';
+            document.getElementById('totalXP').textContent = totalXP;
+            document.getElementById('avgPercentage').textContent = avgPercentage + '%';
+
+            // Display reattempt summary (all attempts)
+            displayReattemptSummary(userResults);
+            
+            // Display test cards (only first attempts)
+            displayTestCards(allTests, firstAttempts);
+        }
+
+        function displayReattemptSummary(userResults) {
+            const container = document.getElementById('reattemptSummary');
+            
+            // Group results by testId to count attempts
+            const testAttempts = {};
+            userResults.forEach(result => {
+                if (!testAttempts[result.testId]) {
+                    testAttempts[result.testId] = {
+                        testTitle: result.testTitle,
+                        attempts: []
+                    };
+                }
+                testAttempts[result.testId].attempts.push(result);
+            });
+            
+            // Filter tests with multiple attempts
+            const reattemptedTests = Object.entries(testAttempts).filter(([testId, data]) => data.attempts.length > 1);
+            
+            if (reattemptedTests.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-24 h-24 bg-gradient-to-r from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">Perfect First Attempts!</h3>
+                        <p class="text-gray-500">No test reattempts yet. All tests attempted only once.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const summaryHTML = reattemptedTests.map(([testId, data]) => {
+                const attemptCount = data.attempts.length;
+                const bestScore = Math.max(...data.attempts.map(a => Math.round((a.totalMarks / a.maxMarks) * 100)));
+                const latestScore = Math.round((data.attempts[data.attempts.length - 1].totalMarks / data.attempts[data.attempts.length - 1].maxMarks) * 100);
+                const reattemptXP = data.attempts.slice(1).reduce((sum, attempt) => sum + (attempt.correctAnswers || 0), 0); // 1 XP per correct for reattempts
+                
+                return `
+                    <div class="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-105 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-full -translate-y-10 translate-x-10 opacity-30"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-bold text-gray-900 text-lg">${data.testTitle}</h3>
+                                </div>
+                                <span class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                    ${attemptCount} Attempts
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="text-center p-4 bg-green-50 rounded-xl border border-green-200">
+                                    <div class="text-2xl font-bold text-green-600 mb-1">${bestScore}%</div>
+                                    <div class="text-sm font-semibold text-green-700">Best Score</div>
+                                </div>
+                                <div class="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+                                    <div class="text-2xl font-bold text-blue-600 mb-1">${latestScore}%</div>
+                                    <div class="text-sm font-semibold text-blue-700">Latest Score</div>
+                                </div>
+                                <div class="text-center p-4 bg-purple-50 rounded-xl border border-purple-200">
+                                    <div class="text-2xl font-bold text-purple-600 mb-1">${reattemptXP}</div>
+                                    <div class="text-sm font-semibold text-purple-700">Reattempt XP</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = summaryHTML;
+        }
+
+        function displayTestCards(allTests, userResults) {
+            const container = document.getElementById('testCards');
+            const loadingState = document.getElementById('loadingState');
+            
+            if (userResults.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <div class="w-32 h-32 bg-gradient-to-r from-purple-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <svg class="w-16 h-16 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-700 mb-3">No Tests Attempted Yet</h3>
+                        <p class="text-gray-500 mb-8 text-lg">Start taking tests to see your performance analysis</p>
+                        <a href="home.html" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-2xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg font-semibold">
+                            <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                            </svg>Go to Home
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort results by submission date (newest first)
+            userResults.sort((a, b) => b.submittedAt - a.submittedAt);
+
+            const cardsHTML = userResults.map((result, index) => {
+                const percentage = Math.round((result.totalMarks / result.maxMarks) * 100);
+                const submissionDate = new Date(result.submittedAt).toLocaleDateString();
+                
+                let performanceClass, performanceIcon, performanceText;
+                if (percentage >= 80) {
+                    performanceClass = 'text-green-600 bg-green-100';
+                    performanceIcon = 'fa-trophy';
+                    performanceText = 'Excellent';
+                } else if (percentage >= 60) {
+                    performanceClass = 'text-blue-600 bg-blue-100';
+                    performanceIcon = 'fa-thumbs-up';
+                    performanceText = 'Good';
+                } else if (percentage >= 40) {
+                    performanceClass = 'text-yellow-600 bg-yellow-100';
+                    performanceIcon = 'fa-chart-line';
+                    performanceText = 'Average';
+                } else {
+                    performanceClass = 'text-red-600 bg-red-100';
+                    performanceIcon = 'fa-chart-line-down';
+                    performanceText = 'Needs Work';
+                }
+
+                return `
+                    <div class="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-8 hover:shadow-2xl transition-all duration-500 hover:scale-105 bounce-in relative overflow-hidden" style="animation-delay: ${index * 0.1}s">
+                        <div class="absolute top-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full -translate-y-8 translate-x-8 sm:-translate-y-12 sm:translate-x-12 opacity-30"></div>
+                        <div class="relative z-10">
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 sm:mb-6">
+                                <div class="flex-1 mb-4 sm:mb-0">
+                                    <div class="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center">
+                                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg sm:text-xl font-bold text-gray-900">${result.testTitle}</h3>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
+                                        <span class="flex items-center bg-gray-100 px-2 py-1 sm:px-3 sm:py-1 rounded-lg">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                            </svg>${submissionDate}
+                                        </span>
+                                        <span class="flex items-center bg-green-100 px-2 py-1 sm:px-3 sm:py-1 rounded-lg text-green-700">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>Completed
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="${performanceClass} px-3 py-1 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl flex items-center shadow-lg">
+                                    <i class="fas ${performanceIcon} mr-1 sm:mr-2 text-sm sm:text-base"></i>
+                                    <span class="font-bold text-sm sm:text-base">${performanceText}</span>
+                                </div>
+                            </div>
+                        
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 mb-4 sm:mb-6">
+                                <div class="text-center p-2 sm:p-4 bg-gray-50 rounded-lg sm:rounded-xl border border-gray-200">
+                                    <div class="text-lg sm:text-2xl font-bold text-gray-900 mb-1">${result.totalMarks}</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-gray-600">Marks Scored</div>
+                                </div>
+                                <div class="text-center p-2 sm:p-4 bg-purple-50 rounded-lg sm:rounded-xl border border-purple-200">
+                                    <div class="text-lg sm:text-2xl font-bold text-purple-600 mb-1">${percentage}%</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-purple-700">Percentage</div>
+                                </div>
+                                <div class="text-center p-2 sm:p-4 bg-green-50 rounded-lg sm:rounded-xl border border-green-200">
+                                    <div class="text-lg sm:text-2xl font-bold text-green-600 mb-1">${result.correctAnswers}</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-green-700">Correct</div>
+                                </div>
+                                <div class="text-center p-2 sm:p-4 bg-yellow-50 rounded-lg sm:rounded-xl border border-yellow-200">
+                                    <div class="text-lg sm:text-2xl font-bold text-yellow-600 mb-1">${result.attemptNumber === 1 ? (result.earnedXP || 0) : result.correctAnswers}</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-yellow-700">XP Earned</div>
+                                </div>
+                                <div class="text-center p-2 sm:p-4 bg-orange-50 rounded-lg sm:rounded-xl border border-orange-200 col-span-2 sm:col-span-1">
+                                    <div class="text-lg sm:text-2xl font-bold text-orange-600 mb-1">${Math.floor((result.timeTaken || 0) / 60)}m ${(result.timeTaken || 0) % 60}s</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-orange-700">Time Taken</div>
+                                </div>
+                            </div>
+                        
+                            <div class="flex flex-col space-y-3 sm:space-y-4">
+                                <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+                                    <span class="flex items-center bg-green-100 text-green-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                        </svg>${result.correctAnswers} Correct
+                                    </span>
+                                    <span class="flex items-center bg-red-100 text-red-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+                                        </svg>${result.wrongAnswers} Wrong
+                                    </span>
+                                    <span class="flex items-center bg-yellow-100 text-yellow-700 px-2 py-1 sm:px-3 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                        </svg>${result.unattempted} Skipped
+                                    </span>
+                                </div>
+                                <button onclick="viewDetailedAnalysis('${result.testId}')" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg sm:rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg font-semibold text-sm sm:text-base w-full sm:w-auto">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                                    </svg>View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = cardsHTML;
+            loadingState.style.display = 'none';
+        }
+
+        function viewDetailedAnalysis(testId) {
+            // Store test ID and redirect to detailed analysis
+            localStorage.setItem('selectedTestId', testId);
+            window.location.href = 'test-detailed-analysis.html';
+        }
+
+        function showError() {
+            const container = document.getElementById('testCards');
+            container.innerHTML = `
+                <div class="text-center py-16">
+                    <div class="w-24 h-24 bg-gradient-to-r from-red-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-12 h-12 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-red-600 mb-3">Error Loading Data</h3>
+                    <p class="text-red-500 mb-8 text-lg">Unable to load your test analysis. Please try again.</p>
+                    <button onclick="loadTestAnalysis()" class="bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-4 rounded-2xl hover:from-red-700 hover:to-orange-700 transition-all duration-300 hover:scale-105 shadow-lg font-semibold">
+                        <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg>Retry
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

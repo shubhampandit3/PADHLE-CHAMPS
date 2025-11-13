@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Analysis - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .glass-effect { backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.1); }
+        .correct-answer { background: linear-gradient(135deg, #10b981, #059669); }
+        .wrong-answer { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .unattempted-answer { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+        .slide-up { animation: slideUp 0.6s ease-out forwards; opacity: 0; transform: translateY(30px); }
+        .bounce-in { animation: bounceIn 0.8s ease-out forwards; opacity: 0; transform: scale(0.8); }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3); }
+        .floating-icon { animation: float 3s ease-in-out infinite; }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); } 50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20"></div>
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center group">
+                    <div class="relative">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white mr-2 sm:mr-4 floating-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                        </svg>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <div>
+                        <span class="text-lg sm:text-2xl font-bold text-white tracking-tight">Detailed Analysis</span>
+                        <div class="text-xs sm:text-sm text-purple-200 font-medium hidden sm:block">In-depth Performance Review</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-6">
+                    <button onclick="history.back()" class="glass-effect text-white hover:bg-white/20 px-2 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-105 group">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg><span class="hidden sm:inline">Back</span>
+                    </button>
+                    <div class="glass-effect px-2 py-1 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border border-white/20">
+                        <div class="flex items-center space-x-1 sm:space-x-2">
+                            <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs sm:text-sm"></i>
+                            </div>
+                            <span class="font-semibold text-white text-sm sm:text-base" id="username">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <!-- Test Overview -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex flex-col space-y-4 mb-4 sm:mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between">
+                        <div class="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-0">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                </svg>
+                            </div>
+                            <h1 class="text-lg sm:text-2xl font-bold text-gray-900 tracking-tight" id="testTitle">Test Analysis</h1>
+                        </div>
+                        <span id="attemptStatus" class="px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-bold rounded-xl sm:rounded-2xl bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg w-fit">LIVE</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                        <label class="text-sm font-semibold text-gray-700 flex items-center">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                            </svg>Attempt:
+                        </label>
+                        <select id="attemptSelector" class="px-3 py-2 sm:px-4 sm:py-2 border-2 border-gray-300 rounded-lg sm:rounded-xl text-sm font-semibold bg-white hover:border-purple-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all w-full sm:w-auto">
+                            <option value="1">Attempt 1 (LIVE)</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Score Summary -->
+                <div class="bg-gradient-to-r from-purple-100 via-blue-100 to-indigo-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10"></div>
+                    <div class="text-center relative z-10">
+                        <div class="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">
+                            <span id="scoredMarks" class="text-purple-600">0</span> 
+                            <span class="text-gray-400">/</span> 
+                            <span id="maxMarks" class="text-blue-600">0</span>
+                        </div>
+                        <div class="text-base sm:text-lg font-semibold text-gray-700">Marks Obtained</div>
+                        <div class="w-16 sm:w-24 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mx-auto mt-2 sm:mt-3"></div>
+                    </div>
+                </div>
+            
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4">
+                    <div class="text-center p-2 sm:p-4 bg-green-50 rounded-lg sm:rounded-2xl border border-green-200 hover:shadow-lg transition-all">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-green-600 mb-1" id="correctCount">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-green-700">Correct</div>
+                    </div>
+                    <div class="text-center p-2 sm:p-4 bg-red-50 rounded-lg sm:rounded-2xl border border-red-200 hover:shadow-lg transition-all">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-red-600 mb-1" id="wrongCount">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-red-700">Wrong</div>
+                    </div>
+                    <div class="text-center p-2 sm:p-4 bg-yellow-50 rounded-lg sm:rounded-2xl border border-yellow-200 hover:shadow-lg transition-all">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-yellow-600 mb-1" id="unattemptedCount">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-yellow-700">Unattempted</div>
+                    </div>
+                    <div class="text-center p-2 sm:p-4 bg-blue-50 rounded-lg sm:rounded-2xl border border-blue-200 hover:shadow-lg transition-all">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-blue-600 mb-1" id="accuracy">0%</div>
+                        <div class="text-xs sm:text-sm font-semibold text-blue-700">Accuracy</div>
+                    </div>
+                    <div class="text-center p-2 sm:p-4 bg-purple-50 rounded-lg sm:rounded-2xl border border-purple-200 hover:shadow-lg transition-all">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-purple-600 mb-1" id="xpEarned">0</div>
+                        <div class="text-xs sm:text-sm font-semibold text-purple-700">XP Earned</div>
+                    </div>
+                    <div class="text-center p-2 sm:p-4 bg-orange-50 rounded-lg sm:rounded-2xl border border-orange-200 hover:shadow-lg transition-all col-span-2 sm:col-span-1">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-1 sm:mb-2">
+                            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                        </div>
+                        <div class="text-lg sm:text-2xl font-bold text-orange-600 mb-1" id="timeTaken">0m 0s</div>
+                        <div class="text-xs sm:text-sm font-semibold text-orange-700">Time Taken</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attempt Comparison Chart -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.05s" id="attemptComparisonSection">
+            <div class="absolute top-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-8 -translate-x-8 sm:-translate-y-12 sm:-translate-x-12 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Attempt Comparison</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Track your progress across attempts</p>
+                    </div>
+                </div>
+                <div class="h-64 sm:h-80 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl sm:rounded-2xl p-2 sm:p-4">
+                    <canvas id="attemptComparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subject-wise Performance -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.1s">
+            <div class="absolute bottom-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-tl from-green-100 to-blue-100 rounded-full translate-y-10 translate-x-10 sm:translate-y-16 sm:translate-x-16 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Subject Performance</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Your performance by subject area</p>
+                    </div>
+                </div>
+                <div id="subjectAnalysis" class="space-y-3 sm:space-y-4">
+                    <!-- Subject analysis will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic-wise Performance -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 mb-6 sm:mb-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.2s">
+            <div class="absolute top-0 right-0 w-18 h-18 sm:w-28 sm:h-28 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full -translate-y-9 translate-x-9 sm:-translate-y-14 sm:translate-x-14 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-4 sm:mb-6">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Topic Analysis</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Detailed breakdown by topics</p>
+                    </div>
+                </div>
+                <div id="topicAnalysis" class="space-y-4 sm:space-y-6">
+                    <!-- Topic analysis will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Question-wise Analysis -->
+        <div class="bg-white rounded-2xl sm:rounded-3xl card-shadow p-4 sm:p-8 slide-up hover-lift relative overflow-hidden" style="animation-delay: 0.3s">
+            <div class="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 bg-gradient-to-tr from-orange-100 to-red-100 rounded-full -translate-y-12 -translate-x-12 sm:-translate-y-18 sm:-translate-x-18 opacity-50"></div>
+            <div class="relative z-10">
+                <div class="flex items-center mb-6 sm:mb-8">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">Question Analysis</h2>
+                        <p class="text-sm sm:text-base text-gray-600 font-medium">Detailed review of each question</p>
+                    </div>
+                </div>
+                <div id="questionAnalysis" class="space-y-4 sm:space-y-6">
+                    <!-- Question analysis will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        let testData = null;
+        let results = null;
+        let allAttempts = [];
+        let currentAttempt = null;
+        let attemptChart = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+            }
+
+            results = JSON.parse(localStorage.getItem('testResults'));
+            if (results) {
+                loadAllAttempts();
+            } else {
+                alert('No test results found');
+                window.location.href = 'home.html';
+            }
+        });
+
+        async function loadAllAttempts() {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            try {
+                // Load all attempts for this test and student
+                const attemptsSnapshot = await database.ref('testResults')
+                    .orderByChild('testId')
+                    .equalTo(results.testId)
+                    .once('value');
+                
+                allAttempts = [];
+                attemptsSnapshot.forEach(childSnapshot => {
+                    const attempt = childSnapshot.val();
+                    if (attempt.studentId === results.studentId) {
+                        allAttempts.push(attempt);
+                    }
+                });
+                
+                // Sort by submission time
+                allAttempts.sort((a, b) => a.submittedAt - b.submittedAt);
+                
+                // Load test data
+                const testsSnapshot = await database.ref('tests').once('value');
+                let foundTest = null;
+                testsSnapshot.forEach(childSnapshot => {
+                    const test = childSnapshot.val();
+                    if (childSnapshot.key === results.testId) {
+                        foundTest = test;
+                        foundTest.id = childSnapshot.key;
+                    }
+                });
+                
+                if (foundTest) {
+                    testData = foundTest;
+                    setupAttemptSelector();
+                    displayCurrentAttempt();
+                    createAttemptComparisonChart();
+                } else {
+                    alert('Test data not found');
+                    history.back();
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading test data');
+            }
+        }
+
+        function setupAttemptSelector() {
+            const selector = document.getElementById('attemptSelector');
+            selector.innerHTML = '';
+            
+            allAttempts.forEach((attempt, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                const isLive = isAttemptLive(attempt);
+                option.textContent = `Attempt ${index + 1} (${isLive ? 'LIVE' : 'NON-LIVE'})`;
+                if (attempt.submittedAt === results.submittedAt) {
+                    option.selected = true;
+                    currentAttempt = attempt;
+                }
+                selector.appendChild(option);
+            });
+            
+            selector.addEventListener('change', function() {
+                currentAttempt = allAttempts[this.value];
+                displayCurrentAttempt();
+            });
+        }
+
+        function isAttemptLive(attempt) {
+            if (!testData.startDateTime || !testData.endDateTime) return false;
+            
+            const attemptTime = new Date(attempt.submittedAt);
+            const testStartTime = new Date(testData.startDateTime);
+            const testEndTime = new Date(testData.endDateTime);
+            
+            return attemptTime >= testStartTime && attemptTime <= testEndTime;
+        }
+
+        function createAttemptComparisonChart() {
+            if (allAttempts.length < 2) {
+                document.getElementById('attemptComparisonSection').style.display = 'none';
+                return;
+            }
+            
+            const ctx = document.getElementById('attemptComparisonChart').getContext('2d');
+            
+            const labels = allAttempts.map((_, index) => `Attempt ${index + 1}`);
+            const marks = allAttempts.map(attempt => attempt.totalMarks);
+            const percentages = allAttempts.map(attempt => Math.round((attempt.totalMarks / attempt.maxMarks) * 100));
+            
+            attemptChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Marks Scored',
+                        data: marks,
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#3B82F6',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const percentage = percentages[context.dataIndex];
+                                    return `Marks: ${context.parsed.y}/${allAttempts[0].maxMarks} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: allAttempts[0].maxMarks,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' marks';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function displayCurrentAttempt() {
+            const attempt = currentAttempt || results;
+            const isLive = isAttemptLive(attempt);
+            
+            document.getElementById('testTitle').textContent = attempt.testTitle + ' - Detailed Analysis';
+            document.getElementById('correctCount').textContent = attempt.correctAnswers;
+            document.getElementById('wrongCount').textContent = attempt.wrongAnswers;
+            document.getElementById('unattemptedCount').textContent = attempt.unattempted;
+            document.getElementById('scoredMarks').textContent = attempt.totalMarks;
+            document.getElementById('maxMarks').textContent = attempt.maxMarks;
+            
+            // Update attempt status indicator
+            const statusElement = document.getElementById('attemptStatus');
+            if (isLive) {
+                statusElement.textContent = 'LIVE';
+                statusElement.className = 'px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800';
+            } else {
+                statusElement.textContent = 'NON-LIVE';
+                statusElement.className = 'px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800';
+            }
+            
+            // XP calculation: First attempt = full XP (3 per correct), Reattempts = 1 XP per correct
+            const attemptIndex = allAttempts.findIndex(a => a.submittedAt === attempt.submittedAt);
+            let xpEarned = 0;
+            if (attemptIndex === 0) {
+                xpEarned = attempt.earnedXP || 0; // Full XP for first attempt
+            } else {
+                xpEarned = attempt.correctAnswers; // 1 XP per correct for reattempts
+            }
+            document.getElementById('xpEarned').textContent = xpEarned;
+            
+            // Display time taken
+            const timeTaken = attempt.timeTaken || 0;
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            document.getElementById('timeTaken').textContent = `${minutes}m ${seconds}s`;
+            
+            const totalQuestions = testData.questions.length;
+            const accuracy = totalQuestions > 0 ? Math.round((attempt.correctAnswers / totalQuestions) * 100) : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+
+            generateRealSubjectAnalysis(attempt);
+            generateTopicAnalysis(attempt);
+            generateRealQuestionAnalysis(attempt);
+        }
+
+        function generateRealSubjectAnalysis(attempt = currentAttempt || results) {
+            const subjects = {};
+            
+            // Analyze real test data
+            testData.questions.forEach((question, index) => {
+                const subject = question.subject;
+                if (!subjects[subject]) {
+                    subjects[subject] = { correct: 0, total: 0 };
+                }
+                subjects[subject].total++;
+                
+                const userAnswer = attempt.answers[index];
+                if (userAnswer === question.correctAnswer) {
+                    subjects[subject].correct++;
+                }
+            });
+
+            const container = document.getElementById('subjectAnalysis');
+            container.innerHTML = Object.entries(subjects).map(([subject, data]) => {
+                const percentage = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                return `
+                    <div class="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-green-100 to-blue-100 rounded-full -translate-y-8 translate-x-8 opacity-30"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-gray-900">${subject.charAt(0).toUpperCase() + subject.slice(1)}</h3>
+                                        <div class="text-sm text-gray-600 font-medium">${data.correct}/${data.total} questions correct</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-green-600 mb-1">${percentage}%</div>
+                                    <div class="text-sm font-semibold text-gray-700">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                                <div class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-1500 shadow-sm" style="width: ${percentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function generateTopicAnalysis(attempt = currentAttempt || results) {
+            const subjects = {};
+            
+            // Group by subject > chapter > topic
+            testData.questions.forEach((question, index) => {
+                const subject = question.subject;
+                const chapter = question.chapter;
+                const topic = question.topic;
+                
+                if (!subjects[subject]) subjects[subject] = {};
+                if (!subjects[subject][chapter]) subjects[subject][chapter] = {};
+                if (!subjects[subject][chapter][topic]) {
+                    subjects[subject][chapter][topic] = { correct: 0, total: 0, marks: 0, maxMarks: 0 };
+                }
+                
+                subjects[subject][chapter][topic].total++;
+                subjects[subject][chapter][topic].maxMarks += question.marks;
+                
+                const userAnswer = attempt.answers[index];
+                if (userAnswer === question.correctAnswer) {
+                    subjects[subject][chapter][topic].correct++;
+                    subjects[subject][chapter][topic].marks += question.marks;
+                } else if (userAnswer !== null) {
+                    subjects[subject][chapter][topic].marks -= 1;
+                }
+            });
+
+            const container = document.getElementById('topicAnalysis');
+            let html = '';
+            
+            Object.entries(subjects).forEach(([subject, chapters]) => {
+                html += `
+                    <div class="mb-8">
+                        <div class="flex items-center mb-4 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl border border-purple-200">
+                            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">${subject.charAt(0).toUpperCase() + subject.slice(1)}</h3>
+                        </div>
+                        <div class="space-y-4">
+                `;
+                
+                Object.entries(chapters).forEach(([chapter, topics]) => {
+                    html += `
+                        <div class="ml-4">
+                            <div class="flex items-center mb-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-bold text-gray-800">${chapter}</h4>
+                            </div>
+                            <div class="grid gap-3 ml-6">
+                    `;
+                    
+                    Object.entries(topics).forEach(([topic, data]) => {
+                        const percentage = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                        const marksPercentage = data.maxMarks > 0 ? Math.round((Math.max(0, data.marks) / data.maxMarks) * 100) : 0;
+                        
+                        html += `
+                            <div class="bg-gradient-to-r from-white to-purple-50 border border-purple-200 rounded-xl p-4 hover:shadow-md transition-all duration-300 hover:scale-102 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full -translate-y-6 translate-x-6 opacity-40"></div>
+                                <div class="relative z-10">
+                                    <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-3">
+                                        <div class="flex-1 mb-3 lg:mb-0">
+                                            <div class="flex items-center space-x-2 mb-2">
+                                                <div class="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                    </svg>
+                                                </div>
+                                                <h5 class="text-base font-bold text-gray-900">${topic}</h5>
+                                            </div>
+                                            <div class="text-sm text-gray-600 font-medium">
+                                                ${data.correct}/${data.total} correct • ${Math.max(0, data.marks)}/${data.maxMarks} marks
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="text-center p-2 bg-purple-100 rounded-lg">
+                                                <div class="text-lg font-bold text-purple-600">${percentage}%</div>
+                                                <div class="text-xs font-semibold text-purple-700">Accuracy</div>
+                                            </div>
+                                            <div class="w-20 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                <div class="bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full transition-all duration-1200" style="width: ${marksPercentage}%"></div>
+                                            </div>
+                                            <div class="text-sm font-bold text-gray-800 min-w-[3rem]">${marksPercentage}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function generateRealQuestionAnalysis(attempt = currentAttempt || results) {
+            const container = document.getElementById('questionAnalysis');
+            
+            let html = '';
+            testData.questions.forEach((question, index) => {
+                const userAnswer = attempt.answers[index];
+                const correctAnswer = question.correctAnswer;
+                
+                let status, statusClass, statusIcon, statusText;
+                let isCorrect = false;
+                
+                if (userAnswer === null) {
+                    status = 'unattempted';
+                    statusClass = 'unattempted-answer';
+                    statusIcon = 'fa-minus-circle';
+                    statusText = 'Unattempted';
+                } else {
+                    if (question.type === 'type') {
+                        const userAnswerStr = String(userAnswer).toLowerCase().trim();
+                        const correctAnswerStr = String(correctAnswer).toLowerCase().trim();
+                        isCorrect = userAnswerStr === correctAnswerStr;
+                    } else if (question.type === 'multiple') {
+                        const userAnswerArray = Array.isArray(userAnswer) ? userAnswer.sort() : [];
+                        const correctAnswerArray = Array.isArray(correctAnswer) ? correctAnswer.sort() : [];
+                        isCorrect = JSON.stringify(userAnswerArray) === JSON.stringify(correctAnswerArray);
+                    } else {
+                        isCorrect = userAnswer === correctAnswer;
+                    }
+                    
+                    if (isCorrect) {
+                        status = 'correct';
+                        statusClass = 'correct-answer';
+                        statusIcon = 'fa-check-circle';
+                        statusText = 'Correct';
+                    } else {
+                        status = 'wrong';
+                        statusClass = 'wrong-answer';
+                        statusIcon = 'fa-times-circle';
+                        statusText = 'Wrong';
+                    }
+                }
+
+                html += `
+                    <div class="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-102 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-full -translate-y-10 translate-x-10 opacity-30"></div>
+                        <div class="relative z-10">
+                            <div class="flex flex-col lg:flex-row lg:items-start justify-between mb-4">
+                                <div class="flex-1 mb-4 lg:mb-0">
+                                    <div class="flex flex-col sm:flex-row sm:items-center mb-3">
+                                        <div class="flex items-center space-x-3 mb-2 sm:mb-0">
+                                            <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                                                <span class="text-white font-bold text-sm">${index + 1}</span>
+                                            </div>
+                                            <span class="text-lg font-bold text-gray-900">Question ${index + 1}</span>
+                                        </div>
+                                        <span class="px-3 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold rounded-xl shadow-sm">${question.marks} marks</span>
+                                    </div>
+                                    <p class="text-base text-gray-700 mb-3 leading-relaxed">${question.question}</p>
+                                    <div class="flex items-center space-x-2 text-sm text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                        <span class="font-medium">${question.subject.charAt(0).toUpperCase() + question.subject.slice(1)} > ${question.chapter} > ${question.topic}</span>
+                                    </div>
+                                </div>
+                                <div class="${statusClass} text-white px-4 py-2 rounded-2xl flex items-center font-bold shadow-lg">
+                                    <i class="fas ${statusIcon} mr-2"></i>
+                                    ${statusText}
+                                </div>
+                            </div>
+                        
+                            ${question.type === 'type' ? `
+                                <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 mb-4">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mr-3">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-lg font-bold text-blue-800">Type Answer Question</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                        <div class="p-4 bg-green-50 rounded-xl border border-green-200">
+                                            <div class="flex items-center mb-2">
+                                                <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                </svg>
+                                                <span class="font-bold text-green-700">Correct Answer</span>
+                                            </div>
+                                            <span class="text-green-800 font-semibold">${correctAnswer}</span>
+                                        </div>
+                                        <div class="p-4 ${userAnswer === null ? 'bg-yellow-50 border-yellow-200' : 
+                                            String(userAnswer).toLowerCase().trim() === String(correctAnswer).toLowerCase().trim() ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} rounded-xl border">
+                                            <div class="flex items-center mb-2">
+                                                <svg class="w-5 h-5 ${userAnswer === null ? 'text-yellow-600' : 
+                                                    String(userAnswer).toLowerCase().trim() === String(correctAnswer).toLowerCase().trim() ? 'text-green-600' : 'text-red-600'} mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                                </svg>
+                                                <span class="font-bold ${userAnswer === null ? 'text-yellow-700' : 
+                                                    String(userAnswer).toLowerCase().trim() === String(correctAnswer).toLowerCase().trim() ? 'text-green-700' : 'text-red-700'}">Your Answer</span>
+                                            </div>
+                                            <span class="font-semibold">${userAnswer === null ? 'Not Attempted' : userAnswer}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : `
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+                                    ${question.type === 'multiple' && Array.isArray(correctAnswer) ? 
+                                        Object.entries(question.options).map(([key, value]) => `
+                                            <div class="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border-2 ${
+                                                correctAnswer.includes(key) ? 'border-green-400 bg-gradient-to-r from-green-50 to-green-100' : 
+                                                Array.isArray(userAnswer) && userAnswer.includes(key) && !correctAnswer.includes(key) ? 'border-red-400 bg-gradient-to-r from-red-50 to-red-100' : 
+                                                'border-gray-200'
+                                            } hover:shadow-md transition-all duration-200">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 ${correctAnswer.includes(key) ? 'bg-green-500' : 
+                                                            Array.isArray(userAnswer) && userAnswer.includes(key) && !correctAnswer.includes(key) ? 'bg-red-500' : 'bg-gray-400'} rounded-lg flex items-center justify-center">
+                                                            <span class="text-white font-bold text-sm">${key}</span>
+                                                        </div>
+                                                        <span class="text-gray-800 font-medium">${value}</span>
+                                                    </div>
+                                                    ${correctAnswer.includes(key) ? '<div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>' : ''}
+                                                    ${Array.isArray(userAnswer) && userAnswer.includes(key) && !correctAnswer.includes(key) ? '<div class="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg></div>' : ''}
+                                                </div>
+                                            </div>
+                                        `).join('') :
+                                        Object.entries(question.options).map(([key, value]) => `
+                                            <div class="p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border-2 ${
+                                                key === correctAnswer ? 'border-green-400 bg-gradient-to-r from-green-50 to-green-100' : 
+                                                key === userAnswer && userAnswer !== correctAnswer ? 'border-red-400 bg-gradient-to-r from-red-50 to-red-100' : 
+                                                'border-gray-200'
+                                            } hover:shadow-md transition-all duration-200">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center space-x-3">
+                                                        <div class="w-8 h-8 ${key === correctAnswer ? 'bg-green-500' : 
+                                                            key === userAnswer && userAnswer !== correctAnswer ? 'bg-red-500' : 'bg-gray-400'} rounded-lg flex items-center justify-center">
+                                                            <span class="text-white font-bold text-sm">${key}</span>
+                                                        </div>
+                                                        <span class="text-gray-800 font-medium">${value}</span>
+                                                    </div>
+                                                    ${key === correctAnswer ? '<div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>' : ''}
+                                                    ${key === userAnswer && userAnswer !== correctAnswer ? '<div class="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center"><svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg></div>' : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')
+                                    }
+                                </div>
+                            `}
+                        
+                            <div class="flex flex-col lg:flex-row lg:items-center justify-between pt-4 border-t border-gray-200">
+                                <div class="flex flex-wrap items-center gap-3 mb-3 lg:mb-0">
+                                    ${question.type === 'multiple' ? `
+                                        <div class="flex items-center bg-green-100 text-green-700 px-3 py-2 rounded-lg font-semibold">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>Correct: ${Array.isArray(correctAnswer) ? correctAnswer.join(', ') : correctAnswer}
+                                        </div>
+                                        ${userAnswer !== null ? `<div class="flex items-center bg-blue-100 text-blue-700 px-3 py-2 rounded-lg font-semibold">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 6h-3V5h-2v3H8v2h3v3h2v-3h3V8z"/>
+                                            </svg>Your Answer: ${Array.isArray(userAnswer) ? userAnswer.join(', ') : userAnswer}
+                                        </div>` : '<div class="flex items-center bg-yellow-100 text-yellow-700 px-3 py-2 rounded-lg font-semibold"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>Not Attempted</div>'}
+                                    ` : `
+                                        <div class="flex items-center bg-green-100 text-green-700 px-3 py-2 rounded-lg font-semibold">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            </svg>Correct: ${correctAnswer}
+                                        </div>
+                                        ${userAnswer !== null ? `<div class="flex items-center bg-blue-100 text-blue-700 px-3 py-2 rounded-lg font-semibold">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 6h-3V5h-2v3H8v2h3v3h2v-3h3V8z"/>
+                                            </svg>Your Answer: ${userAnswer}
+                                        </div>` : '<div class="flex items-center bg-yellow-100 text-yellow-700 px-3 py-2 rounded-lg font-semibold"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>Not Attempted</div>'}
+                                    `}
+                                </div>
+                                <div class="bg-gradient-to-r ${status === 'correct' ? 'from-green-500 to-green-600' : status === 'wrong' ? 'from-red-500 to-red-600' : 'from-gray-500 to-gray-600'} text-white px-4 py-2 rounded-xl font-bold shadow-lg">
+                                    ${status === 'correct' ? `+${question.marks} marks${allAttempts.findIndex(a => a.submittedAt === attempt.submittedAt) === 0 ? ', +3 XP' : ', +1 XP'}` : status === 'wrong' ? '-1 mark' : '0 marks'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Complaint Center - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        .complaint-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .complaint-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .priority-high { border-left: 4px solid #ef4444; }
+        .priority-critical { border-left: 4px solid #dc2626; }
+        .priority-medium { border-left: 4px solid #f59e0b; }
+        .priority-low { border-left: 4px solid #10b981; }
+        
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-in-progress { background: #dbeafe; color: #1e40af; }
+        .status-resolved { background: #d1fae5; color: #065f46; }
+        .status-closed { background: #f3f4f6; color: #374151; }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-lg lg:text-2xl font-bold text-blue-600">Padhle Champs - Teacher Portal</h1>
+                </div>
+                <div class="flex items-center space-x-2 lg:space-x-4">
+                    <button onclick="goHome()" class="text-gray-600 hover:text-blue-600 transition-colors text-sm lg:text-base">
+                        <i class="fas fa-home mr-1 lg:mr-2"></i><span class="hidden sm:inline">Home</span>
+                    </button>
+                    <button onclick="goToDashboard()" class="text-gray-600 hover:text-blue-600 transition-colors text-sm lg:text-base">
+                        <i class="fas fa-tachometer-alt mr-1 lg:mr-2"></i><span class="hidden sm:inline">Dashboard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header Section -->
+            <div class="text-center mb-8 lg:mb-12" data-aos="fade-up">
+                <div class="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 lg:mb-6 flex items-center justify-center">
+                    <i class="fas fa-clipboard-list text-2xl lg:text-3xl text-white"></i>
+                </div>
+                <h1 class="text-2xl lg:text-4xl font-bold text-gray-800 mb-2 lg:mb-4">Teacher Complaint Center</h1>
+                <p class="text-base lg:text-lg text-gray-600">Manage and resolve student complaints</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white rounded-lg p-4 lg:p-6 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-red-100 rounded-lg flex items-center justify-center mr-3 lg:mr-4">
+                            <i class="fas fa-exclamation-triangle text-red-600 text-lg lg:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs lg:text-sm text-gray-600">Total Complaints</p>
+                            <p class="text-xl lg:text-2xl font-bold text-gray-800" id="totalComplaints">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg p-4 lg:p-6 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-3 lg:mr-4">
+                            <i class="fas fa-clock text-yellow-600 text-lg lg:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs lg:text-sm text-gray-600">Pending</p>
+                            <p class="text-xl lg:text-2xl font-bold text-gray-800" id="pendingComplaints">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg p-4 lg:p-6 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 lg:mr-4">
+                            <i class="fas fa-cog text-blue-600 text-lg lg:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs lg:text-sm text-gray-600">In Progress</p>
+                            <p class="text-xl lg:text-2xl font-bold text-gray-800" id="inProgressComplaints">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg p-4 lg:p-6 shadow-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3 lg:mr-4">
+                            <i class="fas fa-check-circle text-green-600 text-lg lg:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs lg:text-sm text-gray-600">Resolved</p>
+                            <p class="text-xl lg:text-2xl font-bold text-gray-800" id="resolvedComplaints">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg p-4 lg:p-6 shadow-lg mb-8" data-aos="fade-up" data-aos-delay="200">
+                <div class="space-y-4 lg:space-y-0 lg:flex lg:items-center lg:justify-between">
+                    <div class="flex flex-wrap gap-2">
+                        <button class="filter-btn active px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-700" onclick="filterComplaints('all')">All</button>
+                        <button class="filter-btn px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-700" onclick="filterComplaints('pending')">Pending</button>
+                        <button class="filter-btn px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-700" onclick="filterComplaints('in-progress')">In Progress</button>
+                        <button class="filter-btn px-3 py-2 text-sm rounded-lg bg-gray-100 text-gray-700" onclick="filterComplaints('resolved')">Resolved</button>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <select id="priorityFilter" class="px-3 py-2 text-sm border rounded-lg" onchange="applyFilters()">
+                            <option value="">All Priorities</option>
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                        <select id="typeFilter" class="px-3 py-2 text-sm border rounded-lg" onchange="applyFilters()">
+                            <option value="">All Types</option>
+                            <option value="technical-issue">Technical Issue</option>
+                            <option value="feature-problem">Feature Problem</option>
+                            <option value="login-issue">Login Issue</option>
+                            <option value="test-problem">Test/Quiz Problem</option>
+                            <option value="dashboard-issue">Dashboard Issue</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complaints List -->
+            <div id="complaintsContainer" class="space-y-6" data-aos="fade-up" data-aos-delay="300">
+                <!-- Complaints will be loaded here -->
+            </div>
+
+            <!-- No Complaints Message -->
+            <div id="noComplaints" class="text-center py-12 hidden">
+                <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Complaints Found</h3>
+                <p class="text-gray-500">There are no complaints matching your current filters.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Detail Modal -->
+    <div id="complaintModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-4 lg:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 lg:mb-6">
+                <h3 class="text-xl lg:text-2xl font-bold text-gray-800">Complaint Details</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-lg lg:text-xl"></i>
+                </button>
+            </div>
+            <div id="modalContent">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let allComplaints = [];
+        let currentFilter = 'all';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            checkTeacherAccess();
+            loadComplaints();
+        });
+
+        // Check teacher access
+        function checkTeacherAccess() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (!userData) {
+                alert('Please login first');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            if (user.role !== 'Teacher') {
+                alert('Access denied. This page is for teachers only.');
+                window.location.href = 'home.html';
+                return;
+            }
+        }
+
+        // Load complaints from Firebase
+        async function loadComplaints() {
+            try {
+                const snapshot = await database.ref('complaints').once('value');
+                const complaintsData = snapshot.val();
+                
+                allComplaints = [];
+                if (complaintsData) {
+                    Object.keys(complaintsData).forEach(key => {
+                        allComplaints.push({
+                            id: key,
+                            ...complaintsData[key]
+                        });
+                    });
+                }
+                
+                // Sort by timestamp (newest first)
+                allComplaints.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                updateStats();
+                displayComplaints();
+                
+            } catch (error) {
+                console.error('Error loading complaints:', error);
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = allComplaints.length;
+            const pending = allComplaints.filter(c => c.status === 'pending').length;
+            const inProgress = allComplaints.filter(c => c.status === 'in-progress').length;
+            const resolved = allComplaints.filter(c => c.status === 'resolved').length;
+            
+            document.getElementById('totalComplaints').textContent = total;
+            document.getElementById('pendingComplaints').textContent = pending;
+            document.getElementById('inProgressComplaints').textContent = inProgress;
+            document.getElementById('resolvedComplaints').textContent = resolved;
+        }
+
+        // Display complaints
+        function displayComplaints() {
+            const container = document.getElementById('complaintsContainer');
+            const noComplaints = document.getElementById('noComplaints');
+            
+            let filteredComplaints = allComplaints;
+            
+            // Apply filters
+            if (currentFilter !== 'all') {
+                filteredComplaints = filteredComplaints.filter(c => c.status === currentFilter);
+            }
+            
+            const priorityFilter = document.getElementById('priorityFilter').value;
+            if (priorityFilter) {
+                filteredComplaints = filteredComplaints.filter(c => c.priorityLevel === priorityFilter);
+            }
+            
+            const typeFilter = document.getElementById('typeFilter').value;
+            if (typeFilter) {
+                filteredComplaints = filteredComplaints.filter(c => c.complaintType === typeFilter);
+            }
+            
+            if (filteredComplaints.length === 0) {
+                container.innerHTML = '';
+                noComplaints.classList.remove('hidden');
+                return;
+            }
+            
+            noComplaints.classList.add('hidden');
+            
+            container.innerHTML = filteredComplaints.map(complaint => `
+                <div class="complaint-card p-4 lg:p-6 priority-${complaint.priorityLevel} cursor-pointer" onclick="openComplaintModal('${complaint.id}')">
+                    <div class="space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap items-center gap-2 mb-2">
+                                    <h3 class="text-base lg:text-lg font-semibold text-gray-800">${complaint.subject}</h3>
+                                    <span class="status-${complaint.status || 'pending'} px-2 py-1 rounded-full text-xs font-semibold">
+                                        ${(complaint.status || 'pending').replace('-', ' ').toUpperCase()}
+                                    </span>
+                                    <span class="bg-gray-100 px-2 py-1 rounded-full text-xs font-semibold text-gray-600">
+                                        ${complaint.priorityLevel.toUpperCase()}
+                                    </span>
+                                </div>
+                                <p class="text-sm lg:text-base text-gray-600 mb-3">${complaint.description.substring(0, 120)}${complaint.description.length > 120 ? '...' : ''}</p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-2 sm:ml-4">
+                                <button onclick="event.stopPropagation(); updateComplaintStatus('${complaint.id}', 'in-progress')" 
+                                        class="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-xs hover:bg-blue-200 transition-colors whitespace-nowrap">
+                                    In Progress
+                                </button>
+                                <button onclick="event.stopPropagation(); updateComplaintStatus('${complaint.id}', 'resolved')" 
+                                        class="px-3 py-1 bg-green-100 text-green-600 rounded-lg text-xs hover:bg-green-200 transition-colors whitespace-nowrap">
+                                    Resolve
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 text-xs lg:text-sm text-gray-500">
+                            <span><i class="fas fa-user mr-1"></i>${complaint.studentName}</span>
+                            <span><i class="fas fa-graduation-cap mr-1"></i>${complaint.studentClass}</span>
+                            <span><i class="fas fa-tag mr-1"></i>${complaint.complaintType.replace('-', ' ')}</span>
+                            <span><i class="fas fa-clock mr-1"></i>${formatDate(complaint.timestamp)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter complaints
+        function filterComplaints(status) {
+            currentFilter = status;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayComplaints();
+        }
+
+        // Apply filters
+        function applyFilters() {
+            displayComplaints();
+        }
+
+        // Update complaint status
+        async function updateComplaintStatus(complaintId, newStatus) {
+            try {
+                await database.ref(`complaints/${complaintId}/status`).set(newStatus);
+                await database.ref(`complaints/${complaintId}/updatedAt`).set(firebase.database.ServerValue.TIMESTAMP);
+                
+                // Update local data
+                const complaint = allComplaints.find(c => c.id === complaintId);
+                if (complaint) {
+                    complaint.status = newStatus;
+                }
+                
+                updateStats();
+                displayComplaints();
+                
+            } catch (error) {
+                console.error('Error updating complaint status:', error);
+                alert('Error updating complaint status');
+            }
+        }
+
+        // Open complaint modal
+        function openComplaintModal(complaintId) {
+            const complaint = allComplaints.find(c => c.id === complaintId);
+            if (!complaint) return;
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="space-y-4 lg:space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Student Name</label>
+                            <p class="text-sm lg:text-base text-gray-800">${complaint.studentName}</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Class</label>
+                            <p class="text-sm lg:text-base text-gray-800">${complaint.studentClass}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Complaint Type</label>
+                            <p class="text-sm lg:text-base text-gray-800">${complaint.complaintType.replace('-', ' ')}</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Priority</label>
+                            <span class="bg-gray-100 px-2 py-1 rounded-full text-xs lg:text-sm font-semibold text-gray-600">
+                                ${complaint.priorityLevel.toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Subject</label>
+                        <p class="text-sm lg:text-base text-gray-800">${complaint.subject}</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Description</label>
+                        <p class="text-sm lg:text-base text-gray-800 bg-gray-50 p-3 lg:p-4 rounded-lg">${complaint.description}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Affected Page</label>
+                            <p class="text-sm lg:text-base text-gray-800">${complaint.affectedPage || 'Not specified'}</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Browser/Device</label>
+                            <p class="text-sm lg:text-base text-gray-800">${complaint.browserInfo} / ${complaint.deviceInfo}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs lg:text-sm font-semibold text-gray-600 mb-1">Submitted</label>
+                        <p class="text-sm lg:text-base text-gray-800">${formatDate(complaint.timestamp)}</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+                        <button onclick="updateComplaintStatus('${complaint.id}', 'in-progress'); closeModal();" 
+                                class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm lg:text-base">
+                            Mark In Progress
+                        </button>
+                        <button onclick="updateComplaintStatus('${complaint.id}', 'resolved'); closeModal();" 
+                                class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-sm lg:text-base">
+                            Mark Resolved
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('complaintModal').classList.remove('hidden');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('complaintModal').classList.add('hidden');
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        }
+
+        // Navigation functions
+        function goHome() {
+            window.location.href = 'home.html';
+        }
+
+        function goToDashboard() {
+            window.location.href = 'teacher-dashboard.html';
+        }
+    </script>
+</body>
+</html>

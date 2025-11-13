@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif']
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        },
+                        'accent': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Inter', 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .dashboard-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .dashboard-card:hover::before {
+            left: 100%;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .batch-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .batch-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        .performance-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .performance-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        .student-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        .student-card:hover::before {
+            left: 100%;
+        }
+        .student-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .modal {
+            backdrop-filter: blur(25px);
+            animation: modalFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-content {
+            animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 95vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+        }
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; backdrop-filter: blur(0px); }
+            to { opacity: 1; backdrop-filter: blur(25px); }
+        }
+        @keyframes modalSlideIn {
+            from { transform: translateY(-100px) scale(0.8); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            transition: stroke-dasharray 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .chart-container {
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 8px;
+                max-height: calc(100vh - 16px);
+                border-radius: 1rem;
+            }
+            .student-card {
+                margin-bottom: 16px;
+            }
+            /* Mobile responsive fixes */
+            .overflow-x-auto table th,
+            .overflow-x-auto table td {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.75rem !important;
+            }
+            /* Mobile animations */
+            .animate-float {
+                animation: none;
+            }
+            .animate-bounce-slow {
+                animation: bounce 3s infinite;
+            }
+            /* Mobile menu animation */
+            #mobileMenu {
+                animation: slideDown 0.3s ease-out;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
+        <div class="absolute top-0 left-0 w-full h-full">
+            <svg class="absolute top-10 left-10 text-blue-200 opacity-20 animate-float" width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                <path d="M2 17L12 22L22 17"/>
+                <path d="M2 12L12 17L22 12"/>
+            </svg>
+            <svg class="absolute top-32 right-20 text-purple-200 opacity-20 animate-bounce-slow" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 14L8 10H16L12 14Z"/>
+            </svg>
+            <svg class="absolute bottom-20 left-20 text-indigo-200 opacity-20 animate-pulse-slow" width="50" height="50" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+            <svg class="absolute bottom-32 right-32 text-blue-300 opacity-20 animate-wiggle" width="35" height="35" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 12L11 14L15 10"/>
+            </svg>
+        </div>
+    </div>
+    <!-- Header -->
+    <nav class="relative z-10 bg-white/80 backdrop-blur-xl shadow-xl border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo Section -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-chalkboard-teacher text-white text-lg md:text-xl"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="text-lg md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-poppins">Teacher Dashboard</h1>
+                        <p class="text-xs md:text-sm text-gray-500 font-inter hidden md:block">Padhle Champs Learning Platform</p>
+                    </div>
+                    <div class="sm:hidden">
+                        <h1 class="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-poppins">Dashboard</h1>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                        <i class="fas fa-bars text-xl" id="menuIcon"></i>
+                    </button>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <button onclick="goHome()" class="group relative px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-home mr-2 group-hover:animate-bounce"></i>
+                        <span class="font-medium">Home</span>
+                        <div class="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                    <button onclick="logout()" class="group relative px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-sign-out-alt mr-2 group-hover:animate-wiggle"></i>
+                        <span class="font-medium">Logout</span>
+                        <div class="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden bg-white/95 backdrop-blur-lg rounded-2xl mt-2 p-4 shadow-xl border border-white/20">
+                <div class="space-y-3">
+                    <button onclick="goHome(); toggleMobileMenu();" class="w-full flex items-center px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-home mr-3"></i>
+                        <span class="font-medium">Home</span>
+                    </button>
+                    <button onclick="logout(); toggleMobileMenu();" class="w-full flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-sign-out-alt mr-3"></i>
+                        <span class="font-medium">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-12 text-center animate-fade-in">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl shadow-2xl mb-6 animate-bounce-slow">
+                <i class="fas fa-star text-white text-2xl"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 font-poppins" id="welcomeTeacher">Welcome, Teacher!</h2>
+            <p class="text-xl text-gray-600 font-inter max-w-2xl mx-auto leading-relaxed">Monitor student progress, track performance metrics, and manage your classes with our comprehensive dashboard</p>
+            <div class="flex justify-center mt-6">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                    <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                    <div class="w-3 h-3 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="dashboard-card stat-card rounded-3xl p-8 group animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-2">
+                            <div class="w-2 h-2 bg-white/60 rounded-full mr-2 animate-pulse"></div>
+                            <p class="text-white/80 text-sm font-medium uppercase tracking-wider font-inter">Total Students</p>
+                        </div>
+                        <p class="text-4xl font-bold mb-2 font-poppins group-hover:scale-110 transition-transform duration-300" id="totalStudents">0</p>
+                        <div class="flex items-center text-white/70 text-xs">
+                            <i class="fas fa-trending-up mr-1"></i>
+                            <span>Active learners</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-users text-3xl group-hover:animate-bounce"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-xs text-yellow-800"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card batch-card rounded-3xl p-8 group animate-slide-up" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-2">
+                            <div class="w-2 h-2 bg-white/60 rounded-full mr-2 animate-pulse"></div>
+                            <p class="text-white/80 text-sm font-medium uppercase tracking-wider font-inter">Active Batches</p>
+                        </div>
+                        <p class="text-4xl font-bold mb-2 font-poppins group-hover:scale-110 transition-transform duration-300" id="activeBatches">4</p>
+                        <div class="flex items-center text-white/70 text-xs">
+                            <i class="fas fa-chart-line mr-1"></i>
+                            <span>Running courses</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-graduation-cap text-3xl group-hover:animate-bounce"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-xs text-green-800"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card performance-card rounded-3xl p-8 group animate-slide-up" style="animation-delay: 0.2s">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center mb-2">
+                            <div class="w-2 h-2 bg-white/60 rounded-full mr-2 animate-pulse"></div>
+                            <p class="text-white/80 text-sm font-medium uppercase tracking-wider font-inter">Avg Performance</p>
+                        </div>
+                        <p class="text-4xl font-bold mb-2 font-poppins group-hover:scale-110 transition-transform duration-300" id="avgPerformance">85%</p>
+                        <div class="flex items-center text-white/70 text-xs">
+                            <i class="fas fa-trophy mr-1"></i>
+                            <span>Overall score</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-chart-line text-3xl group-hover:animate-bounce"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-pink-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-star text-xs text-pink-800"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Batch Enrollment Stats -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div class="dashboard-card rounded-3xl p-8 animate-scale-in">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 font-poppins flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mr-3">
+                            <i class="fas fa-chart-pie text-white"></i>
+                        </div>
+                        Batch Enrollments
+                    </h3>
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                        <div class="w-3 h-3 bg-orange-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+                <div class="chart-container bg-gradient-to-br from-gray-50 to-white rounded-2xl p-4" style="position: relative; height: 320px; width: 100%;">
+                    <canvas id="batchChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-card rounded-3xl p-8 animate-scale-in" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800 font-poppins flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mr-3">
+                            <i class="fas fa-list text-white"></i>
+                        </div>
+                        Batch Details
+                    </h3>
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-100 to-green-200 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-info text-green-600 text-sm"></i>
+                    </div>
+                </div>
+                <div id="batchDetails" class="space-y-4">
+                    <!-- Batch details will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Student Analysis Section -->
+        <div class="dashboard-card rounded-3xl p-6 md:p-8 mb-12 animate-fade-in">
+            <div class="flex flex-col space-y-4 mb-8">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mr-3 md:mr-4">
+                        <i class="fas fa-chart-line text-white text-lg md:text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 font-poppins">Student Analysis</h3>
+                        <p class="text-gray-500 text-xs md:text-sm font-inter">Performance overview</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <select id="classFilter" class="flex-1 px-3 py-2 md:px-4 md:py-3 border-2 border-gray-200 rounded-xl md:rounded-2xl bg-white/80 backdrop-blur-sm hover:border-purple-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all duration-300 text-sm md:text-base font-inter">
+                        <option value="all">🎓 All Classes</option>
+                    </select>
+                    <select id="schoolFilter" class="flex-1 px-3 py-2 md:px-4 md:py-3 border-2 border-gray-200 rounded-xl md:rounded-2xl bg-white/80 backdrop-blur-sm hover:border-purple-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all duration-300 text-sm md:text-base font-inter">
+                        <option value="all">🏫 All Schools</option>
+                    </select>
+                    <button onclick="refreshStudentCards()" class="px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl md:rounded-2xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-medium text-sm md:text-base">
+                        <i class="fas fa-filter mr-2"></i>
+                        <span class="hidden sm:inline">Apply Filters</span>
+                        <span class="sm:hidden">Filter</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="studentCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <!-- Student cards will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Student Performance Table -->
+        <div class="dashboard-card rounded-3xl p-8 animate-fade-in">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 space-y-4 lg:space-y-0">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 font-poppins">Student Performance</h3>
+                        <p class="text-gray-500 text-sm font-inter">Track individual student progress and metrics</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 filter-section">
+                    <select id="batchFilter" class="px-4 py-3 border-2 border-gray-200 rounded-2xl bg-white/80 backdrop-blur-sm hover:border-blue-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 mobile-select font-inter">
+                        <option value="all">📚 All Batches</option>
+                    </select>
+                    <button onclick="refreshData()" class="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mobile-btn font-medium">
+                        <i class="fas fa-refresh mr-2 group-hover:animate-spin"></i>
+                        <span class="hidden sm:inline">Refresh Data</span>
+                        <span class="sm:hidden">Refresh</span>
+                        <div class="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto bg-gradient-to-br from-gray-50 to-white rounded-2xl">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gradient-to-r from-gray-100 to-gray-50">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">👤 Student</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">📚 Batch</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">📊 Progress</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">⭐ XP</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">🔥 Streak</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider font-inter border-b-2 border-gray-200">🕒 Last Active</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTable" class="bg-white divide-y divide-gray-100">
+                        <!-- Student data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button onclick="refreshData()" class="group w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center">
+            <i class="fas fa-sync-alt text-white text-xl group-hover:animate-spin"></i>
+        </button>
+    </div>
+
+    <!-- Student Detail Modal -->
+    <div id="studentModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm modal hidden z-50 flex items-center justify-center p-2 sm:p-4">
+        <div class="modal-content bg-white rounded-2xl md:rounded-3xl max-w-6xl w-full shadow-2xl border border-gray-200">
+            <div class="sticky top-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-t-2xl md:rounded-t-3xl p-4 md:p-6 flex justify-between items-center z-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user-graduate text-sm md:text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg md:text-2xl font-bold font-poppins" id="modalStudentName">Student Details</h2>
+                        <p class="text-xs md:text-sm text-white/80 font-inter">Performance Overview</p>
+                    </div>
+                </div>
+                <button onclick="closeStudentModal()" class="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                    <i class="fas fa-times text-sm md:text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 sm:p-6 space-y-6">
+                <!-- Student Info Header -->
+                <div class="glass-effect rounded-2xl p-4 sm:p-6 text-gray-800">
+                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-user-graduate text-3xl"></i>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-2xl font-bold" id="modalStudentFullName">Student Name</h3>
+                            <p class="text-gray-600 mt-1" id="modalStudentInfo">Class • Age • School</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-2xl text-white text-center">
+                        <div class="text-2xl sm:text-3xl font-bold" id="modalXP">0</div>
+                        <div class="text-xs sm:text-sm opacity-90">Total XP</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-4 rounded-2xl text-white text-center">
+                        <div class="text-2xl sm:text-3xl font-bold" id="modalStreak">0</div>
+                        <div class="text-xs sm:text-sm opacity-90">Day Streak</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-2xl text-white text-center">
+                        <div class="text-2xl sm:text-3xl font-bold" id="modalProgress">0%</div>
+                        <div class="text-xs sm:text-sm opacity-90">Progress</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-2xl text-white text-center">
+                        <div class="text-2xl sm:text-3xl font-bold" id="modalBatches">0</div>
+                        <div class="text-xs sm:text-sm opacity-90">Batches</div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <!-- Progress Chart -->
+                    <div class="chart-container glass-effect rounded-2xl p-4 sm:p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-chart-pie mr-2 text-blue-600"></i>Progress Overview
+                        </h4>
+                        <div class="flex items-center justify-center">
+                            <div class="relative w-32 h-32 sm:w-40 sm:h-40">
+                                <svg class="progress-ring w-full h-full" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
+                                    <circle id="progressCircle" cx="60" cy="60" r="50" stroke="url(#progressGradient)" stroke-width="8" fill="none" 
+                                            class="progress-ring-circle" stroke-dasharray="0 314" stroke-linecap="round"></circle>
+                                    <defs>
+                                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-xl sm:text-2xl font-bold text-gray-800" id="progressPercent">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- XP Trend Chart -->
+                    <div class="chart-container glass-effect rounded-2xl p-4 sm:p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-chart-line mr-2 text-green-600"></i>XP Trend (7 Days)
+                        </h4>
+                        <div class="h-48 sm:h-56">
+                            <canvas id="xpChart" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Performance -->
+                <div class="glass-effect rounded-2xl p-4 sm:p-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-clipboard-check mr-2 text-blue-600"></i>Test Performance
+                    </h4>
+                    <div id="modalTestDetails" class="space-y-3 max-h-60 overflow-y-auto">
+                        <!-- Test details will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Enrolled Batches -->
+                <div class="glass-effect rounded-2xl p-4 sm:p-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-graduation-cap mr-2 text-purple-600"></i>Enrolled Batches
+                    </h4>
+                    <div id="modalEnrolledBatches" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Enrolled batches will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let batchChart;
+        let allStudents = [];
+        let batchEnrollments = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkTeacherAccess();
+            loadTeacherData();
+            loadDashboardData();
+        });
+
+        function checkTeacherAccess() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            if (user.role !== 'Teacher' && user.role !== 'teacher') {
+                alert('Access denied. Teacher privileges required.');
+                window.location.href = 'home.html';
+                return;
+            }
+            
+            document.getElementById('welcomeTeacher').textContent = `Welcome, ${user.name.split(' ')[0]}!`;
+        }
+
+        async function loadDashboardData() {
+            try {
+                await Promise.all([
+                    loadAllStudents(),
+                    loadBatchEnrollments(),
+                    loadStudentStats(),
+                    loadTestResults()
+                ]);
+                
+                updateDashboardStats();
+                createBatchChart();
+                displayBatchDetails();
+                displayStudentTable();
+                populateBatchFilter();
+                displayStudentCards();
+                populateFilters();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        async function loadAllStudents() {
+            try {
+                const usersRef = database.ref('users');
+                const snapshot = await usersRef.once('value');
+                const users = snapshot.val() || {};
+                
+                allStudents = Object.values(users).filter(user => 
+                    user.role === 'Student' || user.role === 'student'
+                );
+            } catch (error) {
+                console.error('Error loading students:', error);
+            }
+        }
+
+        async function loadBatchEnrollments() {
+            try {
+                const enrollmentsRef = database.ref('enrollments');
+                const snapshot = await enrollmentsRef.once('value');
+                batchEnrollments = snapshot.val() || {};
+            } catch (error) {
+                console.error('Error loading enrollments:', error);
+            }
+        }
+
+        let allTestResults = [];
+
+        async function loadStudentStats() {
+            try {
+                const statsRef = database.ref('userStats');
+                const snapshot = await statsRef.once('value');
+                const stats = snapshot.val() || {};
+                
+                allStudents.forEach(student => {
+                    const studentStats = stats[student.userId] || {};
+                    student.xp = studentStats.xp || 0;
+                    student.streak = studentStats.streak || 0;
+                    student.lastActivity = studentStats.lastActivity || student.timestamp;
+                });
+            } catch (error) {
+                console.error('Error loading student stats:', error);
+            }
+        }
+
+        async function loadTestResults() {
+            try {
+                const testResultsRef = database.ref('testResults');
+                const snapshot = await testResultsRef.once('value');
+                allTestResults = [];
+                snapshot.forEach(childSnapshot => {
+                    allTestResults.push(childSnapshot.val());
+                });
+            } catch (error) {
+                console.error('Error loading test results:', error);
+            }
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('totalStudents').textContent = allStudents.length;
+            
+            // Calculate average performance based on test results
+            if (allTestResults.length > 0) {
+                const avgPerformance = Math.round(
+                    allTestResults.reduce((sum, result) => 
+                        sum + ((result.totalMarks / result.maxMarks) * 100), 0
+                    ) / allTestResults.length
+                );
+                document.getElementById('avgPerformance').textContent = `${avgPerformance}%`;
+            } else {
+                document.getElementById('avgPerformance').textContent = '0%';
+            }
+        }
+
+        function createBatchChart() {
+            const ctx = document.getElementById('batchChart').getContext('2d');
+            
+            const batchCounts = {
+                'Sangharsh': 0,
+                'Manzil': 0,
+                'Vigyan': 0,
+                'CodeCrack': 0
+            };
+
+            Object.keys(batchEnrollments).forEach(batchType => {
+                const enrollments = batchEnrollments[batchType] || {};
+                const count = Object.keys(enrollments).length;
+                
+                if (batchType.includes('sangharsh')) batchCounts['Sangharsh'] = count;
+                else if (batchType.includes('manzil')) batchCounts['Manzil'] = count;
+                else if (batchType.includes('vigyan')) batchCounts['Vigyan'] = count;
+                else if (batchType.includes('codecrack')) batchCounts['CodeCrack'] = count;
+            });
+
+            batchChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(batchCounts),
+                    datasets: [{
+                        data: Object.values(batchCounts),
+                        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#8B5CF6'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: 10
+                    }
+                }
+            });
+        }
+
+        function displayBatchDetails() {
+            const container = document.getElementById('batchDetails');
+            const batchInfo = [
+                { name: 'Sangharsh Batch', type: 'sangharsh-enrollments', color: 'from-blue-500 to-blue-600', icon: 'fas fa-mountain', bgColor: 'from-blue-50 to-blue-100' },
+                { name: 'Manzil Batch', type: 'manzil-enrollments', color: 'from-green-500 to-green-600', icon: 'fas fa-flag-checkered', bgColor: 'from-green-50 to-green-100' },
+                { name: 'Vigyan Batch', type: 'vigyan-enrollments', color: 'from-orange-500 to-orange-600', icon: 'fas fa-flask', bgColor: 'from-orange-50 to-orange-100' },
+                { name: 'CodeCrack Batch', type: 'codecrack-enrollments', color: 'from-purple-500 to-purple-600', icon: 'fas fa-code', bgColor: 'from-purple-50 to-purple-100' }
+            ];
+
+            container.innerHTML = batchInfo.map((batch, index) => {
+                const enrollments = batchEnrollments[batch.type] || {};
+                const count = Object.keys(enrollments).length;
+                
+                return `
+                    <div class="group relative bg-gradient-to-r ${batch.bgColor} rounded-2xl p-5 border border-white/50 hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-slide-up" style="animation-delay: ${index * 0.1}s">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br ${batch.color} rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                                    <i class="${batch.icon} text-lg group-hover:animate-bounce"></i>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-gray-800 text-lg font-poppins">${batch.name}</span>
+                                    <p class="text-sm text-gray-500 font-inter">Active learning batch</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-gray-800 font-poppins">${count}</div>
+                                <div class="text-sm text-gray-500 font-inter">students</div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayStudentTable() {
+            const tbody = document.getElementById('studentTable');
+            const selectedBatch = document.getElementById('batchFilter').value;
+            
+            let studentsToShow = allStudents;
+            if (selectedBatch !== 'all') {
+                studentsToShow = allStudents.filter(student => {
+                    return Object.keys(batchEnrollments).some(batchType => {
+                        if (batchType.includes(selectedBatch.toLowerCase())) {
+                            const enrollments = batchEnrollments[batchType] || {};
+                            return Object.values(enrollments).some(enrollment => 
+                                enrollment.userId === student.userId
+                            );
+                        }
+                        return false;
+                    });
+                });
+            }
+
+            tbody.innerHTML = studentsToShow.map(student => {
+                const studentBatches = [];
+                Object.keys(batchEnrollments).forEach(batchType => {
+                    const enrollments = batchEnrollments[batchType] || {};
+                    Object.values(enrollments).forEach(enrollment => {
+                        if (enrollment.userId === student.userId) {
+                            studentBatches.push(enrollment.batchName);
+                        }
+                    });
+                });
+
+                // Calculate progress based on test performance
+                const studentTests = allTestResults.filter(result => result.studentId === student.userId);
+                const progress = studentTests.length > 0 ? 
+                    Math.round(studentTests.reduce((sum, result) => sum + ((result.totalMarks / result.maxMarks) * 100), 0) / studentTests.length) : 0;
+                    
+                const lastActive = student.lastActivity ? 
+                    new Date(student.lastActivity).toLocaleDateString() : 
+                    new Date(student.loginTime).toLocaleDateString();
+
+                return `
+                    <tr class="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group">
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="relative">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                                        ${student.name.charAt(0)}
+                                    </div>
+                                    <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900 font-poppins group-hover:text-blue-600 transition-colors duration-300">${student.name}</div>
+                                    <div class="text-sm text-gray-500 font-inter flex items-center mt-1">
+                                        <i class="fas fa-birthday-cake mr-1 text-pink-400"></i>
+                                        Age: ${student.age}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex flex-wrap gap-1">
+                                ${studentBatches.length > 0 ? studentBatches.map(batch => `
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 border border-blue-200">
+                                        <i class="fas fa-graduation-cap mr-1"></i>${batch}
+                                    </span>
+                                `).join('') : '<span class="text-gray-400 italic font-inter">No batches</span>'}
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-20 bg-gray-200 rounded-full h-3 mr-3 shadow-inner">
+                                    <div class="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded-lg font-poppins">${progress}%</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-2"></i>
+                                <span class="text-sm font-bold text-gray-900 font-poppins">${student.xp || 0}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <i class="fas fa-fire text-orange-400 mr-2"></i>
+                                <span class="text-sm font-bold text-gray-900 font-poppins">${student.streak || 0} days</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-gray-400 mr-2"></i>
+                                <span class="text-sm text-gray-500 font-inter">${lastActive}</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function populateBatchFilter() {
+            const select = document.getElementById('batchFilter');
+            const batches = ['sangharsh', 'manzil', 'vigyan', 'codecrack'];
+            
+            batches.forEach(batch => {
+                const option = document.createElement('option');
+                option.value = batch;
+                option.textContent = batch.charAt(0).toUpperCase() + batch.slice(1);
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', displayStudentTable);
+        }
+
+        function displayStudentCards() {
+            const container = document.getElementById('studentCards');
+            const classFilter = document.getElementById('classFilter')?.value || 'all';
+            const schoolFilter = document.getElementById('schoolFilter')?.value || 'all';
+            
+            let filteredStudents = allStudents.filter(student => {
+                const classMatch = classFilter === 'all' || student.class === classFilter;
+                const schoolMatch = schoolFilter === 'all' || (student.schoolName && student.schoolName.toLowerCase().includes(schoolFilter.toLowerCase()));
+                return classMatch && schoolMatch;
+            });
+
+            container.innerHTML = filteredStudents.map(student => {
+                const progress = Math.min(Math.round((student.xp || 0) / 10), 100);
+                const enrolledBatches = getStudentBatches(student.userId);
+                
+                return `
+                    <div class="student-card rounded-2xl md:rounded-3xl p-4 md:p-6 group cursor-pointer transform transition-all duration-300 hover:scale-105" onclick="openStudentModal('${student.userId}')">
+                        <div class="flex items-center mb-4 md:mb-6">
+                            <div class="relative">
+                                <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white font-bold text-lg md:text-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                                    ${student.name.charAt(0)}
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-4 h-4 md:w-6 md:h-6 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center shadow-lg">
+                                    <div class="w-2 h-2 md:w-3 md:h-3 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0 ml-3 md:ml-4">
+                                <h4 class="font-bold text-gray-800 text-base md:text-xl truncate font-poppins group-hover:text-blue-600 transition-colors duration-300">${student.name}</h4>
+                                <div class="flex items-center justify-between mt-1">
+                                    <p class="text-xs md:text-sm text-gray-500 font-inter flex items-center">
+                                        <i class="fas fa-graduation-cap mr-1 text-blue-400"></i>
+                                        Class ${student.class || 'N/A'} • 
+                                        <i class="fas fa-birthday-cake ml-3 mr-1 text-pink-400"></i>
+                                        ${student.age}y
+                                    </p>
+                                    <div class="flex items-center ml-1">
+                                        <div class="w-2 h-2 md:w-3 md:h-3 bg-gradient-to-r from-green-400 to-green-500 rounded-full animate-pulse shadow-lg mr-1"></div>
+                                        <span class="text-xs text-green-600 font-medium">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 md:space-y-4">
+                            <div class="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs text-gray-500 uppercase tracking-wider font-bold flex items-center">
+                                        <i class="fas fa-school mr-1 text-blue-400"></i>School
+                                    </span>
+                                </div>
+                                <span class="text-xs md:text-sm font-semibold text-gray-800 truncate block font-inter">${student.schoolName || 'Not specified'}</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3 md:gap-4">
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl md:rounded-2xl p-3 md:p-4 text-center border border-blue-200 group-hover:shadow-lg transition-shadow duration-300">
+                                    <div class="flex items-center justify-center mb-1 md:mb-2">
+                                        <i class="fas fa-star text-blue-500 text-sm md:text-base"></i>
+                                    </div>
+                                    <div class="text-lg md:text-2xl font-bold text-blue-600 font-poppins">${student.xp || 0}</div>
+                                    <div class="text-xs text-blue-500 font-medium uppercase tracking-wide">XP Points</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl md:rounded-2xl p-3 md:p-4 text-center border border-orange-200 group-hover:shadow-lg transition-shadow duration-300">
+                                    <div class="flex items-center justify-center mb-1 md:mb-2">
+                                        <i class="fas fa-fire text-orange-500 text-sm md:text-base"></i>
+                                    </div>
+                                    <div class="text-lg md:text-2xl font-bold text-orange-600 font-poppins">${student.streak || 0}</div>
+                                    <div class="text-xs text-orange-500 font-medium uppercase tracking-wide">Day Streak</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 md:mt-6">
+                                <div class="flex justify-between items-center mb-2 md:mb-3">
+                                    <span class="text-xs text-gray-500 uppercase tracking-wider font-bold flex items-center">
+                                        <i class="fas fa-chart-line mr-1 text-green-400"></i>Progress
+                                    </span>
+                                    <span class="text-sm md:text-lg font-bold text-green-600 bg-green-100 px-2 md:px-3 py-1 rounded-full font-poppins">${progress}%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3 md:h-4 overflow-hidden shadow-inner">
+                                    <div class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 h-full rounded-full transition-all duration-1000 ease-out shadow-lg" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-3 md:pt-4 border-t-2 border-gray-100">
+                                <span class="text-xs md:text-sm text-gray-600 flex items-center font-medium">
+                                    <i class="fas fa-graduation-cap mr-1 md:mr-2 text-purple-500"></i>Batches
+                                </span>
+                                <div class="flex items-center space-x-1 md:space-x-2">
+                                    <span class="text-sm md:text-lg font-bold text-purple-600 bg-gradient-to-r from-purple-100 to-pink-100 px-2 md:px-3 py-1 rounded-full font-poppins">${enrolledBatches.length}</span>
+                                    <i class="fas fa-arrow-right text-gray-400 group-hover:text-purple-500 transition-colors duration-300 text-xs md:text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getStudentBatches(userId) {
+            const batches = [];
+            Object.keys(batchEnrollments).forEach(batchType => {
+                const enrollments = batchEnrollments[batchType] || {};
+                Object.values(enrollments).forEach(enrollment => {
+                    if (enrollment.userId === userId) {
+                        batches.push(enrollment.batchName || batchType);
+                    }
+                });
+            });
+            return batches;
+        }
+
+        function populateFilters() {
+            const classFilter = document.getElementById('classFilter');
+            const schoolFilter = document.getElementById('schoolFilter');
+            
+            if (classFilter && schoolFilter) {
+                const classes = [...new Set(allStudents.map(s => s.class).filter(c => c))];
+                classes.forEach(cls => {
+                    const option = document.createElement('option');
+                    option.value = cls;
+                    option.textContent = `Class ${cls}`;
+                    classFilter.appendChild(option);
+                });
+
+                const schools = [...new Set(allStudents.map(s => s.schoolName).filter(s => s))];
+                schools.forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school;
+                    option.textContent = school;
+                    schoolFilter.appendChild(option);
+                });
+
+                classFilter.addEventListener('change', displayStudentCards);
+                schoolFilter.addEventListener('change', displayStudentCards);
+            }
+        }
+
+        function refreshStudentCards() {
+            displayStudentCards();
+        }
+
+        function openStudentModal(userId) {
+            const student = allStudents.find(s => s.userId === userId);
+            if (!student) return;
+
+            document.getElementById('modalStudentName').textContent = student.name;
+            document.getElementById('modalStudentFullName').textContent = student.name;
+            document.getElementById('modalStudentInfo').textContent = `Class ${student.class || 'N/A'} • Age ${student.age} • ${student.schoolName || 'School not specified'}`;
+            document.getElementById('modalXP').textContent = student.xp || 0;
+            document.getElementById('modalStreak').textContent = student.streak || 0;
+            
+            const enrolledBatches = getStudentBatches(userId);
+            document.getElementById('modalBatches').textContent = enrolledBatches.length;
+
+            // Calculate comprehensive progress including tests
+            calculateStudentProgress(userId);
+
+            createXPChart(student);
+            displayModalBatches(enrolledBatches);
+            loadStudentTestDetails(userId);
+            document.getElementById('studentModal').classList.remove('hidden');
+        }
+
+        function createXPChart(student) {
+            const ctx = document.getElementById('xpChart').getContext('2d');
+            
+            // Clear any existing chart
+            if (window.xpChartInstance) {
+                window.xpChartInstance.destroy();
+            }
+            
+            // Get current XP and create realistic progression
+            const currentXP = student.xp || 0;
+            const xpData = [];
+            const labels = [];
+            
+            // Generate last 7 days with realistic XP progression
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                
+                if (i === 0) {
+                    // Today shows current XP
+                    xpData.push(currentXP);
+                } else {
+                    // Previous days show gradual progression
+                    const dayXP = Math.max(0, currentXP - (i * Math.ceil(currentXP / 7)));
+                    xpData.push(dayXP);
+                }
+            }
+            
+            window.xpChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'XP Progress',
+                        data: xpData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#3b82f6',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `XP: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' XP';
+                                }
+                            }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        async function displayModalBatches(batches) {
+            const container = document.getElementById('modalEnrolledBatches');
+            
+            if (batches.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No batches enrolled</p>';
+                return;
+            }
+
+            const batchColors = {
+                'sangharsh': 'from-blue-500 to-blue-600',
+                'manzil': 'from-green-500 to-green-600',
+                'vigyan': 'from-orange-500 to-orange-600',
+                'codecrack': 'from-purple-500 to-purple-600'
+            };
+
+            const batchCards = await Promise.all(batches.map(async batch => {
+                const batchType = batch.toLowerCase();
+                const colorClass = batchColors[batchType] || 'from-gray-500 to-gray-600';
+                
+                // Get real progress from enrollments
+                let progress = 0;
+                Object.keys(batchEnrollments).forEach(enrollmentType => {
+                    if (enrollmentType.includes(batchType)) {
+                        const enrollments = batchEnrollments[enrollmentType] || {};
+                        Object.values(enrollments).forEach(enrollment => {
+                            if (enrollment.batchName === batch) {
+                                progress = enrollment.progress || 0;
+                            }
+                        });
+                    }
+                });
+                
+                return `
+                    <div class="bg-gradient-to-r ${colorClass} rounded-lg p-4 text-white">
+                        <h5 class="font-semibold">${batch}</h5>
+                        <p class="text-sm opacity-90">Active Enrollment</p>
+                        <div class="mt-2 flex items-center">
+                            <div class="w-full bg-white bg-opacity-20 rounded-full h-2 mr-2">
+                                <div class="bg-white h-2 rounded-full" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="text-xs">${progress}%</span>
+                        </div>
+                    </div>
+                `;
+            }));
+            
+            container.innerHTML = batchCards.join('');
+        }
+
+        function closeStudentModal() {
+            const modal = document.getElementById('studentModal');
+            modal.style.opacity = '0';
+            modal.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.opacity = '1';
+                modal.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeStudentModal();
+            }
+        });
+        
+        // Close modal on backdrop click
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('studentModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeStudentModal();
+                    }
+                });
+            }
+            
+            // Close mobile menu on outside click
+            document.addEventListener('click', function(e) {
+                const menu = document.getElementById('mobileMenu');
+                const menuButton = e.target.closest('[onclick="toggleMobileMenu()"]');
+                
+                if (!menuButton && !menu.contains(e.target) && !menu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        function refreshData() {
+            // Add loading animation
+            const refreshButtons = document.querySelectorAll('[onclick="refreshData()"]');
+            refreshButtons.forEach(btn => {
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('animate-spin');
+                }
+            });
+            
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                loadDashboardData().then(() => {
+                    refreshButtons.forEach(btn => {
+                        const icon = btn.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('animate-spin');
+                        }
+                    });
+                });
+            }, 500);
+        }
+
+        function loadTeacherData() {
+            // This function can be expanded to load teacher-specific data
+            console.log('Loading teacher data...');
+            
+            // Add welcome animation
+            const welcomeSection = document.querySelector('#welcomeTeacher').parentElement;
+            welcomeSection.style.opacity = '0';
+            welcomeSection.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                welcomeSection.style.transition = 'all 0.6s ease-out';
+                welcomeSection.style.opacity = '1';
+                welcomeSection.style.transform = 'translateY(0)';
+            }, 200);
+        }
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    menu.style.transition = 'all 0.3s ease-out';
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0)';
+                }, 10);
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300);
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        async function calculateStudentProgress(userId) {
+            try {
+                // Get test results
+                const testResultsRef = database.ref('testResults');
+                const testSnapshot = await testResultsRef.orderByChild('studentId').equalTo(userId).once('value');
+                const testResults = [];
+                testSnapshot.forEach(child => testResults.push(child.val()));
+                
+                // Get user progress (content completion)
+                const userProgressRef = database.ref('userProgress');
+                const progressSnapshot = await userProgressRef.child(userId).once('value');
+                const contentProgress = progressSnapshot.val() || {};
+                
+                // Calculate test progress
+                const testProgress = testResults.length > 0 ? 
+                    testResults.reduce((sum, result) => sum + ((result.totalMarks / result.maxMarks) * 100), 0) / testResults.length : 0;
+                
+                // Calculate content progress (assuming 100 total content items)
+                const contentCount = Object.keys(contentProgress).length;
+                const contentProgressPercent = Math.min((contentCount / 50) * 100, 100); // Assuming 50 total content items
+                
+                // Combined progress (60% content, 40% tests)
+                const overallProgress = Math.round((contentProgressPercent * 0.6) + (testProgress * 0.4));
+                
+                document.getElementById('modalProgress').textContent = `${overallProgress}%`;
+                
+                const circle = document.getElementById('progressCircle');
+                const circumference = 2 * Math.PI * 50;
+                const offset = circumference - (overallProgress / 100) * circumference;
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+                document.getElementById('progressPercent').textContent = `${overallProgress}%`;
+                
+            } catch (error) {
+                console.error('Error calculating progress:', error);
+                // Fallback to XP-based progress
+                const student = allStudents.find(s => s.userId === userId);
+                const progress = Math.min(Math.round((student?.xp || 0) / 10), 100);
+                document.getElementById('modalProgress').textContent = `${progress}%`;
+                document.getElementById('progressPercent').textContent = `${progress}%`;
+            }
+        }
+
+        async function loadStudentTestDetails(userId) {
+            const container = document.getElementById('modalTestDetails');
+            container.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-gray-400"></i> Loading test details...</div>';
+            
+            try {
+                const testResultsRef = database.ref('testResults');
+                const snapshot = await testResultsRef.orderByChild('studentId').equalTo(userId).once('value');
+                const testResults = [];
+                
+                snapshot.forEach(childSnapshot => {
+                    testResults.push(childSnapshot.val());
+                });
+                
+                if (testResults.length === 0) {
+                    container.innerHTML = '<div class="text-center py-8 text-gray-500"><i class="fas fa-clipboard-list text-3xl mb-2"></i><p>No tests attempted yet</p></div>';
+                    return;
+                }
+                
+                // Sort by submission date (newest first)
+                testResults.sort((a, b) => b.submittedAt - a.submittedAt);
+                
+                const testDetailsHtml = testResults.map(result => {
+                    const percentage = Math.round((result.totalMarks / result.maxMarks) * 100);
+                    const statusColor = percentage >= 80 ? 'text-green-600 bg-green-100' : 
+                                       percentage >= 60 ? 'text-blue-600 bg-blue-100' : 
+                                       percentage >= 40 ? 'text-yellow-600 bg-yellow-100' :
+                                       'text-red-600 bg-red-100';
+                    
+                    const attemptDate = new Date(result.submittedAt).toLocaleDateString();
+                    const attemptTime = new Date(result.submittedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    let performanceIcon, performanceText;
+                    if (percentage >= 80) {
+                        performanceIcon = 'fa-trophy';
+                        performanceText = 'Excellent';
+                    } else if (percentage >= 60) {
+                        performanceIcon = 'fa-thumbs-up';
+                        performanceText = 'Good';
+                    } else if (percentage >= 40) {
+                        performanceIcon = 'fa-chart-line';
+                        performanceText = 'Average';
+                    } else {
+                        performanceIcon = 'fa-chart-line-down';
+                        performanceText = 'Needs Work';
+                    }
+                    
+                    return `
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex-1">
+                                    <h5 class="font-semibold text-gray-800 text-sm mb-1">${result.testTitle}</h5>
+                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                        <span><i class="fas fa-calendar mr-1"></i>${attemptDate}</span>
+                                        <span><i class="fas fa-clock mr-1"></i>${attemptTime}</span>
+                                    </div>
+                                </div>
+                                <span class="${statusColor} px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                                    <i class="fas ${performanceIcon} mr-1"></i>${performanceText}
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-4 gap-3 mb-3 text-center">
+                                <div>
+                                    <div class="text-lg font-bold text-gray-900">${result.totalMarks}</div>
+                                    <div class="text-xs text-gray-500">Score</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold text-purple-600">${percentage}%</div>
+                                    <div class="text-xs text-gray-500">Percent</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold text-green-600">${result.correctAnswers}</div>
+                                    <div class="text-xs text-gray-500">Correct</div>
+                                </div>
+                                <div>
+                                    <div class="text-lg font-bold text-yellow-600">${result.earnedXP || 0}</div>
+                                    <div class="text-xs text-gray-500">XP</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-xs text-gray-600 pt-2 border-t border-gray-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-1"></i>${result.correctAnswers}</span>
+                                    <span class="flex items-center"><i class="fas fa-times-circle text-red-500 mr-1"></i>${result.wrongAnswers}</span>
+                                    <span class="flex items-center"><i class="fas fa-minus-circle text-yellow-500 mr-1"></i>${result.unattempted}</span>
+                                </div>
+                                <span class="text-gray-500">${result.totalMarks}/${result.maxMarks} marks</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                container.innerHTML = testDetailsHtml;
+                
+            } catch (error) {
+                console.error('Error loading test details:', error);
+                container.innerHTML = '<div class="text-center py-4 text-red-500"><i class="fas fa-exclamation-triangle mr-2"></i>Error loading test details</div>';
+            }
+        }
+
+        function goHome() {
+            // Add smooth transition effect
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 300);
+        }
+
+        function logout() {
+            // Add smooth transition effect
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                localStorage.removeItem('padhleChamps_user');
+                window.location.href = 'login.html';
+            }, 300);
+        }
+
+        // Add smooth page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'scale(0.95)';
+            document.body.style.transition = 'all 0.3s ease-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                document.body.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+
+        
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all dashboard cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.dashboard-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+        });
+        
+        // Add smooth scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        // Add loading state management
+        window.addEventListener('beforeunload', function() {
+            document.body.style.opacity = '0.5';
+        });
+    </script>
+</body>
+</html>

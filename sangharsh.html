@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangharsh Batch 2025 - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::before {
+            width: 80%;
+        }
+        
+        .nav-link:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            right: -100%;
+            width: 280px;
+            height: calc(100vh - 64px);
+            background: white;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 40;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 39;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex !important;
+            }
+            
+            .desktop-nav {
+                display: none !important;
+            }
+            
+            .navbar .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+            
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .mobile-menu-item {
+            animation: slideInRight 0.3s ease forwards;
+            opacity: 0;
+        }
+        
+        .mobile-menu.active .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand -->
+                <div class="flex items-center group">
+                    <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                        Sangharsh 2025
+                    </span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav hidden md:flex items-center space-x-2">
+                    <a href="home.html" class="nav-link px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="subject-sangharsh.html" class="nav-link px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">menu_book</span>
+                        <span>Subjects</span>
+                    </a>
+                    <a href="notification-sangharsh.html" class="nav-link relative p-3 text-gray-700 rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50">
+                        <span class="material-icons text-xl">notifications</span>
+                        <span id="notification-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden animate-pulse shadow-lg">0</span>
+                    </a>
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-xl border border-blue-100">
+                        <span class="material-icons text-blue-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="home.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">home</span>
+            <span class="font-medium text-gray-700">Home</span>
+        </a>
+        <a href="subject-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">menu_book</span>
+            <span class="font-medium text-gray-700">Subjects</span>
+        </a>
+        <a href="notification-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">notifications</span>
+            <span class="font-medium text-gray-700">Notifications</span>
+            <span id="mobile-notification-count" class="ml-auto bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
+        </a>
+        <div class="mobile-menu-item p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+            <div class="flex items-center gap-3">
+                <span class="material-icons text-blue-600">account_circle</span>
+                <span class="font-semibold text-gray-700" id="mobile-username">Hi Student</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Hero Section -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h1 class="text-5xl font-bold text-gray-900 mb-4">
+                    <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        Sangharsh Batch 2025
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Comprehensive preparation program designed to excel in competitive examinations with expert guidance and structured learning
+                </p>
+            </div>
+
+            <!-- Batch Description -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">About This Batch</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Sangharsh Batch 2025 is a comprehensive learning program that covers all essential subjects for competitive exam preparation. 
+                            Our structured approach ensures thorough understanding of concepts with practical application.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <span class="material-icons text-blue-600">auto_stories</span>
+                                </div>
+                                <span class="text-gray-700">Comprehensive curriculum covering all major subjects</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                    <span class="material-icons text-green-600">groups</span>
+                                </div>
+                                <span class="text-gray-700">Expert faculty with years of teaching experience</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <span class="material-icons text-purple-600">trending_up</span>
+                                </div>
+                                <span class="text-gray-700">Regular assessments and progress tracking</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Batch Highlights</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">5</div>
+                                <div class="text-sm text-gray-600">Core Subjects</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">8+</div>
+                                <div class="text-sm text-gray-600">Total Chapters</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">2025</div>
+                                <div class="text-sm text-gray-600">Target Year</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-orange-600">24/7</div>
+                                <div class="text-sm text-gray-600">Support</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subjects Overview -->
+            <div class="mb-8" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Subjects We Cover</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center cursor-pointer">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-icons text-red-600 text-3xl">menu_book</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900">English</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center cursor-pointer">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-icons text-blue-600 text-3xl">science</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900">Science</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center cursor-pointer">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-icons text-green-600 text-3xl">public</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900">Social Science</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center cursor-pointer" onclick="window.location.href='chapter-sangharsh.html?subject=maths'">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-icons text-yellow-600 text-3xl">calculate</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900">Maths</h3>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-center cursor-pointer">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="material-icons text-purple-600 text-3xl">computer</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900">Computer</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                <a href="subject-sangharsh.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span>Explore Subjects</span>
+                    <span class="material-icons">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Load username from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('mobile-username').textContent = `Hi ${username}`;
+            
+            // Load notification count
+            loadNotificationCount();
+        });
+
+        function loadNotificationCount() {
+            // Firebase integration for real-time notification count
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+            
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            database.ref('notifications/sangharsh').on('value', (snapshot) => {
+                const count = snapshot.numChildren();
+                const countElement = document.getElementById('notification-count');
+                const mobileCountElement = document.getElementById('mobile-notification-count');
+                
+                if (count > 0) {
+                    countElement.textContent = count;
+                    countElement.classList.remove('hidden');
+                    mobileCountElement.textContent = count;
+                    mobileCountElement.classList.remove('hidden');
+                } else {
+                    countElement.classList.add('hidden');
+                    mobileCountElement.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+</body>
+</html>

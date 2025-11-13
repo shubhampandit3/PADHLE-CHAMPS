@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Permissions-Policy" content="unload=()">
+    <title>Subjects - Vigyan Batch 2025</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            cursor: pointer;
+            width: 28px;
+            height: 24px;
+            position: relative;
+            display: none !important;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #9333ea, #4f46e5);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) { top: 0px; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
+        
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        .navbar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        /* Progress Bar Animation */
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        /* Subject Card Background Icon */
+        .subject-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bg-icon {
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.08;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        /* Circular Progress Bar */
+        .circular-progress {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+        
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+        
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: block !important;
+            }
+            
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            
+            .hamburger {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Vigyan Batch 2025
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav flex items-center space-x-2">
+                    <a href="home.html" class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="vigyan.html" class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">dashboard</span>
+                        <span>Batch</span>
+                    </a>
+                    <a href="subject-vigyan.html" class="relative px-4 py-2 text-purple-600 font-medium rounded-lg bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">book</span>
+                        <span>Subjects</span>
+                    </a>
+                    
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-2 rounded-xl border border-purple-100">
+                        <span class="material-icons text-purple-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="py-4 space-y-2">
+                    <a href="home.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">home</span>
+                        Home
+                    </a>
+                    <a href="vigyan.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">dashboard</span>
+                        Batch
+                    </a>
+                    <a href="subject-vigyan.html" class="flex items-center px-4 py-3 text-purple-600 font-medium rounded-lg bg-purple-50">
+                        <span class="material-icons mr-3">book</span>
+                        Subjects
+                    </a>
+                    <div class="flex items-center px-4 py-3 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-100">
+                        <span class="material-icons text-purple-600 mr-3">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username-mobile">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                    <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                        Choose Your Subject
+                    </span>
+                </h1>
+                <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+                    Select a subject to explore chapters and start learning
+                </p>
+            </div>
+
+            <!-- Subjects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- History -->
+                <div class="subject-card bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105" 
+                     onclick="goToChapters('history')" data-aos="fade-up" data-aos-delay="100">
+                    <span class="material-icons bg-icon text-white">history_edu</span>
+                    <div class="relative z-10 p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">Active</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">History</h3>
+                                <p class="text-blue-100 text-sm mb-4">European History & Nationalism</p>
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">menu_book</span>
+                                        1 Chapter Available
+                                    </div>
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">play_circle</span>
+                                        Videos & Notes
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center ml-4">
+                                <div class="circular-progress mb-2">
+                                    <svg width="80" height="80">
+                                        <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" />
+                                        <circle cx="40" cy="40" r="36" stroke="#ffffff" id="circle-history" stroke-dasharray="226" stroke-dashoffset="226" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white" id="percent-history">0%</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-white/80 font-medium">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Civics -->
+                <div class="subject-card bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105" 
+                     onclick="goToChapters('civics')" data-aos="fade-up" data-aos-delay="150">
+                    <span class="material-icons bg-icon text-white">account_balance</span>
+                    <div class="relative z-10 p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">Active</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Civics</h3>
+                                <p class="text-rose-100 text-sm mb-4">Democratic Politics & Governance</p>
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">menu_book</span>
+                                        1 Chapter Available
+                                    </div>
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">play_circle</span>
+                                        Videos & Notes
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center ml-4">
+                                <div class="circular-progress mb-2">
+                                    <svg width="80" height="80">
+                                        <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" />
+                                        <circle cx="40" cy="40" r="36" stroke="#ffffff" id="circle-civics" stroke-dasharray="226" stroke-dashoffset="226" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white" id="percent-civics">0%</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-white/80 font-medium">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="subject-card bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105" 
+                     onclick="goToChapters('chemistry')" data-aos="fade-up" data-aos-delay="200">
+                    <span class="material-icons bg-icon text-white">science</span>
+                    <div class="relative z-10 p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">Active</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Chemistry</h3>
+                                <p class="text-green-100 text-sm mb-4">Chemical Reactions & Equations</p>
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">menu_book</span>
+                                        1 Chapter Available
+                                    </div>
+                                    <div class="flex items-center text-sm text-white/90">
+                                        <span class="material-icons text-base mr-2">play_circle</span>
+                                        Videos & Notes
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center ml-4">
+                                <div class="circular-progress mb-2">
+                                    <svg width="80" height="80">
+                                        <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" />
+                                        <circle cx="40" cy="40" r="36" stroke="#ffffff" id="circle-chemistry" stroke-dasharray="226" stroke-dashoffset="226" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white" id="percent-chemistry">0%</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-white/80 font-medium">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maths -->
+                <div class="subject-card bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 opacity-75" 
+                     data-aos="fade-up" data-aos-delay="300">
+                    <span class="material-icons bg-icon text-white">calculate</span>
+                    <div class="relative z-10 p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">Coming Soon</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Mathematics</h3>
+                                <p class="text-yellow-100 text-sm mb-4">Calculus, Algebra & Geometry</p>
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center text-sm text-white/70">
+                                        <span class="material-icons text-base mr-2">schedule</span>
+                                        Chapters coming soon
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center ml-4">
+                                <div class="circular-progress mb-2">
+                                    <svg width="80" height="80">
+                                        <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" />
+                                        <circle cx="40" cy="40" r="36" stroke="#ffffff" stroke-dasharray="226" stroke-dashoffset="226" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white">0%</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-white/80 font-medium">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Technology -->
+                <div class="subject-card bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 opacity-75" 
+                     data-aos="fade-up" data-aos-delay="400">
+                    <span class="material-icons bg-icon text-white">computer</span>
+                    <div class="relative z-10 p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">Coming Soon</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Information Technology</h3>
+                                <p class="text-purple-100 text-sm mb-4">Programming & Computer Science</p>
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center text-sm text-white/70">
+                                        <span class="material-icons text-base mr-2">schedule</span>
+                                        Chapters coming soon
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center ml-4">
+                                <div class="circular-progress mb-2">
+                                    <svg width="80" height="80">
+                                        <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" />
+                                        <circle cx="40" cy="40" r="36" stroke="#ffffff" stroke-dasharray="226" stroke-dashoffset="226" />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-bold text-white">0%</span>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-white/80 font-medium">Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="500">
+                <a href="vigyan.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons mr-2">arrow_back</span>
+                    Back to Batch Overview
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- Home JS for Firebase functions -->
+    <script src="home.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('username-mobile').textContent = `Hi ${username}`;
+            
+            updateAllSubjectProgress();
+        });
+        
+        function updateAllSubjectProgress() {
+            const subjects = ['history', 'civics', 'chemistry', 'maths', 'information-technology'];
+            
+            for (const subject of subjects) {
+                const progress = calculateSubjectProgress(subject);
+                updateSubjectCard(subject, progress);
+            }
+        }
+        
+        function calculateSubjectProgress(subject) {
+            try {
+                const localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                const subjectPrefix = `${subject}_`;
+                const completed = Object.keys(localProgress).filter(key => 
+                    key.startsWith(subjectPrefix) && localProgress[key].completed
+                ).length;
+                
+                const totalItems = getSubjectContentCount(subject);
+                const percent = totalItems > 0 ? Math.round((completed / totalItems) * 100) : 0;
+                
+                return { completed, total: totalItems, percent };
+            } catch (error) {
+                console.error('Error calculating subject progress:', error);
+                return { completed: 0, total: 0, percent: 0 };
+            }
+        }
+        
+        function getSubjectContentCount(subject) {
+            const subjectCounts = {
+                'history': 2,
+                'civics': 1,
+                'chemistry': 1,
+                'maths': 0,
+                'information-technology': 0
+            };
+            return subjectCounts[subject] || 0;
+        }
+        
+        function updateSubjectCard(subject, progress) {
+            const progressText = document.getElementById(`percent-${subject}`);
+            const progressCircle = document.getElementById(`circle-${subject}`);
+            
+            if (progressText && progressCircle) {
+                progressText.textContent = `${progress.percent}%`;
+                const circumference = 226;
+                const offset = circumference - (progress.percent / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+            }
+        }
+
+        function goToChapters(subject) {
+            if (subject === 'history' || subject === 'civics' || subject === 'chemistry') {
+                window.location.href = `chapter-vigyan.html?subject=${subject}`;
+            }
+        }
+    </script>
+</body>
+</html>

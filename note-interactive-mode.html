@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Notes - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Quill.js Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Ubuntu:wght@300;400;500;700&family=Raleway:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="note-interactive-mode.css">
+</head>
+<body class="bg-gray-50 overflow-hidden">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='home.html'" class="text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </button>
+                <h1 class="text-2xl font-bold text-gray-800">Interactive Notes</h1>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="saveBtn" class="save-btn">
+                    <i class="fas fa-save mr-2"></i>Save
+                </button>
+                <button id="exportBtn" class="export-btn">
+                    <i class="fas fa-download mr-2"></i>Export
+                </button>
+                <button id="themeToggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-screen pt-16 overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="mobile-menu-btn md:hidden">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <button id="newNoteBtn" class="new-note-btn">
+                    <i class="fas fa-plus mr-2"></i>New Note
+                </button>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search notes..." class="search-input">
+                </div>
+                
+
+            </div>
+
+            <!-- Folders -->
+            <div class="folders-section">
+                <h3 class="section-title">Subjects</h3>
+                <div id="foldersList" class="folders-list">
+                    <div class="folder-item active" data-folder="all">
+                        <i class="fas fa-folder text-blue-500 mr-2"></i>
+                        <span>All Notes</span>
+                        <span class="note-count">0</span>
+                    </div>
+                </div>
+                <button id="addFolderBtn" class="add-folder-btn">
+                    <i class="fas fa-plus mr-2"></i>Add Subject
+                </button>
+            </div>
+
+            <!-- Notes List -->
+            <div class="notes-section">
+                <div class="section-header-with-filter">
+                    <h3 class="section-title" id="sectionTitle">Recent Notes</h3>
+                    <div class="filter-dropdown">
+                        <select id="sortFilter" class="sort-select">
+                            <option value="updated">Last Updated</option>
+                            <option value="created">Date Created</option>
+                            <option value="title">Title A-Z</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="notesList" class="notes-list">
+                    <div class="empty-state">
+                        <i class="fas fa-sticky-note text-gray-300 text-4xl mb-2"></i>
+                        <p class="text-gray-500">No notes yet</p>
+                        <p class="text-sm text-gray-400">Create your first note!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Editor -->
+        <div class="main-content">
+            <div id="editorContainer" class="editor-container">
+                <!-- Note Header -->
+                <div class="note-header">
+                    <input type="text" id="noteTitle" placeholder="Untitled Note" class="note-title-input">
+                    <div class="note-meta">
+                        <select id="folderSelect" class="folder-select">
+                            <option value="">Select Subject</option>
+                        </select>
+                        <select id="prioritySelect" class="priority-select">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                        <div class="tags-container">
+                            <input type="text" id="tagsInput" placeholder="Add tags..." class="tags-input">
+                            <div id="tagsList" class="tags-list"></div>
+                        </div>
+                        <div class="note-actions">
+                            <button id="pinBtn" class="pin-btn" title="Pin Note">
+                                <i class="fas fa-thumbtack"></i>
+                            </button>
+                            <button id="shareBtn" class="share-btn" title="Share Note">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button id="deleteBtn" class="delete-btn" title="Delete Note">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button id="closeBtn" class="close-note-btn" title="Close Note">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor Toolbar -->
+                <div id="toolbar" class="editor-toolbar">
+                    <div class="toolbar-group">
+                        <select class="ql-font" title="Font Family">
+                            <option value="arial">Arial</option>
+                            <option value="georgia">Georgia</option>
+                            <option value="times">Times New...</option>
+                            <option value="verdana">Verdana</option>
+                            <option value="helvetica">Helvetica</option>
+                            <option value="comic-sans">Comic Sans</option>
+                            <option value="courier">Courier</option>
+                            <option value="inter" selected>Inter</option>
+                            <option value="roboto">Roboto</option>
+                            <option value="open-sans">Open Sans</option>
+                            <option value="lato">Lato</option>
+                            <option value="montserrat">Montserrat</option>
+                            <option value="poppins">Poppins</option>
+                            <option value="nunito">Nunito</option>
+                            <option value="source-sans">Source Sans</option>
+                            <option value="ubuntu">Ubuntu</option>
+                            <option value="raleway">Raleway</option>
+                            <option value="merriweather">Merriweather</option>
+                            <option value="playfair">Playfair Disp...</option>
+                        </select>
+                        <select class="ql-size" title="Font Size">
+                            <option value="8px">8</option>
+                            <option value="9px">9</option>
+                            <option value="10px">10</option>
+                            <option value="11px">11</option>
+                            <option value="12px">12</option>
+                            <option value="13px">13</option>
+                            <option value="14px" selected>14</option>
+                            <option value="15px">15</option>
+                            <option value="16px">16</option>
+                            <option value="18px">18</option>
+                            <option value="20px">20</option>
+                            <option value="22px">22</option>
+                            <option value="24px">24</option>
+                            <option value="28px">28</option>
+                            <option value="32px">32</option>
+                            <option value="36px">36</option>
+                            <option value="48px">48</option>
+                            <option value="64px">64</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="ql-bold" title="Bold"><i class="fas fa-bold"></i></button>
+                        <button class="ql-italic" title="Italic"><i class="fas fa-italic"></i></button>
+                        <button class="ql-underline" title="Underline"><i class="fas fa-underline"></i></button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="ql-align" value="" title="Align Left"><i class="fas fa-align-left"></i></button>
+                        <button class="ql-align" value="center" title="Align Center"><i class="fas fa-align-center"></i></button>
+                        <button class="ql-align" value="right" title="Align Right"><i class="fas fa-align-right"></i></button>
+                        <button class="ql-align" value="justify" title="Justify"><i class="fas fa-align-justify"></i></button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="ql-header" value="1" title="Heading 1"><i class="fas fa-heading"></i>1</button>
+                        <button class="ql-header" value="2" title="Heading 2"><i class="fas fa-heading"></i>2</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button class="ql-list" value="ordered" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                        <button class="ql-list" value="bullet" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                    </div>
+                    <div class="toolbar-group">
+                        <select class="ql-color" title="Text Color">
+                            <option value="#000000"></option>
+                            <option value="#e60000"></option>
+                            <option value="#ff9900"></option>
+                            <option value="#ffff00"></option>
+                            <option value="#008a00"></option>
+                            <option value="#0066cc"></option>
+                            <option value="#9933ff"></option>
+                        </select>
+                        <select class="ql-background" title="Highlight">
+                            <option value="#ffffff"></option>
+                            <option value="#ffff00"></option>
+                            <option value="#00ff00"></option>
+                            <option value="#00ffff"></option>
+                            <option value="#ff00ff"></option>
+                            <option value="#ff0000"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Rich Text Editor -->
+                <div id="editor" class="editor"></div>
+                
+
+
+
+                
+                <!-- Bottom Spacer -->
+                <div class="bottom-spacer"></div>
+            </div>
+
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-content">
+                    <i class="fas fa-sticky-note text-blue-500 text-6xl mb-4"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Interactive Notes</h2>
+                    <p class="text-gray-600 mb-6">Create, organize, and enhance your study notes with AI-powered tools</p>
+                    <button onclick="createNewNote()" class="welcome-btn">
+                        <i class="fas fa-plus mr-2"></i>Create Your First Note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Folder Modal -->
+    <div id="addFolderModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Subject</h3>
+                <button onclick="closeModal('addFolderModal')" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="folderNameInput" placeholder="Subject name..." class="modal-input">
+                <div class="color-picker">
+                    <span class="text-sm text-gray-600 mb-2 block">Choose color:</span>
+                    <div class="color-options">
+                        <div class="color-option active" data-color="#3B82F6"></div>
+                        <div class="color-option" data-color="#EF4444"></div>
+                        <div class="color-option" data-color="#10B981"></div>
+                        <div class="color-option" data-color="#F59E0B"></div>
+                        <div class="color-option" data-color="#8B5CF6"></div>
+                        <div class="color-option" data-color="#EC4899"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('addFolderModal')" class="cancel-btn">Cancel</button>
+                <button onclick="createFolder()" class="create-btn">Create</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Export Note</h3>
+                <button onclick="closeModal('exportModal')" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="export-options">
+                    <button onclick="exportNote('pdf')" class="export-option">
+                        <i class="fas fa-file-pdf text-red-500 text-2xl mb-2"></i>
+                        <span>Export as PDF</span>
+                    </button>
+                    <button onclick="exportNote('html')" class="export-option">
+                        <i class="fas fa-code text-blue-500 text-2xl mb-2"></i>
+                        <span>Export as HTML</span>
+                    </button>
+                    <button onclick="exportNote('txt')" class="export-option">
+                        <i class="fas fa-file-alt text-gray-500 text-2xl mb-2"></i>
+                        <span>Export as Text</span>
+                    </button>
+                    <button onclick="exportNote('docx')" class="export-option">
+                        <i class="fas fa-file-word text-blue-600 text-2xl mb-2"></i>
+                        <span>Export as Word</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Confirmation</h3>
+                <button onclick="closeModal('deleteModal')" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-warning">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                    <p class="text-lg font-semibold mb-2">Are you sure?</p>
+                    <p class="text-gray-600">This action cannot be undone. This will permanently delete your <span id="deleteItemType">note</span>.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('deleteModal')" class="cancel-btn">Cancel</button>
+                <button onclick="confirmDelete()" class="delete-confirm-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Share Note</h3>
+                <button onclick="closeModal('shareModal')" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="share-options">
+                    <div class="share-link-container">
+                        <label class="share-label">Share Link:</label>
+                        <div class="share-link-input-group">
+                            <input type="text" id="shareLink" class="share-link-input" readonly>
+                            <button onclick="copyShareLink()" class="copy-link-btn">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="share-permissions">
+                        <label class="share-label">Permissions:</label>
+                        <select id="sharePermissions" class="share-select">
+                            <option value="view">View Only</option>
+                            <option value="edit">Can Edit</option>
+                            <option value="comment">Can Comment</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="note-interactive-mode.js"></script>
+</body>
+</html>

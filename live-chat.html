@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chat-container {
+            height: 70vh;
+            max-height: 500px;
+        }
+        .message {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .typing-indicator {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <button onclick="window.history.back()" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg">Padhle Champs Support</h1>
+                        <p class="text-sm text-blue-100">AI Assistant • Online</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-sm">Active</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="max-w-4xl mx-auto p-4">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-container overflow-y-auto p-6 space-y-4">
+                <!-- Initial bot message will be added here -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="border-t p-4 bg-gray-50">
+                <div id="optionsContainer" class="mb-4">
+                    <!-- Options will be dynamically added here -->
+                </div>
+                <div id="emailContainer" class="hidden">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-blue-800 mb-2">
+                            <i class="fas fa-envelope mr-2"></i>Send us an Email
+                        </h4>
+                        <p class="text-blue-700 text-sm mb-3">For other queries, please email us at:</p>
+                        <div class="flex items-center space-x-3">
+                            <a href="mailto:padhle.champs156@gmail.com" 
+                               class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+                                <i class="fas fa-envelope"></i>
+                                <span>padhle.champs156@gmail.com</span>
+                            </a>
+                            <button onclick="restartChat()" 
+                                    class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-redo mr-2"></i>Start Over
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const emailContainer = document.getElementById('emailContainer');
+
+        const chatFlow = {
+            start: {
+                message: "👋 Hello! I'm your Padhle Champs AI Assistant. How can I help you today?",
+                options: [
+                    { text: "📚 Learning & Studies", next: "learning" },
+                    { text: "🔐 Account & Login", next: "account" },
+                    { text: "🏆 XP & Levels", next: "xp" },
+                    { text: "🛡️ Safety & Privacy", next: "safety" },
+                    { text: "📱 Technical Issues", next: "technical" },
+                    { text: "📧 Other Questions", next: "email" }
+                ]
+            },
+            learning: {
+                message: "📚 Great! I can help you with learning-related questions. What would you like to know?",
+                options: [
+                    { text: "📹 How to watch videos", answer: "To watch videos: Go to your batch → Select subject → Choose chapter → Click on any video. You can pause, rewind, and take notes anytime!" },
+                    { text: "📝 About DPP (Daily Practice)", answer: "DPP are daily practice problems! Find them in your dashboard, solve before the deadline, and earn +25 XP for each completion. They help track your daily progress!" },
+                    { text: "⏰ How timed tests work", answer: "Timed tests have fixed duration. Once started, timer begins automatically. Answer all questions and submit before time ends. Don't worry - auto-submit happens if time runs out!" },
+                    { text: "📥 Downloading materials", answer: "Yes! Look for the download icon 📥 next to PDF notes and materials. You can download them for offline study anytime!" },
+                    { text: "🔙 Back to main menu", next: "start" },
+                    { text: "📧 Other learning questions", next: "email" }
+                ]
+            },
+            account: {
+                message: "🔐 I can help with account and login issues. What's your concern?",
+                options: [
+                    { text: "🔑 Forgot password", answer: "No worries! Click 'Forgot Password' on login page → Enter your email → Check inbox for reset link → Follow instructions to create new password." },
+                    { text: "👤 Update profile info", answer: "Go to Profile page → Click 'Edit Profile' → Make changes → Save. Note: Some changes may need parent approval for students under 18." },
+                    { text: "🖼️ Change profile picture", answer: "Click your current profile picture → Select 'Change Photo' → Upload new image → Save. Keep it school-friendly and appropriate!" },
+                    { text: "🔔 Manage notifications", answer: "Go to Settings → Notifications → Choose what alerts you want via email, SMS, or in-app. Customize to your preference!" },
+                    { text: "🔙 Back to main menu", next: "start" },
+                    { text: "📧 Other account questions", next: "email" }
+                ]
+            },
+            xp: {
+                message: "🏆 Awesome! Let me explain our XP and Level system. What interests you?",
+                options: [
+                    { text: "⚡ How to earn XP", answer: "Earn XP by: Watching videos (+10 XP), Completing DPP (+25 XP), Passing tests 90%+ (+50 XP), Active participation (+15 XP). Every activity counts!" },
+                    { text: "🎯 Level progression", answer: "10 Levels total: Level 1 Honhar (0-99 XP) → Level 2 Beginner (100-499 XP) → Level 3 Focused (500-999 XP) and so on up to Level 10 Legend Master (5000+ XP)!" },
+                    { text: "🎁 Level rewards", answer: "Each level unlocks: Exclusive badges, Higher leaderboard rank, Special platform features, Achievement recognition. The higher you go, the more you unlock!" },
+                    { text: "📊 Check leaderboard", answer: "Visit XP Leaderboard to see your rank! You can filter by your class or view global rankings. Compete with friends and climb higher!" },
+                    { text: "🔙 Back to main menu", next: "start" },
+                    { text: "📧 Other XP questions", next: "email" }
+                ]
+            },
+            safety: {
+                message: "🛡️ Safety is our priority! What would you like to know about our safety measures?",
+                options: [
+                    { text: "🔒 Privacy protection", answer: "Your data is encrypted and secure. Only you and teachers see your progress. No ads or third-party tracking. We follow strict educational privacy laws!" },
+                    { text: "👨‍👩‍👧‍👦 Parent controls", answer: "Parents can: Monitor your progress, Control privacy settings, Manage account permissions, Contact teachers directly, and approve major changes." },
+                    { text: "⚠️ Report issues", answer: "Report any inappropriate behavior immediately! Use the 'Report' button or contact support. We take all reports seriously and act quickly." },
+                    { text: "🚫 Block system info", answer: "Blocks are applied for: Inappropriate behavior, cheating, account sharing, or platform misuse. Duration varies from warnings to permanent blocks based on severity." },
+                    { text: "🔙 Back to main menu", next: "start" },
+                    { text: "📧 Other safety questions", next: "email" }
+                ]
+            },
+            technical: {
+                message: "📱 Having technical difficulties? Let me help you troubleshoot!",
+                options: [
+                    { text: "🎥 Videos not loading", answer: "Try: Check internet connection → Refresh page → Switch browser → Clear browser cache. If still not working, try during off-peak hours!" },
+                    { text: "📤 Can't submit answers", answer: "Ensure: All required questions answered → Good internet connection → Try submitting again. If urgent, contact support immediately!" },
+                    { text: "🐌 Website loading slowly", answer: "Solutions: Close other browser tabs → Check internet speed → Try off-peak hours → Clear browser cache → Update your browser to latest version." },
+                    { text: "📱 Mobile issues", answer: "We're web-based! Use your mobile browser for best experience. Ensure you have the latest browser version. Works on all devices!" },
+                    { text: "🔙 Back to main menu", next: "start" },
+                    { text: "📧 Other technical issues", next: "email" }
+                ]
+            }
+        };
+
+        let currentStep = 'start';
+
+        function addMessage(content, isBot = true, isTyping = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message flex ${isBot ? 'justify-start' : 'justify-end'}`;
+            
+            if (isTyping) {
+                messageDiv.innerHTML = `
+                    <div class="flex items-center space-x-2 bg-gray-200 rounded-2xl px-4 py-3 max-w-xs">
+                        <div class="typing-indicator flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+                            <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+                            <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">AI is typing...</span>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start space-x-3 max-w-md">
+                        ${isBot ? `
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-white text-sm"></i>
+                            </div>
+                        ` : ''}
+                        <div class="bg-${isBot ? 'gray-200' : 'blue-500'} text-${isBot ? 'gray-800' : 'white'} rounded-2xl px-4 py-3">
+                            <p class="text-sm">${content}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageDiv;
+        }
+
+        function showOptions(options) {
+            optionsContainer.innerHTML = '';
+            emailContainer.classList.add('hidden');
+            
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-2';
+            
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn bg-white border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 rounded-lg p-3 text-left text-sm font-medium transition-all';
+                button.textContent = option.text;
+                button.onclick = () => handleOptionClick(option);
+                optionsGrid.appendChild(button);
+            });
+            
+            optionsContainer.appendChild(optionsGrid);
+        }
+
+        function handleOptionClick(option) {
+            // Add user message
+            addMessage(option.text, false);
+            
+            // Clear options
+            optionsContainer.innerHTML = '';
+            
+            // Show typing indicator
+            const typingMsg = addMessage('', true, true);
+            
+            setTimeout(() => {
+                // Remove typing indicator
+                typingMsg.remove();
+                
+                if (option.next === 'email') {
+                    addMessage("📧 For other questions, please email us directly. We'll respond within 24 hours!");
+                    emailContainer.classList.remove('hidden');
+                } else if (option.answer) {
+                    addMessage(option.answer);
+                    // Show options for current step again
+                    setTimeout(() => {
+                        showOptions(chatFlow[currentStep].options);
+                    }, 1000);
+                } else if (option.next) {
+                    currentStep = option.next;
+                    addMessage(chatFlow[currentStep].message);
+                    setTimeout(() => {
+                        showOptions(chatFlow[currentStep].options);
+                    }, 1000);
+                }
+            }, 1500);
+        }
+
+        function restartChat() {
+            chatMessages.innerHTML = '';
+            optionsContainer.innerHTML = '';
+            emailContainer.classList.add('hidden');
+            currentStep = 'start';
+            initializeChat();
+        }
+
+        function initializeChat() {
+            setTimeout(() => {
+                addMessage(chatFlow.start.message);
+                setTimeout(() => {
+                    showOptions(chatFlow.start.options);
+                }, 1000);
+            }, 500);
+        }
+
+        // Initialize chat when page loads
+        document.addEventListener('DOMContentLoaded', initializeChat);
+    </script>
+</body>
+</html>

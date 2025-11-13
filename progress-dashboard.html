@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Dashboard - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .progress-circle { transition: stroke-dashoffset 2s ease-in-out; }
+        .dark { background: #1a1a1a; color: #ffffff; }
+        .dark .bg-white { background: #2d2d2d !important; }
+        .dark .text-gray-900 { color: #ffffff !important; }
+        .dark .text-gray-600 { color: #cccccc !important; }
+        .dark .border-gray-200 { border-color: #404040 !important; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen transition-colors duration-300">
+    <!-- Header -->
+    <nav class="gradient-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-chart-line text-2xl text-white mr-3"></i>
+                    <span class="text-xl font-bold text-white">Progress Dashboard</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleTheme()" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="home.html" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <div class="bg-white bg-opacity-20 px-3 py-2 rounded-lg">
+                        <span class="font-semibold text-white" id="username">Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
+        <!-- Overall Progress Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 mb-4 sm:mb-8">
+            <!-- Circular Progress -->
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 card-hover">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">Overall Progress</h2>
+                <div class="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
+                    <svg class="w-24 h-24 sm:w-32 sm:h-32 transform -rotate-90" viewBox="0 0 36 36">
+                        <path class="text-gray-200" stroke="currentColor" stroke-width="3" fill="none" 
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        <path class="text-purple-600 progress-circle" stroke="currentColor" stroke-width="3" fill="none" 
+                              stroke-linecap="round" stroke-dasharray="0, 100" 
+                              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                              id="overallProgress"></path>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-xl sm:text-2xl font-bold text-gray-900" id="overallPercent">0%</div>
+                            <div class="text-xs sm:text-sm text-gray-600">Complete</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xs sm:text-sm text-gray-600 mb-2">Total XP: <span id="totalXP" class="font-bold text-purple-600">0</span></div>
+                    <div class="text-xs sm:text-sm text-gray-600">Tests Taken: <span id="testsCompleted" class="font-bold">0</span></div>
+                </div>
+            </div>
+
+            <!-- Subject Progress -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-4 sm:p-6 card-hover">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Subject Progress</h2>
+                <div class="space-y-3 sm:space-y-4" id="subjectProgress">
+                    <!-- Subject progress bars will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Streak Tracker & Weak Topics -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-4 sm:mb-8">
+            <!-- Streak Tracker -->
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 card-hover">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
+                    <i class="fas fa-fire text-orange-500 mr-2"></i>Study Streak
+                </h2>
+                <div class="text-center mb-4 sm:mb-6">
+                    <div class="text-3xl sm:text-4xl font-bold text-orange-500 mb-2" id="currentStreak">0</div>
+                    <div class="text-sm sm:text-base text-gray-600">Days Streak</div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 sm:gap-2" id="streakCalendar">
+                    <!-- Calendar will be generated here -->
+                </div>
+                <div class="mt-3 sm:mt-4 text-center">
+                    <div class="text-xs sm:text-sm text-gray-600">Best Streak: <span id="bestStreak" class="font-bold text-orange-500">0</span> days</div>
+                </div>
+            </div>
+
+            <!-- Weak Topics -->
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 card-hover">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
+                    <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>Areas to Improve
+                </h2>
+                <div class="space-y-2 sm:space-y-3" id="weakTopics">
+                    <!-- Weak topics will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Test Scores -->
+        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 card-hover">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-0">Recent Test Scores</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterTests('all')" class="filter-btn active px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-medium bg-purple-100 text-purple-600">All</button>
+                    <button onclick="filterTests('Physics')" class="filter-btn px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-medium bg-gray-100 text-gray-600">Physics</button>
+                    <button onclick="filterTests('Chemistry')" class="filter-btn px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-medium bg-gray-100 text-gray-600">Chemistry</button>
+                    <button onclick="filterTests('Maths')" class="filter-btn px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-medium bg-gray-100 text-gray-600">Maths</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="testScores">
+                <!-- Test score cards will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        let userData = null;
+        let realData = {
+            user: { name: "Student", totalXP: 0, currentStreak: 0, bestStreak: 0 },
+            subjects: [],
+            weakTopics: [],
+            recentTests: []
+        };
+
+        let currentFilter = 'all';
+        let isDarkMode = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            if (userData) {
+                loadRealData();
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+        });
+
+        async function loadRealData() {
+            try {
+                // Set user data from localStorage
+                document.getElementById('username').textContent = userData.name.split(' ')[0];
+                realData.user.name = userData.name;
+                
+                // Load XP using same method as home.js
+                await loadUserStats(userData.userId);
+                
+                // Load test and DPP data
+                const hasTestData = await loadTestResults();
+                await loadUserProgress();
+                
+                // Initialize dashboard
+                initializeDashboard(hasTestData);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                initializeDashboard(false);
+            }
+        }
+
+        async function loadTestResults() {
+            const resultsSnapshot = await database.ref('testResults')
+                .orderByChild('studentId')
+                .equalTo(userData.userId)
+                .once('value');
+            
+            const testResults = [];
+            resultsSnapshot.forEach(childSnapshot => {
+                testResults.push(childSnapshot.val());
+            });
+            
+            if (testResults.length === 0) {
+                return false; // No test data available
+            }
+            
+            // Process test results
+            realData.recentTests = testResults
+                .sort((a, b) => b.submittedAt - a.submittedAt)
+                .slice(0, 10)
+                .map(result => ({
+                    id: result.testId,
+                    subject: extractSubjectFromTitle(result.testTitle),
+                    name: result.testTitle,
+                    score: Math.round((result.totalMarks / result.maxMarks) * 100),
+                    rank: result.rank || 'N/A',
+                    date: new Date(result.submittedAt).toISOString().split('T')[0],
+                    maxMarks: result.maxMarks
+                }));
+            
+            // Calculate subject progress and weak topics
+            calculateSubjectProgress(testResults);
+            calculateWeakTopics(testResults);
+            return true; // Test data available
+        }
+
+        // Load user stats (XP and streak) - same as home.js
+        async function loadUserStats(userId) {
+            try {
+                // Calculate total XP from all sources
+                const [testSnapshot, dppSnapshot, progressSnapshot] = await Promise.all([
+                    database.ref('testResults').orderByChild('studentId').equalTo(userId).once('value'),
+                    database.ref('dppResults').orderByChild('studentId').equalTo(userId).once('value'),
+                    database.ref('userProgress').once('value')
+                ]);
+                
+                // Calculate test XP (including reattempt XP)
+                let testXP = 0;
+                const testAttempts = {};
+                
+                testSnapshot.forEach(childSnapshot => {
+                    const result = childSnapshot.val();
+                    const testId = result.testId;
+                    
+                    if (!testAttempts[testId]) {
+                        testAttempts[testId] = [];
+                    }
+                    testAttempts[testId].push(result);
+                });
+                
+                // Calculate XP: first attempt gets full XP, reattempts get 1 XP per correct
+                Object.values(testAttempts).forEach(attempts => {
+                    attempts.sort((a, b) => a.submittedAt - b.submittedAt);
+                    
+                    attempts.forEach((attempt, index) => {
+                        if (index === 0) {
+                            // First attempt gets full XP
+                            testXP += attempt.earnedXP || 0;
+                        } else {
+                            // Reattempts get 1 XP per correct answer
+                            testXP += attempt.correctAnswers || 0;
+                        }
+                    });
+                });
+                
+                // Calculate DPP XP (all attempts)
+                let dppXP = 0;
+                dppSnapshot.forEach(childSnapshot => {
+                    const result = childSnapshot.val();
+                    dppXP += result.earnedXP || 0;
+                });
+                
+                // Calculate content XP from userProgress
+                let contentXP = 0;
+                if (progressSnapshot.exists()) {
+                    progressSnapshot.forEach(childSnapshot => {
+                        const progress = childSnapshot.val();
+                        if (progress && progress.completed) {
+                            contentXP += 5;
+                        }
+                    });
+                }
+                
+                // Also check localStorage for content XP
+                try {
+                    const localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                    Object.keys(localProgress).forEach(key => {
+                        if (localProgress[key].completed) {
+                            contentXP += 5;
+                        }
+                    });
+                } catch (error) {
+                    console.log('No local progress found');
+                }
+                
+                // Get video XP and creative XP from userStats
+                const statsRef = database.ref(`userStats/${userId}`);
+                const statsSnapshot = await statsRef.once('value');
+                const stats = statsSnapshot.val() || {};
+                const videoXP = stats.videoXP || 0;
+                const creativeXP = await getCreativeXP(userId);
+                
+                // Calculate total XP from all sources
+                const finalXP = testXP + dppXP + contentXP + videoXP + creativeXP;
+                
+                // Set the XP in realData
+                realData.user.totalXP = finalXP;
+                
+                console.log(`XP Calculation - Test: ${testXP}, DPP: ${dppXP}, Content: ${contentXP}, Video: ${videoXP}, Creative: ${creativeXP}, Final: ${finalXP}`);
+                
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+                realData.user.totalXP = 0;
+            }
+        }
+
+        async function loadUserProgress() {
+            // Get streak data from user profile (same as profile.html approach)
+            realData.user.currentStreak = userData.streak || 0;
+            realData.user.bestStreak = userData.bestStreak || realData.user.currentStreak;
+            
+            // If no streak data, set defaults
+            if (!realData.user.currentStreak) {
+                realData.user.currentStreak = 1; // Default to 1 day
+                realData.user.bestStreak = 1;
+            }
+        }
+
+        function extractSubjectFromTitle(title) {
+            const subjects = ['Physics', 'Chemistry', 'Mathematics', 'English', 'Science', 'Computer', 'Biology'];
+            for (const subject of subjects) {
+                if (title.toLowerCase().includes(subject.toLowerCase())) {
+                    return subject;
+                }
+            }
+            return 'General';
+        }
+
+        function calculateSubjectProgress(testResults) {
+            const subjectStats = {};
+            
+            testResults.forEach(result => {
+                const subject = extractSubjectFromTitle(result.testTitle);
+                if (!subjectStats[subject]) {
+                    subjectStats[subject] = { scores: [], tests: 0 };
+                }
+                subjectStats[subject].scores.push((result.totalMarks / result.maxMarks) * 100);
+                subjectStats[subject].tests++;
+            });
+            
+            const colors = ['blue', 'green', 'purple', 'indigo', 'cyan', 'orange', 'red'];
+            let colorIndex = 0;
+            
+            realData.subjects = Object.entries(subjectStats).map(([subject, stats]) => {
+                const avgScore = stats.scores.reduce((sum, score) => sum + score, 0) / stats.scores.length;
+                return {
+                    name: subject,
+                    progress: Math.round(avgScore),
+                    color: colors[colorIndex++ % colors.length],
+                    tests: stats.tests,
+                    avgScore: Math.round(avgScore)
+                };
+            });
+        }
+
+        function calculateWeakTopics(testResults) {
+            // Identify weak performance areas
+            const weakPerformance = testResults.filter(result => {
+                const percentage = (result.totalMarks / result.maxMarks) * 100;
+                return percentage < 50;
+            });
+            
+            realData.weakTopics = weakPerformance.slice(0, 4).map(result => {
+                const percentage = Math.round((result.totalMarks / result.maxMarks) * 100);
+                return {
+                    subject: extractSubjectFromTitle(result.testTitle),
+                    topic: result.testTitle.replace(/Test|Quiz|Exam/gi, '').trim(),
+                    score: percentage,
+                    color: percentage < 30 ? 'red' : percentage < 40 ? 'orange' : 'yellow'
+                };
+            });
+        }
+
+        function initializeDashboard(hasTestData = false) {
+            if (!hasTestData) {
+                showNoDataState();
+            } else {
+                updateOverallProgress();
+                renderSubjectProgress();
+                renderWeakTopics();
+                renderTestScores();
+            }
+            // Always show streak and XP
+            renderStreakTracker();
+        }
+
+        function showNoDataState() {
+            // Show basic user info and no data message
+            document.getElementById('overallPercent').textContent = '0%';
+            document.getElementById('totalXP').textContent = realData.user.totalXP;
+            document.getElementById('testsCompleted').textContent = '0';
+            
+            // Subject progress - no data
+            document.getElementById('subjectProgress').innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-chart-line text-6xl mb-4 text-gray-300"></i>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">No Test Data Available</h3>
+                    <p class="text-gray-500">Take some tests to see your subject progress here!</p>
+                </div>
+            `;
+            
+            // Weak topics - no data
+            document.getElementById('weakTopics').innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-trophy text-4xl mb-2 text-gray-300"></i>
+                    <p>No weak areas to show yet!</p>
+                </div>
+            `;
+            
+            // Test scores - no data
+            document.getElementById('testScores').innerHTML = `
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    <i class="fas fa-clipboard-list text-6xl mb-4 text-gray-300"></i>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">No Test Results Yet</h3>
+                    <p class="text-gray-500 mb-4">Start taking tests to track your performance!</p>
+                    <a href="home.html" class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                        <i class="fas fa-home mr-2"></i>Go to Home
+                    </a>
+                </div>
+            `;
+            
+            // Set progress circle to 0
+            setTimeout(() => {
+                const circle = document.getElementById('overallProgress');
+                const circumference = 2 * Math.PI * 15.9155;
+                circle.style.strokeDasharray = `${circumference}, ${circumference}`;
+                circle.style.strokeDashoffset = circumference;
+            }, 500);
+        }
+
+        function updateOverallProgress() {
+            const totalTests = realData.recentTests.length;
+            const avgProgress = realData.subjects.length > 0 ? 
+                realData.subjects.reduce((sum, subject) => sum + subject.progress, 0) / realData.subjects.length : 0;
+            
+            document.getElementById('overallPercent').textContent = Math.round(avgProgress) + '%';
+            document.getElementById('totalXP').textContent = realData.user.totalXP;
+            document.getElementById('testsCompleted').textContent = totalTests;
+            
+            // Animate progress circle
+            setTimeout(() => {
+                const circle = document.getElementById('overallProgress');
+                const circumference = 2 * Math.PI * 15.9155;
+                const offset = circumference - (avgProgress / 100) * circumference;
+                circle.style.strokeDasharray = `${circumference}, ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+        }
+
+        function renderSubjectProgress() {
+            const container = document.getElementById('subjectProgress');
+            
+            if (realData.subjects.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-book text-4xl mb-2"></i>
+                        <p>No test data available yet. Take some tests to see your progress!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = realData.subjects.map(subject => `
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-3 h-3 bg-${subject.color}-500 rounded-full"></div>
+                        <span class="font-medium text-gray-900">${subject.name}</span>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <div class="flex-1 sm:w-32 bg-gray-200 rounded-full h-2">
+                            <div class="bg-${subject.color}-500 h-2 rounded-full transition-all duration-1000" 
+                                 style="width: ${subject.progress}%"></div>
+                        </div>
+                        <span class="text-xs sm:text-sm font-bold text-${subject.color}-600 w-8 sm:w-12">${subject.progress}%</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderStreakTracker() {
+            document.getElementById('currentStreak').textContent = realData.user.currentStreak;
+            document.getElementById('bestStreak').textContent = realData.user.bestStreak;
+            
+            // Generate calendar for last 14 days
+            const calendar = document.getElementById('streakCalendar');
+            const today = new Date();
+            const days = [];
+            
+            for (let i = 13; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const isActive = i < realData.user.currentStreak;
+                
+                days.push(`
+                    <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-medium
+                                ${isActive ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'}">
+                        ${date.getDate()}
+                    </div>
+                `);
+            }
+            
+            calendar.innerHTML = days.join('');
+        }
+
+        function renderWeakTopics() {
+            const container = document.getElementById('weakTopics');
+            
+            if (realData.weakTopics.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-trophy text-4xl mb-2"></i>
+                        <p>Great job! No weak areas found.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = realData.weakTopics.map(topic => `
+                <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                    <div>
+                        <div class="font-medium text-gray-900">${topic.topic}</div>
+                        <div class="text-sm text-gray-600">${topic.subject}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-bold text-${topic.color}-600">${topic.score}%</div>
+                        <div class="text-xs text-gray-500">Last Score</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTestScores() {
+            const container = document.getElementById('testScores');
+            const filteredTests = currentFilter === 'all' ? 
+                realData.recentTests : 
+                realData.recentTests.filter(test => test.subject === currentFilter);
+            
+            if (filteredTests.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-gray-500">
+                        <i class="fas fa-clipboard-list text-4xl mb-2"></i>
+                        <p>No test results available yet. Take some tests to see your scores!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredTests.map(test => {
+                const scoreColor = test.score >= 80 ? 'green' : test.score >= 60 ? 'blue' : test.score >= 40 ? 'yellow' : 'red';
+                const rankColor = typeof test.rank === 'number' && test.rank <= 10 ? 'green' : 
+                                 typeof test.rank === 'number' && test.rank <= 25 ? 'blue' : 'gray';
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4 card-hover">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="font-semibold text-gray-900">${test.name}</h3>
+                                <p class="text-sm text-gray-600">${test.subject}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-${scoreColor}-600">${test.score}%</div>
+                                <div class="text-xs text-gray-500">${Math.round(test.score * test.maxMarks / 100)}/${test.maxMarks}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">${new Date(test.date).toLocaleDateString()}</span>
+                            <span class="bg-${rankColor}-100 text-${rankColor}-600 px-2 py-1 rounded-full font-medium">
+                                Rank ${test.rank}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterTests(subject) {
+            currentFilter = subject;
+            
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-100', 'text-purple-600');
+                btn.classList.add('bg-gray-100', 'text-gray-600');
+            });
+            
+            event.target.classList.remove('bg-gray-100', 'text-gray-600');
+            event.target.classList.add('active', 'bg-purple-100', 'text-purple-600');
+            
+            renderTestScores();
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            
+            if (isDarkMode) {
+                body.classList.add('dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                body.classList.remove('dark');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Get creative XP from user's posts
+        async function getCreativeXP(userId) {
+            try {
+                const postsSnapshot = await database.ref('creativePosts')
+                    .orderByChild('authorId')
+                    .equalTo(userId)
+                    .once('value');
+                
+                let creativeXP = 0;
+                postsSnapshot.forEach(childSnapshot => {
+                    creativeXP += 3; // 3 XP per creative post
+                });
+                
+                return creativeXP;
+            } catch (error) {
+                console.error('Error calculating creative XP:', error);
+                return 0;
+            }
+        }
+
+        // Add smooth animations on scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

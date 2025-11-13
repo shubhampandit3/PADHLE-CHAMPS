@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Sangharsh Batch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .animate-slide-in { animation: slideIn 0.5s ease-out; }
+        .animate-pulse-slow { animation: pulse 2s infinite; }
+        .notification-card { transition: all 0.3s ease; }
+        .notification-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .mobile-menu { animation: slideInRight 0.3s ease-out; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center animate-pulse-slow">
+                    <span class="material-icons text-white">notifications</span>
+                </div>
+                <span class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Sangharsh Notifications</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="sangharsh.html" class="flex items-center space-x-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-all duration-300 hover:scale-105">
+                    <span class="material-icons text-sm">arrow_back</span>
+                    <span>Back to Batch</span>
+                </a>
+            </div>
+            <button onclick="toggleMenu()" class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <span class="material-icons text-gray-700">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="hidden fixed inset-y-0 right-0 w-64 bg-white shadow-2xl z-50 mobile-menu">
+        <div class="p-4 border-b flex justify-between items-center">
+            <span class="font-semibold text-gray-800">Menu</span>
+            <button onclick="toggleMenu()" class="p-2 hover:bg-gray-100 rounded-lg">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="p-4 space-y-2">
+            <a href="sangharsh.html" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span class="material-icons text-blue-600">arrow_back</span>
+                <span class="text-gray-700">Back to Batch</span>
+            </a>
+        </div>
+    </div>
+    <div id="menu-overlay" class="hidden fixed inset-0 bg-black/50 z-40" onclick="toggleMenu()"></div>
+
+    <div class="pt-20 pb-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 animate-slide-in">
+                <h1 class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">Notifications</h1>
+                <p class="text-gray-600">Stay updated with the latest announcements</p>
+                <button onclick="markAllAsRead()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center space-x-2 mx-auto">
+                    <span class="material-icons text-sm">done_all</span>
+                    <span>Mark All as Read</span>
+                </button>
+            </div>
+            <div id="notifications-container" class="space-y-4">
+                <div class="flex justify-center items-center py-12">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function loadNotifications() {
+            database.ref('notifications/sangharsh').orderByChild('timestamp').on('value', (snapshot) => {
+                const container = document.getElementById('notifications-container');
+                container.innerHTML = '';
+
+                if (!snapshot.exists()) {
+                    container.innerHTML = '<p class="text-gray-500 text-center">No notifications yet</p>';
+                    return;
+                }
+
+                const notifications = [];
+                snapshot.forEach((child) => {
+                    const notificationData = child.val();
+                    notificationData.id = child.key;
+                    notifications.push(notificationData);
+                });
+
+                notifications.reverse().forEach((notification, index) => {
+                    const notificationEl = document.createElement('div');
+                    notificationEl.className = 'notification-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 animate-slide-in';
+                    notificationEl.style.animationDelay = `${index * 0.1}s`;
+                    const urgentClass = notification.urgent ? 'border-red-500 bg-red-50' : 'border-blue-500';
+                    notificationEl.className = `notification-card bg-white rounded-xl shadow-lg p-6 border-l-4 ${urgentClass} animate-slide-in`;
+                    notificationEl.innerHTML = `
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <h3 class="text-lg font-semibold text-gray-900">${notification.title}</h3>
+                                    ${notification.urgent ? '<span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded-full font-medium">Urgent</span>' : ''}
+                                </div>
+                                <p class="text-gray-600 mb-3 leading-relaxed">${notification.message}</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span class="flex items-center space-x-1">
+                                        <span class="material-icons text-sm">schedule</span>
+                                        <span>${new Date(notification.timestamp).toLocaleString()}</span>
+                                    </span>
+                                    <span class="flex items-center space-x-1">
+                                        <span class="material-icons text-sm">person</span>
+                                        <span>${notification.createdBy}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ml-4 flex-shrink-0 flex flex-col space-y-2">
+                                <button onclick="markAsRead('${notification.id}')" class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full hover:bg-green-200 transition-colors duration-300 flex items-center space-x-1">
+                                    <span class="material-icons" style="font-size: 14px;">check</span>
+                                    <span>Mark as Read</span>
+                                </button>
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                                    <span class="material-icons text-blue-600">notifications</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(notificationEl);
+                });
+            });
+        }
+
+        loadNotifications();
+        
+        function markAsRead(notificationId) {
+            database.ref(`notifications/sangharsh/${notificationId}`).remove()
+                .then(() => {
+                    console.log('Notification marked as read');
+                })
+                .catch((error) => {
+                    console.error('Error marking notification as read:', error);
+                });
+        }
+        
+        function markAllAsRead() {
+            database.ref('notifications/sangharsh').remove()
+                .then(() => {
+                    console.log('All notifications marked as read');
+                })
+                .catch((error) => {
+                    console.error('Error marking all notifications as read:', error);
+                });
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            menu.classList.toggle('hidden');
+            overlay.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Percentages: An Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            min-height: 80px;
+        }
+        .arrow {
+            font-size: 2.5rem;
+            color: #58508d;
+            margin: 0 1rem;
+            transform: rotate(90deg);
+        }
+         @media (min-width: 768px) {
+            .arrow {
+                 transform: rotate(0deg);
+            }
+        }
+        .solution-step {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+        .solution-step li {
+            background-color: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #ffa600;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Palette: Brilliant Blues -->
+    <!-- Plan: Section 1 introduces percentages. Section 2 details the three core conversions (Fraction -> Percent, Percent -> Fraction, Fraction -> Decimal) using charts and diagrams. Section 3 provides a real-world application. Section 4 is the Practice Arena. Section 5 is the Q&A Solved Examples. -->
+    <!-- Visualization Choices: Donut Chart for part-to-whole (Inform, Chart.js, No SVG). Bar Chart for comparison (Compare, Chart.js, No SVG). Flow Diagram for process (Organize, HTML/CSS, No SVG/Mermaid). Pictograph for simple comparison (Inform, Unicode/HTML, No SVG). All choices adhere to the NO SVG constraint. -->
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#003f5c] mb-2">The Complete Guide to Percentages</h1>
+            <p class="text-lg md:text-xl text-[#58508d]">Mastering the art of converting fractions, decimals, and real-world values.</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-2/3 mb-6 md:mb-0">
+                    <h2 class="text-3xl font-bold text-[#003f5c] mb-3">What Does "Percent" Mean?</h2>
+                    <p class="text-gray-600 mb-4">The word "percent" literally means "per one hundred." It's a way to express a fraction or a ratio where the whole is always considered to be 100. This provides a standard way to compare different quantities.</p>
+                    <div class="flex items-center space-x-4">
+                         <span class="text-6xl font-black text-[#ff6361]">%</span>
+                         <p class="text-lg font-semibold">The symbol for percentage, representing a value out of 100.</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 flex-shrink-0">
+                    <div class="chart-container" style="max-width: 250px; height: 250px;">
+                        <canvas id="introDonutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold text-[#003f5c] mb-4">1. Score to Percentage</h3>
+                <p class="text-gray-600 mb-4">To turn a score or fraction into a percentage, simply multiply it by 100. This scales the fraction to be out of 100.</p>
+                <div class="text-center bg-gray-50 p-3 rounded-lg mb-4">
+                    <code class="text-sm font-semibold text-[#bc5090]">(Score / Total) × 100 = Percentage</code>
+                </div>
+                <div class="chart-container">
+                    <canvas id="scoreChart"></canvas>
+                </div>
+                 <p class="text-center mt-4 text-gray-700 font-semibold">An exam score of 80 out of 120 is equivalent to 66.66%.</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold text-[#003f5c] mb-4">2. Percentage to Fraction</h3>
+                <p class="text-gray-600 mb-4">To convert a percentage back to a fraction, place the percentage value over a denominator of 100 and simplify.</p>
+                 <div class="text-center bg-gray-50 p-3 rounded-lg mb-4">
+                    <code class="text-sm font-semibold text-[#bc5090]">Percentage / 100 = Equivalent Fraction</code>
+                </div>
+                <div class="chart-container">
+                    <canvas id="percentToFractionChart"></canvas>
+                </div>
+                <p class="text-center mt-4 text-gray-700 font-semibold">10% is the same as the fraction 10/100, which simplifies to 1/10.</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-2xl font-bold text-[#003f5c] mb-4">3. Fraction to Decimal</h3>
+                <p class="text-gray-600 mb-4">When the denominator is a power of 10 (like 100), count the zeros. Move the numerator's decimal point to the left by that many places.</p>
+                <div class="flex flex-col md:flex-row items-center justify-center mt-8 md:mt-16">
+                    <div class="flow-step bg-[#003f5c]">Fraction<br>564 / 100</div>
+                    <div class="arrow">➔</div>
+                    <div class="flow-step bg-[#58508d]">2 Zeros in 100<br>Move Decimal 2 Places</div>
+                    <div class="arrow">➔</div>
+                    <div class="flow-step bg-[#ff6361]">Result<br>5.64</div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6 text-center">
+                 <h2 class="text-3xl font-bold text-[#003f5c] mb-4">Real-World Application: Money</h2>
+                 <p class="text-gray-600 mb-6 max-w-3xl mx-auto">Percentages are used everywhere, especially in finance. To find what percentage one amount is of another, you must first convert them to the same unit.</p>
+                 <p class="text-2xl font-semibold mb-4">What percentage is 35 paisa of ₹1?</p>
+                 
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                    <div class="bg-[#ffa600] text-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-bold mb-2">Step 1: Unify Units</h4>
+                        <p class="text-4xl font-black">₹1 = 100p</p>
+                    </div>
+
+                    <div class="bg-gray-100 p-6 rounded-lg">
+                         <h4 class="text-xl font-bold text-[#003f5c] mb-2">Step 2: Visualize</h4>
+                         <p class="text-5xl tracking-widest">
+                             <span class="text-[#ff6361]">🪙🪙🪙🪙🪙</span><span class="text-gray-400">🪙🪙🪙🪙🪙</span>
+                         </p>
+                         <p class="font-semibold mt-2">35 out of 100 paisa</p>
+                    </div>
+
+                    <div class="bg-[#003f5c] text-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-bold mb-2">Step 3: Result</h4>
+                        <p class="text-6xl font-black">35%</p>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- Practice Arena Section -->
+            <div class="md:col-span-2 lg:col-span-3 bg-[#e8f1ff] rounded-lg shadow-xl p-6 border-4 border-[#003f5c] mt-8">
+                <h2 class="text-4xl font-black text-[#003f5c] mb-2 text-center">Practice Arena (50 Questions)</h2>
+                <p class="text-lg text-[#58508d] mb-6 text-center">Test your knowledge on the conversions and concepts you just learned!</p>
+
+                <div id="quiz-card" class="bg-white p-6 rounded-lg shadow-lg">
+                    
+                    <!-- EXAMPLES ADDED -->
+                    <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                        <h3 class="text-xl font-bold text-[#ffa600] mb-3">Example Answers (Format Guide)</h3>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><span class="font-semibold text-[#003f5c]">1. Percentage to Fraction:</span> For "Convert 40% to a fraction", enter the simplified answer like 2/5.</p>
+                            <p><span class="font-semibold text-[#003f5c]">2. Score to Percentage:</span> For "What is 15 out of 20 as a percentage?", enter the answer like 75% (include the % symbol).</p>
+                            <p><span class="font-semibold text-[#003f5c]">3. Decimal Value:</span> For "Convert 3/10 to a decimal", enter the answer like 0.3.</p>
+                            <p><span class="font-semibold text-[#003f5c]">4. Word Problem (Value):</span> For "15% of ₹400 is X", enter the numerical value like 60 (no symbols unless requested).</p>
+                        </div>
+                    </div>
+                    <!-- END OF EXAMPLES -->
+
+                    <p class="text-sm font-medium text-[#bc5090] mb-2" id="question-counter">Question 1 of 50</p>
+                    <p class="text-xl font-bold text-gray-800 mb-4" id="question-text">Loading...</p>
+
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-4 items-center">
+                        <input type="text" id="answer-input" placeholder="Enter your answer (e.g., 1/4, 0.25, 50%)" class="flex-grow p-3 border-2 border-gray-300 rounded-lg focus:border-[#ffa600] focus:ring-[#ffa600] transition duration-200">
+                        <button id="check-button" class="bg-[#ff6361] hover:bg-[#ff403e] text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200 w-full sm:w-auto">
+                            Check Answer
+                        </button>
+                    </div>
+
+                    <div id="feedback-message" class="text-center text-lg font-semibold min-h-[1.5rem]"></div>
+                </div>
+
+                <div class="flex justify-between mt-4">
+                    <button id="prev-button" class="bg-[#58508d] hover:bg-[#433c66] text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-200" disabled>
+                        &larr; Previous
+                    </button>
+                    <button id="next-button" class="bg-[#003f5c] hover:bg-[#002a40] text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-200">
+                        Next &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Solved Examples Section (Updated to remove symbols) -->
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-xl p-6 border-4 border-[#ffa600] mt-8">
+                <h2 class="text-4xl font-black text-[#003f5c] mb-6 text-center">Solved Examples: Step-by-Step Solutions</h2>
+
+                <!-- Example 1: Percentage to Fraction/Decimal -->
+                <div class="mb-8 border-b pb-4">
+                    <h3 class="text-2xl font-semibold text-[#bc5090] mb-3">Question 1: Convert 45% into a simplified fraction and a decimal.</h3>
+                    <h4 class="text-xl font-bold text-[#003f5c] mt-4 mb-2">Solution:</h4>
+                    <ul class="solution-step">
+                        <li>Step 1, Fraction Setup, Write the percentage over 100, which gives 45 / 100.</li>
+                        <li>Step 2, Simplify Fraction, Divide both the numerator and denominator by their greatest common divisor, 5. This simplifies the fraction to 9 / 20.</li>
+                        <li>Step 3, Decimal Conversion, To convert 45 / 100 to a decimal, move the decimal point two places to the left, since there are two zeros in 100.</li>
+                        <li>Answer, The simplified fraction is 9 / 20, and the decimal is 0.45.</li>
+                    </ul>
+                </div>
+
+                <!-- Example 2: Fraction/Score to Percentage (Word Problem) -->
+                <div class="mb-8 border-b pb-4">
+                    <h3 class="text-2xl font-semibold text-[#bc5090] mb-3">Question 2: In a class of 50 students, 35 passed the exam. What percentage of students passed?</h3>
+                    <h4 class="text-xl font-bold text-[#003f5c] mt-4 mb-2">Solution:</h4>
+                    <ul class="solution-step">
+                        <li>Step 1, Form the Fraction, The ratio of passed students to total students is 35 / 50.</li>
+                        <li>Step 2, Convert to Percentage, To convert any fraction to a percentage, multiply it by 100. Write it as (35 / 50) multiplied by 100.</li>
+                        <li>Step 3, Calculate, Simplify the calculation, which is 0.7 multiplied by 100, which equals 70.</li>
+                        <li>Answer, 70% of the students passed the exam.</li>
+                    </ul>
+                </div>
+
+                <!-- Example 3: Finding the Value of a Percentage (Word Problem) -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold text-[#bc5090] mb-3">Question 3: A store offers a 30% discount on a bicycle priced at ₹1500. What is the discount amount?</h3>
+                    <h4 class="text-xl font-bold text-[#003f5c] mt-4 mb-2">Solution:</h4>
+                    <ul class="solution-step">
+                        <li>Step 1, Convert Percentage to Decimal, Convert the discount rate from percentage form to decimal form. 30% is 30 / 100, which is 0.30.</li>
+                        <li>Step 2, Calculate Discount, Multiply the original price by the decimal value. Write it as ₹1500 multiplied by 0.30.</li>
+                        <li>Step 3, Result, The calculation gives ₹450.</li>
+                        <li>Answer, The discount amount is ₹450.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End Solved Examples Section -->
+
+        </main>
+    </div>
+
+    <script>
+        const tooltipTitleCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const wrapLabels = (label) => {
+            const max = 16;
+            if (label.length <= max) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > max) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const introDonutCtx = document.getElementById('introDonutChart').getContext('2d');
+        new Chart(introDonutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['The Whole'],
+                datasets: [{
+                    data: [100],
+                    backgroundColor: ['#ff6361'],
+                    borderColor: ['#ffffff'],
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: { enabled: false }
+                },
+                cutout: '70%'
+            }
+        });
+        
+        const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+        new Chart(scoreCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Marks', 'Score Obtained'],
+                datasets: [{
+                    label: 'Marks',
+                    data: [120, 80],
+                    backgroundColor: ['#58508d', '#ffa600'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                ...tooltipTitleCallback,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                         grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        const percentToFractionCtx = document.getElementById('percentToFractionChart').getContext('2d');
+        new Chart(percentToFractionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['10%', 'Remaining 90%'],
+                datasets: [{
+                    label: 'Percentage',
+                    data: [10, 90],
+                    backgroundColor: ['#bc5090', '#f0f4f8'],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...tooltipTitleCallback,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // --- QUIZ LOGIC AND DATA ---
+
+        const practiceQuestions = [
+            // A. Score to Percentage (Format: X%)
+            { type: 'Score', question: "1. What is the percentage of a score of 45 out of 90?", answer: "50%" },
+            { type: 'Score', question: "2. Convert the score 30 out of 150 to a percentage.", answer: "20%" },
+            { type: 'Score', question: "3. You earned 150 marks on a 200-mark test. What is your percentage score?", answer: "75%" },
+            { type: 'Score', question: "4. What percentage is 8 correct answers out of 40 questions?", answer: "20%" },
+            { type: 'Score', question: "5. Find the percentage of 75 items completed out of 300 total items.", answer: "25%" },
+            { type: 'Score', question: "6. Convert 10 out of 10 to a percentage.", answer: "100%" },
+            { type: 'Score', question: "7. A basket has 52 apples, and 13 are red. What percentage are red?", answer: "25%" },
+            { type: 'Score', question: "8. A car travelled 18 km of a 60 km trip. What percentage of the trip is complete?", answer: "30%" },
+            { type: 'Score', question: "9. Express the fraction 4/5 as a percentage.", answer: "80%" },
+            { type: 'Score', question: "10. What percentage is the fraction 1/4?", answer: "25%" },
+            { type: 'Score', question: "11. Convert the fraction 3/8 to a percentage (use one decimal place).", answer: "37.5%" },
+            { type: 'Score', question: "12. What is 60 as a percentage of 80?", answer: "75%" },
+            { type: 'Score', question: "13. What is the percentage equivalent of 7 out of 25?", answer: "28%" },
+            { type: 'Score', question: "14. A book has 180 pages. If you read 90, what percentage have you read?", answer: "50%" },
+            { type: 'Score', question: "15. Find the percentage for 11 out of 55.", answer: "20%" },
+
+            // B. Percentage to Fraction (Format: X/Y or X)
+            { type: 'Fraction', question: "16. Convert 25% into its simplest equivalent fraction.", answer: "1/4" },
+            { type: 'Fraction', question: "17. Convert 50% into its simplest equivalent fraction.", answer: "1/2" },
+            { type: 'Fraction', question: "18. Convert 75% into its simplest equivalent fraction.", answer: "3/4" },
+            { type: 'Fraction', question: "19. Convert 10% into its simplest equivalent fraction.", answer: "1/10" },
+            { type: 'Fraction', question: "20. Convert 20% into its simplest equivalent fraction.", answer: "1/5" },
+            { type: 'Fraction', question: "21. Convert 40% into its simplest equivalent fraction.", answer: "2/5" },
+            { type: 'Fraction', question: "22. Convert 60% into its simplest equivalent fraction.", answer: "3/5" },
+            { type: 'Fraction', question: "23. Convert 80% into its simplest equivalent fraction.", answer: "4/5" },
+            { type: 'Fraction', question: "24. Convert 33.33% (or 33 1/3%) to its fraction equivalent.", answer: "1/3" },
+            { type: 'Fraction', question: "25. Convert 66.66% (or 66 2/3%) to its fraction equivalent.", answer: "2/3" },
+            { type: 'Fraction', question: "26. Convert 12.5% into its simplest equivalent fraction.", answer: "1/8" },
+            { type: 'Fraction', question: "27. Convert 30% into its simplest equivalent fraction.", answer: "3/10" },
+            { type: 'Fraction', question: "28. Convert 90% into its simplest equivalent fraction.", answer: "9/10" },
+            { type: 'Fraction', question: "29. Convert 1% into its simplest equivalent fraction.", answer: "1/100" },
+            { type: 'Fraction', question: "30. Convert 100% into a simple number (no percent or fraction).", answer: "1" },
+
+            // C. Fraction to Decimal (Format: 0.XX)
+            { type: 'Decimal', question: "31. Convert the fraction 45/100 to a decimal.", answer: "0.45" },
+            { type: 'Decimal', question: "32. Convert the fraction 789/1000 to a decimal.", answer: "0.789" },
+            { type: 'Decimal', question: "33. Convert 5/10 to a decimal.", answer: "0.5" },
+            { type: 'Decimal', question: "34. Convert 1/100 to a decimal.", answer: "0.01" },
+            { type: 'Decimal', question: "35. Convert 13/1000 to a decimal.", answer: "0.013" },
+            { type: 'Decimal', question: "36. Convert 99/100 to a decimal.", answer: "0.99" },
+            { type: 'Decimal', question: "37. Convert 10/1000 to a decimal.", answer: "0.01" },
+            { type: 'Decimal', question: "38. Convert 500/100 to a decimal.", answer: "5" },
+            { type: 'Decimal', question: "39. Convert 25/10 to a decimal.", answer: "2.5" },
+            { type: 'Decimal', question: "40. Convert 305/100 to a decimal.", answer: "3.05" },
+
+            // D. Word Problems (Mixed Format)
+            { type: 'Word', question: "41. What percentage is 50 paisa of ₹1?", answer: "50%" },
+            { type: 'Word', question: "42. A shirt costs ₹800. If you get a 25% discount, how much is the discount amount (in ₹)?", answer: "200" },
+            { type: 'Word', question: "43. A class has 40 students. 10% of them wear glasses. How many students wear glasses?", answer: "4" },
+            { type: 'Word', question: "44. If 12 hours have passed, what percentage of a 24-hour day has passed?", answer: "50%" },
+            { type: 'Word', question: "45. If you save 15% of your ₹40,000 salary, how much do you save (in ₹)?", answer: "6000" },
+            { type: 'Word', question: "46. What fraction of $1 is $0.20? (Simplest fraction)", answer: "1/5" },
+            { type: 'Word', question: "47. Convert 70% of a pizza to a decimal value.", answer: "0.7" },
+            { type: 'Word', question: "48. If a jar has 6 red marbles and 4 white marbles, what percentage of the marbles are red?", answer: "60%" },
+            { type: 'Word', question: "49. A store sold 15 red phones and 35 black phones. What percentage of the total phones sold were red?", answer: "30%" },
+            { type: 'Word', question: "50. What is 25 paisa as a percentage of ₹2? (Answer in X.X%)", answer: "12.5%" }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        const questionTextElement = document.getElementById('question-text');
+        const answerInput = document.getElementById('answer-input');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const questionCounter = document.getElementById('question-counter');
+        const checkButton = document.getElementById('check-button');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+
+        const normalizeAnswer = (input) => {
+            return input.toString().trim().replace(/\s/g, '').toLowerCase().replace(/rs\./, '').replace(/₹/, '').replace(/%/, '').replace(/,/g, '');
+        };
+
+        const loadQuestion = () => {
+            const questionData = practiceQuestions[currentQuestionIndex];
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${practiceQuestions.length}`;
+            questionTextElement.textContent = questionData.question;
+            answerInput.value = '';
+            feedbackMessage.textContent = '';
+            feedbackMessage.className = 'text-center text-lg font-semibold min-h-[1.5rem]';
+            updateNavigationButtons();
+        };
+
+        const checkAnswer = () => {
+            const userAnswer = normalizeAnswer(answerInput.value);
+            const correctAnswer = normalizeAnswer(practiceQuestions[currentQuestionIndex].answer);
+
+            if (userAnswer === correctAnswer) {
+                feedbackMessage.textContent = 'Correct! Great job.';
+                feedbackMessage.classList.add('text-green-600');
+                feedbackMessage.classList.remove('text-red-600');
+            } else {
+                feedbackMessage.textContent = `Incorrect. The correct answer is: ${practiceQuestions[currentQuestionIndex].answer}`;
+                feedbackMessage.classList.add('text-red-600');
+                feedbackMessage.classList.remove('text-green-600');
+            }
+            checkButton.disabled = true;
+        };
+
+        const nextQuestion = () => {
+            if (currentQuestionIndex < practiceQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+                checkButton.disabled = false;
+            }
+        };
+
+        const prevQuestion = () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+                checkButton.disabled = false;
+            }
+        };
+
+        const updateNavigationButtons = () => {
+            prevButton.disabled = currentQuestionIndex === 0;
+            nextButton.disabled = currentQuestionIndex === practiceQuestions.length - 1;
+        };
+
+        checkButton.addEventListener('click', checkAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        prevButton.addEventListener('click', prevQuestion);
+        answerInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !checkButton.disabled) {
+                checkAnswer();
+            } else if (e.key === 'Enter' && checkButton.disabled) {
+                nextQuestion();
+            }
+        });
+        answerInput.addEventListener('input', () => {
+             // Re-enable check button when user starts typing again
+            checkButton.disabled = false;
+            feedbackMessage.textContent = '';
+            feedbackMessage.className = 'text-center text-lg font-semibold min-h-[1.5rem]';
+        });
+
+        // Initial load
+        window.addEventListener('load', loadQuestion);
+
+    </script>
+</body>
+</html>
