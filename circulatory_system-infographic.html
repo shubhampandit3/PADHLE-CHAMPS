@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Human Circulatory System Chapter Infographic (Revised)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .info-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        .flow-step {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+            padding: 0.75rem;
+        }
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0;
+            color: #10b981; /* Emerald Green */
+        }
+        .arrow svg {
+            width: 2rem;
+            height: 2rem;
+            stroke-width: 2.5;
+            transform: rotate(90deg); /* Default to vertical down arrow for mobile */
+        }
+        @media (min-width: 768px) {
+            .arrow {
+                margin: 0 1rem;
+            }
+            .arrow svg {
+                transform: rotate(0deg); /* Horizontal arrow for desktop */
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-10">
+
+        <header class="text-center mb-12 bg-white p-6 rounded-xl shadow-lg border-b-4 border-teal-500">
+            <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-3">Chapter Infographic: The Circulatory System</h1>
+            <p class="text-xl md:text-2xl text-teal-600 font-semibold">Heart, Blood, and Vessels: The Body's Transport Network</p>
+        </header>
+
+        <!-- Main Components Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">I. Components & Purpose</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Card 1: Definition -->
+                <div class="info-card bg-teal-50 border-2 border-teal-200">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-3">What is Circulation?</h3>
+                    <p class="text-gray-600">The Circulatory System is a group of organs (Heart, Blood, Blood Vessels) that work together to transport essential substances throughout the body.</p>
+                </div>
+                <!-- Card 2: Need for Circulation -->
+                <div class="info-card bg-pink-50 border-2 border-pink-200">
+                    <h3 class="text-2xl font-bold text-pink-700 mb-3">The Purpose</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4">
+                        <li>Supply Oxygen, Food, and Water to every body part.</li>
+                        <li>Collect Carbon Dioxide and other Waste for removal.</li>
+                        <li>Deliver Nutrients from the digestive system.</li>
+                    </ul>
+                </div>
+                <!-- Card 3: Blood -->
+                <div class="info-card bg-red-50 border-2 border-red-200">
+                    <h3 class="text-2xl font-bold text-red-700 mb-3">Blood: The Transport Medium</h3>
+                    <p class="text-gray-600">Blood is a red liquid that flows through the vessels. It carries Oxygen to tissues and collects Carbon Dioxide and other waste products (like from the liver).</p>
+                    <img src="https://media.beckman.com/-/media/stock-images/resource-center/images/redbloodcells_03_2022.jpeg?rev=f52f8028b5424d66b1b03b24602bf89f" alt="Model of Red Blood Cells" class="w-full h-auto mt-3 rounded-lg border border-red-300 shadow-sm">
+                </div>
+            </div>
+        </section>
+
+        <!-- The Heart Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">II. The Heart: The Pumping Machine</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div class="info-card bg-indigo-50 border-2 border-indigo-200">
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">Structure and Function</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                        <li>Location: Lies between the lungs, slightly toward the left side of the chest.</li>
+                        <li>Chambers: Consists of four chambers: two upper Atria and two lower Ventricles.</li>
+                        <li>Valves (Walls): Allow blood to flow in one direction only.</li>
+                        <li>Action: It continuously contracts and relaxes like a pumping machine.</li>
+                        <li>Heart Beat & Pulse: Contraction produces the heartbeat. The wavy movement in arteries caused by pumping is the pulse.</li>
+                    </ul>
+                </div>
+                <div class="info-card flex flex-col justify-center items-center bg-gray-100">
+                    <h4 class="text-xl font-bold text-gray-700 mb-4">4-Chamber Heart Model</h4>
+                    <img src="https://my.clevelandclinic.org/-/scassets/images/org/health/articles/23074-heart-chambers" alt="Diagram of the 4-Chamber Human Heart" class="w-full h-auto rounded-lg border border-blue-300 shadow-md">
+                </div>
+            </div>
+        </section>
+
+        <!-- Blood Vessels Section (Revised) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">III. Blood Vessels: The Tubes</h2>
+            <p class="text-lg text-gray-600 mb-6">There are three main types of thin tubes forming the network throughout the body:</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Vessel 1: Arteries (Thick Walls, Away from Heart) -->
+                <div class="info-card border-t-8 border-red-600 bg-red-50 text-red-800">
+                    <h4 class="text-2xl font-black mb-1 flex items-center">
+                        <!-- Icon representing flow and pressure -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-red-600"><path d="M12 2v20M5 5l1.5 1.5M19 5l-1.5 1.5M2 12h20M5 19l1.5-1.5M19 19l-1.5-1.5"/><circle cx="12" cy="12" r="10"/></svg>
+                        ARTERIES
+                    </h4>
+                    <p class="text-base font-semibold text-gray-700">The High-Pressure Path</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4 mt-2">
+                        <li>Direction: Heart &rarr; Rest of Body.</li>
+                        <li>Blood Type: Carry Oxygenated Blood.</li>
+                        <li>Feature: Have thick, elastic walls (for pressure).</li>
+                    </ul>
+                </div>
+
+                <!-- Vessel 2: Veins (Thin Walls, To the Heart) -->
+                <div class="info-card border-t-8 border-blue-600 bg-blue-50 text-blue-800">
+                    <h4 class="text-2xl font-black mb-1 flex items-center">
+                        <!-- Icon representing return flow -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-blue-600"><path d="M12 2v20M5 5l1.5 1.5M19 5l-1.5 1.5M2 12h20M5 19l1.5-1.5M19 19l-1.5-1.5"/><rect x="4" y="4" width="16" height="16" rx="8" ry="8"/></svg>
+                        VEINS
+                    </h4>
+                    <p class="text-base font-semibold text-gray-700">The Low-Pressure Return</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4 mt-2">
+                        <li>Direction: Body &rarr; Heart.</li>
+                        <li>Blood Type: Carry Deoxygenated Blood.</li>
+                        <li>Feature: Have thinner walls and often contain valves.</li>
+                    </ul>
+                </div>
+
+                <!-- Vessel 3: Capillaries (Exchange, Thinnest) -->
+                <div class="info-card border-t-8 border-purple-600 bg-purple-50 text-purple-800">
+                    <h4 class="text-2xl font-black mb-1 flex items-center">
+                        <!-- Icon representing exchange/network -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-purple-600"><rect width="20" height="20" x="2" y="2" rx="4" ry="4"/><path d="M8 2v20M16 2v20M2 12h20"/></svg>
+                        CAPILLARIES
+                    </h4>
+                    <p class="text-base font-semibold text-gray-700">The Exchange Zone</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1 ml-4 mt-2">
+                        <li>Function: Site of gas and nutrient exchange.</li>
+                        <li>Feature: Thinnest vessels, forming dense networks.</li>
+                        <li>Connection: Link Arteries to Veins.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <h4 class="text-xl font-bold text-gray-700 mb-4">Vascular Network Model</h4>
+                <img src="https://www.shutterstock.com/image-vector/blood-vessels-network-structure-arteria-600nw-2459000195.jpg" alt="Diagram of arteries, veins, and capillaries connecting" class="w-full h-auto rounded-lg border border-teal-300 shadow-md">
+            </div>
+        </section>
+
+
+        <!-- Circulation Flow Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">IV. The Circulation Cycle</h2>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flow-step bg-blue-700 text-sm md:text-base">1. Body sends Deoxygenated Blood to the Heart (via Veins)</div>
+                <div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto text-teal-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </div>
+                <div class="flow-step bg-gray-500 text-sm md:text-base">2. Heart pumps Deoxygenated Blood to the Lungs</div>
+                <div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto text-teal-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </div>
+                <div class="flow-step bg-teal-500 text-sm md:text-base">3. Lungs remove CO2 and add O2 (Blood becomes Oxygenated)</div>
+                <div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto text-teal-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </div>
+                <div class="flow-step bg-red-700 text-sm md:text-base">4. Oxygenated Blood returns to the Heart</div>
+                <div class="arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto text-teal-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </div>
+                <div class="flow-step bg-red-800 text-sm md:text-base">5. Heart pumps Oxygenated Blood to all parts of the Body (via Arteries)</div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <h4 class="text-xl font-bold text-gray-700 mb-4">Pulmonary & Systemic Circulation</h4>
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240411170113/Double-Circulation.png" alt="Diagram showing the path of blood through the heart and lungs" class="w-full h-auto rounded-lg border border-indigo-300 shadow-md">
+            </div>
+        </section>
+
+        <!-- Healthy Heart Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-700 mb-6 border-b-2 border-gray-300 pb-2">V. Maintaining a Healthy Heart</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="info-card bg-green-50 border-2 border-green-200">
+                    <h3 class="text-2xl font-bold text-green-700 mb-3">Dietary Habits</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                        <li>Eat a balanced diet.</li>
+                        <li>Avoid or limit fatty and sugary foods, as they are harmful for heart health.</li>
+                    </ul>
+                </div>
+                <div class="info-card bg-yellow-50 border-2 border-yellow-200">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-3">Exercise and Well-being</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 ml-4">
+                        <li>Engage in regular exercise (e.g., jogging, brisk walking).</li>
+                        <li>Exercise pumps more blood throughout the body.</li>
+                        <li>Yoga and deep breathing help the respiratory system, which in turn aids the heart's function.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Practice Arena Section (50 Questions) -->
+        <section class="mt-12 p-8 bg-blue-900 rounded-xl shadow-2xl border-4 border-blue-400">
+            <h2 class="text-4xl font-black text-white mb-2 text-center">VI. 50-Question Practice Arena</h2>
+            <p class="text-lg text-blue-300 mb-8 text-center">Test your knowledge on the structure and function of the Circulatory System.</p>
+
+            <div id="quiz-card" class="bg-white p-6 rounded-xl shadow-inner">
+                <p class="text-sm font-medium text-blue-600 mb-2" id="question-counter">Question 1 of 50</p>
+                <p class="text-xl font-bold text-gray-800 mb-4" id="question-text">Loading...</p>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-4 items-center">
+                    <input type="text" id="answer-input" placeholder="Type your answer here" class="flex-grow p-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-teal-500 transition duration-200">
+                    <button id="check-button" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200 w-full sm:w-auto">
+                        Check Answer
+                    </button>
+                </div>
+
+                <div id="feedback-message" class="text-center text-lg font-semibold min-h-[1.5rem]"></div>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button id="prev-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-200" disabled>
+                    &larr; Previous
+                </button>
+                <button id="next-button" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-200">
+                    Next &rarr;
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- QUIZ DATA: 50 Questions on The Circulatory System ---
+        const practiceQuestions = [
+            // I. Definitions and Basics
+            { q: "1. What is the main function carried out by an organ system?", a: "work together to carry out the same function" },
+            { q: "2. The circulatory system consists of the heart, blood, and what other main components?", a: "blood vessels" },
+            { q: "3. Name the red liquid that flows in blood vessels.", a: "blood" },
+            { q: "4. What essential gas does blood carry to all parts of our body?", a: "oxygen" },
+            { q: "5. What waste product does blood collect and transport away?", a: "carbon dioxide" },
+            { q: "6. Besides oxygen and digested food, what else does the blood transport to body parts?", a: "water" },
+            { q: "7. Which parts of the body also need food and water to grow and repair themselves?", a: "all body parts" },
+            { q: "8. The circulatory system also collects waste products from what organ, besides general body parts?", a: "liver" },
+            { q: "9. How does blood collect waste from the liver and other parts of the body?", a: "removing waste" },
+            { q: "10. What is the system that transports oxygen, digested food, and water throughout our body called?", a: "circulatory system" },
+
+            // II. The Heart Structure and Function
+            { q: "11. The heart is located between which two organs?", a: "lungs" },
+            { q: "12. The heart is slightly toward which side of the chest?", a: "left side" },
+            { q: "13. The heart is about the size of our what?", a: "fist" },
+            { q: "14. How many chambers does the human heart consist of?", a: "four chambers" },
+            { q: "15. What are the two upper chambers of the heart called?", a: "atria" },
+            { q: "16. What are the two lower chambers of the heart called?", a: "ventricles" },
+            { q: "17. What is the function of the walls between the upper and lower chambers?", a: "allow the blood to flow in one direction only" },
+            { q: "18. The heart is often described as what type of muscular machine?", a: "pumping machine" },
+            { q: "19. The heart continuously performs which two actions to pump blood?", a: "contracts and relaxes" },
+            { q: "20. What is the sound or beat produced by the contraction of the heart muscle called?", a: "heartbeat" },
+
+            // III. Blood Vessels
+            { q: "21. What are the thin tubes that form a network throughout our body called?", a: "blood vessels" },
+            { q: "22. How many types of blood vessels are there?", a: "three types" },
+            { q: "23. Which vessels carry blood from the heart to the rest of the body?", a: "arteries" },
+            { q: "24. What is a key structural feature of arteries mentioned in the video?", a: "thick walls" },
+            { q: "25. Which vessels carry blood back to the heart from the body?", a: "veins" },
+            { q: "26. Which vessels are the thinnest of all blood vessels?", a: "capillaries" },
+            { q: "27. What important process takes place through the walls of capillaries?", a: "exchange of gases nutrients and waste" },
+            { q: "28. Blood that comes back to the heart from the body is considered what type of blood due to its low oxygen content?", a: "deoxygenated blood" },
+            { q: "29. What is the term for blood rich in oxygen?", a: "oxygenated blood" },
+            { q: "30. The slight wavy movement of blood in the artery caused by the heart's pumping is called the what?", a: "pulse" },
+
+            // IV. Circulation Process
+            { q: "31. Deoxygenated blood from the body first comes to which organ?", a: "heart" },
+            { q: "32. After receiving deoxygenated blood, the heart pumps it to where for cleaning?", a: "lungs" },
+            { q: "33. What is removed from the blood when it is in the lungs?", a: "carbon dioxide" },
+            { q: "34. What is absorbed into the blood when it is in the lungs?", a: "oxygenated blood" },
+            { q: "35. Where does the oxygen rich blood go immediately after leaving the lungs?", a: "comes back to the heart" },
+            { q: "36. The heart pumps oxygenated blood to all parts of the body through which type of blood vessel?", a: "arteries" },
+            { q: "37. The cycle of blood movement through the body is continuous and involves which two main organs?", a: "heart and lungs" },
+            { q: "38. What does the blood pick up and transport when it moves through the digestive system?", a: "nutrients" },
+            { q: "39. The heart gives what type of blood to the lungs?", a: "deoxygenated blood" },
+            { q: "40. After the lungs purify the blood, they give what type of blood back to the heart?", a: "oxygenated blood" },
+
+            // V. Healthy Heart and Lifestyle
+            { q: "41. What two general habits are necessary to keep our heart healthy?", a: "healthy food habits and regular exercise" },
+            { q: "42. What kind of diet should we eat for a healthy heart?", a: "balanced diet" },
+            { q: "43. Name a specific category of food mentioned that is not good for the heart.", a: "fatty and sugary foods" },
+            { q: "44. Name one of the specific forms of exercise mentioned as being good for the heart.", a: "jogging" },
+            { q: "45. Name the other form of exercise mentioned as being good for the heart, besides jogging.", a: "brisk walking" },
+            { q: "46. What system benefits the most from deep breathing in yoga, which in turn helps the heart?", a: "respiratory system" },
+            { q: "47. When we exercise, more of what is pumped throughout the body?", a: "blood" },
+            { q: "48. What helps the mind and body and involves relaxing in a posture while focusing on deep breathing?", a: "yoga" },
+            { q: "49. Why should we avoid fatty and sugary foods for heart health?", a: "they are not good for the heart" },
+            { q: "50. What instrument is used to listen to the heartbeat?", a: "stethoscope" }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        const questionTextElement = document.getElementById('question-text');
+        const answerInput = document.getElementById('answer-input');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const questionCounter = document.getElementById('question-counter');
+        const checkButton = document.getElementById('check-button');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+
+        const normalizeAnswer = (input) => {
+            return input.toString().trim().replace(/\s/g, '').toLowerCase().replace(/,/g, '');
+        };
+
+        const loadQuestion = () => {
+            const questionData = practiceQuestions[currentQuestionIndex];
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${practiceQuestions.length}`;
+            questionTextElement.textContent = questionData.q;
+            answerInput.value = '';
+            feedbackMessage.textContent = '';
+            feedbackMessage.className = 'text-center text-lg font-semibold min-h-[1.5rem]';
+            updateNavigationButtons();
+        };
+
+        const checkAnswer = () => {
+            const userAnswer = normalizeAnswer(answerInput.value);
+            const correctAnswer = normalizeAnswer(practiceQuestions[currentQuestionIndex].a);
+
+            if (userAnswer === correctAnswer) {
+                feedbackMessage.textContent = 'Correct! Fantastic job.';
+                feedbackMessage.classList.add('text-green-600');
+                feedbackMessage.classList.remove('text-red-600');
+            } else {
+                feedbackMessage.textContent = `Incorrect. The correct answer is: ${practiceQuestions[currentQuestionIndex].a}`;
+                feedbackMessage.classList.add('text-red-600');
+                feedbackMessage.classList.remove('text-green-600');
+            }
+            checkButton.disabled = true;
+        };
+
+        const nextQuestion = () => {
+            if (currentQuestionIndex < practiceQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+                checkButton.disabled = false;
+            }
+        };
+
+        const prevQuestion = () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+                checkButton.disabled = false;
+            }
+        };
+
+        const updateNavigationButtons = () => {
+            prevButton.disabled = currentQuestionIndex === 0;
+            nextButton.disabled = currentQuestionIndex === practiceQuestions.length - 1;
+        };
+
+        checkButton.addEventListener('click', checkAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        prevButton.addEventListener('click', prevQuestion);
+
+        // Allow Enter key to check or move next
+        answerInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (!checkButton.disabled) {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
+        });
+
+        answerInput.addEventListener('input', () => {
+             // Re-enable check button when user starts typing again
+            checkButton.disabled = false;
+            feedbackMessage.textContent = '';
+            feedbackMessage.className = 'text-center text-lg font-semibold min-h-[1.5rem]';
+        });
+
+        // Initial load
+        window.addEventListener('load', loadQuestion);
+
+    </script>
+</body>
+</html>

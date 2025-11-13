@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Permissions-Policy" content="unload=()">
+    <title>Chapter Content - Vigyan Batch 2025</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #F9FAFB;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239333ea' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .max-w-7xl {
+            max-width: 100%;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .max-w-7xl {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .max-w-7xl {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .max-w-7xl {
+                max-width: 80rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* Modern Tab Styles */
+        .tab-nav-container {
+            background: linear-gradient(to bottom, #f9fafb, #ffffff);
+            border-bottom: 2px solid #e5e7eb;
+            border-radius: 1rem 1rem 0 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            min-width: max-content;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab-btn:hover::before {
+            left: 100%;
+        }
+
+        .tab-btn:hover {
+            border-color: #9333ea;
+            color: #9333ea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.15);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+            border-color: #9333ea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(147, 51, 234, 0.3);
+        }
+
+        .tab-btn i {
+            font-size: 1.125rem;
+            transition: transform 0.3s;
+        }
+
+        .tab-btn.active i {
+            transform: scale(1.1);
+        }
+
+        .tab-content {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar for tab navigation */
+        .tab-nav-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tab-nav-container::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 3px;
+        }
+
+        .tab-nav-container::-webkit-scrollbar-thumb {
+            background: #9333ea;
+            border-radius: 3px;
+        }
+
+        .tab-nav-container::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            cursor: pointer;
+            width: 28px;
+            height: 24px;
+            position: relative;
+            display: none !important;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #9333ea, #4f46e5);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 10px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+
+        .navbar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: block !important;
+            }
+
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-menu {
+                display: none !important;
+            }
+
+            .hamburger {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span
+                            class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Vigyan Batch 2025
+                        </span>
+                        <div
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600 transition-all duration-300 group-hover:w-full">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav flex items-center space-x-2">
+                    <a href="home.html"
+                        class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="subject-vigyan.html"
+                        class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">book</span>
+                        <span>Subjects</span>
+                    </a>
+
+                    <div
+                        class="flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-2 rounded-xl border border-purple-100">
+                        <span class="material-icons text-purple-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="py-4 space-y-2">
+                    <a href="home.html"
+                        class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">home</span>
+                        Home
+                    </a>
+                    <a href="subject-vigyan.html"
+                        class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">book</span>
+                        Subjects
+                    </a>
+                    <div
+                        class="flex items-center px-4 py-3 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-100">
+                        <span class="material-icons text-purple-600 mr-3">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username-mobile">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Chapter Header -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" data-aos="fade-up">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div id="subjectIcon" class="w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                            <i id="subjectIconClass" class="text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900" id="chapterTitle">Chapter Title</h1>
+                            <p class="text-gray-600" id="subjectName">Subject Name</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium"
+                            id="chapterDuration">
+                            Duration
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-gray-700 text-lg" id="chapterDescription">Chapter description will appear here.</p>
+            </div>
+
+            <!-- Icon Legend (Mobile Only) -->
+            <div class="icon-legend bg-purple-50 rounded-lg p-3 mb-4 md:hidden" data-aos="fade-up" data-aos-delay="50">
+                <div class="grid grid-cols-3 gap-2 text-xs text-gray-600">
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-red-500" style="font-size: 16px;">play_circle</span>
+                        <span>Videos</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-red-500" style="font-size: 16px;">description</span>
+                        <span>Notes</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-green-500" style="font-size: 16px;">assignment</span>
+                        <span>DPP</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-blue-500" style="font-size: 16px;">quiz</span>
+                        <span>DPP Quiz</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-purple-500" style="font-size: 16px;">fact_check</span>
+                        <span>Tests</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-orange-500" style="font-size: 16px;">picture_as_pdf</span>
+                        <span>Test PDFs</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                <div class="tab-nav-container">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" data-tab="videos">
+                            <span class="material-icons">play_circle</span>
+                            <span>Videos</span>
+                        </button>
+                        <button class="tab-btn" data-tab="notes">
+                            <span class="material-icons">description</span>
+                            <span>Notes</span>
+                        </button>
+                        <button class="tab-btn" data-tab="dpp">
+                            <span class="material-icons">assignment</span>
+                            <span>DPP</span>
+                        </button>
+                        <button class="tab-btn" data-tab="quiz">
+                            <span class="material-icons">quiz</span>
+                            <span>DPP QUIZ</span>
+                        </button>
+                        <button class="tab-btn" data-tab="tests">
+                            <span class="material-icons">fact_check</span>
+                            <span>TESTS</span>
+                        </button>
+                        <button class="tab-btn" data-tab="testpdfs">
+                            <span class="material-icons">picture_as_pdf</span>
+                            <span>TEST PDFs</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content p-6">
+                    <div class="tab-pane active" id="videos-tab">
+                        <div id="videosContainer" class="space-y-4">
+                            <!-- Videos will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="notes-tab">
+                        <div id="notesContainer" class="space-y-4">
+                            <!-- Notes will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="dpp-tab">
+                        <div class="space-y-4" id="assignmentsContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4"
+                                    style="font-size: 80px;">assignment</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPP Available</h3>
+                                <p class="text-gray-500">Daily Practice Problems for this chapter will be added soon.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="quiz-tab">
+                        <div class="space-y-4" id="dppContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">quiz</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading DPPs...</h3>
+                                <p class="text-gray-500">Please wait while we load available DPPs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tests-tab">
+                        <div class="space-y-4" id="testsContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4"
+                                    style="font-size: 80px;">fact_check</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading Tests...</h3>
+                                <p class="text-gray-500">Please wait while we load available tests.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="testpdfs-tab">
+                        <div class="space-y-4" id="testPdfsContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4"
+                                    style="font-size: 80px;">picture_as_pdf</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Test PDFs Available</h3>
+                                <p class="text-gray-500">Downloadable test papers will be added soon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons mt-8" data-aos="fade-up" data-aos-delay="500">
+                <button onclick="goBack()"
+                    class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons mr-2">arrow_back</span>
+                    Back to Chapters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Home JS for Firebase functions -->
+    <script src="home.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function () {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Chapter data with content
+        const chapterData = {
+            'history': {
+                title: 'History',
+                icon: 'fas fa-history',
+                color: 'bg-gradient-to-br from-blue-500 to-cyan-600',
+                chapters: {
+                    'rise-of-nationalism-in-europe': {
+                        title: 'Rise of Nationalism in Europe',
+                        description: 'Explore the rise of nationalism across Europe and its impact on modern history.',
+                        duration: '60 min',
+                        videos: [
+                            { title: 'CLASS 10TH - RISE OF NATIONALISM IN EUROPE| SUMMARY VIDEO|2025-26', url: 'https://youtu.be/hjYOLaSej7I?si=-ARkLkPZD_JeDS_M', type: 'youtube' },
+                        ],
+                        notes: [
+                            { title: 'Rise of Nationalism in Europe - Notes', url: 'NOTES OF SOCIAL SCIENCE OF CH- 1.pdf' },
+                        ],
+                        assignments: [],
+                        testPdfs: [],
+                    }
+                }
+            },
+            'civics': {
+                title: 'Civics',
+                icon: 'fas fa-balance-scale',
+                color: 'bg-gradient-to-br from-rose-500 to-pink-600',
+                chapters: {
+                    'power-sharing': {
+                        title: 'Power Sharing',
+                        description: 'Understanding democratic power sharing mechanisms and their importance in governance.',
+                        duration: '45 min',
+                        videos: [],
+                        notes: [
+                            { title: 'Power Sharing - Mind Map', url: 'MIND MAP - CIVICS CH1 - CLASS10.png' },
+                        ],
+                        assignments: [],
+                        testPdfs: [],
+                    }
+                }
+            },
+            'chemistry': {
+                title: 'Chemistry',
+                icon: 'fas fa-flask',
+                color: 'bg-gradient-to-br from-green-500 to-emerald-600',
+                chapters: {
+                    'chemical-reaction-and-equation': {
+                        title: 'Chemical Reaction and Equation',
+                        description: 'Understanding chemical reactions, their types, and how to write balanced chemical equations.',
+                        duration: '50 min',
+                        videos: [],
+                        notes: [
+                            { title: 'Chemical Reaction and Equation - Mind Map', url: 'CHEMISTRY - CH1 - CLASS10 - MINDMAP.png' },
+                        ],
+                        assignments: [],
+                        testPdfs: [],
+                    }
+                }
+            }
+        };
+
+        // Load username and chapter content
+        document.addEventListener('DOMContentLoaded', function () {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('username-mobile').textContent = `Hi ${username}`;
+
+            // Get parameters from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject');
+            const chapter = urlParams.get('chapter');
+
+            loadChapterContent(subject, chapter);
+            checkCompletedContent(subject, chapter);
+            loadTests();
+            loadDPPs();
+        });
+
+        function loadChapterContent(subject, chapterId) {
+            const subjectData = chapterData[subject];
+            const chapter = subjectData?.chapters[chapterId];
+
+            if (!subjectData || !chapter) {
+                window.location.href = 'subject-vigyan.html';
+                return;
+            }
+
+            // Update header
+            document.getElementById('chapterTitle').textContent = chapter.title;
+            document.getElementById('subjectName').textContent = subjectData.title;
+            document.getElementById('chapterDescription').textContent = chapter.description;
+            document.getElementById('chapterDuration').textContent = chapter.duration;
+            document.getElementById('subjectIconClass').className = subjectData.icon + ' text-2xl text-white';
+            document.getElementById('subjectIcon').className = 'w-12 h-12 rounded-full flex items-center justify-center mr-4 ' + subjectData.color;
+
+            // Load content sections
+            loadVideos(chapter.videos, subject, chapterId);
+            loadNotes(chapter.notes, subject, chapterId);
+            loadAssignments(chapter.assignments, subject, chapterId);
+            loadTestPdfs(chapter.testPdfs, subject, chapterId);
+
+            window.currentSubject = subject;
+            initializeTabs();
+        }
+
+        function loadVideos(videos, subject, chapterId) {
+            const container = document.getElementById('videosContainer');
+            if (!videos || videos.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">videocam</span><h3 class="text-xl font-semibold text-gray-600 mb-2">No Videos Available</h3></div>';
+                return;
+            }
+
+            const subjectData = chapterData[subject];
+            container.innerHTML = videos.map((video, index) => `
+                <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="video-thumbnail">
+                            <span class="material-icons ${video.type === 'youtube' ? 'text-red-500' : 'text-purple-500'}" style="font-size: 32px;">${video.type === 'youtube' ? 'smart_display' : 'play_circle'}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${video.title}</h3>
+                            <a href="video-player.html?id=${encodeURIComponent(subject + '_' + chapterId + '_video_' + index)}&title=${encodeURIComponent(video.title)}&subject=${encodeURIComponent(subjectData.title)}&type=${encodeURIComponent(video.type)}&url=${encodeURIComponent(video.url)}" class="text-purple-600 hover:text-purple-800 text-sm inline-flex items-center">
+                                <span class="material-icons text-sm mr-1">play_arrow</span>Watch Video
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_video_${index}', 'vigyan-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_video_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons text-green-500" style="font-size: 36px; cursor: pointer;">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadNotes(notes, subject, chapterId) {
+            const container = document.getElementById('notesContainer');
+            if (!notes || notes.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">description</span><h3 class="text-xl font-semibold text-gray-600 mb-2">No Notes Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = notes.map((note, index) => `
+                <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="notes-icon">
+                            <span class="material-icons text-red-500" style="font-size: 32px;">picture_as_pdf</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${note.title}</h3>
+                            <a href="${note.url}" target="_blank" class="text-purple-600 hover:text-purple-800 text-sm inline-flex items-center">
+                                <span class="material-icons text-sm mr-1">visibility</span>View PDF
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_note_${index}', 'vigyan-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_note_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons text-green-500" style="font-size: 36px; cursor: pointer;">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAssignments(assignments, subject, chapterId) {
+            const container = document.getElementById('assignmentsContainer');
+            if (!assignments || assignments.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">assignment</span><h3 class="text-xl font-semibold text-gray-600 mb-2">No DPP Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = assignments.map((assignment, index) => `
+                <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="assignment-icon">
+                            <span class="material-icons text-green-500" style="font-size: 32px;">assignment</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${assignment.title}</h3>
+                            <a href="${assignment.url}" target="_blank" class="text-purple-600 hover:text-purple-800 text-sm inline-flex items-center">
+                                <span class="material-icons text-sm mr-1">visibility</span>View DPP
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_assignment_${index}', 'vigyan-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_assignment_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons text-green-500" style="font-size: 36px; cursor: pointer;">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadTestPdfs(testPdfs, subject, chapterId) {
+            const container = document.getElementById('testPdfsContainer');
+            if (!testPdfs || testPdfs.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">picture_as_pdf</span><h3 class="text-xl font-semibold text-gray-600 mb-2">No Test PDFs Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = testPdfs.map((testPdf, index) => `
+                <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                    <div class="flex items-start gap-4">
+                        <div class="test-pdf-icon">
+                            <span class="material-icons text-orange-500" style="font-size: 32px;">picture_as_pdf</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${testPdf.title}</h3>
+                            <a href="${testPdf.url}" target="_blank" class="text-purple-600 hover:text-purple-800 text-sm inline-flex items-center">
+                                <span class="material-icons text-sm mr-1">visibility</span>View Test PDF
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_testpdf_${index}', 'vigyan-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_testpdf_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons text-green-500" style="font-size: 36px; cursor: pointer;">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Check if content is completed
+        function isContentCompleted(contentId, batchType) {
+            try {
+                const progress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                return progress[contentId] && progress[contentId].completed === true;
+            } catch (error) {
+                console.error('Error checking content completion:', error);
+                return false;
+            }
+        }
+        
+        // Mark content as complete
+        function markContentComplete(contentId, batchType) {
+            try {
+                const progress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                
+                if (progress[contentId] && progress[contentId].completed) {
+                    return; // Already completed
+                }
+                
+                progress[contentId] = {
+                    completed: true,
+                    completedAt: Date.now()
+                };
+                
+                localStorage.setItem('userProgress', JSON.stringify(progress));
+                
+                // Update icon
+                const icon = document.querySelector(`[data-content-id="${contentId}"]`);
+                if (icon) {
+                    icon.classList.remove('complete-icon');
+                    icon.classList.add('completed-icon');
+                    icon.innerHTML = '<span class="material-icons text-gray-400" style="font-size: 36px;">check_circle</span>';
+                    icon.title = 'Completed';
+                    icon.onclick = null;
+                }
+                
+                // Show success message
+                showToast('Content marked as complete! +5 XP');
+                
+            } catch (error) {
+                console.error('Error marking content complete:', error);
+            }
+        }
+        
+        // Check completed content and update icons
+        function checkCompletedContent(subject, chapterId) {
+            const icons = document.querySelectorAll('.complete-icon');
+            for (const icon of icons) {
+                const contentId = icon.getAttribute('data-content-id');
+                const isCompleted = isContentCompleted(contentId, 'vigyan-enrollments');
+                if (isCompleted) {
+                    icon.classList.remove('complete-icon');
+                    icon.classList.add('completed-icon');
+                    icon.innerHTML = '<span class="material-icons text-gray-400" style="font-size: 36px;">check_circle</span>';
+                    icon.title = 'Completed';
+                    icon.onclick = null;
+                }
+            }
+        }
+
+        // Tab functionality
+        function initializeTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and panes
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding pane
+                    btn.classList.add('active');
+                    document.getElementById(targetTab + '-tab').classList.add('active');
+                });
+            });
+        }
+
+        // Load tests for Vigyan batch
+        async function loadTests() {
+            const testsContainer = document.getElementById('testsContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'history';
+            const currentChapter = urlParams.get('chapter') || 'rise-of-nationalism-in-europe';
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+
+            try {
+                const testsSnapshot = await database.ref('tests').orderByChild('batch').equalTo('vigyan').once('value');
+                const tests = [];
+                testsSnapshot.forEach(childSnapshot => {
+                    const test = childSnapshot.val();
+                    test.id = childSnapshot.key;
+
+                    // Filter tests based on visibleIn field
+                    if (test.visibleIn && test.visibleIn[currentSubject] &&
+                        test.visibleIn[currentSubject].includes(currentChapter)) {
+                        tests.push(test);
+                    } else if (test.visibleIn && (test.visibleIn['social-science'] && 
+                        test.visibleIn['social-science'].includes(currentChapter))) {
+                        // Backward compatibility for social-science tests
+                        tests.push(test);
+                    } else if (!test.visibleIn) {
+                        // Show all tests if no visibility filter is set (backward compatibility)
+                        tests.push(test);
+                    }
+                });
+
+                if (tests.length === 0) {
+                    testsContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Tests Available</h3>
+                            <p class="text-gray-500">Tests for Vigyan batch will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's test attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userAttempts = {};
+                if (userData) {
+                    const attemptsSnapshot = await database.ref('testResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    attemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userAttempts[result.testId]) {
+                            userAttempts[result.testId] = 0;
+                        }
+                        userAttempts[result.testId]++;
+                    });
+                }
+
+                testsContainer.innerHTML = tests.map(test => {
+                    const startDate = new Date(test.startDateTime);
+                    const endDate = new Date(test.endDateTime);
+                    const now = new Date();
+                    const hasAttempted = userAttempts[test.id] > 0;
+
+                    let status = 'upcoming';
+                    let statusClass = 'bg-yellow-100 text-yellow-800';
+                    let statusText = 'Upcoming';
+
+                    if (now >= startDate && now <= endDate) {
+                        status = 'active';
+                        statusClass = 'bg-green-100 text-green-800';
+                        statusText = 'Active';
+                    } else if (now > endDate) {
+                        status = 'ended';
+                        statusClass = 'bg-red-100 text-red-800';
+                        statusText = 'Ended';
+                    }
+
+                    return `
+                        <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="test-icon">
+                                    <i class="fas fa-clipboard-check text-purple-500 text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-semibold text-gray-800">${test.title}</h3>
+                                        <span class="${statusClass} px-2 py-1 rounded text-xs font-medium">${statusText}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600 mb-2">
+                                        <i class="fas fa-clock mr-1"></i>${test.duration} minutes | 
+                                        <i class="fas fa-star mr-1"></i>${test.totalMarks} marks | 
+                                        <i class="fas fa-question-circle mr-1"></i>${test.questions.length} questions
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        ${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString()} - ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString()}
+                                    </div>
+                                    ${status === 'active' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 ${hasAttempted ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-purple-600 hover:bg-purple-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                            <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt Test' : 'Start Test'}
+                                        </button>
+                                    ` : status === 'ended' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700 transition-colors">
+                                            <i class="fas fa-redo mr-1"></i>Reattempt Test
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading tests:', error);
+                testsContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading Tests</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startTest(testId) {
+            window.location.href = `attempt-student-test.html?testId=${testId}`;
+        }
+
+        async function loadDPPs() {
+            const dppContainer = document.getElementById('dppContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'history';
+            const currentChapter = urlParams.get('chapter') || 'rise-of-nationalism-in-europe';
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+
+            try {
+                const dppsSnapshot = await database.ref('dpps').orderByChild('batch').equalTo('vigyan').once('value');
+                const dpps = [];
+                dppsSnapshot.forEach(childSnapshot => {
+                    const dpp = childSnapshot.val();
+                    dpp.id = childSnapshot.key;
+                    // Match by subject and chapter (exact match or partial match)
+                    if (dpp.subject === currentSubject &&
+                        (dpp.chapter === currentChapter ||
+                            dpp.chapter.includes(currentChapter) ||
+                            currentChapter.includes(dpp.chapter))) {
+                        dpps.push(dpp);
+                    }
+                });
+
+                if (dpps.length === 0) {
+                    dppContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-tasks text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPPs Available</h3>
+                            <p class="text-gray-500">DPPs for this chapter will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's DPP attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userDppAttempts = {};
+                if (userData) {
+                    const dppAttemptsSnapshot = await database.ref('dppResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    dppAttemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userDppAttempts[result.dppId]) {
+                            userDppAttempts[result.dppId] = 0;
+                        }
+                        userDppAttempts[result.dppId]++;
+                    });
+                }
+
+                dppContainer.innerHTML = dpps.map(dpp => {
+                    const hasAttempted = userDppAttempts[dpp.id] > 0;
+                    return `
+                    <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                        <div class="flex items-start gap-4">
+                            <div class="test-icon">
+                                <i class="fas fa-tasks text-purple-500 text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">${dpp.title}</h3>
+                                <div class="text-sm text-gray-600 mb-2">
+                                    <i class="fas fa-infinity mr-1"></i>Unlimited Time | 
+                                    <i class="fas fa-star mr-1"></i>${dpp.totalMarks} marks | 
+                                    <i class="fas fa-question-circle mr-1"></i>${dpp.questions.length} questions
+                                </div>
+                                <div class="text-xs text-gray-500 mb-2">
+                                    Subject: ${dpp.subject} | Chapter: ${dpp.chapter}
+                                </div>
+                                <button onclick="startDPP('${dpp.id}')" class="${hasAttempted ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-purple-600 hover:bg-purple-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                    <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt DPP' : 'Start DPP'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `}).join('');
+            } catch (error) {
+                console.error('Error loading DPPs:', error);
+                dppContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading DPPs</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startDPP(dppId) {
+            localStorage.setItem('selectedDppId', dppId);
+            window.location.href = 'attempt-dpp-students.html';
+        }
+
+        function goBack() {
+            const subject = window.currentSubject || 'history';
+            window.location.href = `chapter-vigyan.html?subject=${subject}`;
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span class="material-icons mr-2">check_circle</span>${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Load tests for Vigyan batch
+    </script>
+
+    <style>
+        .test-icon,
+        .video-thumbnail,
+        .notes-icon,
+        .assignment-icon,
+        .test-pdf-icon {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .content-item {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .content-item:hover {
+            border-color: #9333ea;
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Complete Icon Styles will come from home.css */
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast i {
+            font-size: 1.25rem;
+        }
+    </style>
+</body>
+
+</html>

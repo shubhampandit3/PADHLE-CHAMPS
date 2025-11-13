@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapters - CodeCrack Batch 2025</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="codecrack-responsive.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="navbar fixed top-0 w-full z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-green-600">CodeCrack Batch 2025</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="home.html" class="text-gray-700 hover:text-green-600 font-medium transition-colors">Home</a>
+                    <a href="subject-codecrack.html" class="text-gray-700 hover:text-green-600 font-medium transition-colors">Subjects</a>
+                    <div class="flex items-center space-x-2 bg-green-100 px-3 py-2 rounded-lg">
+                        <i class="fas fa-user text-green-600"></i>
+                        <span class="font-semibold text-green-800" id="username">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center mb-8" data-aos="fade-up">
+                <div class="flex items-center justify-center mb-4">
+                    <div id="subjectIcon" class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-4">
+                        <i id="subjectIconClass" class="fas fa-code text-3xl text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-4xl font-bold text-gray-900" id="subjectTitle">Programming Chapters</h1>
+                        <p class="text-lg text-gray-600" id="subjectDescription">Select a chapter to start coding</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapters Container -->
+            <div id="chaptersContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Chapters will be loaded dynamically -->
+            </div>
+
+            <!-- No Chapters Message -->
+            <div id="noChaptersMessage" class="hidden text-center py-12">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <i class="fas fa-code text-6xl text-gray-300 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-600 mb-2">No Chapters Available</h3>
+                    <p class="text-gray-500 mb-4">Programming chapters will be added soon. Stay tuned for exciting coding content!</p>
+                    <a href="subject-codecrack.html" class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Subjects
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <a href="subject-codecrack.html" class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+        
+        const subjectData = {
+            'html': { title: 'HTML', description: 'Structure & Markup Language', icon: 'fab fa-html5', color: 'bg-gradient-to-br from-orange-500 to-red-600', chapters: [] },
+            'css': { title: 'CSS', description: 'Styling & Design Language', icon: 'fab fa-css3-alt', color: 'bg-gradient-to-br from-blue-500 to-indigo-600', chapters: [] },
+            'javascript': { title: 'JavaScript', description: 'Interactive Programming Language', icon: 'fab fa-js-square', color: 'bg-gradient-to-br from-yellow-500 to-orange-600', chapters: [] },
+            'python': { title: 'Python', description: 'Versatile Programming Language', icon: 'fab fa-python', color: 'bg-gradient-to-br from-green-500 to-teal-600', chapters: [] }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject') || 'html';
+            loadSubjectChapters(subject);
+        });
+        
+        function loadSubjectChapters(subject) {
+            const data = subjectData[subject];
+            if (!data) return;
+            
+            document.getElementById('subjectTitle').textContent = data.title;
+            document.getElementById('subjectDescription').textContent = data.description;
+            document.getElementById('subjectIconClass').className = data.icon + ' text-3xl text-white';
+            document.getElementById('subjectIcon').className = 'w-16 h-16 rounded-full flex items-center justify-center mr-4 ' + data.color;
+            
+            const container = document.getElementById('chaptersContainer');
+            const noChaptersMsg = document.getElementById('noChaptersMessage');
+            
+            if (data.chapters.length === 0) {
+                container.style.display = 'none';
+                noChaptersMsg.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

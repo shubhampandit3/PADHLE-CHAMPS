@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCrack Batch 2025 - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="codecrack-responsive.css">
+    
+    <style>
+        .navbar { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .nav-link { position: relative; overflow: hidden; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: linear-gradient(90deg, #059669, #0d9488); transition: all 0.3s ease; transform: translateX(-50%); }
+        .nav-link:hover::before { width: 80%; }
+        .nav-link:hover { box-shadow: 0 0 20px rgba(5, 150, 105, 0.15); }
+        @keyframes notification-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .notification-active { animation: notification-pulse 2s infinite; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left side: Brand -->
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-green-600 via-teal-600 to-green-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            CodeCrack Batch 2025
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-green-600 to-teal-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Right side: Navigation -->
+                <div class="flex items-center space-x-2">
+                    <a href="home.html" class="nav-link relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-green-600 hover:bg-green-50 group">
+                        <span class="relative z-10">Home</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a>
+                    <a href="subject-codecrack.html" class="nav-link relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-green-600 hover:bg-green-50 group">
+                        <span class="relative z-10">Subjects</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a>
+                    
+                    <!-- Notification Bell -->
+                    <div class="relative group">
+                        <a href="notification-codecrack.html" class="nav-link relative p-3 text-gray-700 rounded-lg transition-all duration-300 hover:text-green-600 hover:bg-green-50 flex items-center justify-center">
+                            <i class="fas fa-bell text-lg transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"></i>
+                            <span id="notification-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden animate-pulse shadow-lg">
+                                0
+                            </span>
+                        </a>
+                        <div class="absolute top-full right-0 mt-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                            Notifications
+                        </div>
+                    </div>
+                    
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-green-50 to-teal-50 px-4 py-2 rounded-xl border border-green-100 hover:border-green-200 transition-all duration-300 hover:shadow-md group cursor-pointer">
+                        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center transform transition-all duration-300 group-hover:scale-110">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <span class="font-semibold text-gray-700 group-hover:text-green-700 transition-colors duration-300" id="username">Hi Student</span>
+                        <i class="fas fa-chevron-down text-xs text-gray-500 transform transition-transform duration-300 group-hover:rotate-180"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Hero Section -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h1 class="text-5xl font-bold text-gray-900 mb-4">
+                    <span class="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+                        CodeCrack Batch 2025
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Master programming and web development with comprehensive coding courses designed for future developers
+                </p>
+            </div>
+
+            <!-- Batch Description -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">About This Batch</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            CodeCrack Batch 2025 is designed for aspiring programmers and web developers. Learn the fundamentals 
+                            of coding with HTML, CSS, JavaScript, and Python through hands-on projects and practical exercises.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-code text-green-600"></i>
+                                </div>
+                                <span class="text-gray-700">Hands-on coding projects and exercises</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-laptop-code text-teal-600"></i>
+                                </div>
+                                <span class="text-gray-700">Industry-standard programming languages</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-rocket text-emerald-600"></i>
+                                </div>
+                                <span class="text-gray-700">Build real-world applications</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Batch Highlights</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">4</div>
+                                <div class="text-sm text-gray-600">Programming Languages</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-teal-600">0</div>
+                                <div class="text-sm text-gray-600">Chapters Available</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-emerald-600">2025</div>
+                                <div class="text-sm text-gray-600">Target Year</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-lime-600">24/7</div>
+                                <div class="text-sm text-gray-600">Support</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subjects Overview -->
+            <div class="mb-8" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Programming Languages We Cover</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-html5 text-orange-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">HTML</h3>
+                        <p class="text-sm text-gray-600">Coming Soon</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-css3-alt text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">CSS</h3>
+                        <p class="text-sm text-gray-600">Coming Soon</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-js-square text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">JavaScript</h3>
+                        <p class="text-sm text-gray-600">Coming Soon</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-python text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Python</h3>
+                        <p class="text-sm text-gray-600">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="subject-codecrack.html" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-arrow-right mr-2"></i>
+                    Explore Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Load username from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            
+            // Load notification count with Firebase
+            loadNotificationCount();
+        });
+        
+        function loadNotificationCount() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+            
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            database.ref('notifications/codecrack').on('value', (snapshot) => {
+                const count = snapshot.numChildren();
+                const countElement = document.getElementById('notification-count');
+                if (count > 0) {
+                    countElement.textContent = count;
+                    countElement.classList.remove('hidden');
+                } else {
+                    countElement.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

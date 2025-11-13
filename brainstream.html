@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainstream - Unlock Your Potential. Stream Your Success.</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="brainstream.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1 class="brand-text">Brainstream</h1>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="user-name" id="userName">Loading...</span>
+                </div>
+                <select class="class-selector" id="classSelector">
+                    <option value="">Select Class</option>
+                    <option value="10">Class 10</option>
+                    <option value="9">Class 9</option>
+                    <option value="8">Class 8</option>
+                    <option value="5">Class 5</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Brainstream</h1>
+            <p class="hero-subtitle">Unlock Your Potential. Stream Your Success.</p>
+            <div class="hero-greeting">
+                <span>Hello, <span id="heroUserName">Student</span>! Ready to continue your learning journey?</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Content -->
+    <main class="main-content" id="dashboardContent">
+        <div class="container">
+            <!-- Continue Learning -->
+            <section class="section">
+                <h2 class="section-title">Continue Learning</h2>
+                <div class="learning-progress" id="learningProgress">
+                    <div class="no-progress" id="noProgress">
+                        <div class="no-progress-icon">
+                            <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                                <circle cx="50" cy="50" r="45" stroke="#667eea" stroke-width="3" fill="none" stroke-dasharray="5,5">
+                                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                                </circle>
+                                <path d="M35 45 L50 60 L65 35" stroke="#667eea" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Ready to Start Learning?</h3>
+                        <p>Choose a class from the dropdown above and begin your educational journey!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top Picks -->
+            <section class="section" id="topPicksSection">
+                <h2 class="section-title">Top Picks of the Week</h2>
+                <div class="courses-scroll" id="topPicksGrid">
+                    <!-- Top chapters will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Science Chapters -->
+            <section class="section" id="scienceSection" style="display: none;">
+                <h2 class="section-title">Complete Science</h2>
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Courses will be loaded dynamically based on selected class -->
+                </div>
+            </section>
+
+            <!-- English Chapters -->
+            <section class="section" id="englishSection" style="display: none;">
+                <h2 class="section-title">Complete English</h2>
+                <div class="courses-grid" id="englishGrid">
+                    <!-- English courses will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Social Science Chapters -->
+            <section class="section" id="socialScienceSection" style="display: none;">
+                <h2 class="section-title">Complete Social Science</h2>
+                <div class="courses-grid" id="socialScienceGrid">
+                    <!-- Social Science courses will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- History Chapters -->
+            <section class="section" id="historySection" style="display: none;">
+                <h2 class="section-title">Complete History</h2>
+                <div class="courses-scroll" id="historyGrid">
+                    <!-- History courses will be loaded dynamically -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="brainstream.js"></script>
+</body>
+</html>

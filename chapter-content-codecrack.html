@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Content - CodeCrack Batch 2025</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="codecrack-responsive.css">
+    <style>
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        .max-w-7xl { max-width: 100%; padding-left: 1rem; padding-right: 1rem; }
+        @media (min-width: 640px) { .max-w-7xl { padding-left: 1.5rem; padding-right: 1.5rem; } }
+        @media (min-width: 1024px) { .max-w-7xl { padding-left: 2rem; padding-right: 2rem; } }
+        @media (min-width: 1280px) { .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; } }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="navbar fixed top-0 w-full z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-green-600">CodeCrack Batch 2025</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="home.html" class="text-gray-700 hover:text-green-600 font-medium transition-colors">Home</a>
+                    <a href="subject-codecrack.html" class="text-gray-700 hover:text-green-600 font-medium transition-colors">Subjects</a>
+                    <div class="flex items-center space-x-2 bg-green-100 px-3 py-2 rounded-lg">
+                        <i class="fas fa-user text-green-600"></i>
+                        <span class="font-semibold text-green-800" id="username">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" data-aos="fade-up">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-code text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900">Programming Chapter</h1>
+                            <p class="text-gray-600">CodeCrack Batch</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700 text-lg">Chapter content will be available soon.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                <div class="tab-nav-container">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" data-tab="videos">
+                            <i class="fas fa-play"></i>
+                            <span>Videos</span>
+                        </button>
+                        <button class="tab-btn" data-tab="notes">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Notes</span>
+                        </button>
+                        <button class="tab-btn" data-tab="dpp">
+                            <i class="fas fa-tasks"></i>
+                            <span>DPP</span>
+                        </button>
+                        <button class="tab-btn" data-tab="quiz">
+                            <i class="fas fa-question-circle"></i>
+                            <span>DPP QUIZ</span>
+                        </button>
+                        <button class="tab-btn" data-tab="tests">
+                            <i class="fas fa-clipboard-check"></i>
+                            <span>TESTS</span>
+                        </button>
+                        <button class="tab-btn" data-tab="testpdfs">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>TEST PDFs</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content p-6">
+                    <div class="tab-pane active" id="videos-tab">
+                        <div class="text-center py-12">
+                            <i class="fas fa-video text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Videos Available</h3>
+                            <p class="text-gray-500">Programming videos will be added soon.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="notes-tab">
+                        <div class="text-center py-12">
+                            <i class="fas fa-sticky-note text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Notes Available</h3>
+                            <p class="text-gray-500">Programming notes will be added soon.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="dpp-tab">
+                        <div class="text-center py-12">
+                            <i class="fas fa-clipboard-list text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPP Available</h3>
+                            <p class="text-gray-500">Programming exercises will be added soon.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="quiz-tab">
+                        <div class="space-y-4" id="dppContainer">
+                            <div class="text-center py-12">
+                                <i class="fas fa-question-circle text-6xl text-gray-300 mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading DPPs...</h3>
+                                <p class="text-gray-500">Please wait while we load available DPPs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tests-tab">
+                        <div class="space-y-4" id="testsContainer">
+                            <div class="text-center py-12">
+                                <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading Tests...</h3>
+                                <p class="text-gray-500">Please wait while we load available tests.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="testpdfs-tab">
+                        <div class="text-center py-12">
+                            <i class="fas fa-file-pdf text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Test PDFs Available</h3>
+                            <p class="text-gray-500">Programming test PDFs will be added soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons mt-8" data-aos="fade-up" data-aos-delay="500">
+                <button onclick="goBack()" class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Chapters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            initializeTabs();
+            loadTests();
+            loadDPPs();
+        });
+
+        function initializeTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(targetTab + '-tab').classList.add('active');
+                });
+            });
+        }
+
+        // Load tests for CodeCrack batch
+        async function loadTests() {
+            const testsContainer = document.getElementById('testsContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'computer';
+            const currentChapter = urlParams.get('chapter') || 'html-basics';
+            
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            try {
+                const testsSnapshot = await database.ref('tests').orderByChild('batch').equalTo('codecrack').once('value');
+                const tests = [];
+                testsSnapshot.forEach(childSnapshot => {
+                    const test = childSnapshot.val();
+                    test.id = childSnapshot.key;
+                    
+                    // Filter tests based on visibleIn field
+                    if (test.visibleIn && test.visibleIn[currentSubject] && 
+                        test.visibleIn[currentSubject].includes(currentChapter)) {
+                        tests.push(test);
+                    } else if (!test.visibleIn) {
+                        // Show all tests if no visibility filter is set (backward compatibility)
+                        tests.push(test);
+                    }
+                });
+
+                if (tests.length === 0) {
+                    testsContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Tests Available</h3>
+                            <p class="text-gray-500">Tests for CodeCrack batch will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's test attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userAttempts = {};
+                if (userData) {
+                    const attemptsSnapshot = await database.ref('testResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    attemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userAttempts[result.testId]) {
+                            userAttempts[result.testId] = 0;
+                        }
+                        userAttempts[result.testId]++;
+                    });
+                }
+
+                testsContainer.innerHTML = tests.map(test => {
+                    const startDate = new Date(test.startDateTime);
+                    const endDate = new Date(test.endDateTime);
+                    const now = new Date();
+                    const hasAttempted = userAttempts[test.id] > 0;
+                    
+                    let status = 'upcoming';
+                    let statusClass = 'bg-yellow-100 text-yellow-800';
+                    let statusText = 'Upcoming';
+                    
+                    if (now >= startDate && now <= endDate) {
+                        status = 'active';
+                        statusClass = 'bg-green-100 text-green-800';
+                        statusText = 'Active';
+                    } else if (now > endDate) {
+                        status = 'ended';
+                        statusClass = 'bg-red-100 text-red-800';
+                        statusText = 'Ended';
+                    }
+
+                    return `
+                        <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="test-icon">
+                                    <i class="fas fa-clipboard-check text-green-500 text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-semibold text-gray-800">${test.title}</h3>
+                                        <span class="${statusClass} px-2 py-1 rounded text-xs font-medium">${statusText}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600 mb-2">
+                                        <i class="fas fa-clock mr-1"></i>${test.duration} minutes | 
+                                        <i class="fas fa-star mr-1"></i>${test.totalMarks} marks | 
+                                        <i class="fas fa-question-circle mr-1"></i>${test.questions.length} questions
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        ${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString()} - ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString()}
+                                    </div>
+                                    ${status === 'active' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 ${hasAttempted ? 'bg-teal-600 hover:bg-teal-700' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                            <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt Test' : 'Start Test'}
+                                        </button>
+                                    ` : status === 'ended' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 bg-teal-600 text-white px-4 py-2 rounded text-sm hover:bg-teal-700 transition-colors">
+                                            <i class="fas fa-redo mr-1"></i>Reattempt Test
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading tests:', error);
+                testsContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading Tests</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startTest(testId) {
+            window.location.href = `attempt-student-test.html?testId=${testId}`;
+        }
+
+        async function loadDPPs() {
+            const dppContainer = document.getElementById('dppContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'computer';
+            const currentChapter = urlParams.get('chapter') || 'html-basics';
+            
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+                authDomain: "quiz-app-10f81.firebaseapp.com",
+                databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+                projectId: "quiz-app-10f81",
+                storageBucket: "quiz-app-10f81.firebasestorage.app",
+                messagingSenderId: "351578019731",
+                appId: "1:351578019731:web:2055fe24498ca17908fa66"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+            
+            try {
+                const dppsSnapshot = await database.ref('dpps').orderByChild('batch').equalTo('codecrack').once('value');
+                const dpps = [];
+                dppsSnapshot.forEach(childSnapshot => {
+                    const dpp = childSnapshot.val();
+                    dpp.id = childSnapshot.key;
+                    // Match by subject and chapter (exact match or partial match)
+                    if (dpp.subject === currentSubject && 
+                        (dpp.chapter === currentChapter || 
+                         dpp.chapter.includes(currentChapter) || 
+                         currentChapter.includes(dpp.chapter))) {
+                        dpps.push(dpp);
+                    }
+                });
+
+                if (dpps.length === 0) {
+                    dppContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-tasks text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPPs Available</h3>
+                            <p class="text-gray-500">DPPs for this chapter will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's DPP attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userDppAttempts = {};
+                if (userData) {
+                    const dppAttemptsSnapshot = await database.ref('dppResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    dppAttemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userDppAttempts[result.dppId]) {
+                            userDppAttempts[result.dppId] = 0;
+                        }
+                        userDppAttempts[result.dppId]++;
+                    });
+                }
+
+                dppContainer.innerHTML = dpps.map(dpp => {
+                    const hasAttempted = userDppAttempts[dpp.id] > 0;
+                    return `
+                    <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                        <div class="flex items-start gap-4">
+                            <div class="test-icon">
+                                <i class="fas fa-tasks text-green-500 text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">${dpp.title}</h3>
+                                <div class="text-sm text-gray-600 mb-2">
+                                    <i class="fas fa-infinity mr-1"></i>Unlimited Time | 
+                                    <i class="fas fa-star mr-1"></i>${dpp.totalMarks} marks | 
+                                    <i class="fas fa-question-circle mr-1"></i>${dpp.questions.length} questions
+                                </div>
+                                <div class="text-xs text-gray-500 mb-2">
+                                    Subject: ${dpp.subject} | Chapter: ${dpp.chapter}
+                                </div>
+                                <button onclick="startDPP('${dpp.id}')" class="${hasAttempted ? 'bg-teal-600 hover:bg-teal-700' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                    <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt DPP' : 'Start DPP'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `}).join('');
+            } catch (error) {
+                console.error('Error loading DPPs:', error);
+                dppContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading DPPs</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startDPP(dppId) {
+            localStorage.setItem('selectedDppId', dppId);
+            window.location.href = 'attempt-dpp-students.html';
+        }
+
+        function goBack() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject') || 'html';
+            window.location.href = `chapter-codecrack.html?subject=${subject}`;
+        }
+    </script>
+    
+    <style>
+        .test-icon {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content-item {
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            border-color: #059669;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1);
+        }
+    </style>
+</body>
+</html>

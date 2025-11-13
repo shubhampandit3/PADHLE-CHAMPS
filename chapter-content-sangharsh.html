@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Content - Sangharsh Batch 2025</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Poppins', sans-serif; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        .max-w-7xl { max-width: 100%; padding-left: 1rem; padding-right: 1rem; }
+        @media (min-width: 640px) { .max-w-7xl { padding-left: 1.5rem; padding-right: 1.5rem; } }
+        @media (min-width: 1024px) { .max-w-7xl { padding-left: 2rem; padding-right: 2rem; } }
+        @media (min-width: 1280px) { .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; } }
+        
+        .navbar { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        
+        .hamburger { display: none; flex-direction: column; cursor: pointer; padding: 8px; }
+        .hamburger span { width: 25px; height: 3px; background: linear-gradient(90deg, #3b82f6, #8b5cf6); margin: 3px 0; transition: all 0.3s ease; border-radius: 3px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+        
+        .mobile-menu { position: fixed; top: 64px; right: -100%; width: 280px; height: calc(100vh - 64px); background: white; box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1); transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 40; padding: 20px; overflow-y: auto; }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 39; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        @media (max-width: 768px) { .hamburger { display: flex !important; } .desktop-nav { display: none !important; } }
+        @media (min-width: 769px) { .hamburger { display: none !important; } .mobile-menu { display: none !important; } }
+        
+        .mobile-menu-item { animation: slideInRight 0.3s ease forwards; opacity: 0; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        .mobile-menu.active .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+        
+        .tab-nav-container { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; border-bottom: 2px solid #e5e7eb; }
+        .tab-nav-container::-webkit-scrollbar { display: none; }
+        .tab-nav { display: flex; gap: 0.5rem; padding: 1rem; min-width: max-content; }
+        .tab-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: transparent; border: none; border-radius: 0.5rem; font-weight: 500; color: #6b7280; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }
+        .tab-btn:hover { background: #f3f4f6; color: #3b82f6; }
+        .tab-btn.active { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        .tab-btn .material-icons { font-size: 20px; }
+        
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .content-item { position: relative; transition: all 0.3s ease; }
+        .content-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        
+        .complete-icon, .completed-icon { cursor: pointer; padding: 0.5rem; border-radius: 50%; transition: all 0.3s ease; font-size: 24px; }
+        .complete-icon { color: #d1d5db; }
+        .complete-icon:hover { color: #6b7280; background: #f3f4f6; transform: scale(1.1); }
+        .completed-icon { color: #6b7280; cursor: default; background: #f3f4f6; }
+        
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); display: flex; align-items: center; gap: 0.5rem; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center group">
+                    <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                        Sangharsh 2025
+                    </span>
+                </div>
+                
+                <div class="desktop-nav hidden md:flex items-center space-x-2">
+                    <a href="home.html" class="px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="subject-sangharsh.html" class="px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">menu_book</span>
+                        <span>Subjects</span>
+                    </a>
+                    <a href="notification-sangharsh.html" class="relative p-3 text-gray-700 rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50">
+                        <span class="material-icons text-xl">notifications</span>
+                        <span id="notification-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden animate-pulse shadow-lg">0</span>
+                    </a>
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-xl border border-blue-100">
+                        <span class="material-icons text-blue-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+                
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    
+    <div class="mobile-menu">
+        <a href="home.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">home</span>
+            <span class="font-medium text-gray-700">Home</span>
+        </a>
+        <a href="subject-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">menu_book</span>
+            <span class="font-medium text-gray-700">Subjects</span>
+        </a>
+        <a href="notification-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">notifications</span>
+            <span class="font-medium text-gray-700">Notifications</span>
+            <span id="mobile-notification-count" class="ml-auto bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
+        </a>
+        <div class="mobile-menu-item p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+            <div class="flex items-center gap-3">
+                <span class="material-icons text-blue-600">account_circle</span>
+                <span class="font-semibold text-gray-700" id="mobile-username">Hi Student</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Chapter Header -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8" data-aos="fade-up">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <div id="subjectIcon" class="w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                            <span id="subjectIconClass" class="material-icons text-3xl text-white"></span>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900" id="chapterTitle">Chapter Title</h1>
+                            <p class="text-gray-600" id="subjectName">Subject Name</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium"
+                            id="chapterDuration">
+                            Duration
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-gray-700 text-lg" id="chapterDescription">Chapter description will appear here.</p>
+            </div>
+
+            <!-- Icon Legend (Mobile Only) -->
+            <div class="icon-legend bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-4 md:hidden border border-blue-100" data-aos="fade-up" data-aos-delay="50">
+                <div class="grid grid-cols-3 gap-3 text-xs text-gray-700">
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-red-500" style="font-size: 18px;">play_circle</span>
+                        <span>Videos</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-red-500" style="font-size: 18px;">description</span>
+                        <span>Notes</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-green-500" style="font-size: 18px;">assignment</span>
+                        <span>DPP</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-blue-500" style="font-size: 18px;">quiz</span>
+                        <span>DPP Quiz</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-purple-500" style="font-size: 18px;">fact_check</span>
+                        <span>Tests</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="material-icons text-orange-500" style="font-size: 18px;">picture_as_pdf</span>
+                        <span>Test PDFs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="bg-white rounded-2xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                <!-- Tab Navigation -->
+                <div class="tab-nav-container">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" data-tab="videos">
+                            <span class="material-icons">play_circle</span>
+                            <span>Videos</span>
+                        </button>
+                        <button class="tab-btn" data-tab="notes">
+                            <span class="material-icons">description</span>
+                            <span>Notes</span>
+                        </button>
+                        <button class="tab-btn" data-tab="dpp">
+                            <span class="material-icons">assignment</span>
+                            <span>DPP</span>
+                        </button>
+                        <button class="tab-btn" data-tab="quiz">
+                            <span class="material-icons">quiz</span>
+                            <span>DPP QUIZ</span>
+                        </button>
+                        <button class="tab-btn" data-tab="tests">
+                            <span class="material-icons">fact_check</span>
+                            <span>TESTS</span>
+                        </button>
+                        <button class="tab-btn" data-tab="testpdfs">
+                            <span class="material-icons">picture_as_pdf</span>
+                            <span>TEST PDFs</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content p-6">
+                    <!-- Videos Tab -->
+                    <div class="tab-pane active" id="videos-tab">
+                        <div class="space-y-4" id="videosContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4" style="font-size: 64px;">videocam</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Videos Available</h3>
+                                <p class="text-gray-500">Video content for this chapter will be added soon.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notes Tab -->
+                    <div class="tab-pane" id="notes-tab">
+                        <div class="space-y-4" id="notesContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4" style="font-size: 64px;">note</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Notes Available</h3>
+                                <p class="text-gray-500">Study notes for this chapter will be added soon.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DPP Tab -->
+                    <div class="tab-pane" id="dpp-tab">
+                        <div class="space-y-4" id="assignmentsContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4" style="font-size: 64px;">assignment</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPP Available</h3>
+                                <p class="text-gray-500">Daily Practice Problems for this chapter will be added soon.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DPP Quiz Tab -->
+                    <div class="tab-pane" id="quiz-tab">
+                        <div class="space-y-4" id="dppContainer">
+                            <div class="text-center py-12">
+                                <span class="material-icons text-gray-300 mb-4" style="font-size: 64px;">quiz</span>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading DPPs...</h3>
+                                <p class="text-gray-500">Please wait while we load available DPPs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tests Tab -->
+                    <div class="tab-pane" id="tests-tab">
+                        <div class="space-y-4" id="testsContainer">
+                            <div class="text-center py-12">
+                                <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">Loading Tests...</h3>
+                                <p class="text-gray-500">Please wait while we load available tests.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test PDFs Tab -->
+                    <div class="tab-pane" id="testpdfs-tab">
+                        <div class="space-y-4" id="testPdfsContainer">
+                            <div class="text-center py-12">
+                                <i class="fas fa-file-pdf text-6xl text-gray-300 mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Test PDFs Available</h3>
+                                <p class="text-gray-500">Downloadable test papers will be added soon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons mt-8" data-aos="fade-up" data-aos-delay="500">
+                <button onclick="goBack()"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Back to Chapters</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Home JS for Firebase functions -->
+    <script src="home.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Chapter data with content
+        const chapterData = {
+            'english': {
+                title: 'English',
+                icon: 'menu_book',
+                color: 'bg-gradient-to-br from-red-500 to-pink-600',
+                chapters: {
+                    'warmth-candle': {
+                        title: 'The Warmth of a Candle',
+                        description: 'Exploring themes of hope and comfort in literature through this beautiful piece that teaches us about finding light in darkness.',
+                        duration: '45 min',
+                        videos: [
+                            { title: 'Full Chapter Explanation', url: 'https://youtu.be/vsURGvzFMVw?si=z_9TfO9iKB1zI-aE', type: 'youtube' },
+                        ],
+                        notes: [
+                            { title: 'Chapter Notes', url: 'TWC (THE WARMTH OF A CANDLE).pdf' },
+                        ],
+                        assignments: [
+                            { title: 'DPP 1 - THE WARMTH OF A CANDLE', url: 'DPP 1 - THE WARMTH OF A CANDLE.pdf' }
+                        ],
+                    },
+                    'my-shadow': {
+                        title: 'My Shadow',
+                        description: 'Understanding poetry and literary devices through this classic poem that explores the relationship between a child and their shadow.',
+                        duration: '35 min',
+                        videos: [
+                            { title: 'FULL POEM EXPLANATION', url: 'https://youtu.be/ZIfGgklOH28?si=tcNxaGO3hh0-BiS8', type: 'youtube' }
+                        ],
+                        notes: [
+                            { title: 'POEM NOTES', url: 'MY SHADOW.pdf' },
+                            { title: 'MIND MAP - MY SHADOW', url: 'MIND MAP - MY SHADOW.pdf' }
+                        ],
+                    },
+                    'leisure': {
+                        title: 'Leisure',
+                        description: 'Understanding poetry and literary devices through this classic poem that explores the relationship between a child and their shadow.',
+                        duration: '35 min',
+                        videos: [
+                            { title: 'CHAPTER - LEISURE| PART 1| SANGHARSH BATCH| 2025-26', url: 'https://youtu.be/kQhjW7ApsTk?si=SPUyv2TWuosH_uti', type: 'youtube' }
+                        ],
+                        notes: [
+                            { title: 'POEM NOTES', url: 'LEISURE.pdf' }
+                        ],
+                    },
+                }
+            },
+            'maths': {
+                title: 'Maths',
+                icon: 'calculate',
+                color: 'bg-gradient-to-br from-yellow-500 to-orange-600',
+                chapters: {
+                    'percentage': {
+                        title: 'Percentage',
+                        description: '',
+                        duration: '60 min',
+                        videos: [
+                            {title: 'Percentage (PART 1)', url: 'https://youtu.be/Y5I3HyFP_3U?si=Lx586tcZn2Z_5OCR', type: 'youtube'},
+                        ],
+                        notes: [
+                        ],
+                        assignments: [
+                        ],
+                    },
+                }
+            },
+            'science': {
+                title: 'Science',
+                icon: 'science',
+                color: 'bg-gradient-to-br from-blue-500 to-cyan-600',
+                chapters: {
+                    'circulatory-system': {
+                        title: 'The Circulatory System',
+                        description: 'Understanding blood circulation and heart functions, exploring how the cardiovascular system works to keep our body healthy and functioning.',
+                        duration: '60 min',
+                        videos: [
+                            { title: 'The Circulatory System (PART 1)', url: 'https://youtu.be/A5UjnefArVc?si=0iZxb35RrO1Qj7zv', type: 'youtube' },
+                            { title: 'The Circulatory System (PART 2)', url: 'https://youtu.be/jRmbmpOgGzA?si=Mm-oKqycWa_IoWqi', type: 'youtube' },
+                            { title: 'The Circulatory System (PART 3)', url: 'https://youtu.be/7ZR5QTvIltw?si=_TS3HRu-nZOuJqnW', type: 'youtube' }
+                        ],
+                        notes: [
+                            { title: 'Circulatory System Notes (Part 1)', url: 'CIRCULATORY SYSTEM.pdf' },
+                            { title: 'Circulatory System Notes (Part 2)', url: 'CIRCULATORY SYSTEM 2.pdf' },
+                            { title: 'Circulatory System Notes (Part 3)', url: 'CIRCULATORY SYSTEM PART 3.pdf' },
+                            { title: 'Circulatory System Summary Notes', url: 'SUMMARY CIRCULATORY SYSTEM.pdf' },
+                        ],
+                        assignments: [
+                            { title: 'DPP 1: The Circulatory System', url: 'DPP 01 CIRCULATORY SYSTEM.pdf' }
+                        ],
+                        testPdfs: [
+                            { title: 'SCIENCE: PRACTICE TEST 01 (SYLLABUS)', url: 'TEST SYLLABUS - 1.pdf' },
+                        ],
+                    },
+                    'skeletal-system': {
+                        title: 'The Skeletal System',
+                        description: 'Understanding about bones',
+                        duration: '60 min',
+                        videos:[
+                            {title: 'The Skeletal System (PART 1)', url: 'https://youtu.be/kfc7ZpgcWMg?si=CcmcZi51hkBNsenV', type: 'youtube'}
+                        ],
+                        notes: [
+                            {title: 'Skletal System Notes (Part 1)', url: 'SKELETAL SYSTEM.pdf'}
+                        ],
+                        testPdfs: [
+                            { title: 'SCIENCE: PRACTICE TEST 01 (SYLLABUS)', url: 'TEST SYLLABUS - 1.pdf' },
+                        ],
+                    }
+                }
+            },
+            'social-science': {
+                title: 'Social Science',
+                icon: 'public',
+                color: 'bg-gradient-to-br from-green-500 to-emerald-600',
+                chapters: {
+                    'evolution-humans': {
+                        title: 'Evolution of Human Beings',
+                        description: 'Tracing human development through history, from early ancestors to modern humans, understanding the journey of human civilization.',
+                        duration: '50 min',
+                        videos: [
+                            { title: 'Evolution Of Human Beings (PART 1)', url: 'https://youtu.be/FeDrz9iO4K4?si=q2R4GQSk2XrBfsiy', type: 'youtube' },
+                            { title: 'Evolution Of Human Beings (PART 2)', url: 'https://youtu.be/3d1_ci7AaPA?si=xrMKiGd18V10_opH', type: 'youtube' },
+                            { title: 'Evolution Of Human Beings (PART 3)', url: 'https://youtu.be/ilLJqtsTpQw?si=3i-VAIxCEHIFuI6x', type: 'youtube' },
+                        ],
+                        notes: [
+                            { title: 'Evolution Of Human Beings Notes (PART 1)', url: 'EVOL. Of HUMAN BEINGS (Part 1).pdf' },
+                            { title: 'Evolution Of Human Beings Notes (PART 2)', url: 'EVO OF HUMAN BEING (PART 2).pdf' },
+                            { title: 'Evolution Of Human Beings Notes (PART 3)', url: 'EVO. OF HUMAN BEING (PART 3).pdf' },
+                        ],
+                        assignments: [
+                            { title: 'DPP 01', url: 'DPP 01 EVOLUTION OF HUMAN.pdf' },
+                        ],
+                    }
+                }
+            },
+            'computer': {
+                title: 'Computer',
+                icon: 'computer',
+                color: 'bg-gradient-to-br from-purple-500 to-indigo-600',
+                chapters: {
+                    'simple-circuits': {
+                        title: 'Simple Circuits',
+                        description: 'Basic electronics and circuit design, learning fundamental concepts of electrical circuits and how they work in everyday devices.',
+                        duration: '40 min',
+                        videos: [
+                            { title: 'Coming Soon', url: '/', type: 'youtube' }
+                        ],
+                        notes: [
+                            { title: 'Simple CIrcuits Notes (PART 1)', url: 'Simple Circuits (PART 1).pdf' }
+                        ],
+                        assignments: [
+                        ],
+                    }
+                }
+            }
+        };
+
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Load username and chapter content
+        document.addEventListener('DOMContentLoaded', function () {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            if(document.getElementById('mobile-username')) document.getElementById('mobile-username').textContent = `Hi ${username}`;
+
+            // Get parameters from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject');
+            const chapter = urlParams.get('chapter');
+
+            loadChapterContent(subject, chapter);
+            setTimeout(() => checkCompletedContent(subject, chapter), 100);
+            loadTests();
+            loadDPPs();
+            
+            // Override markContentComplete after home.js loads
+            setTimeout(() => {
+                window.markContentComplete = function(contentId, batchType) {
+                    try {
+                        const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                        
+                        if (userProgress[contentId]?.completed) {
+                            showToast('Already marked as complete!');
+                            return;
+                        }
+                        
+                        userProgress[contentId] = {
+                            completed: true,
+                            completedAt: new Date().toISOString()
+                        };
+                        
+                        localStorage.setItem('userProgress', JSON.stringify(userProgress));
+                        
+                        const icon = document.querySelector(`[data-content-id="${contentId}"]`);
+                        if (icon) {
+                            icon.classList.remove('complete-icon');
+                            icon.classList.add('completed-icon');
+                            icon.innerHTML = '<span class="material-icons">check_circle</span>';
+                            icon.title = 'Completed';
+                            icon.onclick = null;
+                        }
+                        
+                        showToast('Marked as complete! +5 XP');
+                    } catch (error) {
+                        console.error('Error marking content complete:', error);
+                        showToast('Error marking as complete');
+                    }
+                };
+            }, 500);
+        });
+
+        // Check completed content and update icons
+        function checkCompletedContent(subject, chapterId) {
+            try {
+                const userProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                const icons = document.querySelectorAll('.complete-icon');
+                for (const icon of icons) {
+                    const contentId = icon.getAttribute('data-content-id');
+                    const isCompleted = userProgress[contentId]?.completed || false;
+                    if (isCompleted) {
+                        icon.classList.remove('complete-icon');
+                        icon.classList.add('completed-icon');
+                        icon.innerHTML = '<span class="material-icons">check_circle</span>';
+                        icon.title = 'Completed';
+                        icon.onclick = null;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking completed content:', error);
+            }
+        }
+
+        function loadChapterContent(subject, chapterId) {
+            const subjectData = chapterData[subject];
+            const chapter = subjectData?.chapters[chapterId];
+
+            if (!subjectData || !chapter) {
+                window.location.href = 'subject-sangharsh.html';
+                return;
+            }
+
+            // Update header
+            document.getElementById('chapterTitle').textContent = chapter.title;
+            document.getElementById('subjectName').textContent = subjectData.title;
+            document.getElementById('chapterDescription').textContent = chapter.description;
+            document.getElementById('chapterDuration').textContent = chapter.duration;
+            document.getElementById('subjectIconClass').className = 'material-icons text-3xl text-white';
+            document.getElementById('subjectIconClass').textContent = subjectData.icon;
+            document.getElementById('subjectIcon').className = 'w-12 h-12 rounded-full flex items-center justify-center mr-4 ' + subjectData.color;
+
+            // Load content sections
+            loadVideos(chapter.videos, subject, chapterId);
+            loadNotes(chapter.notes, subject, chapterId);
+            loadAssignments(chapter.assignments, subject, chapterId);
+            loadTestPdfs(chapter.testPdfs, subject, chapterId);
+
+            window.currentSubject = subject;
+            initializeTabs();
+        }
+
+        // Tab functionality
+        function initializeTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and panes
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding pane
+                    btn.classList.add('active');
+                    document.getElementById(targetTab + '-tab').classList.add('active');
+                });
+            });
+        }
+
+        function loadVideos(videos, subject, chapterId) {
+            const container = document.getElementById('videosContainer');
+            if (!videos || videos.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><i class="fas fa-video text-6xl text-gray-300 mb-4"></i><h3 class="text-xl font-semibold text-gray-600 mb-2">No Videos Available</h3></div>';
+                return;
+            }
+
+            const subjectData = chapterData[subject];
+            container.innerHTML = videos.map((video, index) => `
+                <div class="content-item bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full ${video.type === 'youtube' ? 'bg-red-100' : 'bg-blue-100'} flex items-center justify-center flex-shrink-0">
+                            <span class="material-icons ${video.type === 'youtube' ? 'text-red-500' : 'text-blue-500'}" style="font-size: 24px;">${video.type === 'youtube' ? 'play_circle' : 'videocam'}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${video.title}</h3>
+                            <a href="video-player.html?id=${subject}_${chapterId}_video_${index}&title=${encodeURIComponent(video.title)}&subject=${encodeURIComponent(subjectData.title)}&type=${video.type}&url=${encodeURIComponent(video.url)}" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                <span class="material-icons" style="font-size: 16px;">play_arrow</span>
+                                <span>Watch Video</span>
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_video_${index}', 'sangharsh-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_video_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadNotes(notes, subject, chapterId) {
+            const container = document.getElementById('notesContainer');
+            if (!notes || notes.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><i class="fas fa-sticky-note text-6xl text-gray-300 mb-4"></i><h3 class="text-xl font-semibold text-gray-600 mb-2">No Notes Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = notes.map((note, index) => `
+                <div class="content-item bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                            <span class="material-icons text-red-500" style="font-size: 24px;">picture_as_pdf</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${note.title}</h3>
+                            <a href="${note.url}" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                <span class="material-icons" style="font-size: 16px;">visibility</span>
+                                <span>View PDF</span>
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_note_${index}', 'sangharsh-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_note_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAssignments(assignments, subject, chapterId) {
+            const container = document.getElementById('assignmentsContainer');
+            if (!assignments || assignments.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><i class="fas fa-clipboard-list text-6xl text-gray-300 mb-4"></i><h3 class="text-xl font-semibold text-gray-600 mb-2">No DPP Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = assignments.map((assignment, index) => `
+                <div class="content-item bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                            <span class="material-icons text-green-500" style="font-size: 24px;">assignment</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${assignment.title}</h3>
+                            <a href="${assignment.url}" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                <span class="material-icons" style="font-size: 16px;">visibility</span>
+                                <span>View DPP</span>
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_assignment_${index}', 'sangharsh-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_assignment_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadTestPdfs(testPdfs, subject, chapterId) {
+            const container = document.getElementById('testPdfsContainer');
+            if (!testPdfs || testPdfs.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><i class="fas fa-file-pdf text-6xl text-gray-300 mb-4"></i><h3 class="text-xl font-semibold text-gray-600 mb-2">No Test PDFs Available</h3></div>';
+                return;
+            }
+
+            container.innerHTML = testPdfs.map((testPdf, index) => `
+                <div class="content-item bg-gradient-to-r from-white to-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                            <span class="material-icons text-orange-500" style="font-size: 24px;">picture_as_pdf</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-800 mb-1">${testPdf.title}</h3>
+                            <a href="${testPdf.url}" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                <span class="material-icons" style="font-size: 16px;">visibility</span>
+                                <span>View Test PDF</span>
+                            </a>
+                        </div>
+                        <div onclick="markContentComplete('${subject}_${chapterId}_testpdf_${index}', 'sangharsh-enrollments')" 
+                             class="complete-icon" data-content-id="${subject}_${chapterId}_testpdf_${index}" title="Mark as Complete (+5 XP)">
+                            <span class="material-icons">check_circle_outline</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function goBack() {
+            const subject = window.currentSubject || 'english';
+            window.location.href = `chapter-sangharsh.html?subject=${subject}`;
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span class="material-icons">check_circle</span><span>${message}</span>`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Load tests for Sangharsh batch
+        async function loadTests() {
+            const testsContainer = document.getElementById('testsContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'english';
+            const currentChapter = urlParams.get('chapter') || 'warmth-candle';
+            
+            try {
+                const testsSnapshot = await database.ref('tests').orderByChild('batch').equalTo('sangharsh').once('value');
+                const tests = [];
+                testsSnapshot.forEach(childSnapshot => {
+                    const test = childSnapshot.val();
+                    test.id = childSnapshot.key;
+                    
+                    // Filter tests based on visibleIn field
+                    if (test.visibleIn && test.visibleIn[currentSubject] && 
+                        test.visibleIn[currentSubject].includes(currentChapter)) {
+                        tests.push(test);
+                    } else if (!test.visibleIn) {
+                        // Show all tests if no visibility filter is set (backward compatibility)
+                        tests.push(test);
+                    }
+                });
+
+                if (tests.length === 0) {
+                    testsContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-clipboard-check text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No Tests Available</h3>
+                            <p class="text-gray-500">Tests for Sangharsh batch will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's test attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userAttempts = {};
+                if (userData) {
+                    const attemptsSnapshot = await database.ref('testResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    attemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userAttempts[result.testId]) {
+                            userAttempts[result.testId] = 0;
+                        }
+                        userAttempts[result.testId]++;
+                    });
+                }
+
+                testsContainer.innerHTML = tests.map(test => {
+                    const startDate = new Date(test.startDateTime);
+                    const endDate = new Date(test.endDateTime);
+                    const now = new Date();
+                    const hasAttempted = userAttempts[test.id] > 0;
+                    
+                    let status = 'upcoming';
+                    let statusClass = 'bg-yellow-100 text-yellow-800';
+                    let statusText = 'Upcoming';
+                    
+                    if (now >= startDate && now <= endDate) {
+                        status = 'active';
+                        statusClass = 'bg-green-100 text-green-800';
+                        statusText = 'Active';
+                    } else if (now > endDate) {
+                        status = 'ended';
+                        statusClass = 'bg-red-100 text-red-800';
+                        statusText = 'Ended';
+                    }
+
+                    return `
+                        <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                            <div class="flex items-start gap-4">
+                                <div class="test-icon">
+                                    <i class="fas fa-clipboard-check text-blue-500 text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-semibold text-gray-800">${test.title}</h3>
+                                        <span class="${statusClass} px-2 py-1 rounded text-xs font-medium">${statusText}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600 mb-2">
+                                        <i class="fas fa-clock mr-1"></i>${test.duration} minutes | 
+                                        <i class="fas fa-star mr-1"></i>${test.totalMarks} marks | 
+                                        <i class="fas fa-question-circle mr-1"></i>${test.questions.length} questions
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        ${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString()} - ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString()}
+                                    </div>
+                                    ${status === 'active' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 ${hasAttempted ? 'bg-orange-600 hover:bg-orange-700' : 'bg-blue-600 hover:bg-blue-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                            <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt Test' : 'Start Test'}
+                                        </button>
+                                    ` : status === 'ended' ? `
+                                        <button onclick="startTest('${test.id}')" class="mt-2 bg-orange-600 text-white px-4 py-2 rounded text-sm hover:bg-orange-700 transition-colors">
+                                            <i class="fas fa-redo mr-1"></i>Reattempt Test
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading tests:', error);
+                testsContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading Tests</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startTest(testId) {
+            window.location.href = `attempt-student-test.html?testId=${testId}`;
+        }
+
+        async function loadDPPs() {
+            const dppContainer = document.getElementById('dppContainer');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSubject = urlParams.get('subject') || 'english';
+            const currentChapter = urlParams.get('chapter') || 'warmth-candle';
+            
+            try {
+                const dppsSnapshot = await database.ref('dpps').orderByChild('batch').equalTo('sangharsh').once('value');
+                const dpps = [];
+                dppsSnapshot.forEach(childSnapshot => {
+                    const dpp = childSnapshot.val();
+                    dpp.id = childSnapshot.key;
+                    // Match by subject and chapter (exact match or partial match)
+                    if (dpp.subject === currentSubject && 
+                        (dpp.chapter === currentChapter || 
+                         dpp.chapter.includes(currentChapter) || 
+                         currentChapter.includes(dpp.chapter))) {
+                        dpps.push(dpp);
+                    }
+                });
+
+                if (dpps.length === 0) {
+                    dppContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <i class="fas fa-tasks text-6xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">No DPPs Available</h3>
+                            <p class="text-gray-500">DPPs for this chapter will be added soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Get user's DPP attempts
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const userDppAttempts = {};
+                if (userData) {
+                    const dppAttemptsSnapshot = await database.ref('dppResults').orderByChild('studentId').equalTo(userData.userId).once('value');
+                    dppAttemptsSnapshot.forEach(childSnapshot => {
+                        const result = childSnapshot.val();
+                        if (!userDppAttempts[result.dppId]) {
+                            userDppAttempts[result.dppId] = 0;
+                        }
+                        userDppAttempts[result.dppId]++;
+                    });
+                }
+
+                dppContainer.innerHTML = dpps.map(dpp => {
+                    const hasAttempted = userDppAttempts[dpp.id] > 0;
+                    return `
+                    <div class="content-item bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                        <div class="flex items-start gap-4">
+                            <div class="test-icon">
+                                <i class="fas fa-tasks text-blue-500 text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800 mb-1">${dpp.title}</h3>
+                                <div class="text-sm text-gray-600 mb-2">
+                                    <i class="fas fa-infinity mr-1"></i>Unlimited Time | 
+                                    <i class="fas fa-star mr-1"></i>${dpp.totalMarks} marks | 
+                                    <i class="fas fa-question-circle mr-1"></i>${dpp.questions.length} questions
+                                </div>
+                                <div class="text-xs text-gray-500 mb-2">
+                                    Subject: ${dpp.subject} | Chapter: ${dpp.chapter}
+                                </div>
+                                <button onclick="startDPP('${dpp.id}')" class="${hasAttempted ? 'bg-cyan-600 hover:bg-cyan-700' : 'bg-blue-600 hover:bg-blue-700'} text-white px-4 py-2 rounded text-sm transition-colors">
+                                    <i class="fas ${hasAttempted ? 'fa-redo' : 'fa-play'} mr-1"></i>${hasAttempted ? 'Reattempt DPP' : 'Start DPP'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `}).join('');
+            } catch (error) {
+                console.error('Error loading DPPs:', error);
+                dppContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-red-600 mb-2">Error Loading DPPs</h3>
+                        <p class="text-red-500">Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function startDPP(dppId) {
+            localStorage.setItem('selectedDppId', dppId);
+            window.location.href = 'attempt-dpp-students.html';
+        }
+
+        // Custom markAsComplete function for this page
+        async function markContentComplete(contentId, enrollmentType) {
+            const icon = document.querySelector(`[data-content-id="${contentId}"]`);
+            if (icon && icon.classList.contains('complete-icon')) {
+                // Check if already completed
+                const localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                if (localProgress[contentId]) {
+                    alert('Content already completed!');
+                    return;
+                }
+
+                // Save to localStorage
+                localProgress[contentId] = {
+                    completed: true,
+                    completedAt: Date.now(),
+                    batchType: enrollmentType
+                };
+                localStorage.setItem('userProgress', JSON.stringify(localProgress));
+
+                // Award XP directly
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                if (userData && userData.userId) {
+                    await awardXP(userData.userId, 5);
+                }
+
+                // Update UI
+                icon.classList.remove('complete-icon');
+                icon.classList.add('completed-icon');
+                icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                icon.onclick = null;
+                showToast('Marked as Complete +5 XP');
+
+                // Refresh progress bars
+                refreshProgressBars();
+            }
+        }
+    </script>
+
+    <style>
+        .content-item {
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            border-color: #3B82F6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+
+        .video-thumbnail,
+        .notes-icon,
+        .assignment-icon,
+        .resource-icon {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .complete-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #6B7280;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+        .complete-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .completed-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            cursor: default;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4), 0 4px 10px rgba(16, 185, 129, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Tab Styles */
+        .tab-nav-container {
+            background: #F8FAFC;
+            border-radius: 1rem 1rem 0 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-nav {
+            display: flex;
+            padding: 1rem;
+            gap: 0.5rem;
+            min-width: max-content;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: white;
+            color: #6B7280;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn:hover {
+            color: #3B82F6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-btn i {
+            font-size: 1.125rem;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile specific styles */
+        @media (max-width: 768px) {
+            .tab-nav {
+                padding: 0.75rem;
+                gap: 0.375rem;
+            }
+
+            .tab-btn {
+                padding: 0.625rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</body>
+
+</html>

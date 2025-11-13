@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainstream Player</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="brainstream-player.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1 class="brand-text">Brainstream</h1>
+            </div>
+            <div class="nav-menu">
+                <button onclick="goBack()" class="nav-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="player-container">
+        <!-- Video Player Section -->
+        <div class="video-section">
+            <div class="video-player">
+                <div id="player"></div>
+                <div class="video-controls" id="videoControls">
+                    <!-- Center Controls -->
+                    <div class="center-controls">
+                        <div class="tap-zones">
+                            <div class="tap-left" id="tapLeft">
+                                <div class="tap-feedback">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M11.5 12L20 18V6l-8.5 6zM11 18V6l-8.5 6L11 18z"/>
+                                    </svg>
+                                    10s
+                                </div>
+                            </div>
+                            <div class="tap-right" id="tapRight">
+                                <div class="tap-feedback">
+                                    10s
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M4 18l8.5-6L4 6v12zM13 6v12l8.5-6L13 6z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="control-btn" id="rewind10">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                <path d="M3 3v5h5"/>
+                            </svg>
+                            <span class="control-text">10</span>
+                        </button>
+                        <button class="control-btn play-pause" id="playPause">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" id="playIcon">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" id="pauseIcon" style="display: none;">
+                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                            </svg>
+                        </button>
+                        <button class="control-btn" id="forward10">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+                                <path d="M21 3v5h-5"/>
+                            </svg>
+                            <span class="control-text">10</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Bottom Controls -->
+                    <div class="bottom-controls">
+                        <div class="progress-container">
+                            <div class="seek-bar-container">
+                                <div class="seek-bar-bg"></div>
+                                <div class="seek-bar-progress" id="seekProgress"></div>
+                                <div class="seek-bar-handle" id="seekHandle"></div>
+                                <input type="range" class="seek-bar" id="seekBar" min="0" max="100" value="0">
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <div class="time-display">
+                                <span id="currentTime">0:00</span>
+                                <span>/</span>
+                                <span id="totalTime">0:00</span>
+                            </div>
+                            <div class="right-controls">
+                                <select class="quality-control" id="qualityControl">
+                                    <option value="auto">Auto</option>
+                                </select>
+                                <select class="speed-control" id="speedControl">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>1x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                </select>
+                                <button class="control-btn" id="fullscreenBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="expandIcon">
+                                        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                    </svg>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" id="minimizeIcon" style="display: none;">
+                                        <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Info -->
+            <div class="video-info">
+                <h1 id="videoTitle">Loading...</h1>
+                <div class="video-meta">
+                    <div class="duration-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span id="videoDuration">0:00</span>
+                    </div>
+                    <div class="views-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                        <span id="videoViews">0 views</span>
+                    </div>
+                    <div class="video-actions">
+                        <button class="action-btn" id="likeBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                            </svg>
+                            <span id="likeCount">0</span>
+                        </button>
+                        <button class="action-btn" id="dislikeBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>
+                            </svg>
+                            <span id="dislikeCount">0</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Next Video Notification -->
+                <div class="next-video-notification" id="nextVideoNotification" style="display: none;">
+                    <div class="notification-content">
+                        <span>Next video will play in <span id="countdown">5</span> seconds</span>
+                        <button class="cancel-btn" id="cancelNext">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Playlist -->
+            <div class="playlist-section">
+                <div class="section-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15V6"/>
+                        <path d="M21 21H3"/>
+                        <path d="M3 6v15"/>
+                        <path d="M21 6H3"/>
+                    </svg>
+                    <h3>Playlist</h3>
+                </div>
+                <div class="playlist" id="playlist">
+                    <!-- Playlist items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <div class="section-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <h3>Comments</h3>
+                </div>
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Share your thoughts..."></textarea>
+                    <button onclick="addComment()" class="comment-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                        </svg>
+                        Post
+                    </button>
+                </div>
+                <div class="comments" id="comments">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="brainstream-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create DPP - Padhle Champs</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%); }
+        .gradient-text { background: linear-gradient(135deg, #10b981, #059669, #047857); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05); }
+        .glass-effect { backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .fade-in { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; opacity: 0; }
+        .slide-up { animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.12); }
+        .icon-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hover-lift:hover { transform: none; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); }
+            .mobile-hidden { display: none !important; }
+            .mobile-text-sm { font-size: 0.875rem; }
+            .mobile-p-4 { padding: 1rem; }
+            .mobile-gap-4 { gap: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-text-xs { font-size: 0.75rem; }
+            .mobile-p-3 { padding: 0.75rem; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="gradient-bg shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 mr-3 sm:mr-4 icon-pulse">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor" fill-opacity="0.2"/>
+                            <path d="M9 17H7C4.79086 17 3 15.2091 3 13V11C3 8.79086 4.79086 7 7 7H9M15 17H17C19.2091 17 21 15.2091 21 13V11C21 8.79086 19.2091 7 17 7H15M12 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl sm:text-2xl font-bold text-white font-poppins tracking-tight">DPP Creator Hub</span>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-6">
+                    <a href="home.html" class="glass-effect px-3 sm:px-4 py-2 rounded-xl text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="hidden sm:inline font-medium">Home</span>
+                    </a>
+                    <div class="glass-effect px-3 sm:px-4 py-2 rounded-xl flex items-center">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="font-semibold text-white text-sm sm:text-base" id="username">Teacher</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- DPP Details Form -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 fade-in hover-lift">
+            <div class="flex items-center mb-6 sm:mb-8">
+                <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 16H12V12H11M12 8H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">DPP Configuration</h2>
+            </div>
+
+            <form id="dppDetailsForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 7V4C4 3.46957 4.21071 2.96086 4.58579 2.58579C4.96086 2.21071 5.46957 2 6 2H18C18.5304 2 19.0391 2.21071 19.4142 2.58579C19.7893 2.96086 20 3.46957 20 4V7M4 7C4 6.46957 4.21071 5.96086 4.58579 5.58579C4.96086 5.21071 5.46957 5 6 5H18C18.5304 5 19.0391 5.21071 19.4142 5.58579C19.7893 5.96086 20 6.46957 20 7M4 7V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        DPP Title
+                    </label>
+                    <input type="text" id="dppTitle" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="✨ Enter an engaging DPP title..." required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C23 18.1645 22.7155 17.3541 22.2094 16.6977C21.7033 16.0414 20.9999 15.5766 20.2 15.3746" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8003 3.33204 17.5037 3.79668 18.0098 4.45302C18.5159 5.10936 18.8004 5.91973 18.8004 6.755C18.8004 7.59027 18.5159 8.40064 18.0098 9.05698C17.5037 9.71332 16.8003 10.178 16 10.38" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Target Batch
+                    </label>
+                    <select id="dppBatch" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                        <option value="">🎯 Select Target Batch</option>
+                        <option value="sangharsh">🔥 Sangharsh Batch 2025</option>
+                        <option value="manzil">🎯 Manzil Batch 2025</option>
+                        <option value="vigyan">🧪 Vigyan Batch 2025</option>
+                        <option value="codecrack">💻 CodeCrack Batch 2025</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6.253V10C12 10.2652 12.1054 10.5196 12.2929 10.7071C12.4804 10.8946 12.7348 11 13 11H16.747M18 13V20C18 20.5304 17.7893 21.0391 17.4142 21.4142C17.0391 21.7893 16.5304 22 16 22H8C7.46957 22 6.96086 21.7893 6.58579 21.4142C6.21071 21.0391 6 20.5304 6 20V4C6 3.46957 6.21071 2.96086 6.58579 2.58579C6.96086 2.21071 7.46957 2 8 2H12.747C13.0122 2 13.2666 2.10536 13.4541 2.29289L17.7071 6.54594C17.8946 6.73347 18 6.98783 18 7.253V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Subject
+                    </label>
+                    <select id="dppSubject" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" onchange="updateDppChapters()" required>
+                        <option value="">📚 Choose Subject</option>
+                        <option value="mathematics">🔢 Mathematics</option>
+                        <option value="science">🔬 Science</option>
+                        <option value="english">📖 English</option>
+                        <option value="social_science">🌍 Social Science</option>
+                        <option value="computer">💻 Computer</option>
+                        <option value="physics">⚛️ Physics</option>
+                        <option value="chemistry">🧪 Chemistry</option>
+                        <option value="biology">🧬 Biology</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Chapter
+                    </label>
+                    <select id="dppChapter" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" required>
+                        <option value="">📑 Select Chapter</option>
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <div class="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-2xl p-4 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-sm sm:text-base text-emerald-800 font-semibold">⏰ Unlimited Time Practice</div>
+                                <div class="text-xs sm:text-sm text-emerald-700 mt-1">Students can solve at their own comfortable pace</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Question Adding Section -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 slide-up hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8">
+                <div class="flex items-center mb-4 sm:mb-0">
+                    <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">Question Builder</h2>
+                </div>
+                <div class="bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 px-4 sm:px-6 py-2 sm:py-3 rounded-2xl font-bold text-sm sm:text-base shadow-sm">
+                    <svg class="w-4 h-4 inline mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Total: <span id="questionCount">0</span> Questions
+                </div>
+            </div>
+
+            <!-- Question Form -->
+            <div class="border-2 border-dashed border-emerald-200 rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 bg-gradient-to-br from-emerald-50/30 to-green-50/30 hover:border-emerald-300 transition-all duration-300">
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.228 9C8.549 8.33167 9.025 7.76811 9.644 7.40913C10.263 7.05016 10.997 6.91894 11.712 7.03871C12.427 7.15849 13.075 7.52152 13.543 8.06353C14.011 8.60553 14.269 9.29152 14.268 10C14.268 12 11.268 13 11.268 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.268 17H11.278" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Question Statement
+                    </label>
+                    <textarea id="questionText" rows="4" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white resize-none" placeholder="❓ Write your question here... Be clear and concise!"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">A</div>
+                            Option A
+                        </label>
+                        <input type="text" id="optionA" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🅰️ Enter option A...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">B</div>
+                            Option B
+                        </label>
+                        <input type="text" id="optionB" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-red-100 focus:border-red-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🅱️ Enter option B...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">C</div>
+                            Option C
+                        </label>
+                        <input type="text" id="optionC" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🄭 Enter option C...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <div class="w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">D</div>
+                            Option D
+                        </label>
+                        <input type="text" id="optionD" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white" placeholder="🄳 Enter option D...">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Correct Answer
+                        </label>
+                        <select id="correctAnswer" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 text-sm sm:text-base font-medium bg-gray-50 hover:bg-white">
+                            <option value="">✅ Select Correct Answer</option>
+                            <option value="A">🅰️ Option A</option>
+                            <option value="B">🅱️ Option B</option>
+                            <option value="C">🄭 Option C</option>
+                            <option value="D">🄳 Option D</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-amber-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Marking Scheme
+                        </label>
+                        <div class="relative">
+                            <input type="number" id="questionMarks" class="w-full px-4 sm:px-6 py-3 sm:py-4 border-2 border-gray-200 rounded-2xl bg-amber-50 text-amber-800 font-bold text-sm sm:text-base" value="4" readonly>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+                                <div class="text-xs text-amber-600 font-medium">⭐ +4 | ❌ -1 | ⏸️ 0</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-amber-600 mt-2 font-medium">📊 Fixed: +4 correct, -1 wrong, 0 unattempted</p>
+                    </div>
+                </div>
+
+                <button type="button" onclick="addQuestion()" class="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-4 px-8 rounded-2xl hover:from-emerald-700 hover:to-green-700 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2"/>
+                        <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Add Question to DPP
+                </button>
+            </div>
+        </div>
+
+        <!-- Questions List -->
+        <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-8 sm:mb-10 slide-up hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center mb-6 sm:mb-8">
+                <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold gradient-text font-poppins">Question Bank</h3>
+            </div>
+            <div id="questionsList" class="space-y-4 sm:space-y-6">
+                <div class="text-center py-12 text-gray-500">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <p class="text-lg font-medium mb-2">No questions added yet</p>
+                    <p class="text-sm text-gray-400">Start building your DPP by adding questions above ⬆️</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create DPP Buttons -->
+        <div class="text-center space-y-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                <button onclick="saveDraft()" class="bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 px-8 rounded-2xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 2.58579C3.96086 2.21071 4.46957 2 5 2H16L21 7V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="7,3 7,8 15,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Save as Draft
+                </button>
+                <button onclick="createDPP()" class="bg-gradient-to-r from-emerald-600 to-green-600 text-white py-4 px-8 rounded-2xl hover:from-emerald-700 hover:to-green-700 transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.5 16.5C4.5 17.8807 5.61929 19 7 19H17C18.3807 19 19.5 17.8807 19.5 16.5V10.9142C19.5 10.649 19.3946 10.3946 19.2071 10.2071L13.7929 4.79289C13.6054 4.60536 13.351 4.5 13.0858 4.5H7C5.61929 4.5 4.5 5.61929 4.5 7V16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Create DPP
+                </button>
+            </div>
+            <button onclick="showDraftsModal()" class="text-emerald-600 hover:text-emerald-800 font-semibold text-lg transition-colors duration-300 flex items-center justify-center mx-auto">
+                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7M3 7C3 6.46957 3.21071 5.96086 3.58579 5.58579C3.96086 5.21071 4.46957 5 5 5H19C19.5304 5 20.0391 5.21071 20.4142 5.58579C20.7893 5.96086 21 6.46957 21 7M3 7V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 12H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Load Saved Draft
+            </button>
+        </div>
+    </div>
+
+    <!-- Drafts Modal -->
+    <div id="draftsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex items-center justify-between mb-6 sm:mb-8">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 7C3 6.46957 3.21071 5.96086 3.58579 5.58579C3.96086 5.21071 4.46957 5 5 5H19C19.5304 5 20.0391 5.21071 20.4142 5.58579C20.7893 5.96086 21 6.46957 21 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 7V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold gradient-text font-poppins">Load DPP Draft</h2>
+                </div>
+                <button onclick="closeDraftsModal()" class="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-xl">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="draftsList" class="space-y-4">
+                <!-- Drafts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let questions = [];
+        let questionCounter = 0;
+        let currentDraftId = null;
+        let autoSaveInterval;
+
+        // Subject-Chapter mapping
+        const subjectData = {
+            mathematics: {
+                chapters: ['algebra', 'geometry', 'trigonometry', 'calculus', 'foundation-math']
+            },
+            science: {
+                chapters: ['circulatory-system', 'skeletal-system', 'physics-basics', 'chemistry-fundamentals']
+            },
+            english: {
+                chapters: ['warmth-candle', 'my-shadow', 'leisure', 'grammar-basics']
+            },
+            social_science: {
+                chapters: ['evolution-humans', 'history-basics', 'geography-fundamentals']
+            },
+            computer: {
+                chapters: ['html-basics', 'css-styling', 'javascript-fundamentals', 'programming-concepts']
+            },
+            physics: {
+                chapters: ['mechanics', 'thermodynamics', 'optics', 'electricity']
+            },
+            chemistry: {
+                chapters: ['atomic-structure', 'chemical-bonding', 'organic-chemistry', 'inorganic-chemistry']
+            },
+            biology: {
+                chapters: ['cell-biology', 'genetics', 'ecology', 'human-physiology']
+            }
+        };
+
+        // Load user data and start auto-save
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    document.getElementById('username').textContent = user.name.split(' ')[0];
+                    if (user.role !== 'Teacher' && user.role !== 'teacher') {
+                        alert('Access denied. Teachers only.');
+                        window.location.href = 'home.html';
+                    }
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            } else {
+                alert('Please login first');
+                window.location.href = 'login.html';
+            }
+            
+            // Start auto-save every 30 seconds
+            startAutoSave();
+        });
+        
+        function startAutoSave() {
+            autoSaveInterval = setInterval(() => {
+                if (hasUnsavedChanges()) {
+                    autoSaveDraft();
+                }
+            }, 30000);
+        }
+        
+        function hasUnsavedChanges() {
+            const title = document.getElementById('dppTitle').value;
+            return title.trim() !== '' || questions.length > 0;
+        }
+        
+        async function autoSaveDraft() {
+            if (!hasUnsavedChanges()) return;
+            
+            try {
+                const draftData = getDraftData();
+                draftData.title = draftData.title || 'Auto-saved DPP Draft';
+                draftData.isAutoSave = true;
+                
+                if (currentDraftId) {
+                    await database.ref(`dppDrafts/${currentDraftId}`).update(draftData);
+                } else {
+                    const draftRef = database.ref('dppDrafts').push();
+                    currentDraftId = draftRef.key;
+                    await draftRef.set(draftData);
+                }
+            } catch (error) {
+                console.error('Auto-save failed:', error);
+            }
+        }
+        
+        function getDraftData() {
+            return {
+                title: document.getElementById('dppTitle').value,
+                batch: document.getElementById('dppBatch').value,
+                subject: document.getElementById('dppSubject').value,
+                chapter: document.getElementById('dppChapter').value,
+                questions: questions,
+                createdBy: JSON.parse(localStorage.getItem('padhleChamps_user'))?.name || 'Teacher',
+                lastModified: Date.now(),
+                type: 'dpp'
+            };
+        }
+        
+        async function saveDraft() {
+            if (!hasUnsavedChanges()) {
+                alert('No changes to save');
+                return;
+            }
+            
+            const title = document.getElementById('dppTitle').value;
+            if (!title.trim()) {
+                alert('Please enter a DPP title before saving draft');
+                return;
+            }
+            
+            try {
+                const draftData = getDraftData();
+                draftData.isAutoSave = false;
+                
+                if (currentDraftId) {
+                    await database.ref(`dppDrafts/${currentDraftId}`).update(draftData);
+                } else {
+                    const draftRef = database.ref('dppDrafts').push();
+                    currentDraftId = draftRef.key;
+                    await draftRef.set(draftData);
+                }
+                
+                alert('DPP draft saved successfully!');
+            } catch (error) {
+                console.error('Error saving draft:', error);
+                alert('Error saving draft. Please try again.');
+            }
+        }
+        
+        async function showDraftsModal() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+                const teacherName = userData?.name || 'Teacher';
+                
+                const draftsSnapshot = await database.ref('dppDrafts')
+                    .orderByChild('createdBy')
+                    .equalTo(teacherName)
+                    .once('value');
+                
+                const drafts = [];
+                draftsSnapshot.forEach(childSnapshot => {
+                    const draft = childSnapshot.val();
+                    draft.id = childSnapshot.key;
+                    drafts.push(draft);
+                });
+                
+                displayDrafts(drafts);
+                document.getElementById('draftsModal').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading drafts:', error);
+                alert('Error loading drafts');
+            }
+        }
+        
+        function displayDrafts(drafts) {
+            const container = document.getElementById('draftsList');
+            
+            if (drafts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 7V19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H19C19.5304 21 20.0391 20.7893 20.4142 20.4142C20.7893 20.0391 21 19.5304 21 19V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p class="text-lg font-medium mb-2">No DPP drafts found</p>
+                        <p class="text-sm text-gray-400">Your saved drafts will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            drafts.sort((a, b) => b.lastModified - a.lastModified);
+            
+            container.innerHTML = drafts.map(draft => {
+                const lastModified = new Date(draft.lastModified).toLocaleString();
+                const questionCount = draft.questions?.length || 0;
+                const autoSaveLabel = draft.isAutoSave ? ' 🔄' : '';
+                
+                return `
+                    <div class="border-2 border-gray-100 rounded-2xl p-4 sm:p-6 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-gray-50">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                            <div class="flex-1 mb-4 sm:mb-0">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mr-3">
+                                        <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-bold text-gray-900 text-lg">${draft.title || 'Untitled DPP Draft'}${autoSaveLabel}</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                                    <div class="flex items-center text-gray-600">
+                                        <svg class="w-4 h-4 mr-2 text-emerald-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 6.253V10C12 10.2652 12.1054 10.5196 12.2929 10.7071C12.4804 10.8946 12.7348 11 13 11H16.747" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span class="font-medium">${draft.subject || 'No subject'}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg class="w-4 h-4 mr-2 text-amber-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span class="font-medium">${questionCount} questions</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg class="w-4 h-4 mr-2 text-blue-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <span class="font-medium text-xs">${lastModified}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button onclick="loadDraft('${draft.id}')" class="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-4 py-2 rounded-xl hover:from-emerald-700 hover:to-green-700 text-sm font-semibold transition-all duration-300 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 20V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Load
+                                </button>
+                                <button onclick="deleteDraft('${draft.id}')" class="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-xl hover:from-red-600 hover:to-red-700 text-sm font-semibold transition-all duration-300 flex items-center">
+                                    <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M19,6V20C19,20.5304 18.7893,21.0391 18.4142,21.4142C18.0391,21.7893 17.5304,22 17,22H7C6.46957,22 5.96086,21.7893 5.58579,21.4142C5.21071,21.0391 5,20.5304 5,20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        async function loadDraft(draftId) {
+            try {
+                const draftSnapshot = await database.ref(`dppDrafts/${draftId}`).once('value');
+                const draft = draftSnapshot.val();
+                
+                if (!draft) {
+                    alert('Draft not found');
+                    return;
+                }
+                
+                // Load form data
+                document.getElementById('dppTitle').value = draft.title || '';
+                document.getElementById('dppBatch').value = draft.batch || '';
+                document.getElementById('dppSubject').value = draft.subject || '';
+                updateDppChapters();
+                setTimeout(() => {
+                    document.getElementById('dppChapter').value = draft.chapter || '';
+                }, 100);
+                
+                // Load questions
+                questions = draft.questions || [];
+                questionCounter = Math.max(...questions.map(q => q.id), 0);
+                updateQuestionsList();
+                
+                currentDraftId = draftId;
+                closeDraftsModal();
+                alert('DPP draft loaded successfully!');
+            } catch (error) {
+                console.error('Error loading draft:', error);
+                alert('Error loading draft');
+            }
+        }
+        
+        async function deleteDraft(draftId) {
+            if (!confirm('Are you sure you want to delete this DPP draft?')) {
+                return;
+            }
+            
+            try {
+                await database.ref(`dppDrafts/${draftId}`).remove();
+                showDraftsModal();
+            } catch (error) {
+                console.error('Error deleting draft:', error);
+                alert('Error deleting draft');
+            }
+        }
+        
+        function closeDraftsModal() {
+            document.getElementById('draftsModal').classList.add('hidden');
+        }
+
+        function updateDppChapters() {
+            const subject = document.getElementById('dppSubject').value;
+            const chapterSelect = document.getElementById('dppChapter');
+            
+            chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+            
+            if (subject && subjectData[subject]) {
+                subjectData[subject].chapters.forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter;
+                    option.textContent = chapter.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                    chapterSelect.appendChild(option);
+                });
+            }
+        }
+
+        function addQuestion() {
+            const questionText = document.getElementById('questionText').value;
+            const optionA = document.getElementById('optionA').value;
+            const optionB = document.getElementById('optionB').value;
+            const optionC = document.getElementById('optionC').value;
+            const optionD = document.getElementById('optionD').value;
+            const correctAnswer = document.getElementById('correctAnswer').value;
+
+            if (!questionText || !optionA || !optionB || !optionC || !optionD || !correctAnswer) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const question = {
+                id: ++questionCounter,
+                question: questionText,
+                options: { A: optionA, B: optionB, C: optionC, D: optionD },
+                correctAnswer,
+                marks: 4
+            };
+
+            questions.push(question);
+            updateQuestionsList();
+            clearQuestionForm();
+        }
+
+        function updateQuestionsList() {
+            const container = document.getElementById('questionsList');
+            document.getElementById('questionCount').textContent = questions.length;
+
+            if (questions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 11H15M9 15H15M17 21L12 16L7 21V5C7 4.46957 7.21071 3.96086 7.58579 3.58579C7.96086 3.21071 8.46957 3 9 3H15C15.5304 3 16.0391 3.21071 16.4142 3.58579C16.7893 3.96086 17 4.46957 17 5V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p class="text-lg font-medium mb-2">No questions added yet</p>
+                        <p class="text-sm text-gray-400">Start building your DPP by adding questions above ⬆️</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questions.map((q, index) => `
+                <div class="border-2 border-gray-100 rounded-2xl p-4 sm:p-6 hover:border-emerald-200 transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:shadow-lg">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                        <div class="flex-1 mb-3 sm:mb-0">
+                            <div class="flex items-start mb-2">
+                                <div class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-full flex items-center justify-center mr-3 text-sm font-bold flex-shrink-0">
+                                    ${index + 1}
+                                </div>
+                                <div class="font-semibold text-gray-900 text-sm sm:text-base leading-relaxed">${q.question}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 flex-shrink-0">
+                            <div class="bg-gradient-to-r from-amber-100 to-amber-200 text-amber-800 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center">
+                                <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                ${q.marks} marks
+                            </div>
+                            <button onclick="removeQuestion(${q.id})" class="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-xl transition-all duration-300">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polyline points="3,6 5,6 21,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M19,6V20C19,20.5304 18.7893,21.0391 18.4142,21.4142C18.0391,21.7893 17.5304,22 17,22H7C6.46957,22 5.96086,21.7893 5.58579,21.4142C5.21071,21.0391 5,20.5304 5,20V6M8,6V4C8,3.46957 8.21071,2.96086 8.58579,2.58579C8.96086,2.21071 9.46957,2 10,2H14C14.5304,2 15.0391,2.21071 15.4142,2.58579C15.7893,2.96086 16,3.46957 16,4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-sm mb-4">
+                        <div class="flex items-center p-2 bg-blue-50 rounded-lg">
+                            <div class="w-5 h-5 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">A</div>
+                            <span class="text-gray-700">${q.options.A}</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-red-50 rounded-lg">
+                            <div class="w-5 h-5 bg-red-100 text-red-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">B</div>
+                            <span class="text-gray-700">${q.options.B}</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-yellow-50 rounded-lg">
+                            <div class="w-5 h-5 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">C</div>
+                            <span class="text-gray-700">${q.options.C}</span>
+                        </div>
+                        <div class="flex items-center p-2 bg-purple-50 rounded-lg">
+                            <div class="w-5 h-5 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mr-2 text-xs font-bold">D</div>
+                            <span class="text-gray-700">${q.options.D}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-3">
+                        <svg class="w-4 h-4 text-emerald-600 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="text-sm font-semibold text-emerald-800">Correct Answer: Option ${q.correctAnswer}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeQuestion(id) {
+            questions = questions.filter(q => q.id !== id);
+            updateQuestionsList();
+        }
+
+        function clearQuestionForm() {
+            document.getElementById('questionText').value = '';
+            document.getElementById('optionA').value = '';
+            document.getElementById('optionB').value = '';
+            document.getElementById('optionC').value = '';
+            document.getElementById('optionD').value = '';
+            document.getElementById('correctAnswer').value = '';
+        }
+
+        async function createDPP() {
+            const dppTitle = document.getElementById('dppTitle').value;
+            const dppBatch = document.getElementById('dppBatch').value;
+            const dppSubject = document.getElementById('dppSubject').value;
+            const dppChapter = document.getElementById('dppChapter').value;
+
+            if (!dppTitle || !dppBatch || !dppSubject || !dppChapter) {
+                alert('Please fill all DPP details');
+                return;
+            }
+
+            if (questions.length === 0) {
+                alert('Please add at least one question');
+                return;
+            }
+
+            const dppData = {
+                title: dppTitle,
+                batch: dppBatch,
+                subject: dppSubject,
+                chapter: dppChapter,
+                questions: questions,
+                totalMarks: questions.reduce((sum, q) => sum + q.marks, 0),
+                createdAt: Date.now(),
+                createdBy: JSON.parse(localStorage.getItem('padhleChamps_user'))?.name || 'Teacher',
+                status: 'active',
+                type: 'dpp',
+                unlimitedTime: true
+            };
+
+            try {
+                const dppRef = database.ref('dpps').push();
+                await dppRef.set(dppData);
+                
+                // Delete the draft if it exists
+                if (currentDraftId) {
+                    await database.ref(`dppDrafts/${currentDraftId}`).remove();
+                }
+                
+                // Clear auto-save interval
+                if (autoSaveInterval) {
+                    clearInterval(autoSaveInterval);
+                }
+                
+                alert('DPP created successfully!');
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Error creating DPP:', error);
+                alert('Error creating DPP. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

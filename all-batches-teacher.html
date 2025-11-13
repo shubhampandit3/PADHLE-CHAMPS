@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Batches - Teacher Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-nunito { font-family: 'Nunito Sans', sans-serif; }
+        :root {
+            --primary-color: #7C3AED;
+            --secondary-color: #EC4899;
+            --accent-color: #F59E0B;
+        }
+        
+        .teacher-batch-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.1), 0 8px 16px -4px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+        }
+        
+        .teacher-batch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), #F59E0B);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .teacher-batch-card:hover::before {
+            opacity: 1;
+        }
+        
+        .teacher-batch-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 80px -16px rgba(124, 58, 237, 0.25), 0 16px 32px -8px rgba(0, 0, 0, 0.1);
+            border-color: rgba(124, 58, 237, 0.2);
+        }
+        
+        .batch-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .teacher-batch-card:hover .batch-image {
+            transform: scale(1.05);
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .manage-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.3);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .manage-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .manage-btn:hover::before {
+            left: 100%;
+        }
+        
+        .manage-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+        
+        .batch-stats {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(139, 92, 246, 0.06));
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            backdrop-filter: blur(12px);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            font-family: 'Nunito Sans', sans-serif;
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #5B21B6 30%, var(--secondary-color) 70%, #F59E0B 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+        }
+        
+        .header-gradient > * {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-gradient h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-gradient p {
+                font-size: 0.75rem;
+            }
+            
+            .header-gradient .text-right div:first-child {
+                font-size: 0.75rem;
+            }
+            
+            .header-gradient .text-2xl {
+                font-size: 1.25rem;
+            }
+            
+            .teacher-batch-card:hover {
+                transform: translateY(-4px) scale(1.01);
+            }
+            
+            .batch-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .stat-item {
+                justify-content: center;
+                font-size: 0.75rem;
+            }
+            
+            .manage-btn {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .batches-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-gradient h1 {
+                font-size: 1.25rem;
+            }
+            
+            .header-gradient .text-right {
+                text-align: left;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-gradient .max-w-7xl {
+                padding: 1rem;
+            }
+            
+            .header-gradient h1 {
+                font-size: 1.125rem;
+            }
+            
+            .header-gradient p {
+                display: none;
+            }
+            
+            .stats-grid {
+                gap: 0.75rem;
+            }
+            
+            .teacher-batch-card {
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="header-gradient text-white shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 md:space-x-6">
+                    <button onclick="window.location.href='home.html'" class="bg-white bg-opacity-20 p-3 rounded-2xl text-white hover:bg-opacity-30 transition-all duration-300 backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold font-poppins tracking-tight">All Batches</h1>
+                        <p class="text-white text-opacity-80 mt-2 text-sm md:text-base font-medium font-nunito">Manage your teaching batches with ease</p>
+                    </div>
+                </div>
+                <div class="text-right bg-white bg-opacity-15 p-4 rounded-2xl backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                    <div class="text-white text-opacity-80 text-xs md:text-sm mb-2 font-medium">Total Students</div>
+                    <div class="flex items-center text-xl md:text-2xl lg:text-3xl font-bold font-poppins">
+                        <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C23 18.1645 22.7155 17.3541 22.2094 16.6977C21.7033 16.0414 20.9999 15.5766 20.2 15.3746" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8003 3.33204 17.5037 3.79668 18.0098 4.45302C18.5159 5.10936 18.8004 5.91973 18.8004 6.755C18.8004 7.59027 18.5159 8.40064 18.0098 9.05698C17.5037 9.71332 16.8003 10.178 16 10.38" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span id="totalStudents">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Quick Stats -->
+        <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-10" data-aos="fade-up">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div class="flex items-center">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-violet-500 to-violet-600 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6C4 4.89543 4.89543 4 6 4H8L10 6H18C19.1046 6 20 6.89543 20 8V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 10H16M8 14H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-semibold text-gray-600 font-nunito">Active Batches</p>
+                        <p class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins">4</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div class="flex items-center">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C23 18.1645 22.7155 17.3541 22.2094 16.6977C21.7033 16.0414 20.9999 15.5766 20.2 15.3746" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8003 3.33204 17.5037 3.79668 18.0098 4.45302C18.5159 5.10936 18.8004 5.91973 18.8004 6.755C18.8004 7.59027 18.5159 8.40064 18.0098 9.05698C17.5037 9.71332 16.8003 10.178 16 10.38" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-semibold text-gray-600 font-nunito">Total Students</p>
+                        <p class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins" id="statsStudents">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div class="flex items-center">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-semibold text-gray-600 font-nunito">Tests Created</p>
+                        <p class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins" id="totalTests">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div class="flex items-center">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-semibold text-gray-600 font-nunito">DPPs Created</p>
+                        <p class="text-2xl md:text-3xl font-bold text-gray-900 font-poppins" id="totalDPPs">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="batches-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" data-aos="fade-up" data-aos-delay="200">
+            <!-- Sangharsh Batch -->
+            <div class="teacher-batch-card relative" onclick="manageBatch('sangharsh')">
+                <div class="relative overflow-hidden">
+                    <img src="SANGHARSH.png" alt="Sangharsh Batch" class="batch-image">
+                    <div class="status-badge">
+                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        Active
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 font-poppins">Sangharsh 2025</h3>
+                    <p class="text-gray-600 mb-4 font-nunito">Class 5 Comprehensive Preparation</p>
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span id="sangharshStudents">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <span>5 Subjects</span>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); manageBatch('sangharsh')" class="manage-btn w-full">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.549.091A1.875 1.875 0 002.25 11.828v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.091.549a1.875 1.875 0 001.85 1.567h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.549-.091A1.875 1.875 0 0021.75 12.172v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.549A1.875 1.875 0 0012.172 2.25h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/>
+                        </svg>
+                        Manage Batch
+                    </button>
+                </div>
+            </div>
+
+            <!-- Manzil Batch -->
+            <div class="teacher-batch-card relative" onclick="manageBatch('manzil')">
+                <div class="relative overflow-hidden">
+                    <img src="MANZIL.png" alt="Manzil Batch" class="batch-image">
+                    <div class="status-badge">
+                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        Active
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 font-poppins">Manzil 2025</h3>
+                    <p class="text-gray-600 mb-4 font-nunito">Advanced Class 5 Excellence</p>
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span id="manzilStudents">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <span>5 Subjects</span>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); manageBatch('manzil')" class="manage-btn w-full">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.549.091A1.875 1.875 0 002.25 11.828v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.091.549a1.875 1.875 0 001.85 1.567h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.549-.091A1.875 1.875 0 0021.75 12.172v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.549A1.875 1.875 0 0012.172 2.25h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/>
+                        </svg>
+                        Manage Batch
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vigyan Batch -->
+            <div class="teacher-batch-card relative" onclick="manageBatch('vigyan')">
+                <div class="relative overflow-hidden">
+                    <img src="VIGYAN.png" alt="Vigyan Batch" class="batch-image">
+                    <div class="status-badge">
+                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        Active
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 font-poppins">Vigyan 2025</h3>
+                    <p class="text-gray-600 mb-4 font-nunito">Class 10 Science Mastery</p>
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span id="vigyanStudents">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-purple-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>3 Sciences</span>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); manageBatch('vigyan')" class="manage-btn w-full">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.549.091A1.875 1.875 0 002.25 11.828v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.091.549a1.875 1.875 0 001.85 1.567h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.549-.091A1.875 1.875 0 0021.75 12.172v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.549A1.875 1.875 0 0012.172 2.25h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/>
+                        </svg>
+                        Manage Batch
+                    </button>
+                </div>
+            </div>
+
+            <!-- CodeCrack Batch -->
+            <div class="teacher-batch-card relative" onclick="manageBatch('codecrack')">
+                <div class="relative overflow-hidden">
+                    <img src="CODECRACK.png" alt="CodeCrack Batch" class="batch-image">
+                    <div class="status-badge">
+                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        Active
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 font-poppins">CodeCrack 2025</h3>
+                    <p class="text-gray-600 mb-4 font-nunito">Programming Excellence</p>
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span id="codecrackStudents">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg class="w-4 h-4 text-orange-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/>
+                            </svg>
+                            <span>Programming</span>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); manageBatch('codecrack')" class="manage-btn w-full">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.549.091A1.875 1.875 0 002.25 11.828v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.091.549a1.875 1.875 0 001.85 1.567h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.549-.091A1.875 1.875 0 0021.75 12.172v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.549A1.875 1.875 0 0012.172 2.25h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"/>
+                        </svg>
+                        Manage Batch
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Initialize AOS and load data
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            checkTeacherAccess();
+            loadAllData();
+        });
+
+        // Check if user is teacher
+        function checkTeacherAccess() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            if (!userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            if (user.role !== 'Teacher' && user.role !== 'teacher') {
+                alert('Access denied. Teachers only.');
+                window.location.href = 'home.html';
+                return;
+            }
+        }
+
+        // Load all data
+        async function loadAllData() {
+            await Promise.all([
+                loadStudentCounts(),
+                loadTestCounts(),
+                loadDPPCounts()
+            ]);
+        }
+
+        // Load student counts for all batches
+        async function loadStudentCounts() {
+            const batches = ['sangharsh', 'manzil', 'vigyan', 'codecrack'];
+            let totalStudents = 0;
+
+            for (const batch of batches) {
+                try {
+                    const snapshot = await database.ref(`enrollments/${batch}-enrollments`).once('value');
+                    const enrollments = snapshot.val();
+                    const count = enrollments ? Object.keys(enrollments).length : 0;
+                    
+                    document.getElementById(`${batch}Students`).textContent = `${count} Students`;
+                    totalStudents += count;
+                } catch (error) {
+                    console.error(`Error loading ${batch} students:`, error);
+                    document.getElementById(`${batch}Students`).textContent = '0 Students';
+                }
+            }
+            
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('statsStudents').textContent = totalStudents;
+        }
+
+        // Load test counts
+        async function loadTestCounts() {
+            try {
+                const snapshot = await database.ref('tests').once('value');
+                const tests = snapshot.val();
+                const count = tests ? Object.keys(tests).length : 0;
+                document.getElementById('totalTests').textContent = count;
+            } catch (error) {
+                console.error('Error loading test counts:', error);
+                document.getElementById('totalTests').textContent = '0';
+            }
+        }
+
+        // Load DPP counts
+        async function loadDPPCounts() {
+            try {
+                const snapshot = await database.ref('dpps').once('value');
+                const dpps = snapshot.val();
+                const count = dpps ? Object.keys(dpps).length : 0;
+                document.getElementById('totalDPPs').textContent = count;
+            } catch (error) {
+                console.error('Error loading DPP counts:', error);
+                document.getElementById('totalDPPs').textContent = '0';
+            }
+        }
+
+        // Navigate to batch management
+        function manageBatch(batchName) {
+            window.location.href = `${batchName}.html`;
+        }
+    </script>
+</body>
+</html>

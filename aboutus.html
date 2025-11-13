@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="aboutus.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="logo-placeholder flex items-center">
+                    <img src="PC LOGO.png" alt="Padhle Champs Logo" class="h-10 w-10 mr-3">
+                    <span class="text-2xl font-bold text-blue-600">Padhle Champs</span>
+                </div>
+                <div class="hidden md:flex items-center justify-between flex-1 ml-8">
+                    <div class="flex items-center space-x-6">
+                        <a href="index.html" class="nav-link" style="position: relative; transition: all 0.3s ease;">Home</a>
+                        <a href="aboutus.html" class="nav-link active" style="position: relative; transition: all 0.3s ease;">About Us</a>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="batch.html" class="nav-link" style="position: relative; transition: all 0.3s ease;">Batches</a>
+                        <div id="authSection">
+                            <button class="signup-btn" id="signupBtn">
+                                <i class="fas fa-user-plus mr-2"></i>Signup
+                            </button>
+                            <div class="hidden items-center space-x-3 cursor-pointer" id="userProfile" onclick="goToProfile()">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white text-sm" id="userIcon"></i>
+                                </div>
+                                <span class="text-gray-700 font-semibold" id="userGreeting">Hi User</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-6xl mx-auto px-4 text-center" data-aos="fade-up">
+            <img src="PC LOGO.png" alt="Padhle Champs Logo" class="w-32 h-32 mx-auto mb-8 rounded-full shadow-2xl">
+            <h1 class="text-5xl md:text-7xl font-light text-white mb-6 tracking-wide">
+                Our <span class="font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Journey</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-100 font-light max-w-3xl mx-auto leading-relaxed">
+                Crafting excellence in education since March 2025
+            </p>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right" data-aos-delay="100">
+                    <div class="mb-8">
+                        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Genesis</span>
+                        <h2 class="text-4xl md:text-5xl font-light text-gray-900 mt-2 mb-8 leading-tight">
+                            How We <span class="font-bold">Started</span>
+                        </h2>
+                    </div>
+                    <div class="space-y-6">
+                        <p class="text-lg text-gray-600 leading-relaxed font-light">
+                            Our journey began in March 2025 with a simple yet profound vision - to democratize quality education and make it accessible to every aspiring student. What commenced as a modest initiative has evolved into a comprehensive educational ecosystem.
+                        </p>
+                        <p class="text-lg text-gray-600 leading-relaxed font-light">
+                            We believe that every student deserves personalized attention and expert mentorship. Our founders, passionate educators with decades of experience, identified the gaps in traditional education systems and committed to bridging them through innovative pedagogical approaches and cutting-edge technology.
+                        </p>
+                    </div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="200">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl transform rotate-3"></div>
+                        <div class="relative bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl h-80 flex items-center justify-center shadow-2xl">
+                            <i class="fas fa-rocket text-white text-7xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batches Launch Section -->
+    <section class="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Excellence</span>
+                <h2 class="text-4xl md:text-5xl font-light text-gray-900 mt-2 mb-6">
+                    Our Flagship <span class="font-bold">Batches</span>
+                </h2>
+                <p class="text-xl text-gray-600 font-light max-w-2xl mx-auto">Meticulously crafted programs to nurture diverse learning aspirations</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200">
+                        <div class="flex items-center mb-6">
+                            <img src="SANGHARSH.png" alt="Sangharsh" class="w-16 h-16 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">SANGHARSH BATCH</h3>
+                                <span class="text-blue-600 text-sm font-medium">Class 5</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">Designed for Class 5 students focusing on building strong fundamentals and competitive spirit through innovative learning methodologies.</p>
+                    </div>
+                </div>
+                <div class="group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200">
+                        <div class="flex items-center mb-6">
+                            <img src="MANZIL.png" alt="Manzil" class="w-16 h-16 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">MANZIL BATCH</h3>
+                                <span class="text-blue-600 text-sm font-medium">Class 5</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">Comprehensive program for Class 5 students with goal-oriented learning approach and personalized attention to achieve academic excellence.</p>
+                    </div>
+                </div>
+                <div class="group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200">
+                        <div class="flex items-center mb-6">
+                            <img src="VIGYAN.png" alt="Vigyan" class="w-16 h-16 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">VIGYAN BATCH</h3>
+                                <span class="text-blue-600 text-sm font-medium">Class 10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">Science-focused curriculum for Class 10 students preparing for board exams and competitive examinations with advanced learning techniques.</p>
+                    </div>
+                </div>
+                <div class="group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200">
+                        <div class="flex items-center mb-6">
+                            <img src="CODECRACK.png" alt="CodeCrack" class="w-16 h-16 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">CODECRACK BATCH</h3>
+                                <span class="text-blue-600 text-sm font-medium">Class 7-12</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">Programming and coding skills for students from Class 7-12, preparing them for the digital future with hands-on projects and industry exposure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teachers Section -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Mentorship</span>
+                <h2 class="text-4xl md:text-5xl font-light text-gray-900 mt-2 mb-6">
+                    Meet Our <span class="font-bold">Expert Mentors</span>
+                </h2>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white rounded-3xl p-10 shadow-xl border border-gray-100">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-lg opacity-30"></div>
+                                <div class="relative bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-32 h-32 flex items-center justify-center shadow-2xl">
+                                    <i class="fas fa-user text-white text-4xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Aarav Pandit</h3>
+                            <p class="text-blue-600 font-semibold mb-6">Senior Mentor - Mathematics & Science</p>
+                            <p class="text-gray-600 leading-relaxed font-light">
+                                With over 8 years of distinguished teaching experience, Aarav specializes in transforming complex mathematical concepts into engaging, comprehensible lessons. He mentors our SANGHARSH and MANZIL batches, nurturing Class 5 students to develop robust analytical thinking capabilities. His innovative pedagogical methods have empowered hundreds of students to achieve academic excellence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white rounded-3xl p-10 shadow-xl border border-gray-100">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-500 rounded-full blur-lg opacity-30"></div>
+                                <div class="relative bg-gradient-to-br from-green-500 to-blue-600 rounded-full w-32 h-32 flex items-center justify-center shadow-2xl">
+                                    <i class="fas fa-user text-white text-4xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Shubham Pandit</h3>
+                            <p class="text-blue-600 font-semibold mb-6">Lead Instructor - Science & Programming</p>
+                            <p class="text-gray-600 leading-relaxed font-light">
+                                Shubham brings an exceptional fusion of scientific acumen and programming expertise to our educational platform. He leads the VIGYAN batch for Class 10 students and spearheads the innovative CODECRACK batch. His profound passion for technology and education has inspired countless students to pursue distinguished careers in STEM fields.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-black/20"></div>
+            <div class="absolute -top-40 -left-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-blue-300 font-semibold text-sm uppercase tracking-wider">Platform Features</span>
+                <h2 class="text-4xl md:text-5xl font-light text-white mt-2 mb-6">
+                    Why Choose <span class="font-bold">Padhle Champs</span>
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up">
+                <div class="group">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                        <div class="text-4xl text-blue-300 mb-4">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Interactive Learning</h3>
+                        <p class="text-blue-100 font-light text-sm">Engaging lessons with real-time interaction</p>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                        <div class="text-4xl text-blue-300 mb-4">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Expert Mentors</h3>
+                        <p class="text-blue-100 font-light text-sm">Learn from experienced educators</p>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                        <div class="text-4xl text-blue-300 mb-4">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Flexible Schedule</h3>
+                        <p class="text-blue-100 font-light text-sm">Study at your own pace and time</p>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                        <div class="text-4xl text-blue-300 mb-4">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">24/7 Support</h3>
+                        <p class="text-blue-100 font-light text-sm">Round-the-clock student assistance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Padhle Champs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="aboutus.js"></script>
+</body>
+</html>

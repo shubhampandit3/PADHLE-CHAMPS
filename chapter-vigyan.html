@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Permissions-Policy" content="unload=()">
+    <title>Chapters - Vigyan Batch 2025</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Page Background Pattern */
+        body {
+            background-color: #F9FAFB;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239333ea' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            cursor: pointer;
+            width: 28px;
+            height: 24px;
+            position: relative;
+            display: none !important;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #9333ea, #4f46e5);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) { top: 0px; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
+        
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        .navbar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        /* Chapter Card with Background Icon */
+        .chapter-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chapter-bg-icon {
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+        
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+        
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+        
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: block !important;
+            }
+            
+            .desktop-nav {
+                display: none !important;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            
+            .hamburger {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center group">
+                    <div class="relative overflow-hidden">
+                        <span class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 bg-clip-text text-transparent transform transition-all duration-300 group-hover:scale-105">
+                            Vigyan Batch 2025
+                        </span>
+                        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-indigo-600 transition-all duration-300 group-hover:w-full"></div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav flex items-center space-x-2">
+                    <a href="home.html" class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="subject-vigyan.html" class="relative px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-purple-600 hover:bg-purple-50">
+                        <span class="material-icons text-sm align-middle mr-1">book</span>
+                        <span>Subjects</span>
+                    </a>
+                    
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-indigo-50 px-4 py-2 rounded-xl border border-purple-100">
+                        <span class="material-icons text-purple-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="py-4 space-y-2">
+                    <a href="home.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">home</span>
+                        Home
+                    </a>
+                    <a href="subject-vigyan.html" class="flex items-center px-4 py-3 text-gray-700 font-medium rounded-lg hover:bg-purple-50 hover:text-purple-600 transition-all duration-300">
+                        <span class="material-icons mr-3">book</span>
+                        Subjects
+                    </a>
+                    <div class="flex items-center px-4 py-3 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-100">
+                        <span class="material-icons text-purple-600 mr-3">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username-mobile">Hi Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Subject Header -->
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="flex flex-col items-center justify-center mb-4">
+                    <div id="subjectIcon" class="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                        <span id="subjectIconClass" class="material-icons text-white" style="font-size: 40px;">science</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-2" id="subjectTitle">Chapters</h1>
+                    <p class="text-base sm:text-lg text-gray-600" id="subjectDescription">Select a chapter to start learning</p>
+                </div>
+            </div>
+
+            <!-- Chapters Container -->
+            <div id="chaptersContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Chapters will be loaded dynamically -->
+            </div>
+
+            <!-- No Chapters Message -->
+            <div id="noChaptersMessage" class="hidden text-center py-12">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <span class="material-icons text-gray-300 mb-4" style="font-size: 80px;">menu_book</span>
+                    <h3 class="text-2xl font-semibold text-gray-600 mb-2">No Chapters Available</h3>
+                    <p class="text-gray-500 mb-6">Chapters will be added soon. Stay tuned!</p>
+                    <a href="subject-vigyan.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <span class="material-icons mr-2">arrow_back</span>
+                        Back to Subjects
+                    </a>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <a href="subject-vigyan.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons mr-2">arrow_back</span>
+                    Back to Subjects
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Home JS for Firebase functions -->
+    <script src="home.js"></script>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        
+        const subjectData = {
+            'history': { 
+                title: 'History', 
+                description: 'European History & Nationalism', 
+                icon: 'history_edu', 
+                color: 'from-blue-500 to-cyan-600', 
+                chapters: [
+                    { id: 'rise-of-nationalism-in-europe', name: 'Rise of Nationalism in Europe', description: 'European history and nationalism', icon: 'history_edu' }
+                ] 
+            },
+            'civics': { 
+                title: 'Civics', 
+                description: 'Democratic Politics & Governance', 
+                icon: 'account_balance', 
+                color: 'from-rose-500 to-pink-600', 
+                chapters: [
+                    { id: 'power-sharing', name: 'Power Sharing', description: 'Democratic power sharing mechanisms', icon: 'account_balance' }
+                ] 
+            },
+            'physics': { title: 'Physics', description: 'Mechanics, Thermodynamics & Optics', icon: 'bolt', color: 'from-blue-500 to-cyan-600', chapters: [] },
+            'chemistry': { 
+                title: 'Chemistry', 
+                description: 'Chemical Reactions & Equations', 
+                icon: 'science', 
+                color: 'from-green-500 to-emerald-600', 
+                chapters: [
+                    { id: 'chemical-reaction-and-equation', name: 'Chemical Reaction and Equation', description: 'Understanding chemical reactions and their equations', icon: 'science' }
+                ] 
+            },
+            'maths': { title: 'Mathematics', description: 'Calculus, Algebra & Geometry', icon: 'calculate', color: 'from-yellow-500 to-orange-600', chapters: [] },
+            'information-technology': { title: 'Information Technology', description: 'Programming & Computer Science', icon: 'computer', color: 'from-purple-500 to-indigo-600', chapters: [] }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('username-mobile').textContent = `Hi ${username}`;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject') || 'history';
+            loadSubjectChapters(subject);
+        });
+        
+        function loadSubjectChapters(subject) {
+            const data = subjectData[subject];
+            if (!data) return;
+
+            // Update header
+            document.getElementById('subjectTitle').textContent = data.title;
+            document.getElementById('subjectDescription').textContent = data.description;
+            document.getElementById('subjectIconClass').textContent = data.icon;
+            document.getElementById('subjectIcon').className = `w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg bg-gradient-to-br ${data.color}`;
+
+            const container = document.getElementById('chaptersContainer');
+            const noChaptersMsg = document.getElementById('noChaptersMessage');
+
+            if (data.chapters.length === 0) {
+                container.style.display = 'none';
+                noChaptersMsg.classList.remove('hidden');
+                return;
+            }
+
+            container.innerHTML = '';
+            for (let i = 0; i < data.chapters.length; i++) {
+                const chapter = data.chapters[i];
+                const chapterCard = createChapterCard(chapter, subject, i, data.color);
+                container.appendChild(chapterCard);
+            }
+        }
+
+        function createChapterCard(chapter, subject, index, colorGradient) {
+            const card = document.createElement('div');
+            card.className = 'chapter-card bg-gradient-to-br ' + colorGradient + ' rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index + 1) * 100);
+
+            const progress = calculateChapterProgress(subject, chapter.id);
+            const circumference = 220;
+            const offset = circumference - (progress.percent / 100) * circumference;
+
+            card.innerHTML = `
+                <span class="material-icons chapter-bg-icon text-white">${chapter.icon || 'menu_book'}</span>
+                <div class="relative z-10 p-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">
+                                    ${progress.percent > 0 ? 'In Progress' : 'Not Started'}
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">${chapter.name}</h3>
+                            <p class="text-white/90 text-sm mb-4">${chapter.description}</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center text-sm text-white/90">
+                                    <span class="material-icons text-base mr-2">check_circle</span>
+                                    ${progress.completed} of ${progress.total} completed
+                                </div>
+                            </div>
+                            <button onclick="openChapter('${subject}', '${chapter.id}')" 
+                                    class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-5 py-2.5 rounded-xl transition-all duration-300 text-sm font-semibold border border-white/30">
+                                ${progress.percent > 0 ? 'Continue Learning' : 'Start Learning'}
+                            </button>
+                        </div>
+                        <div class="flex flex-col items-center ml-4">
+                            <div class="circular-progress mb-2">
+                                <svg width="70" height="70">
+                                    <circle cx="35" cy="35" r="32" stroke="rgba(255,255,255,0.2)" />
+                                    <circle cx="35" cy="35" r="32" stroke="#ffffff" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-lg font-bold text-white">${progress.percent}%</span>
+                                </div>
+                            </div>
+                            <span class="text-xs text-white/80 font-medium">Progress</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function calculateChapterProgress(subject, chapterId) {
+            try {
+                const localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+                const chapterPrefix = `${subject}_${chapterId}_`;
+                const completed = Object.keys(localProgress).filter(key =>
+                    key.startsWith(chapterPrefix) && localProgress[key].completed
+                ).length;
+
+                const totalItems = getChapterContentCount(subject, chapterId);
+                const percent = totalItems > 0 ? Math.round((completed / totalItems) * 100) : 0;
+
+                return { completed, total: totalItems, percent };
+            } catch (error) {
+                console.error('Error calculating chapter progress:', error);
+                return { completed: 0, total: 0, percent: 0 };
+            }
+        }
+
+        function getChapterContentCount(subject, chapterId) {
+            const chapterData = {
+                'history': {
+                    'rise-of-nationalism-in-europe': 2
+                },
+                'civics': {
+                    'power-sharing': 1
+                },
+                'chemistry': {
+                    'chemical-reaction-and-equation': 1
+                },
+                'maths': {},
+                'information-technology': {}
+            };
+
+            return chapterData[subject]?.[chapterId] || 0;
+        }
+
+        function openChapter(subject, chapterId) {
+            window.location.href = `chapter-content-vigyan.html?subject=${subject}&chapter=${chapterId}`;
+        }
+
+        setTimeout(() => {
+            AOS.refresh();
+        }, 100);
+    </script>
+</body>
+</html>

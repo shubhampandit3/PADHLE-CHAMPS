@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapters - Sangharsh Batch 2025</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        * { font-family: 'Poppins', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        
+        .navbar {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            right: -100%;
+            width: 280px;
+            height: calc(100vh - 64px);
+            background: white;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 40;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active { right: 0; }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 39;
+        }
+        
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        
+        @media (max-width: 768px) {
+            .hamburger { display: flex !important; }
+            .desktop-nav { display: none !important; }
+        }
+        
+        @media (min-width: 769px) {
+            .hamburger { display: none !important; }
+            .mobile-menu { display: none !important; }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .mobile-menu-item {
+            animation: slideInRight 0.3s ease forwards;
+            opacity: 0;
+        }
+        
+        .mobile-menu.active .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+        
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .page-background .material-icons {
+            position: absolute;
+            font-size: 400px;
+            opacity: 0.03;
+            color: currentColor;
+        }
+        
+        .page-background .icon-1 { top: -100px; right: -100px; transform: rotate(-15deg); }
+        .page-background .icon-2 { bottom: -150px; left: -100px; transform: rotate(25deg); }
+        .page-background .icon-3 { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); font-size: 600px; opacity: 0.02; }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-ring {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .progress-ring-circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-50">
+    <!-- Background Icons -->
+    <div class="page-background" id="pageBackground">
+        <span class="material-icons icon-1" id="bgIcon1">menu_book</span>
+        <span class="material-icons icon-2" id="bgIcon2">menu_book</span>
+        <span class="material-icons icon-3" id="bgIcon3">menu_book</span>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center group">
+                    <span class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                        Sangharsh 2025
+                    </span>
+                </div>
+                
+                <div class="desktop-nav hidden md:flex items-center space-x-2">
+                    <a href="home.html" class="px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="subject-sangharsh.html" class="px-4 py-2 text-gray-700 font-medium rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50 flex items-center gap-2">
+                        <span class="material-icons text-xl">menu_book</span>
+                        <span>Subjects</span>
+                    </a>
+                    <a href="notification-sangharsh.html" class="relative p-3 text-gray-700 rounded-lg transition-all duration-300 hover:text-blue-600 hover:bg-blue-50">
+                        <span class="material-icons text-xl">notifications</span>
+                        <span id="notification-count" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden animate-pulse shadow-lg">0</span>
+                    </a>
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-xl border border-blue-100">
+                        <span class="material-icons text-blue-600">account_circle</span>
+                        <span class="font-semibold text-gray-700" id="username">Hi Student</span>
+                    </div>
+                </div>
+                
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+    
+    <div class="mobile-menu">
+        <a href="home.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">home</span>
+            <span class="font-medium text-gray-700">Home</span>
+        </a>
+        <a href="subject-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">menu_book</span>
+            <span class="font-medium text-gray-700">Subjects</span>
+        </a>
+        <a href="notification-sangharsh.html" class="mobile-menu-item flex items-center gap-3 p-4 rounded-lg hover:bg-blue-50 transition-all duration-300 mb-2">
+            <span class="material-icons text-blue-600">notifications</span>
+            <span class="font-medium text-gray-700">Notifications</span>
+            <span id="mobile-notification-count" class="ml-auto bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
+        </a>
+        <div class="mobile-menu-item p-4 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+            <div class="flex items-center gap-3">
+                <span class="material-icons text-blue-600">account_circle</span>
+                <span class="font-semibold text-gray-700" id="mobile-username">Hi Student</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper pt-20 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="text-center mb-8" data-aos="fade-up">
+                <div class="flex items-center justify-center mb-4">
+                    <div id="subjectIcon" class="w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                        <i id="subjectIconClass" class="text-3xl text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-4xl font-bold text-gray-900" id="subjectTitle">Subject Chapters</h1>
+                        <p class="text-lg text-gray-600" id="subjectDescription">Select a chapter to start learning</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapters Container -->
+            <div id="chaptersContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Chapters will be loaded dynamically -->
+            </div>
+
+            <!-- No Chapters Message -->
+            <div id="noChaptersMessage" class="hidden text-center py-12">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <span class="material-icons text-gray-300 mb-4" style="font-size: 64px;">menu_book</span>
+                    <h3 class="text-2xl font-semibold text-gray-600 mb-2">No Chapters Available</h3>
+                    <p class="text-gray-500 mb-4">Chapters for this subject will be added soon.</p>
+                    <a href="subject-sangharsh.html"
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
+                        <span class="material-icons">arrow_back</span>
+                        <span>Back to Subjects</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <a href="subject-sangharsh.html"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Back to Subjects</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Home JS for Firebase functions -->
+    <script src="home.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Subject data
+        const subjectData = {
+            'english': {
+                title: 'English',
+                description: 'Literature and Language Skills',
+                icon: 'menu_book',
+                color: 'bg-gradient-to-br from-red-500 to-pink-600',
+                chapters: [
+                    {
+                        id: 'warmth-candle',
+                        title: 'The Warmth of a Candle',
+                        description: 'Exploring themes of hope and comfort in literature',
+                        duration: '45 min',
+                        status: 'available'
+                    },
+                    {
+                        id: 'my-shadow',
+                        title: 'My Shadow',
+                        description: 'Understanding poetry and literary devices',
+                        duration: '35 min',
+                        status: 'available'
+                    },
+                    {
+                        id: 'leisure',
+                        title: 'Leisure',
+                        description: 'Understanding poetry and literary devices',
+                        duration: '35 min',
+                        status: 'available'
+                    }
+                ]
+            },
+            'science': {
+                title: 'Science',
+                description: 'Physics, Chemistry & Biology',
+                icon: 'science',
+                color: 'bg-gradient-to-br from-blue-500 to-cyan-600',
+                chapters: [
+                    {
+                        id: 'circulatory-system',
+                        title: 'The Circulatory System',
+                        description: 'Understanding blood circulation and heart functions',
+                        duration: '60 min',
+                        status: 'available'
+                    },
+                    {
+                        id: 'skeletal-system',
+                        title: 'The Skeletal System',
+                        description: 'Understanding about bones.',
+                        duration: '60 min',
+                        status: 'available'
+                    }
+                ]
+            },
+            'social-science': {
+                title: 'Social Science',
+                description: 'History, Geography & Civics',
+                icon: 'public',
+                color: 'bg-gradient-to-br from-green-500 to-emerald-600',
+                chapters: [
+                    {
+                        id: 'evolution-humans',
+                        title: 'Evolution of Human Beings',
+                        description: 'Tracing human development through history',
+                        duration: '50 min',
+                        status: 'available'
+                    }
+                ]
+            },
+            'maths': {
+                title: 'Maths',
+                description: 'Algebra, Geometry & Statistics',
+                icon: 'calculate',
+                color: 'bg-gradient-to-br from-yellow-500 to-orange-600',
+                chapters: [
+                    {
+                        id: 'percentage',
+                        title: 'Percentage',
+                        description: 'Understanding percentage calculations and applications',
+                        duration: '40 min',
+                        status: 'available'
+                    }
+                ]
+            },
+            'computer': {
+                title: 'Computer',
+                description: 'Programming & Technology',
+                icon: 'computer',
+                color: 'bg-gradient-to-br from-purple-500 to-indigo-600',
+                chapters: [
+                    {
+                        id: 'simple-circuits',
+                        title: 'Simple Circuits',
+                        description: 'Basic electronics and circuit design',
+                        duration: '40 min',
+                        status: 'available'
+                    }
+                ]
+            }
+        };
+
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Load username from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const userData = localStorage.getItem('padhleChamps_user');
+            let username = 'Student';
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    username = user.name.split(' ')[0];
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                }
+            }
+            document.getElementById('username').textContent = `Hi ${username}`;
+            document.getElementById('mobile-username').textContent = `Hi ${username}`;
+
+            // Get subject from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject') || 'english';
+            
+            loadSubjectChapters(subject);
+        });
+
+        function loadSubjectChapters(subject) {
+            const data = subjectData[subject];
+            if (!data) return;
+
+            // Update header
+            document.getElementById('subjectTitle').textContent = data.title;
+            document.getElementById('subjectDescription').textContent = data.description;
+            document.getElementById('subjectIconClass').className = 'material-icons text-4xl text-white';
+            document.getElementById('subjectIconClass').textContent = data.icon;
+            document.getElementById('subjectIcon').className = 'w-16 h-16 rounded-full flex items-center justify-center mr-4 ' + data.color;
+            
+            // Update background icons
+            document.getElementById('bgIcon1').textContent = data.icon;
+            document.getElementById('bgIcon2').textContent = data.icon;
+            document.getElementById('bgIcon3').textContent = data.icon;
+            
+            // Update background color based on subject
+            const bgColors = {
+                'english': 'text-red-500',
+                'science': 'text-blue-500',
+                'social-science': 'text-green-500',
+                'maths': 'text-yellow-500',
+                'computer': 'text-purple-500'
+            };
+            document.getElementById('pageBackground').className = 'page-background ' + (bgColors[subject] || 'text-gray-500');
+
+            const container = document.getElementById('chaptersContainer');
+            const noChaptersMsg = document.getElementById('noChaptersMessage');
+
+            if (data.chapters.length === 0) {
+                container.style.display = 'none';
+                noChaptersMsg.classList.remove('hidden');
+                return;
+            }
+
+            // Load chapters with real progress
+            container.innerHTML = '';
+            for (let i = 0; i < data.chapters.length; i++) {
+                const chapter = data.chapters[i];
+                const chapterCard = createChapterCard(chapter, subject, i);
+                container.appendChild(chapterCard);
+            }
+        }
+
+        function createChapterCard(chapter, subject, index) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105 flex flex-col';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index + 1) * 100);
+
+            // Calculate chapter progress
+            const progress = calculateChapterProgress(subject, chapter.id);
+            const progressColor = progress.percent > 0 ? 'text-green-600' : 'text-gray-600';
+            const progressText = progress.percent > 0 ? `${progress.percent}% Complete` : 'Not Started';
+            const barColor = progress.percent > 0 ? 'bg-green-500' : 'bg-gray-300';
+
+            const circumference = 141.37;
+            const offset = circumference - (progress.percent / 100) * circumference;
+            
+            card.innerHTML = `
+                <div class="p-6 flex-1">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">${chapter.title}</h3>
+                            <p class="text-gray-600 text-sm mb-3">${chapter.description}</p>
+                        </div>
+                        <div class="ml-4">
+                            <span class="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                                <span class="material-icons" style="font-size: 14px;">schedule</span>
+                                ${chapter.duration}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-icons ${progress.percent > 0 ? 'text-green-500' : 'text-gray-500'}" style="font-size: 20px;">${progress.percent > 0 ? 'check_circle' : 'play_circle'}</span>
+                            <span class="text-sm text-gray-600">${progress.completed} of ${progress.total} items</span>
+                        </div>
+                        <button onclick="openChapter('${subject}', '${chapter.id}')" 
+                                class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-sm font-medium flex items-center gap-1">
+                            <span>${progress.percent > 0 ? 'Continue' : 'Start'}</span>
+                            <span class="material-icons" style="font-size: 18px;">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4 mt-auto">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-gray-500 mb-1">Progress</div>
+                            <div class="font-bold text-lg ${progressColor}">${progress.percent}%</div>
+                        </div>
+                        <svg class="progress-ring" width="50" height="50">
+                            <circle class="text-gray-200" stroke-width="4" stroke="currentColor" fill="transparent" r="22.5" cx="25" cy="25"/>
+                            <circle class="progress-ring-circle ${progress.percent > 0 ? 'text-green-500' : 'text-gray-300'}" stroke-width="4" stroke-linecap="round" stroke="currentColor" fill="transparent" r="22.5" cx="25" cy="25" style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${offset};"/>
+                        </svg>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Calculate progress for individual chapter
+        function calculateChapterProgress(subject, chapterId) {
+            try {
+                const localProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+
+                // Count completed items for this specific chapter
+                const chapterPrefix = `${subject}_${chapterId}_`;
+                const completed = Object.keys(localProgress).filter(key =>
+                    key.startsWith(chapterPrefix) && localProgress[key].completed
+                ).length;
+
+                // Get total items for this chapter from content data
+                const totalItems = getChapterContentCount(subject, chapterId);
+                const percent = totalItems > 0 ? Math.round((completed / totalItems) * 100) : 0;
+
+                return { completed, total: totalItems, percent };
+            } catch (error) {
+                console.error('Error calculating chapter progress:', error);
+                return { completed: 0, total: 0, percent: 0 };
+            }
+        }
+
+        // Get content count for specific chapter
+        function getChapterContentCount(subject, chapterId) {
+            const chapterData = {
+                'english': {
+                    'warmth-candle': 3, // 2 videos + 2 notes + 1 assignment + 2 resources
+                    'my-shadow': 3, // 1 video + 2 notes + 1 assignment + 1 resource
+                    'leisure': 2 // 1 video + 1 note + 1 assignment + 1 resource
+                },
+                'maths': {
+                    'percentage': 1 // 1 video + 1 note + 1 assignment + 1 resource'
+                },
+                'science': {
+                    'circulatory-system': 8,
+                    'skeletal-system': 2,
+                },
+                'social-science': {
+                    'evolution-humans': 7, // 1 video + 1 note + 1 assignment + 1 resource
+                },
+                'computer': {
+                    'simple-circuits': 2, // 1 video + 1 note + 1 assignment + 1 resource
+                }
+            };
+
+            return chapterData[subject]?.[chapterId] || 0;
+        }
+
+        function openChapter(subject, chapterId) {
+            window.location.href = `chapter-content-sangharsh.html?subject=${subject}&chapter=${chapterId}`;
+        }
+
+        // Re-initialize AOS after dynamic content load
+        setTimeout(() => {
+            AOS.refresh();
+        }, 100);
+    </script>
+</body>
+
+</html>

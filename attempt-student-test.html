@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Practice - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .brand-font { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .cyan-gradient { background: linear-gradient(135deg, #06b6d4, #3b82f6, #6366f1); }
+        .option-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15); }
+        .question-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .question-box:hover { transform: scale(1.05); }
+        .glass-effect { backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.95); }
+        .shadow-custom { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-ring { transform: rotate(-90deg); }
+        .timer-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .mobile-nav { transform: translateY(100%); transition: transform 0.3s ease; }
+        .mobile-nav.show { transform: translateY(0); }
+        @media (max-width: 768px) {
+            .question-text { font-size: 1.1rem; line-height: 1.6; }
+            .option-text { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-cyan-50 via-white to-blue-50 min-h-screen">
+    <!-- Enhanced Header -->
+    <div class="cyan-gradient shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <button class="back-btn flex items-center text-white hover:text-cyan-200 transition-all duration-300 hover:scale-105 group">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center mr-2 md:mr-3 group-hover:bg-opacity-30 transition-all">
+                        <i class="fas fa-arrow-left text-xs md:text-sm"></i>
+                    </div>
+                    <span class="hidden sm:inline font-medium text-sm">Back</span>
+                </button>
+                
+                <div class="flex items-center flex-1 justify-center mx-2">
+                    <div class="glass-effect px-2 md:px-6 py-2 md:py-3 rounded-xl md:rounded-2xl border border-white border-opacity-20 shadow-lg max-w-xs md:max-w-none">
+                        <div class="flex items-center space-x-2 md:space-x-3">
+                            <div class="w-6 h-6 md:w-8 md:h-8 bg-cyan-500 rounded-md md:rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clipboard-check text-white text-xs md:text-sm"></i>
+                            </div>
+                            <div class="text-left hidden sm:block">
+                                <div class="text-cyan-800 font-bold text-xs md:text-sm brand-font">Test Practice</div>
+                                <div id="test-title" class="text-cyan-600 text-xs font-medium truncate max-w-24 md:max-w-none">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="bg-white bg-opacity-20 px-2 md:px-4 py-1 md:py-2 rounded-lg md:rounded-xl border border-white border-opacity-30 timer-pulse">
+                        <div class="flex items-center space-x-1 md:space-x-2">
+                            <i class="fas fa-clock text-white text-xs md:text-sm"></i>
+                            <span id="timer" class="text-white font-mono font-bold text-sm md:text-lg drop-shadow-lg">00:00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+            <!-- Enhanced Question Card -->
+            <div class="xl:col-span-3 order-2 xl:order-1">
+                <div class="bg-white rounded-3xl shadow-custom border border-gray-100 overflow-hidden animate-fade-in">
+                    <!-- Enhanced Question Header -->
+                    <div class="cyan-gradient px-6 md:px-8 py-6 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black bg-opacity-5"></div>
+                        <div class="relative flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-question-circle text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white text-sm font-medium opacity-90">Question</div>
+                                    <div class="text-white text-2xl font-bold brand-font">
+                                        <span id="question-num">1</span> of <span id="total-questions">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden md:flex items-center space-x-4">
+                                <div class="text-right">
+                                    <div class="text-white text-xs opacity-75">Progress</div>
+                                    <div class="text-white font-semibold">
+                                        <span id="progress-percent">0</span>%
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16">
+                                    <svg class="w-full h-full progress-ring" viewBox="0 0 36 36">
+                                        <path class="text-white text-opacity-20" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <path id="progress-circle" class="text-white" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Question Body -->
+                    <div class="p-6 md:p-8 lg:p-10">
+                        <div class="mb-8 md:mb-10">
+                            <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-6 md:p-8 border border-cyan-100">
+                                <p id="question-text" class="question-text text-gray-800 font-medium leading-relaxed">
+                                    <i class="fas fa-spinner fa-spin text-cyan-500 mr-2"></i>Loading question...
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Options -->
+                        <div id="options-container" class="space-y-4 md:space-y-5">
+                            <!-- Options will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Navigation Panel -->
+            <div class="xl:col-span-1 order-1 xl:order-2">
+                <div class="bg-white rounded-3xl shadow-custom border border-gray-100 p-6 md:p-8 sticky top-6">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-list text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 brand-font">Question Navigator</h3>
+                        <p class="text-gray-500 text-sm mt-1">Tap to jump to any question</p>
+                    </div>
+                    
+                    <!-- Question Stats -->
+                    <div class="grid grid-cols-3 gap-1 mb-6">
+                        <div class="text-center p-1 bg-blue-50 rounded-lg">
+                            <div class="text-blue-600 font-bold text-sm" id="answered-count">0</div>
+                            <div class="text-blue-600 text-xs font-medium">Done</div>
+                        </div>
+                        <div class="text-center p-1 bg-cyan-50 rounded-lg">
+                            <div class="text-cyan-600 font-bold text-sm" id="current-count">1</div>
+                            <div class="text-cyan-600 text-xs font-medium">Now</div>
+                        </div>
+                        <div class="text-center p-1 bg-gray-50 rounded-lg">
+                            <div class="text-gray-600 font-bold text-sm" id="remaining-count">0</div>
+                            <div class="text-gray-600 text-xs font-medium">Left</div>
+                        </div>
+                    </div>
+                    
+                    <div id="question-grid" class="grid grid-cols-5 xl:grid-cols-4 gap-2 mb-8">
+                        <!-- Question numbers will be loaded here -->
+                    </div>
+                    
+                    <button id="submit-btn" class="submit-btn w-full bg-gradient-to-r from-cyan-600 to-blue-700 text-white py-4 px-6 rounded-2xl font-semibold hover:from-cyan-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font">
+                        <i class="fas fa-paper-plane mr-2"></i>Submit Test
+                    </button>
+                    
+                    <!-- Legend -->
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <div class="text-xs text-gray-500 font-medium mb-3">Legend:</div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-cyan-600 rounded mr-2"></div>
+                                <span class="text-gray-600">Current</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                                <span class="text-gray-600">Answered</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-gray-200 rounded mr-2"></div>
+                                <span class="text-gray-600">Not Answered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Mobile Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 mobile-nav show">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <button id="prev-btn" class="flex items-center px-6 py-3 bg-gray-100 text-gray-600 rounded-2xl hover:bg-gray-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-medium" disabled>
+                    <i class="fas fa-chevron-left mr-2"></i>
+                    <span class="hidden sm:inline">Previous</span>
+                </button>
+                
+                <div class="flex flex-col items-center">
+                    <div class="text-xs text-gray-500 font-medium mb-1">Progress</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="text-sm text-gray-600 font-bold">
+                            <span id="current-q">1</span> / <span id="total-q">0</span>
+                        </div>
+                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="mobile-progress" class="h-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="next-btn" class="flex items-center px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 text-white rounded-2xl hover:from-cyan-700 hover:to-blue-800 transition-all duration-300 font-medium shadow-lg">
+                    <span class="hidden sm:inline">Next</span>
+                    <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add bottom padding to prevent content overlap -->
+    <div class="h-20"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let questions = [];
+        let currentQuestion = 0;
+        let timeLeft = 3600;
+        let userAnswers = [];
+        let testStartTime = Date.now();
+        let currentTestData = null;
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                alert('Time is up! Submitting test automatically.');
+                submitTest();
+            }
+        }
+
+        function loadQuestion(index) {
+            if (questions.length === 0) return;
+            const q = questions[index];
+            document.getElementById('question-num').textContent = index + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+            
+            // Clean question text - remove any answer that might be appended
+            let questionText = q.question;
+            if (q.type === 'type' && q.correctAnswer) {
+                const answerText = q.correctAnswer.toString();
+                if (questionText.includes(answerText)) {
+                    questionText = questionText.replace(answerText, '').trim();
+                }
+            }
+            
+            document.getElementById('question-text').textContent = questionText;
+            
+            const container = document.getElementById('options-container');
+            
+            if (q.type === 'type') {
+                container.innerHTML = `
+                    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 p-6 rounded-2xl border-2 border-cyan-200">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Type your answer:</label>
+                        <input type="text" id="typeAnswerInput" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-cyan-500 focus:outline-none text-lg" placeholder="Enter your answer here..." oninput="saveTypeAnswer()">
+                        <p class="text-xs text-gray-500 mt-2">Enter numbers or words as required</p>
+                    </div>
+                `;
+                
+                const savedAnswer = userAnswers[index];
+                if (savedAnswer) {
+                    document.getElementById('typeAnswerInput').value = savedAnswer;
+                }
+            } else if (q.type === 'multiple') {
+                const optionLabels = ['A', 'B', 'C', 'D'];
+                const optionColors = ['bg-blue-50 border-blue-200', 'bg-green-50 border-green-200', 'bg-purple-50 border-purple-200', 'bg-orange-50 border-orange-200'];
+                
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <p class="text-sm font-medium text-gray-700 mb-4 bg-yellow-50 p-3 rounded-xl border border-yellow-200">
+                            <i class="fas fa-info-circle text-yellow-600 mr-2"></i>Select all correct answers:
+                        </p>
+                        ${optionLabels.map((label, i) => `
+                            <label class="option-btn w-full p-5 md:p-6 text-left border-2 ${optionColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg cursor-pointer flex items-start space-x-4">
+                                <input type="checkbox" class="mt-1" onchange="selectMultipleOption('${label}')">
+                                <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 border-gray-300 flex items-center justify-center font-bold bg-white group-hover:scale-110 transition-transform duration-300">
+                                    ${label}
+                                </div>
+                                <div class="flex-1 pt-1">
+                                    <span class="option-text text-gray-700 font-medium leading-relaxed">${q.options[label]}</span>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                
+                const savedAnswer = userAnswers[index];
+                if (savedAnswer && Array.isArray(savedAnswer)) {
+                    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+                    savedAnswer.forEach(answer => {
+                        const optionIndex = ['A', 'B', 'C', 'D'].indexOf(answer);
+                        if (optionIndex !== -1) {
+                            checkboxes[optionIndex].checked = true;
+                            checkboxes[optionIndex].closest('label').classList.add('border-cyan-500', 'bg-cyan-100');
+                        }
+                    });
+                }
+            } else {
+                const optionLabels = ['A', 'B', 'C', 'D'];
+                const optionColors = ['bg-blue-50 border-blue-200 hover:border-blue-400', 'bg-green-50 border-green-200 hover:border-green-400', 'bg-purple-50 border-purple-200 hover:border-purple-400', 'bg-orange-50 border-orange-200 hover:border-orange-400'];
+                
+                container.innerHTML = optionLabels.map((label, i) => `
+                    <button class="option-btn w-full p-5 md:p-6 text-left border-2 ${optionColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg" onclick="selectOption(${i})">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 border-gray-300 flex items-center justify-center font-bold bg-white group-hover:scale-110 transition-transform duration-300">
+                                ${label}
+                            </div>
+                            <div class="flex-1 pt-1">
+                                <span class="option-text text-gray-700 font-medium leading-relaxed">${q.options[label]}</span>
+                            </div>
+                        </div>
+                    </button>
+                `).join('');
+                
+                const savedAnswer = userAnswers[index];
+                if (savedAnswer) {
+                    const optionIndex = ['A', 'B', 'C', 'D'].indexOf(savedAnswer);
+                    if (optionIndex !== -1) {
+                        selectOption(optionIndex, false);
+                    }
+                }
+            }
+            
+            updateProgress();
+        }
+        
+        function selectOption(index, animate = true) {
+            const buttons = document.querySelectorAll('.option-btn');
+            const optionColors = ['border-blue-200', 'border-green-200', 'border-purple-200', 'border-orange-200'];
+            const selectedColors = ['border-blue-500 bg-blue-100', 'border-green-500 bg-green-100', 'border-purple-500 bg-purple-100', 'border-orange-500 bg-orange-100'];
+            const labelColors = ['border-blue-500 bg-blue-500', 'border-green-500 bg-green-500', 'border-purple-500 bg-purple-500', 'border-orange-500 bg-orange-500'];
+            
+            buttons.forEach((btn, i) => {
+                const label = btn.querySelector('div > div');
+                if (i === index) {
+                    btn.className = `option-btn w-full p-5 md:p-6 text-left border-2 ${selectedColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg shadow-lg`;
+                    label.className = `w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 ${labelColors[i]} flex items-center justify-center font-bold text-white group-hover:scale-110 transition-transform duration-300`;
+                    if (animate) {
+                        btn.style.transform = 'scale(1.02)';
+                        setTimeout(() => btn.style.transform = 'scale(1)', 200);
+                    }
+                } else {
+                    btn.className = `option-btn w-full p-5 md:p-6 text-left border-2 ${optionColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg`;
+                    label.className = 'w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 border-gray-300 flex items-center justify-center font-bold bg-white group-hover:scale-110 transition-transform duration-300';
+                }
+            });
+            
+            userAnswers[currentQuestion] = ['A', 'B', 'C', 'D'][index];
+            loadQuestionGrid();
+            updateStats();
+        }
+        
+        function selectMultipleOption(option) {
+            const currentAnswers = userAnswers[currentQuestion] || [];
+            const answerArray = Array.isArray(currentAnswers) ? [...currentAnswers] : [];
+            
+            if (answerArray.includes(option)) {
+                const index = answerArray.indexOf(option);
+                answerArray.splice(index, 1);
+            } else {
+                answerArray.push(option);
+            }
+            
+            userAnswers[currentQuestion] = answerArray.length > 0 ? answerArray : null;
+            
+            const checkbox = event.target;
+            const label = checkbox.closest('label');
+            if (checkbox.checked) {
+                label.classList.add('border-cyan-500', 'bg-cyan-100');
+            } else {
+                label.classList.remove('border-cyan-500', 'bg-cyan-100');
+            }
+            
+            loadQuestionGrid();
+            updateStats();
+        }
+        
+        function saveTypeAnswer() {
+            const input = document.getElementById('typeAnswerInput');
+            userAnswers[currentQuestion] = input.value.trim() || null;
+            loadQuestionGrid();
+            updateStats();
+        }
+        
+        function loadQuestionGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            questions.forEach((_, i) => {
+                const box = document.createElement('div');
+                let className = 'question-box w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center font-bold cursor-pointer transition-all duration-300 text-sm ';
+                
+                if (i === currentQuestion) {
+                    className += 'bg-cyan-600 text-white shadow-lg ring-4 ring-cyan-200';
+                } else if (userAnswers[i] !== null) {
+                    className += 'bg-blue-500 text-white hover:bg-blue-600 shadow-md';
+                } else {
+                    className += 'bg-gray-100 text-gray-700 hover:bg-cyan-100 hover:text-cyan-700 border border-gray-200';
+                }
+                
+                box.className = className;
+                box.textContent = i + 1;
+                box.onclick = () => goToQuestion(i);
+                grid.appendChild(box);
+            });
+        }
+        
+        function updateStats() {
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const remaining = questions.length - answered;
+            
+            document.getElementById('answered-count').textContent = answered;
+            document.getElementById('current-count').textContent = currentQuestion + 1;
+            document.getElementById('remaining-count').textContent = remaining;
+        }
+        
+        function updateProgress() {
+            const progress = Math.round(((currentQuestion + 1) / questions.length) * 100);
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const answeredProgress = Math.round((answered / questions.length) * 100);
+            
+            document.getElementById('progress-percent').textContent = answeredProgress;
+            document.getElementById('mobile-progress').style.width = progress + '%';
+            
+            const circle = document.getElementById('progress-circle');
+            if (circle) {
+                circle.style.strokeDasharray = `${answeredProgress}, 100`;
+            }
+        }
+        
+        function goToQuestion(index) {
+            currentQuestion = index;
+            loadQuestion(currentQuestion);
+            loadQuestionGrid();
+            updateNavigation();
+        }
+        
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('total-q').textContent = questions.length;
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = '<span class="hidden sm:inline">Submit</span><i class="fas fa-paper-plane ml-2"></i>';
+                nextBtn.className = 'flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-medium shadow-lg';
+                nextBtn.onclick = () => {
+                    if (confirm('Are you sure you want to submit the test? You cannot change your answers after submission.')) {
+                        submitTest();
+                    }
+                };
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Submit Test';
+                submitBtn.className = 'submit-btn w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-6 rounded-2xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font';
+            } else {
+                nextBtn.innerHTML = '<span class="hidden sm:inline">Next</span><i class="fas fa-chevron-right ml-2"></i>';
+                nextBtn.className = 'flex items-center px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-700 text-white rounded-2xl hover:from-cyan-700 hover:to-blue-800 transition-all duration-300 font-medium shadow-lg';
+                nextBtn.onclick = () => goToQuestion(currentQuestion + 1);
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Submit Test';
+                submitBtn.className = 'submit-btn w-full bg-gradient-to-r from-cyan-600 to-blue-700 text-white py-4 px-6 rounded-2xl font-semibold hover:from-cyan-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font';
+            }
+            
+            updateProgress();
+            updateStats();
+        }
+
+        async function loadTest() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const testId = urlParams.get('testId');
+            if (!testId) {
+                alert('Test ID not found');
+                return;
+            }
+
+            try {
+                const snapshot = await database.ref(`tests/${testId}`).once('value');
+                const testData = snapshot.val();
+                if (testData && testData.questions) {
+                    questions = testData.questions;
+                    timeLeft = testData.duration * 60;
+                    currentTestData = testData;
+                    userAnswers = new Array(questions.length).fill(null);
+                    document.getElementById('test-title').textContent = testData.title || 'Test Practice';
+                    loadQuestion(0);
+                    loadQuestionGrid();
+                    updateNavigation();
+                    updateStats();
+                } else {
+                    document.getElementById('question-text').textContent = 'No questions found for this test.';
+                }
+            } catch (error) {
+                console.error('Error loading test:', error);
+                document.getElementById('question-text').textContent = 'Error loading test questions.';
+            }
+        }
+        
+        async function submitTest() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            const urlParams = new URLSearchParams(window.location.search);
+            const testId = urlParams.get('testId');
+            
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            let unattempted = 0;
+            let totalMarks = 0;
+            
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                if (userAnswer === null) {
+                    unattempted++;
+                } else {
+                    let isCorrect = false;
+                    
+                    if (question.type === 'type') {
+                        const userAnswerStr = String(userAnswer).toLowerCase().trim();
+                        const correctAnswerStr = String(question.correctAnswer).toLowerCase().trim();
+                        isCorrect = userAnswerStr === correctAnswerStr;
+                    } else if (question.type === 'multiple') {
+                        const userAnswerArray = Array.isArray(userAnswer) ? userAnswer.sort() : [];
+                        const correctAnswerArray = Array.isArray(question.correctAnswer) ? question.correctAnswer.sort() : [];
+                        isCorrect = JSON.stringify(userAnswerArray) === JSON.stringify(correctAnswerArray);
+                    } else {
+                        isCorrect = userAnswer === question.correctAnswer;
+                    }
+                    
+                    if (isCorrect) {
+                        correctAnswers++;
+                        totalMarks += question.marks || 4;
+                    } else {
+                        wrongAnswers++;
+                        totalMarks -= 1;
+                    }
+                }
+            });
+            
+            totalMarks = Math.max(0, totalMarks);
+            const maxMarks = questions.reduce((sum, q) => sum + (q.marks || 4), 0);
+            const timeTaken = Math.floor((Date.now() - testStartTime) / 1000);
+            
+            const resultData = {
+                testId: testId,
+                studentId: userData.userId,
+                studentName: userData.name,
+                testTitle: currentTestData.title || 'Test Practice',
+                answers: userAnswers,
+                correctAnswers: correctAnswers,
+                wrongAnswers: wrongAnswers,
+                unattempted: unattempted,
+                totalMarks: totalMarks,
+                maxMarks: maxMarks,
+                timeTaken: timeTaken,
+                earnedXP: correctAnswers * 3,
+                attemptNumber: 1,
+                submittedAt: Date.now()
+            };
+            
+            try {
+                await database.ref('testResults').push(resultData);
+                localStorage.setItem('testResults', JSON.stringify(resultData));
+                localStorage.setItem('testQuestions', JSON.stringify(questions));
+                window.location.href = 'test-results.html';
+            } catch (error) {
+                console.error('Error saving results:', error);
+                alert('Error submitting test. Please try again.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTest();
+            updateTimer();
+            
+            document.querySelector('.back-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to leave? Your progress will be lost.')) {
+                    window.history.back();
+                }
+            });
+            
+            document.querySelector('.submit-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to submit the test? You cannot change your answers after submission.')) {
+                    submitTest();
+                }
+            });
+            
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                if (currentQuestion > 0) {
+                    goToQuestion(currentQuestion - 1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

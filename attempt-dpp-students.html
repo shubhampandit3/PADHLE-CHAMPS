@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPP Practice - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .brand-font { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .emerald-gradient { background: linear-gradient(135deg, #10b981, #059669, #047857); }
+        .option-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15); }
+        .question-box { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .question-box:hover { transform: scale(1.05); }
+        .glass-effect { backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.95); }
+        .shadow-custom { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-ring { transform: rotate(-90deg); }
+        .mobile-nav { transform: translateY(100%); transition: transform 0.3s ease; }
+        .mobile-nav.show { transform: translateY(0); }
+        @media (max-width: 768px) {
+            .question-text { font-size: 1.1rem; line-height: 1.6; }
+            .option-text { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 via-white to-teal-50 min-h-screen">
+    <!-- Enhanced Header -->
+    <div class="emerald-gradient shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <button class="back-btn flex items-center text-white hover:text-emerald-200 transition-all duration-300 hover:scale-105 group">
+                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center mr-2 md:mr-3 group-hover:bg-opacity-30 transition-all">
+                        <i class="fas fa-arrow-left text-xs md:text-sm"></i>
+                    </div>
+                    <span class="hidden sm:inline font-medium text-sm">Back</span>
+                </button>
+                
+                <div class="flex items-center flex-1 justify-center mx-4">
+                    <div class="glass-effect px-3 md:px-6 py-2 md:py-3 rounded-xl md:rounded-2xl border border-white border-opacity-20 shadow-lg max-w-xs md:max-w-none">
+                        <div class="flex items-center space-x-2 md:space-x-3">
+                            <div class="w-6 h-6 md:w-8 md:h-8 bg-emerald-500 rounded-md md:rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tasks text-white text-xs md:text-sm"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-emerald-800 font-bold text-xs md:text-sm brand-font">DPP Practice</div>
+                                <div id="dpp-title" class="text-emerald-600 text-xs font-medium truncate max-w-24 md:max-w-none">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="flex items-center bg-white bg-opacity-20 px-2 md:px-4 py-1 md:py-2 rounded-lg md:rounded-xl">
+                        <i class="fas fa-infinity text-white mr-1 md:mr-2 text-xs md:text-sm"></i>
+                        <span class="text-white text-xs md:text-sm font-medium hidden sm:inline">Unlimited</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+            <!-- Enhanced Question Card -->
+            <div class="xl:col-span-3 order-2 xl:order-1">
+                <div class="bg-white rounded-3xl shadow-custom border border-gray-100 overflow-hidden animate-fade-in">
+                    <!-- Enhanced Question Header -->
+                    <div class="emerald-gradient px-6 md:px-8 py-6 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black bg-opacity-5"></div>
+                        <div class="relative flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-question-circle text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white text-sm font-medium opacity-90">Question</div>
+                                    <div class="text-white text-2xl font-bold brand-font">
+                                        <span id="question-num">1</span> of <span id="total-questions">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden md:flex items-center space-x-4">
+                                <div class="text-right">
+                                    <div class="text-white text-xs opacity-75">Progress</div>
+                                    <div class="text-white font-semibold">
+                                        <span id="progress-percent">0</span>%
+                                    </div>
+                                </div>
+                                <div class="w-16 h-16">
+                                    <svg class="w-full h-full progress-ring" viewBox="0 0 36 36">
+                                        <path class="text-white text-opacity-20" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <path id="progress-circle" class="text-white" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Question Body -->
+                    <div class="p-6 md:p-8 lg:p-10">
+                        <div class="mb-8 md:mb-10">
+                            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 md:p-8 border border-emerald-100">
+                                <p id="question-text" class="question-text text-gray-800 font-medium leading-relaxed">
+                                    <i class="fas fa-spinner fa-spin text-emerald-500 mr-2"></i>Loading question...
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Options -->
+                        <div id="options-container" class="space-y-4 md:space-y-5">
+                            <!-- Options will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Navigation Panel -->
+            <div class="xl:col-span-1 order-1 xl:order-2">
+                <div class="bg-white rounded-3xl shadow-custom border border-gray-100 p-6 md:p-8 sticky top-6">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-list text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 brand-font">Question Navigator</h3>
+                        <p class="text-gray-500 text-sm mt-1">Tap to jump to any question</p>
+                    </div>
+                    
+                    <!-- Question Stats -->
+                    <div class="grid grid-cols-3 gap-1 mb-6">
+                        <div class="text-center p-1 bg-blue-50 rounded-lg">
+                            <div class="text-blue-600 font-bold text-sm" id="answered-count">0</div>
+                            <div class="text-blue-600 text-xs font-medium">Done</div>
+                        </div>
+                        <div class="text-center p-1 bg-emerald-50 rounded-lg">
+                            <div class="text-emerald-600 font-bold text-sm" id="current-count">1</div>
+                            <div class="text-emerald-600 text-xs font-medium">Now</div>
+                        </div>
+                        <div class="text-center p-1 bg-gray-50 rounded-lg">
+                            <div class="text-gray-600 font-bold text-sm" id="remaining-count">0</div>
+                            <div class="text-gray-600 text-xs font-medium">Left</div>
+                        </div>
+                    </div>
+                    
+                    <div id="question-grid" class="grid grid-cols-5 xl:grid-cols-4 gap-2 mb-8">
+                        <!-- Question numbers will be loaded here -->
+                    </div>
+                    
+                    <button id="submit-btn" class="submit-btn w-full bg-gradient-to-r from-emerald-600 to-teal-700 text-white py-4 px-6 rounded-2xl font-semibold hover:from-emerald-700 hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font">
+                        <i class="fas fa-paper-plane mr-2"></i>Submit DPP
+                    </button>
+                    
+                    <!-- Legend -->
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <div class="text-xs text-gray-500 font-medium mb-3">Legend:</div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-emerald-600 rounded mr-2"></div>
+                                <span class="text-gray-600">Current</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                                <span class="text-gray-600">Answered</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-gray-200 rounded mr-2"></div>
+                                <span class="text-gray-600">Not Answered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Mobile Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 mobile-nav show">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <button id="prev-btn" class="flex items-center px-6 py-3 bg-gray-100 text-gray-600 rounded-2xl hover:bg-gray-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-medium" disabled>
+                    <i class="fas fa-chevron-left mr-2"></i>
+                    <span class="hidden sm:inline">Previous</span>
+                </button>
+                
+                <div class="flex flex-col items-center">
+                    <div class="text-xs text-gray-500 font-medium mb-1">Progress</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="text-sm text-gray-600 font-bold">
+                            <span id="current-q">1</span> / <span id="total-q">0</span>
+                        </div>
+                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="mobile-progress" class="h-full bg-gradient-to-r from-emerald-500 to-teal-600 transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="next-btn" class="flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-2xl hover:from-emerald-700 hover:to-teal-800 transition-all duration-300 font-medium shadow-lg">
+                    <span class="hidden sm:inline">Next</span>
+                    <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add bottom padding to prevent content overlap -->
+    <div class="h-20"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let questions = [];
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let dppStartTime = Date.now();
+        let currentDppData = null;
+
+        function loadQuestion(index) {
+            if (questions.length === 0) return;
+            const q = questions[index];
+            document.getElementById('question-num').textContent = index + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('question-text').textContent = q.question;
+            
+            const container = document.getElementById('options-container');
+            const optionLabels = ['A', 'B', 'C', 'D'];
+            const optionColors = ['bg-blue-50 border-blue-200 hover:border-blue-400', 'bg-green-50 border-green-200 hover:border-green-400', 'bg-purple-50 border-purple-200 hover:border-purple-400', 'bg-orange-50 border-orange-200 hover:border-orange-400'];
+            
+            container.innerHTML = optionLabels.map((label, i) => `
+                <button class="option-btn w-full p-5 md:p-6 text-left border-2 ${optionColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg" onclick="selectOption(${i})">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 border-gray-300 flex items-center justify-center font-bold bg-white group-hover:scale-110 transition-transform duration-300">
+                            ${label}
+                        </div>
+                        <div class="flex-1 pt-1">
+                            <span class="option-text text-gray-700 font-medium leading-relaxed">${q.options[label]}</span>
+                        </div>
+                    </div>
+                </button>
+            `).join('');
+            
+            // Restore previous selection
+            const savedAnswer = userAnswers[index];
+            if (savedAnswer) {
+                const optionIndex = ['A', 'B', 'C', 'D'].indexOf(savedAnswer);
+                if (optionIndex !== -1) {
+                    selectOption(optionIndex, false);
+                }
+            }
+            
+            updateProgress();
+        }
+        
+        function selectOption(index, animate = true) {
+            const buttons = document.querySelectorAll('.option-btn');
+            const optionColors = ['border-blue-200', 'border-green-200', 'border-purple-200', 'border-orange-200'];
+            const selectedColors = ['border-blue-500 bg-blue-100', 'border-green-500 bg-green-100', 'border-purple-500 bg-purple-100', 'border-orange-500 bg-orange-100'];
+            const labelColors = ['border-blue-500 bg-blue-500', 'border-green-500 bg-green-500', 'border-purple-500 bg-purple-500', 'border-orange-500 bg-orange-500'];
+            
+            buttons.forEach((btn, i) => {
+                const label = btn.querySelector('div > div');
+                if (i === index) {
+                    btn.className = `option-btn w-full p-5 md:p-6 text-left border-2 ${selectedColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg shadow-lg`;
+                    label.className = `w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 ${labelColors[i]} flex items-center justify-center font-bold text-white group-hover:scale-110 transition-transform duration-300`;
+                    if (animate) {
+                        btn.style.transform = 'scale(1.02)';
+                        setTimeout(() => btn.style.transform = 'scale(1)', 200);
+                    }
+                } else {
+                    btn.className = `option-btn w-full p-5 md:p-6 text-left border-2 ${optionColors[i]} rounded-2xl transition-all duration-300 group hover:shadow-lg`;
+                    label.className = 'w-10 h-10 md:w-12 md:h-12 rounded-2xl border-2 border-gray-300 flex items-center justify-center font-bold bg-white group-hover:scale-110 transition-transform duration-300';
+                }
+            });
+            
+            userAnswers[currentQuestion] = ['A', 'B', 'C', 'D'][index];
+            loadQuestionGrid();
+            updateStats();
+        }
+        
+        function loadQuestionGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            questions.forEach((_, i) => {
+                const box = document.createElement('div');
+                let className = 'question-box w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center font-bold cursor-pointer transition-all duration-300 text-sm ';
+                
+                if (i === currentQuestion) {
+                    className += 'bg-emerald-600 text-white shadow-lg ring-4 ring-emerald-200';
+                } else if (userAnswers[i] !== null) {
+                    className += 'bg-blue-500 text-white hover:bg-blue-600 shadow-md';
+                } else {
+                    className += 'bg-gray-100 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 border border-gray-200';
+                }
+                
+                box.className = className;
+                box.textContent = i + 1;
+                box.onclick = () => goToQuestion(i);
+                grid.appendChild(box);
+            });
+        }
+        
+        function updateStats() {
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const remaining = questions.length - answered;
+            
+            document.getElementById('answered-count').textContent = answered;
+            document.getElementById('current-count').textContent = currentQuestion + 1;
+            document.getElementById('remaining-count').textContent = remaining;
+        }
+        
+        function updateProgress() {
+            const progress = Math.round(((currentQuestion + 1) / questions.length) * 100);
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const answeredProgress = Math.round((answered / questions.length) * 100);
+            
+            document.getElementById('progress-percent').textContent = answeredProgress;
+            document.getElementById('mobile-progress').style.width = progress + '%';
+            
+            const circle = document.getElementById('progress-circle');
+            if (circle) {
+                circle.style.strokeDasharray = `${answeredProgress}, 100`;
+            }
+        }
+        
+        function goToQuestion(index) {
+            currentQuestion = index;
+            loadQuestion(currentQuestion);
+            loadQuestionGrid();
+            updateNavigation();
+        }
+        
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Update current question display
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('total-q').textContent = questions.length;
+            
+            // Previous button
+            prevBtn.disabled = currentQuestion === 0;
+            
+            // Next/Submit button logic
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = '<span class="hidden sm:inline">Submit</span><i class="fas fa-paper-plane ml-2"></i>';
+                nextBtn.className = 'flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-medium shadow-lg';
+                nextBtn.onclick = () => {
+                    if (confirm('Are you sure you want to submit the DPP? You cannot change your answers after submission.')) {
+                        submitDPP();
+                    }
+                };
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Submit DPP';
+                submitBtn.className = 'submit-btn w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-6 rounded-2xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font';
+            } else {
+                nextBtn.innerHTML = '<span class="hidden sm:inline">Next</span><i class="fas fa-chevron-right ml-2"></i>';
+                nextBtn.className = 'flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-2xl hover:from-emerald-700 hover:to-teal-800 transition-all duration-300 font-medium shadow-lg';
+                nextBtn.onclick = () => goToQuestion(currentQuestion + 1);
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Submit DPP';
+                submitBtn.className = 'submit-btn w-full bg-gradient-to-r from-emerald-600 to-teal-700 text-white py-4 px-6 rounded-2xl font-semibold hover:from-emerald-700 hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 brand-font';
+            }
+            
+            updateProgress();
+            updateStats();
+        }
+
+        async function loadDPP() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const dppId = urlParams.get('dppId');
+                
+                if (dppId) {
+                    const snapshot = await database.ref(`dpps/${dppId}`).once('value');
+                    const dppData = snapshot.val();
+                    
+                    if (dppData && dppData.questions) {
+                        questions = dppData.questions;
+                        currentDppData = dppData;
+                        currentDppData.id = dppId;
+                        userAnswers = new Array(questions.length).fill(null);
+                        document.getElementById('dpp-title').textContent = dppData.title || 'DPP Practice';
+                        loadQuestion(0);
+                        loadQuestionGrid();
+                        updateNavigation();
+                        updateStats();
+                    } else {
+                        document.getElementById('question-text').textContent = 'No questions found in this DPP.';
+                    }
+                } else {
+                    // Fallback to load first available DPP
+                    const snapshot = await database.ref('dpps').once('value');
+                    const dppsData = snapshot.val();
+                    
+                    if (dppsData) {
+                        const dppKeys = Object.keys(dppsData);
+                        if (dppKeys.length > 0) {
+                            const firstDppKey = dppKeys[0];
+                            const dppData = dppsData[firstDppKey];
+                            
+                            if (dppData && dppData.questions) {
+                                questions = dppData.questions;
+                                currentDppData = dppData;
+                                currentDppData.id = firstDppKey;
+                                userAnswers = new Array(questions.length).fill(null);
+                                document.getElementById('dpp-title').textContent = dppData.title || 'DPP Practice';
+                                loadQuestion(0);
+                                loadQuestionGrid();
+                                updateNavigation();
+                                updateStats();
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading DPP:', error);
+                document.getElementById('question-text').textContent = 'Error loading DPP questions.';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDPP();
+            
+            document.querySelector('.back-btn').addEventListener('click', function() {
+                window.history.back();
+            });
+            
+            document.querySelector('.submit-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to submit the DPP? You cannot change your answers after submission.')) {
+                    submitDPP();
+                }
+            });
+            
+            // Navigation button events
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                if (currentQuestion > 0) {
+                    goToQuestion(currentQuestion - 1);
+                }
+            });
+        });
+        
+        async function submitDPP() {
+            const userData = JSON.parse(localStorage.getItem('padhleChamps_user'));
+            
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            let unattempted = 0;
+            let totalMarks = 0;
+            
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                if (userAnswer === null) {
+                    unattempted++;
+                } else if (userAnswer === question.correctAnswer) {
+                    correctAnswers++;
+                    totalMarks += 4;
+                } else {
+                    wrongAnswers++;
+                    totalMarks -= 1;
+                }
+            });
+            
+            totalMarks = Math.max(0, totalMarks);
+            const maxMarks = questions.length * 4;
+            
+            const resultData = {
+                dppId: currentDppData.id,
+                studentId: userData.userId,
+                studentName: userData.name,
+                dppTitle: currentDppData.title,
+                subject: currentDppData.subject,
+                chapter: currentDppData.chapter,
+                answers: userAnswers,
+                correctAnswers: correctAnswers,
+                wrongAnswers: wrongAnswers,
+                unattempted: unattempted,
+                totalMarks: totalMarks,
+                maxMarks: maxMarks,
+                earnedXP: correctAnswers * 3,
+                isFirstAttempt: true,
+                submittedAt: Date.now()
+            };
+            
+            try {
+                await database.ref('dppResults').push(resultData);
+                localStorage.setItem('dppResult', JSON.stringify(resultData));
+                localStorage.setItem('dppQuestions', JSON.stringify(questions));
+                window.location.href = 'dpp-results.html';
+            } catch (error) {
+                console.error('Error saving results:', error);
+                alert('Error submitting DPP. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

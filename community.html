@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="community.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 w-full z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <span class="text-2xl font-bold text-blue-600">Padhle Champs</span>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="home.html" class="nav-link">Home</a>
+                        <a href="dashboard.html" class="nav-link">Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="ban-status hidden" id="banStatus">
+                        <svg class="w-4 h-4 text-red-500 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                        <span class="text-red-600 text-sm font-semibold">Restricted</span>
+                        <div class="ban-timer text-xs text-red-500 mt-1" id="banTimer"></div>
+                    </div>
+                    <div class="user-info" id="userInfo">
+                        <span class="text-gray-700 font-semibold" id="userName">Student</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Community Header -->
+            <div class="community-header mb-8" data-aos="fade-up">
+                <h1 class="community-title">Student Community</h1>
+                <p class="community-subtitle">Connect, share, and learn together</p>
+                <div class="community-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalPosts">0</span>
+                        <span class="stat-label">Posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="activeUsers">0</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Post Modal -->
+            <div id="createPostModal" class="create-post-modal hidden">
+                <div class="create-post-content">
+                    <div class="create-post-header">
+                        <h3 class="create-post-title">Create New Post</h3>
+                        <button onclick="closeCreatePost()" class="close-btn">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="create-post-body">
+                        <div class="user-info-bar">
+                            <div class="user-avatar">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                            </div>
+                            <span class="user-name" id="modalUserName">Student</span>
+                        </div>
+                        <textarea id="postContent" placeholder="Share your thoughts, ask questions, or help others..." rows="4"></textarea>
+                        <div class="post-guidelines">
+                            <i class="fas fa-shield-alt text-green-600 mr-2"></i>
+                            <span class="text-sm text-gray-600">Bot monitors all posts for safety and community guidelines</span>
+                        </div>
+                    </div>
+                    <div class="create-post-actions">
+                        <button onclick="closeCreatePost()" class="cancel-btn">
+                            Cancel
+                        </button>
+                        <button onclick="createPost()" class="post-btn" id="postBtn">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                            Post
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="tabs-section mb-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('all')" id="allTab">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        All Posts
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('my')" id="myTab">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        My Posts
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('ban-status')" id="banStatusTab">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                        Ban Status
+                    </button>
+                </div>
+            </div>
+
+            <!-- Posts Feed -->
+            <div class="posts-feed" id="postsFeed">
+                <div class="no-posts">
+                    <svg class="w-24 h-24 text-gray-300 mb-4 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2 font-poppins">No posts yet</h3>
+                    <p class="text-gray-500 font-nunito">Be the first to start a discussion!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Add Post Button -->
+    <button class="floating-add-btn" onclick="openCreatePost()" id="floatingAddBtn">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+    </button>
+
+    <!-- Bot Warning Modal -->
+    <div id="warningModal" class="warning-modal hidden">
+        <div class="warning-content">
+            <div class="warning-header">
+                <div class="warning-icon">
+                    <i class="fas fa-robot text-red-500"></i>
+                </div>
+                <h3 class="warning-title">Content Violation Detected</h3>
+            </div>
+            <div class="warning-body">
+                <div class="violation-details" id="violationDetails">
+                    <p class="violation-text">Your post has been flagged for inappropriate content.</p>
+                    <div class="violation-reasons" id="violationReasons"></div>
+                </div>
+                <div class="ban-info">
+                    <div class="ban-duration">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>Restriction: 2 days</span>
+                    </div>
+                    <div class="ban-message">
+                        <p>Your post is now invisible to other students. Please follow community guidelines.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="warning-actions">
+                <button onclick="closeWarning()" class="warning-btn">
+                    <i class="fas fa-check mr-2"></i>I Understand
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="create-post-modal hidden">
+        <div class="create-post-content">
+            <div class="create-post-header">
+                <h3 class="create-post-title">Reply to Post</h3>
+                <button onclick="closeReply()" class="close-btn">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="create-post-body">
+                <div id="originalPost" class="bg-gray-100 p-3 rounded-lg mb-4 border-l-4 border-blue-500"></div>
+                <div class="user-info-bar">
+                    <div class="user-avatar">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    <span class="user-name" id="replyUserName">Student</span>
+                </div>
+                <textarea id="replyContent" placeholder="Write your reply..." rows="4"></textarea>
+            </div>
+            <div class="create-post-actions">
+                <button onclick="closeReply()" class="cancel-btn">
+                    Cancel
+                </button>
+                <button onclick="submitReply()" class="post-btn">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/>
+                    </svg>
+                    Reply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="userProfileModal" class="create-post-modal hidden">
+        <div class="create-post-content">
+            <div class="create-post-header">
+                <h3 class="create-post-title">User Profile</h3>
+                <button onclick="closeUserProfile()" class="close-btn">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="create-post-body">
+                <div class="user-profile-info">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                        </div>
+                        <div class="profile-details">
+                            <h4 class="profile-name" id="profileUserName">Student Name</h4>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total XP</span>
+                                    <div class="xp-info">
+                                        <svg class="w-5 h-5 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                        <span class="stat-value" id="profileTotalXP">0</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Current Level</span>
+                                    <div class="level-info">
+                                        <div class="level-badge" id="profileLevelBadge"></div>
+                                        <span class="level-name" id="profileLevelName">Honhar Level</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Daily Streak</span>
+                                    <div class="streak-info">
+                                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+                                        </svg>
+                                        <span class="streak-value" id="profileDailyStreak">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="community.js"></script>
+</body>
+</html>

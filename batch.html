@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batches - Padhle Champs</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="batch.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="10" fill="url(#gradient1)"/>
+                    <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#3B82F6"/>
+                            <stop offset="100%" stop-color="#10B981"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="nav-brand">Padhle Champs</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    Home
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    Profile
+                </a>
+                <button onclick="goHome()" class="nav-cta">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                    Back to Home
+                </button>
+            </div>
+            
+            <button class="nav-toggle" onclick="toggleMobileMenu()" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <div id="mobileMenu" class="nav-mobile">
+            <a href="index.html" class="nav-mobile-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                Home
+            </a>
+            <a href="profile.html" class="nav-mobile-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                Profile
+            </a>
+            <button onclick="goHome()" class="nav-mobile-cta">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Back to Home
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
+            <div class="hero-icon-wrapper">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="38" stroke="url(#heroGradient)" stroke-width="4" stroke-dasharray="8 8"/>
+                    <path d="M40 15L45 30H60L48 39L53 54L40 45L27 54L32 39L20 30H35L40 15Z" fill="url(#heroGradient)"/>
+                    <defs>
+                        <linearGradient id="heroGradient" x1="0" y1="0" x2="80" y2="80">
+                            <stop offset="0%" stop-color="#3B82F6"/>
+                            <stop offset="50%" stop-color="#8B5CF6"/>
+                            <stop offset="100%" stop-color="#10B981"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="hero-title">Discover Your <span class="gradient-text">Perfect Batch</span></h1>
+            <p class="hero-subtitle">Embark on an extraordinary learning journey with expert mentors - Completely FREE!</p>
+            <div class="free-badge-hero">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+                </svg>
+                <span>100% Free Education for All Students</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Batches Grid -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Sangharsh Batch -->
+                <div class="batch-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="batch-image">
+                        <img src="SANGHARSH.png" alt="Sangharsh Batch" class="w-full h-47 object-cover rounded-t-2xl">
+                        <div class="batch-overlay">
+                            <div class="free-badge">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 1L10 6H15L11 9L13 14L8 11L3 14L5 9L1 6H6L8 1Z" fill="white"/>
+                                </svg>
+                                FREE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="batch-content">
+                        <div class="batch-icon-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" fill="url(#sangharshGrad)"/>
+                                <defs><linearGradient id="sangharshGrad" x1="2" y1="2" x2="22" y2="21"><stop stop-color="#F59E0B"/><stop offset="1" stop-color="#EF4444"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <h3 class="batch-title">SANGHARSH BATCH 2025</h3>
+                        <div class="batch-info">
+                            <div class="info-item">
+                                <div class="info-icon blue"><i class="fas fa-graduation-cap"></i></div>
+                                <span>Class 5</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon green"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <span>Aarav Pandit</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon amber"><i class="fas fa-clock"></i></div>
+                                <span>Duration: TBA</span>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" onclick="enrollBatch('sangharsh')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="white"/>
+                            </svg>
+                            <span>Enroll Now</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manzil Batch -->
+                <div class="batch-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="batch-image">
+                        <img src="MANZIL.png" alt="Manzil Batch" class="w-full h-47 object-cover rounded-t-2xl">
+                        <div class="batch-overlay">
+                            <div class="free-badge">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 1L10 6H15L11 9L13 14L8 11L3 14L5 9L1 6H6L8 1Z" fill="white"/>
+                                </svg>
+                                FREE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="batch-content">
+                        <div class="batch-icon-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L4 7V12C4 16.5 7 20.5 12 22C17 20.5 20 16.5 20 12V7L12 2Z" fill="url(#manzilGrad)"/>
+                                <defs><linearGradient id="manzilGrad" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#10B981"/><stop offset="1" stop-color="#059669"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <h3 class="batch-title">MANZIL BATCH 2025</h3>
+                        <div class="batch-info">
+                            <div class="info-item">
+                                <div class="info-icon blue"><i class="fas fa-graduation-cap"></i></div>
+                                <span>Class 5</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon green"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <span>Aarav Pandit</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon amber"><i class="fas fa-clock"></i></div>
+                                <span>Duration: TBA</span>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" onclick="enrollBatch('manzil')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="white"/>
+                            </svg>
+                            <span>Enroll Now</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vigyan Batch -->
+                <div class="batch-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="batch-image">
+                        <img src="VIGYAN.png" alt="Vigyan Batch" class="w-full h-47 object-cover rounded-t-2xl">
+                        <div class="batch-overlay">
+                            <div class="free-badge">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 1L10 6H15L11 9L13 14L8 11L3 14L5 9L1 6H6L8 1Z" fill="white"/>
+                                </svg>
+                                FREE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="batch-content">
+                        <div class="batch-icon-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 2L7 8H3L7 11L5 17L9 14L13 17L11 11L15 8H11L9 2Z" fill="url(#vigyanGrad)"/>
+                                <path d="M15 2L17 8H21L17 11L19 17L15 14" fill="url(#vigyanGrad)" opacity="0.7"/>
+                                <defs><linearGradient id="vigyanGrad" x1="3" y1="2" x2="21" y2="17"><stop stop-color="#8B5CF6"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <h3 class="batch-title">VIGYAN BATCH 2025</h3>
+                        <div class="batch-info">
+                            <div class="info-item">
+                                <div class="info-icon blue"><i class="fas fa-graduation-cap"></i></div>
+                                <span>Class 10</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon green"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <span>Shubham Pandit</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon amber"><i class="fas fa-clock"></i></div>
+                                <span>Duration: TBA</span>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" onclick="enrollBatch('vigyan')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="white"/>
+                            </svg>
+                            <span>Enroll Now</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CodeCrack Batch -->
+                <div class="batch-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="batch-image">
+                        <img src="CODECRACK.png" alt="CodeCrack Batch" class="w-full h-47 object-cover rounded-t-2xl">
+                        <div class="batch-overlay">
+                            <div class="free-badge">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 1L10 6H15L11 9L13 14L8 11L3 14L5 9L1 6H6L8 1Z" fill="white"/>
+                                </svg>
+                                FREE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="batch-content">
+                        <div class="batch-icon-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 6L4 12L8 18M16 6L20 12L16 18M14 4L10 20" stroke="url(#codeGrad)" stroke-width="2" stroke-linecap="round"/>
+                                <defs><linearGradient id="codeGrad" x1="4" y1="4" x2="20" y2="20"><stop stop-color="#06B6D4"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <h3 class="batch-title">CODECRACK BATCH</h3>
+                        <div class="batch-info">
+                            <div class="info-item">
+                                <div class="info-icon blue"><i class="fas fa-graduation-cap"></i></div>
+                                <span>Class 7-12</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon green"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <span>Shubham Pandit</span>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon amber"><i class="fas fa-clock"></i></div>
+                                <span>Duration: TBA</span>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" onclick="enrollBatch('codecrack')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="white"/>
+                            </svg>
+                            <span>Enroll Now</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="section-title">Why Choose Our Batches?</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon green">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 4L18 10L24 12L18 14L16 20L14 14L8 12L14 10L16 4Z" fill="url(#freeGrad)"/>
+                            <path d="M24 8L25 11L28 12L25 13L24 16L23 13L20 12L23 11L24 8Z" fill="url(#freeGrad)" opacity="0.6"/>
+                            <path d="M8 20L9 23L12 24L9 25L8 28L7 25L4 24L7 23L8 20Z" fill="url(#freeGrad)" opacity="0.6"/>
+                            <defs><linearGradient id="freeGrad" x1="4" y1="4" x2="28" y2="28"><stop stop-color="#10B981"/><stop offset="1" stop-color="#059669"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">100% Free</h3>
+                    <p class="feature-desc">All our batches are completely free for students</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon blue">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="10" r="4" fill="url(#mentorGrad)"/>
+                            <path d="M16 16C11 16 7 18 7 21V24H25V21C25 18 21 16 16 16Z" fill="url(#mentorGrad)"/>
+                            <circle cx="24" cy="12" r="3" fill="url(#mentorGrad)" opacity="0.7"/>
+                            <path d="M28 18C28 16.5 26 15.5 24 15.5C23 15.5 22 15.8 21.5 16.2" stroke="url(#mentorGrad)" stroke-width="1.5" opacity="0.7"/>
+                            <defs><linearGradient id="mentorGrad" x1="7" y1="6" x2="28" y2="24"><stop stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Expert Mentors</h3>
+                    <p class="feature-desc">Learn from experienced and qualified teachers</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon amber">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 4L12 12H4L10 17L7 26L16 20L25 26L22 17L28 12H20L16 4Z" fill="url(#qualityGrad)"/>
+                            <circle cx="16" cy="16" r="4" fill="white" opacity="0.3"/>
+                            <defs><linearGradient id="qualityGrad" x1="4" y1="4" x2="28" y2="26"><stop stop-color="#F59E0B"/><stop offset="1" stop-color="#D97706"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Quality Education</h3>
+                    <p class="feature-desc">Comprehensive curriculum designed for success</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Padhle Champs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="batch.js"></script>
+</body>
+</html>

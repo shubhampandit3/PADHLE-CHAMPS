@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Students - Padhle Champs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-nunito { font-family: 'Nunito Sans', sans-serif; }
+        
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #10b981;
+            --danger-color: #ef4444;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.08);
+        }
+        
+        .profile-card:hover::before {
+            opacity: 1;
+        }
+        
+        .student-avatar {
+            width: 4.5rem;
+            height: 4.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.6rem;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .student-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge {
+            padding: 0.75rem 1.25rem;
+            border-radius: 30px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .status-active {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+        
+        .status-blocked {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            border: 1px solid var(--danger-color);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+        
+        .action-btn {
+            padding: 0.875rem 1.75rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .block-btn {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+        
+        .block-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.4);
+        }
+        
+        .unblock-btn {
+            background: linear-gradient(135deg, var(--secondary-color), #059669);
+            color: white;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .unblock-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+        }
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 520px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 10px;
+        }
+        
+        @keyframes modalSlide {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .page-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .search-input {
+            border-radius: 16px;
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        @media (max-width: 1024px) {
+            .profile-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-card {
+                padding: 1.25rem;
+            }
+            
+            .student-avatar {
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 1.3rem;
+            }
+            
+            .page-title {
+                font-size: 1.25rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .action-btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .profile-card {
+                padding: 1rem;
+            }
+            
+            .student-avatar {
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.1rem;
+            }
+            
+            .info-card {
+                padding: 0.875rem;
+            }
+            
+            .status-badge {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.75rem;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button onclick="window.history.back()" class="mr-4 p-3 hover:bg-gray-100 rounded-xl transition-all duration-300">
+                        <svg class="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 12H5M12 19L5 12L12 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <h1 class="page-title text-xl font-bold">Block Students</h1>
+                </div>
+                <div class="text-sm text-gray-500 font-nunito font-medium">
+                    Teacher Dashboard
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Search and Filter -->
+        <div class="mb-8 flex flex-col sm:flex-row gap-4" data-aos="fade-up">
+            <div class="flex-1 relative">
+                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search students by name, email, or ID..." 
+                       class="search-input w-full pl-12 pr-4 py-3 font-nunito">
+            </div>
+            <select id="statusFilter" class="search-input px-4 py-3 font-nunito font-medium">
+                <option value="all">All Students</option>
+                <option value="active">Active Only</option>
+                <option value="blocked">Blocked Only</option>
+            </select>
+        </div>
+
+        <!-- Students List -->
+        <div id="studentsList" class="grid gap-6" data-aos="fade-up" data-aos-delay="200">
+            <!-- Students will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Block Modal -->
+    <div id="blockModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-xl">
+                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2 font-poppins">Block Student</h3>
+                <p class="text-gray-600 font-nunito">Select blocking duration for <span id="studentName" class="font-semibold text-red-600"></span></p>
+            </div>
+            
+            <div class="space-y-4 mb-8">
+                <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 cursor-pointer transition-all duration-300 hover:border-orange-300">
+                    <input type="radio" name="blockDuration" value="1" class="mr-4 w-5 h-5 text-orange-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold font-nunito text-gray-800">1 Day</span>
+                    </div>
+                </label>
+                <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 cursor-pointer transition-all duration-300 hover:border-amber-300">
+                    <input type="radio" name="blockDuration" value="3" class="mr-4 w-5 h-5 text-amber-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold font-nunito text-gray-800">3 Days</span>
+                    </div>
+                </label>
+                <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50 cursor-pointer transition-all duration-300 hover:border-yellow-300">
+                    <input type="radio" name="blockDuration" value="7" class="mr-4 w-5 h-5 text-yellow-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold font-nunito text-gray-800">1 Week</span>
+                    </div>
+                </label>
+                <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 cursor-pointer transition-all duration-300 hover:border-red-300">
+                    <input type="radio" name="blockDuration" value="30" class="mr-4 w-5 h-5 text-red-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-500 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold font-nunito text-gray-800">1 Month</span>
+                    </div>
+                </label>
+                <label class="flex items-center p-4 border-2 border-red-300 rounded-xl hover:bg-gradient-to-r hover:from-red-100 hover:to-red-50 cursor-pointer transition-all duration-300 hover:border-red-400 bg-red-50">
+                    <input type="radio" name="blockDuration" value="permanent" class="mr-4 w-5 h-5 text-red-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/>
+                            </svg>
+                        </div>
+                        <span class="font-bold font-nunito text-red-700">Permanent Block</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="mb-8">
+                <label class="block text-sm font-semibold text-gray-700 mb-3 font-nunito">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                        Reason (Optional)
+                    </div>
+                </label>
+                <textarea id="blockReason" rows="4" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-400 transition-all duration-300 font-nunito" 
+                          placeholder="Enter reason for blocking this student..."></textarea>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="closeBlockModal()" class="flex-1 px-6 py-4 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 rounded-xl hover:from-gray-300 hover:to-gray-400 font-bold font-poppins transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                    Cancel
+                </button>
+                <button onclick="confirmBlock()" class="flex-1 px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 font-bold font-poppins transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/>
+                    </svg>
+                    Block Student
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDZJeZeJPkuDUZ5Vf_-rsy0PQsx8tQw4k",
+            authDomain: "quiz-app-10f81.firebaseapp.com",
+            databaseURL: "https://quiz-app-10f81-default-rtdb.firebaseio.com",
+            projectId: "quiz-app-10f81",
+            storageBucket: "quiz-app-10f81.firebasestorage.app",
+            messagingSenderId: "351578019731",
+            appId: "1:351578019731:web:2055fe24498ca17908fa66",
+            measurementId: "G-XVQ1GQ58E2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let currentStudentId = null;
+        let allStudents = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            loadStudents();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterStudents);
+            document.getElementById('statusFilter').addEventListener('change', filterStudents);
+        }
+
+        async function loadStudents() {
+            try {
+                const snapshot = await database.ref('users').once('value');
+                const users = snapshot.val() || {};
+                
+                allStudents = Object.keys(users)
+                    .map(userId => ({ ...users[userId], userId }))
+                    .filter(user => user.role === 'Student' || user.role === 'student');
+
+                // Load block status for each student
+                for (let student of allStudents) {
+                    const blockSnapshot = await database.ref(`blockedStudents/${student.userId}`).once('value');
+                    const blockData = blockSnapshot.val();
+                    
+                    if (blockData) {
+                        const now = Date.now();
+                        if (blockData.type === 'permanent' || (blockData.expiresAt && blockData.expiresAt > now)) {
+                            student.blocked = true;
+                            student.blockData = blockData;
+                        } else if (blockData.expiresAt && blockData.expiresAt <= now) {
+                            // Remove expired block
+                            await database.ref(`blockedStudents/${student.userId}`).remove();
+                            student.blocked = false;
+                        }
+                    } else {
+                        student.blocked = false;
+                    }
+                }
+
+                displayStudents(allStudents);
+            } catch (error) {
+                console.error('Error loading students:', error);
+            }
+        }
+
+        function displayStudents(students) {
+            const container = document.getElementById('studentsList');
+            
+            if (students.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <svg class="w-24 h-24 text-gray-300 mb-4 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h3v-3c0-1.1.9-2 2-2h2V7H9.5C8.67 7 8 6.33 8 5.5S8.67 4 9.5 4h5c.83 0 1.5.67 1.5 1.5S15.33 7 14.5 7H13v2h2c1.1 0 2 .9 2 2v3h3v4H4z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2 font-poppins">No Students Found</h3>
+                        <p class="text-gray-500 font-nunito">No students match your search criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = students.map(student => `
+                <div class="profile-card">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="student-avatar">
+                                ${student.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-1">${student.name}</h3>
+                                <p class="text-gray-600 mb-1">${student.email}</p>
+                                <p class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full inline-block mb-2">ID: ${student.userId.substring(0, 8)}...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col items-end gap-3">
+                            <span class="status-badge ${student.blocked ? 'status-blocked' : 'status-active'}">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    ${student.blocked ? 
+                                        '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/>' :
+                                        '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>'
+                                    }
+                                </svg>
+                                ${student.blocked ? 'Blocked' : 'Active'}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-3 mb-4">
+                        <div class="info-card">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">Role</p>
+                                    <p class="font-semibold text-gray-800 text-sm">${student.role}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">Class</p>
+                                    <p class="font-semibold text-gray-800 text-sm">Class ${student.class || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6L21 9l-9-6zM18.82 9L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-medium">School</p>
+                                    <p class="font-semibold text-gray-800 text-sm">${student.schoolName || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${student.blocked && student.blockData ? `
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-sm text-red-800">
+                                    <h4 class="font-semibold mb-2">Block Details</h4>
+                                    <div class="grid grid-cols-1 gap-2">
+                                        <div class="flex justify-between">
+                                            <span class="font-medium">Type:</span>
+                                            <span class="${student.blockData.type === 'permanent' ? 'text-red-700 font-bold' : 'text-orange-700'}">
+                                                ${student.blockData.type === 'permanent' ? 'Permanent' : 'Temporary'}
+                                            </span>
+                                        </div>
+                                        ${student.blockData.expiresAt ? `
+                                        <div class="flex justify-between">
+                                            <span class="font-medium">Expires:</span>
+                                            <span class="text-orange-700">${new Date(student.blockData.expiresAt).toLocaleDateString()} at ${new Date(student.blockData.expiresAt).toLocaleTimeString()}</span>
+                                        </div>` : ''}
+                                        <div class="flex justify-between">
+                                            <span class="font-medium">Blocked On:</span>
+                                            <span>${new Date(student.blockData.blockedAt).toLocaleDateString()}</span>
+                                        </div>
+                                        <div class="mt-2 pt-2 border-t border-red-200">
+                                            <span class="font-medium">Reason:</span>
+                                            <p class="mt-1 text-red-700 italic">${student.blockData.reason || 'No reason provided'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex justify-end">
+                        ${student.blocked ? 
+                            `<button onclick="unblockStudent('${student.userId}')" class="action-btn unblock-btn">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/>
+                                </svg>
+                                Unblock Student
+                            </button>` :
+                            `<button onclick="openBlockModal('${student.userId}', '${student.name}')" class="action-btn block-btn">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"/>
+                                </svg>
+                                Block Student
+                            </button>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterStudents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            let filtered = allStudents.filter(student => {
+                const matchesSearch = student.name.toLowerCase().includes(searchTerm) || 
+                                    student.email.toLowerCase().includes(searchTerm) ||
+                                    student.userId.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = statusFilter === 'all' || 
+                                    (statusFilter === 'active' && !student.blocked) ||
+                                    (statusFilter === 'blocked' && student.blocked);
+                
+                return matchesSearch && matchesStatus;
+            });
+            
+            displayStudents(filtered);
+        }
+
+        function openBlockModal(studentId, studentName) {
+            currentStudentId = studentId;
+            document.getElementById('studentName').textContent = studentName;
+            document.getElementById('blockModal').classList.remove('hidden');
+        }
+
+        function closeBlockModal() {
+            currentStudentId = null;
+            document.getElementById('blockModal').classList.add('hidden');
+            document.getElementById('blockReason').value = '';
+            document.querySelectorAll('input[name="blockDuration"]').forEach(radio => radio.checked = false);
+        }
+
+        async function confirmBlock() {
+            const selectedDuration = document.querySelector('input[name="blockDuration"]:checked');
+            const reason = document.getElementById('blockReason').value.trim();
+            
+            if (!selectedDuration) {
+                alert('Please select a blocking duration.');
+                return;
+            }
+            
+            try {
+                const blockData = {
+                    blockedAt: Date.now(),
+                    blockedBy: JSON.parse(localStorage.getItem('padhleChamps_user')).userId,
+                    reason: reason || 'No reason provided',
+                    type: selectedDuration.value === 'permanent' ? 'permanent' : 'temporary'
+                };
+                
+                if (selectedDuration.value !== 'permanent') {
+                    const days = parseInt(selectedDuration.value);
+                    blockData.expiresAt = Date.now() + (days * 24 * 60 * 60 * 1000);
+                }
+                
+                await database.ref(`blockedStudents/${currentStudentId}`).set(blockData);
+                
+                alert('Student has been blocked successfully.');
+                closeBlockModal();
+                loadStudents(); // Refresh the list
+                
+            } catch (error) {
+                console.error('Error blocking student:', error);
+                alert('Error blocking student. Please try again.');
+            }
+        }
+
+        async function unblockStudent(studentId) {
+            if (!confirm('Are you sure you want to unblock this student?')) {
+                return;
+            }
+            
+            try {
+                await database.ref(`blockedStudents/${studentId}`).remove();
+                alert('Student has been unblocked successfully.');
+                loadStudents(); // Refresh the list
+            } catch (error) {
+                console.error('Error unblocking student:', error);
+                alert('Error unblocking student. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
